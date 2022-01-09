@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Level">
+      <UniqueIdentifier>{2bdfad18-e6b7-4b5b-a574-e980b588103d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor">
+      <UniqueIdentifier>{caf75e45-55cb-4acc-9869-b8b9c4ab8060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Title">
+      <UniqueIdentifier>{57cacfb2-cf38-4d35-9ed7-2db0c9892170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Play">
+      <UniqueIdentifier>{08f3dcef-2a06-4bad-8e4a-18ee5f07786b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLogo.h">
+      <Filter>Actor\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleBack.h">
+      <Filter>Actor\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBack.h">
+      <Filter>Actor\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Actor\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicEnum.h" />
+    <ClInclude Include="SonicActor.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeObject.h">
+      <Filter>Actor\Play</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLogo.cpp">
+      <Filter>Actor\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBack.cpp">
+      <Filter>Actor\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBack.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="SonicActor.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeObject.cpp">
+      <Filter>Actor\Play</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

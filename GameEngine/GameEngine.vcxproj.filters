@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Level0%28OS%29">
+      <UniqueIdentifier>{d041ad39-35fd-4b54-869d-4f2266512301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level1%28Object%29">
+      <UniqueIdentifier>{ead9accf-c332-4e38-94ba-32e3734ed6a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngineWindow.h">
+      <Filter>Level0%28OS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineLevel.h">
+      <Filter>Level1%28Object%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineLevelManager.h">
+      <Filter>Level1%28Object%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineActor.h">
+      <Filter>Level1%28Object%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineImageFile.h">
+      <Filter>Level0%28OS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineImage.h">
+      <Filter>Level0%28OS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineInput.h">
+      <Filter>Level0%28OS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineCollision.h">
+      <Filter>Level1%28Object%29</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEnum.h">
+      <Filter>Level0%28OS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineRenderer.h">
+      <Filter>Level1%28Object%29</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineDebugExtension.h">
+      <Filter>Level0%28OS%29</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameEngineWindow.cpp">
+      <Filter>Level0%28OS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineLevel.cpp">
+      <Filter>Level1%28Object%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineLevelManager.cpp">
+      <Filter>Level1%28Object%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineActor.cpp">
+      <Filter>Level1%28Object%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineImageFile.cpp">
+      <Filter>Level0%28OS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineImage.cpp">
+      <Filter>Level0%28OS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineInput.cpp">
+      <Filter>Level0%28OS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineCollision.cpp">
+      <Filter>Level1%28Object%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineCollision_CheckFunc.cpp">
+      <Filter>Level1%28Object%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRenderer.cpp">
+      <Filter>Level1%28Object%29</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDebugExtension.cpp">
+      <Filter>Level0%28OS%29</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
