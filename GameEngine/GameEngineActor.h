@@ -31,7 +31,7 @@ private:
 	// private이 아니면 아무나 막 할수 있고
 	// 세팅된 레벨을 nullptr로 마음대로 바꿀수도 있다는 이야기가 됩니다.
 private:
-	void SetLevel(GameEngineLevel* _parentLevel) 
+	void SetLevel(GameEngineLevel* _parentLevel)
 	{
 		parentLevel_ = _parentLevel;
 	}
@@ -64,7 +64,7 @@ private:	// member Var
 	float4 pos_;
 
 public:
-	float4 GetPos() 
+	float4 GetPos()
 	{
 		return pos_;
 	}
@@ -72,7 +72,7 @@ public:
 	float4 GetCamEffectPos();
 
 public:
-	void SetPos(float4 _pos) 
+	void SetPos(float4 _pos)
 	{
 		pos_ = _pos;
 	}
@@ -82,7 +82,7 @@ public:
 		pos_ += _pos;
 	}
 
-protected:		
+protected:
 	GameEngineActor(); // default constructer 디폴트 생성자
 	~GameEngineActor() override; // default destructer 디폴트 소멸자
 
@@ -97,13 +97,13 @@ public:		//delete operator
 
 private:		//member Func
 	// 만들어진순간 한번 실행되는 함수
-	virtual void Start();
+	virtual void Start() = 0;
 
 	// 업데이트 함수.
-	virtual void UpdateBefore();
-	virtual void Update();
-	virtual void UpdateAfter();
-	virtual void Render();
+	virtual void UpdateBefore() = 0;;
+	virtual void Update() = 0;
+	virtual void UpdateAfter() = 0;
+	virtual void Render() = 0;
 	virtual void Collision();
 
 private:

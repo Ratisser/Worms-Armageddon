@@ -27,86 +27,30 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EndingLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="eCollisionGroup.h" />
     <ClInclude Include="FadeObject.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="LogicEnum.h" />
-    <ClInclude Include="Monster.h">
+    <ClInclude Include="TestActor.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayBack.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="SonicActor.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TitleBack.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TitleLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="TitleLogo.h">
+    <ClInclude Include="TestLevel.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EndingLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
+    <ClCompile Include="TestActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayBack.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="SonicActor.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TitleBack.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TitleLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="TitleLogo.cpp">
+    <ClCompile Include="TestLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -122,26 +66,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

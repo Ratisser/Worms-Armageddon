@@ -130,6 +130,7 @@ class GameEngineFSM
 			: parent_(_parent)
 			, StateStart(nullptr)
 			, StateUpdate(nullptr)
+			, StateTime(0.0f)
 		{
 
 		}

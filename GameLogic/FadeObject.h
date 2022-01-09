@@ -23,7 +23,7 @@ public:
 
 public:		// delete constructer
 	FadeObject(const FadeObject& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	FadeObject(FadeObject&& _other) noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
+	FadeObject(FadeObject&& _other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
 public:		//delete operator
 	FadeObject& operator=(const FadeObject& _other) = delete; // default Copy operator 디폴트 대입 연산자
@@ -40,6 +40,12 @@ private:		//member Func
 
 	StateInfo FadeInUpdate(StateInfo _Info);
 	StateInfo FadeOutUpdate(StateInfo _Info);
+
+
+	// GameEngineActor을(를) 통해 상속됨
+	virtual void UpdateBefore() override;
+
+	virtual void UpdateAfter() override;
 
 };
 

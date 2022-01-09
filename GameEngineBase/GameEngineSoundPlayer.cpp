@@ -18,14 +18,6 @@ GameEngineSoundPlayer::~GameEngineSoundPlayer()
 {
 }
 
-GameEngineSoundPlayer::GameEngineSoundPlayer(GameEngineSoundPlayer&& _other) noexcept
-	: playSoundFile_(_other.playSoundFile_)
-	, playChannel_(_other.playChannel_)
-{
-}
-
-//member Func
-
 bool GameEngineSoundPlayer::IsPlay() 
 {
 	bool Check = false;

@@ -1,5 +1,8 @@
 #pragma once
+
+#pragma warning(disable:26812)
 #include <FMOD/fmod.hpp>
+
 #include <list>
 #include <map>
 #include <string>

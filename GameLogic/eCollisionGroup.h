@@ -1,8 +1,9 @@
 #pragma once
 
-enum class ST2GROUP
+enum class eCollisionGroup
 {
 	MAP,
 	PLAYER,
 	MONSTER,
+	MAX
 };

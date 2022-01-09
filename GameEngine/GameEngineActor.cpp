@@ -53,36 +53,9 @@ GameEngineActor::~GameEngineActor()
 
 }
 
-GameEngineActor::GameEngineActor(GameEngineActor&& _other) noexcept
-{
-}
-
-//member Func
-
-void GameEngineActor::Start() 
-{
-
-}
-
 float4 GameEngineActor::GetCamEffectPos() 
 {
 	return GetPos() - (parentLevel_->GetCamPos() * cameraEffectScale_);
-}
-
-void GameEngineActor::UpdateBefore() 
-{
-}
-
-void GameEngineActor::Update() 
-{
-}
-
-void GameEngineActor::UpdateAfter() 
-{
-}
-
-void GameEngineActor::Render() 
-{
 }
 
 void GameEngineActor::Collision() 

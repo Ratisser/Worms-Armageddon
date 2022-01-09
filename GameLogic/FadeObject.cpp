@@ -8,17 +8,13 @@
 
 // constructer destructer
 FadeObject::FadeObject()
-	:FadeState(this)
+	: FadeState(this)
 	, Alpha_(255.0f)
+	, mainRender_(nullptr)
 {
 }
 
 FadeObject::~FadeObject()
-{
-}
-
-FadeObject::FadeObject(FadeObject&& _other) noexcept
-	:FadeState(this)
 {
 }
 
@@ -81,4 +77,12 @@ StateInfo FadeObject::FadeOutUpdate(StateInfo _Info)
 	Alpha_ -= 100.0f * GameEngineTime::GetInst().GetDeltaTime();
 	mainRender_->SetAlpha(static_cast<int>(Alpha_));
 	return "";
+}
+
+void FadeObject::UpdateBefore()
+{
+}
+
+void FadeObject::UpdateAfter()
+{
 }

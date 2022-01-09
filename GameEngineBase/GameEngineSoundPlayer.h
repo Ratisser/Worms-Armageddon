@@ -25,7 +25,7 @@ private:
 
 public:		// delete constructer
 	GameEngineSoundPlayer(const GameEngineSoundPlayer& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	GameEngineSoundPlayer(GameEngineSoundPlayer&& _other) noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
+	GameEngineSoundPlayer(GameEngineSoundPlayer&& _other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
 public:		//delete operator
 	GameEngineSoundPlayer& operator=(const GameEngineSoundPlayer& _other) = delete; // default Copy operator 디폴트 대입 연산자
