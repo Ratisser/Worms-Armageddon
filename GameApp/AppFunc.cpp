@@ -19,7 +19,7 @@ void AppResourcesInit()
 	// 이미지 로드
 	{
 		GameEngineDirectroy Dir = GameEngineDirectroy();
-		Dir.MoveParent("API38");
+		Dir.MoveParent("Worms-Armageddon");
 
 		if (false == Dir.MoveChild("\\Resources\\Image\\"))
 		{
@@ -28,25 +28,23 @@ void AppResourcesInit()
 		}
 
 		// 절대 경로
-		GameEngineImageFile* image = GameEngineImage::GetInst().LoadGameImage("test.bmp", Dir.PathToPlusFileName("test.bmp"));
-
-		image->Cut({ 128, 128 });
-
-		GameEngineImage::GetInst().LoadGameImage("BackGround.bmp", Dir.PathToPlusFileName("BackGround.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
 	}
 
 	// 사운드 로드
 	{
-		GameEngineDirectroy Dir = GameEngineDirectroy();
-		Dir.MoveParent("API38");
-
-		if (false == Dir.MoveChild("\\Resources\\Sound\\"))
-		{
-			GameEngineDebug::AssertFalse();
-			return;
-		}
-
-		GameEngineSound::GetInst().LoadSound("test.mp3", Dir.PathToPlusFileName("test.mp3"));
+		//GameEngineDirectroy Dir = GameEngineDirectroy();
+		//Dir.MoveParent("API38");
+		//
+		//if (false == Dir.MoveChild("\\Resources\\Sound\\"))
+		//{
+		//	GameEngineDebug::AssertFalse();
+		//	return;
+		//}
+		//
+		//GameEngineSound::GetInst().LoadSound("test.mp3", Dir.PathToPlusFileName("test.mp3"));
 
 	}
 }

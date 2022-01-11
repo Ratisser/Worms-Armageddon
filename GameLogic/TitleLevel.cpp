@@ -1,8 +1,7 @@
 #include "TitleLevel.h"
-
-
 #include "TitleImage.h"
 #include <GameEngineInput.h>
+#include <GameEngineLevelManager.h>
 TitleLevel::TitleLevel() // default constructer 디폴트 생성자
 {
 
@@ -33,6 +32,6 @@ void TitleLevel::LevelUpdate()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
-		// 씬 전환
+		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
 	}
 }

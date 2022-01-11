@@ -10,6 +10,15 @@
     <Filter Include="Enum">
       <UniqueIdentifier>{ca96aba4-b18b-422d-a995-b9a91e6eaf2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\TitleLevel">
+      <UniqueIdentifier>{9f1540b3-2861-473d-a6e6-871fbdf9430b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel">
+      <UniqueIdentifier>{c8e9a024-d862-498d-bfc8-9c7b9ab1bf43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel">
+      <UniqueIdentifier>{bfc3f820-fa47-4b86-8929-20c53951cbfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -34,7 +43,13 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="TitleImage.h">
-      <Filter>Actor</Filter>
+      <Filter>Actor\TitleLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTrain.h">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyImage.h">
+      <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +72,13 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="TitleImage.cpp">
-      <Filter>Actor</Filter>
+      <Filter>Actor\TitleLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTrain.cpp">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyImage.cpp">
+      <Filter>Actor\LobbyLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

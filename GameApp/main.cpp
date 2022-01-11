@@ -8,7 +8,10 @@
 #include <GameEngineLevelManager.h>
 #include <GameEngineActor.h>
 
-#include <TestLevel.h>
+#include <TitleLevel.h>
+#include <LobbyLevel.h>
+#include <PlayLevel.h>
+
 
 #include <GameEngineMath.h>
 #include <GameEngineInput.h>
@@ -18,7 +21,7 @@
 
 void UpdateFunc() 
 {
-	GameEngineDebugExtension::Update();
+//	GameEngineDebugExtension::Update();
 	GameEngineLevelManager::GetInst().Update();
 }
 
@@ -39,11 +42,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	// 각 씬을 생성하고 로딩을 완료한후
 	// 최초 만들어질 씬을 지정한다.
-	GameEngineLevelManager::GetInst().CreateLevel<TestLevel>("Title");
-
+	GameEngineLevelManager::GetInst().CreateLevel<TitleLevel>("TitleLevel");
+	GameEngineLevelManager::GetInst().CreateLevel<LobbyLevel>("LobbyLevel");
+	GameEngineLevelManager::GetInst().CreateLevel<PlayLevel>("PlayLevel");
 
 	// 최초 씬 지정.
-	GameEngineLevelManager::GetInst().ChangeLevel("Test");
+	GameEngineLevelManager::GetInst().ChangeLevel("TitleLevel");
 
 	GameEngineWindow::GetInst().Loop(UpdateFunc);
 

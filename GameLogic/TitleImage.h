@@ -1,11 +1,12 @@
 #pragma once
-
+#include <GameEngineActor.h>
 // 분류 : 
 // 용도 : 
 // 설명 : 
-class TitleImage
+class TitleImage : public GameEngineActor
 {
 private:	// member Var
+	GameEngineRenderer* mainSpriteRender_;
 
 public:
 	TitleImage(); // default constructer 디폴트 생성자
@@ -20,5 +21,10 @@ private:		//delete operator
 	TitleImage& operator=(const TitleImage&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:
+	virtual void Start() override;
+	virtual void UpdateBefore() override;
+	virtual void Update() override;
+	virtual void UpdateAfter() override;
+	virtual void Render() override;
 };
 

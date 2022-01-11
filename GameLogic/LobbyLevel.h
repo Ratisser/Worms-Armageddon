@@ -1,9 +1,9 @@
 #pragma once
-
+#include <GameEngineLevel.h>
 // 분류 : 
 // 용도 : 
 // 설명 : 
-class LobbyLevel
+class LobbyLevel : public GameEngineLevel
 {
 private:	// member Var
 
@@ -20,5 +20,7 @@ private:		//delete operator
 	LobbyLevel& operator=(const LobbyLevel&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:
+	void Loading() override;
+	void LevelUpdate() override;
 };
 
