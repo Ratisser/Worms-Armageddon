@@ -172,6 +172,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineImage.cpp" />
     <ClCompile Include="GameEngineImageFile.cpp">
       <SubType>
       </SubType>
@@ -181,10 +182,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineRenderer.cpp" />
-    <ClCompile Include="GameEngineWindow.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GameEngineLevel.cpp">
       <SubType>
       </SubType>
@@ -193,14 +190,17 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineImage.cpp" />
+    <ClCompile Include="GameEngineWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EngineEnum.h" />
     <ClInclude Include="GameEngineActor.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineEnum.h" />
     <ClInclude Include="GameEngineCollision.h">
       <SubType>
       </SubType>
@@ -209,6 +209,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineImage.h" />
     <ClInclude Include="GameEngineImageFile.h">
       <SubType>
       </SubType>
@@ -218,10 +219,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineRenderer.h" />
-    <ClInclude Include="GameEngineWindow.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GameEngineLevel.h">
       <SubType>
       </SubType>
@@ -230,7 +227,10 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineImage.h" />
+    <ClInclude Include="GameEngineWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
