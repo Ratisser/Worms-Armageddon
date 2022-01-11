@@ -64,10 +64,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Worm.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -103,10 +99,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Worm.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -31,12 +31,6 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
-
-
-		Dir.MoveParent("Worms-Armageddon");
-		Dir.MoveChild("\\Resources\\Image\\Worms");
-		GameEngineImageFile* Image = GameEngineImage::GetInst().LoadGameImage("wairlnk", Dir.PathToPlusFileName("wairlnk.bmp"));
-		Image->Cut({ 60, 60 });
 	}
 
 	// 사운드 로드
