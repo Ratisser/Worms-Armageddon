@@ -91,6 +91,7 @@ public:		//member Func
 	bool Create(HDC _dc, const float4& _size);
 	bool Load(std::string _Path);
 
+	void ClearImage();
 	// Rendering Copy Func
 
 private:
