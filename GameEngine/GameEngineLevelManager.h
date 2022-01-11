@@ -37,6 +37,12 @@ private:
 	GameEngineLevel* nextLevel_;
 
 public:
+	GameEngineLevel* GetCurLevel()
+	{
+		return curLevel_;
+	}
+
+public:
 	void Update();
 
 private:		

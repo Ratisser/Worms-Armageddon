@@ -38,7 +38,7 @@ void AppResourcesInit()
 		GameEngineImageFile* Image = GameEngineImage::GetInst().LoadGameImage("wairlnk", Dir.PathToPlusFileName("wairlnk.bmp"));
 		Image->Cut({ 60, 60 });
 		LoadingImageInit();
-
+		UIImageInit();
 	}
 
 	// 사운드 로드
@@ -83,4 +83,18 @@ void LoadingImageInit()
 	}
 	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("LoadingSprites", Dir.PathToPlusFileName("LoadingSprites.bmp"));
 	loadingImage->Cut({ 160,160 });
+}
+
+void UIImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("WeaponSheet", Dir.PathToPlusFileName("weaponSheet.bmp"));
 }

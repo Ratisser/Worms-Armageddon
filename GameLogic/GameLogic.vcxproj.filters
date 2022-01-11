@@ -22,6 +22,9 @@
     <Filter Include="Actor\LoadingLevel">
       <UniqueIdentifier>{d6236c91-4435-4f64-8223-421c3e519f68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\UI">
+      <UniqueIdentifier>{ccefebcf-b231-4c5d-83e0-40c3da3a58fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="LoadingImage.h">
       <Filter>Actor\LoadingLevel</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponSheet.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -100,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="LoadingImage.cpp">
       <Filter>Actor\LoadingLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSheet.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

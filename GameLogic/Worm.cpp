@@ -3,6 +3,8 @@
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
 #include <GameEngineTime.h>
+#include <GameEngineLevelManager.h>
+#include <GameEngineLevel.h>
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -43,6 +45,11 @@ void Worm::Start()
 	{
 		GameEngineInput::GetInst().CreateKey("Right", VK_RIGHT);
 	}
+
+	if (false == GameEngineInput::GetInst().IsKey("WeaponSheet"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponSheet", VK_RBUTTON);
+	}
 }
 
 void Worm::UpdateBefore()
@@ -71,6 +78,13 @@ void Worm::Update()
 	else if (true == GameEngineInput::GetInst().IsPress("Down"))
 	{
 		SetMove(float4::DOWN * MOVE_SPEED * deltaTime);
+	}
+
+
+	// 아이템창 활성화/비활성화
+	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
+	{
+
 	}
 }
 

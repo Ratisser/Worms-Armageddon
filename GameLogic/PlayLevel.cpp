@@ -1,14 +1,13 @@
 #include <GameEngineLevelManager.h>
+#include <GameEngineLevel.h>
 #include <GameEngineInput.h>
+#include <GameEngineWindow.h>
 
 #include "MapTrain.h"
 #include "PlayLevel.h"
 #include "Worm.h"
+#include "WeaponSheet.h"
 
-
-#include <GameEngineLevelManager.h>
-#include <GameEngineInput.h>
-#include <GameEngineLevel.h>
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 {
 
@@ -51,6 +50,11 @@ void PlayLevel::Loading()
 	}
 
 	CreateActor<Worm>();
+
+	// 아이템창 생성
+	float4 Resolution = GameEngineWindow::GetInst().GetSize();
+	GameEngineActor* NewWeaponSheet = CreateActor<WeaponSheet>();
+	NewWeaponSheet->SetPos({ Resolution.x  - 100.f, Resolution.y - 240.f, Resolution.z, Resolution.w});
 }
 
 void PlayLevel::LevelUpdate()
