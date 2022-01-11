@@ -54,6 +54,9 @@
     <ClInclude Include="LobbyImage.h">
       <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClInclude>
     <ClInclude Include="LoadingLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="LobbyImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>Actor\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="LoadingLevel.cpp">
       <Filter>Level</Filter>

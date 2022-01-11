@@ -1,5 +1,11 @@
+#include <GameEngineLevelManager.h>
+#include <GameEngineInput.h>
+
 #include "MapTrain.h"
 #include "PlayLevel.h"
+#include "Worm.h"
+
+
 #include <GameEngineLevelManager.h>
 #include <GameEngineInput.h>
 #include <GameEngineLevel.h>
@@ -43,6 +49,8 @@ void PlayLevel::Loading()
 	{
 		GameEngineInput::GetInst().CreateKey("Right", 'd');
 	}
+
+	CreateActor<Worm>();
 }
 
 void PlayLevel::LevelUpdate()
