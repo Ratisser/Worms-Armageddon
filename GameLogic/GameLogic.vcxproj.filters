@@ -19,6 +19,9 @@
     <Filter Include="Actor\PlayLevel">
       <UniqueIdentifier>{bfc3f820-fa47-4b86-8929-20c53951cbfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LoadingLevel">
+      <UniqueIdentifier>{d6236c91-4435-4f64-8223-421c3e519f68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -51,6 +54,12 @@
     <ClInclude Include="LobbyImage.h">
       <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
+    <ClInclude Include="LoadingLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingImage.h">
+      <Filter>Actor\LoadingLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -79,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="LobbyImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingImage.cpp">
+      <Filter>Actor\LoadingLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
