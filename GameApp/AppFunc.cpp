@@ -96,5 +96,5 @@ void UIImageInit()
 		return;
 	}
 
-	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("WeaponSheet", Dir.PathToPlusFileName("weaponSheet.bmp"));
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("WeaponSheet", Dir.PathToPlusFileName("WeaponSheet_Temp.bmp"));
 }
