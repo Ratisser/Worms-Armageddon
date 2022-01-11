@@ -165,10 +165,10 @@ protected:
 	// 지속적으로 무언가를 실행해야 한다면
 	// ex) 4초마다 몬스터를 생성해라.
 	// ex) 점수가 x점 이라면.
-
 	virtual void LevelUpdateBefore();
 	virtual void LevelUpdateAfter();
 	virtual void LevelUpdate();
+
 
 
 private:		//member Func

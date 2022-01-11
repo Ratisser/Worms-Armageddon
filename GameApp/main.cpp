@@ -34,13 +34,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 윈도우 생성 및 기본 윈도우 창에서 게임을 돌릴 준비를 한다.
 	GameEngineWindow::GetInst().CreateMainWindowClass(hInstance, "GameWindow");
 	GameEngineWindow::GetInst().CreateMainWindow("MyWindow", { 1280, 720 }, {600, 100});
-	GameEngineDebugExtension::DebugWindowOpen({ 500, 500 }, { 0, 100 });
 
 	AppResourcesInit();
 
 	// 각 씬을 생성하고 로딩을 완료한후
 	// 최초 만들어질 씬을 지정한다.
-	GameEngineLevelManager::GetInst().CreateLevel<TestLevel>("Test");
+	GameEngineLevelManager::GetInst().CreateLevel<TestLevel>("Title");
+
 
 	// 최초 씬 지정.
 	GameEngineLevelManager::GetInst().ChangeLevel("Test");

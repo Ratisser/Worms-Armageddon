@@ -24,6 +24,18 @@
     <ClInclude Include="eCollisionGroup.h">
       <Filter>Enum</Filter>
     </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleImage.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -33,6 +45,18 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="TestActor.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleImage.cpp">
       <Filter>Actor</Filter>
     </ClCompile>
   </ItemGroup>
