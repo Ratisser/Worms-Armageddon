@@ -1,7 +1,11 @@
-#include "MapTrain.h"
-#include "PlayLevel.h"
 #include <GameEngineLevelManager.h>
 #include <GameEngineInput.h>
+
+#include "MapTrain.h"
+#include "PlayLevel.h"
+#include "Worm.h"
+
+
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 {
 
@@ -24,6 +28,7 @@ void PlayLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
 	}
 	CreateActor<MapTrain>();
+	CreateActor<Worm>();
 }
 
 void PlayLevel::LevelUpdate()

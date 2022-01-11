@@ -51,6 +51,9 @@
     <ClInclude Include="LobbyImage.h">
       <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="LobbyImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>Actor\PlayLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
