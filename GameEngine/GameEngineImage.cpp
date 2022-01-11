@@ -49,6 +49,11 @@ void GameEngineImage::DoubleBuffering()
 	windowimage_->BitCopy(backBufferImage_, float4::ZERO, GameEngineWindow::GetInst().GetSize());
 }
 
+void GameEngineImage::ClearBackBuffer()
+{
+	backBufferImage_->ClearImage();
+}
+
 GameEngineImageFile* GameEngineImage::GetBackBufferImage()
 {
 	return backBufferImage_;

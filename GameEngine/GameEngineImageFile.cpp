@@ -137,6 +137,11 @@ bool GameEngineImageFile::Load(std::string _Path)
 	return true;
 }
 
+void GameEngineImageFile::ClearImage()
+{
+	PatBlt(imagedc_, 0, 0, imageinfo_.bmWidth, imageinfo_.bmHeight, BLACKNESS);
+}
+
 void GameEngineImageFile::BitMapImageInfoCheck() 
 {
 	if (nullptr == imagedc_)

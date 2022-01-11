@@ -119,6 +119,7 @@ void GameEngineLevelManager::Update()
 	curLevel_->LevelUpdateAfter();
 	curLevel_->UpdateAfter();
 
+	GameEngineImage::GetInst().ClearBackBuffer();
 	curLevel_->Render();
 	GameEngineImage::GetInst().DoubleBuffering();
 

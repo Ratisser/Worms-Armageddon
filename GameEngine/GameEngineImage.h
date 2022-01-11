@@ -44,6 +44,7 @@ private:
 	// 모든 랜더링을 할때
 	void InitializeWindowImage(HDC _windowbackgroundDc);
 	void DoubleBuffering();
+	void ClearBackBuffer();
 
 public:
 	GameEngineImageFile* GetBackBufferImage();
