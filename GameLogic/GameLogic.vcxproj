@@ -32,6 +32,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LoadingImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LoadingLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LobbyImage.h">
       <SubType>
       </SubType>
@@ -67,6 +75,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LoadingImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LoadingLevel.cpp">
       <SubType>
       </SubType>
     </ClCompile>

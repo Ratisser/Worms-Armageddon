@@ -31,6 +31,8 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
+		LoadingImageInit();
+
 	}
 
 	// 사운드 로드
@@ -60,4 +62,19 @@ void AppRelease()
 	GameEngineInput::Destroy();
 	GameEngineWindow::Destroy();
 	GameEngineTime::Destroy();
+}
+
+
+void LoadingImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("LoadingSprites", Dir.PathToPlusFileName("LoadingSprites.bmp"));
+	loadingImage->Cut({ 160,160 });
 }

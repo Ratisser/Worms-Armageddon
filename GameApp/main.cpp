@@ -10,6 +10,7 @@
 
 #include <TitleLevel.h>
 #include <LobbyLevel.h>
+#include <LoadingLevel.h>
 #include <PlayLevel.h>
 
 
@@ -44,6 +45,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 최초 만들어질 씬을 지정한다.
 	GameEngineLevelManager::GetInst().CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<LobbyLevel>("LobbyLevel");
+	GameEngineLevelManager::GetInst().CreateLevel<LoadingLevel>("LoadingLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<PlayLevel>("PlayLevel");
 
 	// 최초 씬 지정.
