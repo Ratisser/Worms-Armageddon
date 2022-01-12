@@ -36,7 +36,6 @@ void AppResourcesInit()
 
 		ResourceInitPJW();
 		CharactorImageInit();
-		LoadingImageInit();
 		UIImageInit();
 	}
 
