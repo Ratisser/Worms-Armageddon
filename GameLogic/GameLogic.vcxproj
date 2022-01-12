@@ -27,6 +27,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackgroundScatter.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BottomFlag.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BottomHealthBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BottomNameTag.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="eCollisionGroup.h" />
     <ClInclude Include="FadeObject.h">
       <SubType>
@@ -87,6 +103,22 @@
     <ClInclude Include="eCollisionCheckColor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackgroundScatter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BottomFlag.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BottomHealthBar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BottomNameTag.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <SubType>
       </SubType>

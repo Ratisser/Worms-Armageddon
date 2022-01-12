@@ -33,6 +33,8 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
 
 
+
+		ResourceInitPJW();
 		CharactorImageInit();
 		LoadingImageInit();
 		UIImageInit();
@@ -68,7 +70,7 @@ void AppRelease()
 }
 
 
-void LoadingImageInit()
+void ResourceInitPJW()
 {
 	GameEngineDirectroy Dir = GameEngineDirectroy();
 	Dir.MoveParent("Worms-Armageddon");
@@ -80,6 +82,27 @@ void LoadingImageInit()
 	}
 	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("LoadingSprites", Dir.PathToPlusFileName("LoadingSprites.bmp"));
 	loadingImage->Cut({ 160,160 });
+
+	if (false == Dir.MoveChild("\\Misc\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
+
+	Dir.MoveParent("Image");
+
+	if (false == Dir.MoveChild("\\UI\\HPbar\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+	GameEngineImage::GetInst().LoadGameImage("HPbar", Dir.PathToPlusFileName("HPbar.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomNameTag", Dir.PathToPlusFileName("BottomNameTag.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomFlagRUS", Dir.PathToPlusFileName("BottomFlagRUS.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarR", Dir.PathToPlusFileName("BottomHPbarR.bmp"));
+
 }
 
 void UIImageInit()

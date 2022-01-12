@@ -25,6 +25,9 @@
     <Filter Include="Actor\PlayLevel\UI">
       <UniqueIdentifier>{ccefebcf-b231-4c5d-83e0-40c3da3a58fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\Background">
+      <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -75,6 +78,18 @@
     <ClInclude Include="eCollisionCheckColor.h">
       <Filter>Enum</Filter>
     </ClInclude>
+    <ClInclude Include="BackgroundScatter.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomHealthBar.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomFlag.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomNameTag.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -117,6 +132,18 @@
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIController.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BackgroundScatter.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomHealthBar.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomFlag.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomNameTag.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
   </ItemGroup>

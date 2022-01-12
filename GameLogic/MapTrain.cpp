@@ -5,7 +5,7 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	:mainSpriteRender_(nullptr)
 {
 	this->SetPos(GameEngineWindow::GetInst().GetSize().halffloat4());
-	SetRenderOrder(1);
+	SetRenderOrder(2);
 }
 
 MapTrain::~MapTrain() // default destructer 디폴트 소멸자

@@ -8,6 +8,12 @@
 #include "Worm.h"
 #include "UIController.h"
 
+#include "BottomHealthBar.h"
+#include "BottomNameTag.h"
+#include "BottomFlag.h"
+
+#include "BackgroundScatter.h"
+
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 {
 
@@ -50,6 +56,29 @@ void PlayLevel::Loading()
 	}
 
 	CreateActor<Worm>();
+
+	// 아이템창 생성
+	float4 Resolution = GameEngineWindow::GetInst().GetSize();
+	GameEngineActor* NewWeaponSheet = CreateActor<WeaponSheet>();
+	NewWeaponSheet->SetPos({ Resolution.x  - 100.f, Resolution.y - 240.f, Resolution.z, Resolution.w});
+
+	for (int i = 0; i < 39; i++)
+	{
+		// 배경 바람에 흩날리는 엑터 생성(추후 자료구조로 관리 예정)
+		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
+	}
+
+	{
+		// 플레이화면 하단 체력바
+		BottomNameTag* p1NameTag = CreateActor<BottomNameTag>();
+		p1NameTag->SetPos({ 555, 700 });
+
+		BottomFlag* p1Flag = CreateActor<BottomFlag>();
+		p1Flag->SetPos({ 610, 700 });
+
+		BottomHealthBar* p1Health = CreateActor<BottomHealthBar>();
+		p1Health->SetPos({ 672, 700 });
+	}
 
 	// UI관리자생성
 	CreateActor<UIController>();
