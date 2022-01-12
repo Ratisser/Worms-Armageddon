@@ -72,6 +72,9 @@
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
+    <ClInclude Include="eCollisionCheckColor.h">
+      <Filter>Enum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">

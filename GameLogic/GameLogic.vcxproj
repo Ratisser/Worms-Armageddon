@@ -84,6 +84,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="eCollisionCheckColor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
