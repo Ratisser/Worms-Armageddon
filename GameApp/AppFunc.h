@@ -2,8 +2,6 @@
 #include <string>
 #include <GameEngineImageFile.h>
 
-fasdfsdafsadfasdfasdfasd
-
 void AppRelease();
 void AppResourcesInit();
 
