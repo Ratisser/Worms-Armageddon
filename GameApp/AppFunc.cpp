@@ -33,10 +33,7 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
 
 
-		Dir.MoveParent("Worms-Armageddon");
-		Dir.MoveChild("\\Resources\\Image\\Worms");
-		GameEngineImageFile* Image = GameEngineImage::GetInst().LoadGameImage("wairlnk", Dir.PathToPlusFileName("wairlnk.bmp"));
-		Image->Cut({ 60, 60 });
+		CharactorImageInit();
 		LoadingImageInit();
 		UIImageInit();
 	}
@@ -97,4 +94,56 @@ void UIImageInit()
 	}
 
 	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("WeaponSheet", Dir.PathToPlusFileName("WeaponSheet_Temp.bmp"));
+}
+
+void CharactorImageInit()
+{
+	GameEngineDirectroy dir = GameEngineDirectroy();
+	dir.MoveParent("Worms-Armageddon");
+	dir.MoveChild("\\Resources\\Image\\Worms");
+
+	GameEngineImageFile* image = nullptr; 
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("walkLeft.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("walkRight.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("jumpReadyLeft.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("jumpReadyRight.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyUpLeft.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyUpRight.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyDownLeft.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyDownRight.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyLinkLeft.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyLinkRight.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleLeft.bmp"));
+	image->Cut({ 60, 60 });
+
+	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleRight.bmp"));
+	image->Cut({ 60, 60 });
+}
+
+GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
+{
+	size_t fileNameStartIndex = _path.rfind("\\") + 1;
+	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
+
+	return GameEngineImage::GetInst().LoadGameImage(fileName, _path);
 }
