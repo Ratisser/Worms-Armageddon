@@ -1,4 +1,5 @@
 #include "Worm.h"
+#include "WeaponSheet.h"
 
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
@@ -84,7 +85,7 @@ void Worm::Update()
 	// 아이템창 활성화/비활성화
 	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
 	{
-
+		WeaponSheet::WeaponSheetActive();
 	}
 }
 

@@ -282,3 +282,15 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
     }
 }
 
+float4 GameEngineWindow::GetMousePos()
+{
+    POINT P;
+
+    // 모니터에서의 마우스 위치
+    GetCursorPos(&P);
+
+    // m_WindowHWnd 윈도우 기준으로
+    ScreenToClient(windowhandle_, &P);
+
+    return { (float)P.x, (float)P.y };
+}

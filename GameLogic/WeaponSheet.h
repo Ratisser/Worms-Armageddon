@@ -1,14 +1,53 @@
 #pragma once
 #include <GameEngineActor.h>
 
-// 분류 : 
-// 용도 : 
-// 설명 : 
+
+
 class GameEngineRenderer;
+class GameEngineCollision;
 class WeaponSheet : public GameEngineActor
 {
+private:
+	static bool Active_;
+
+public:
+	static bool IsActive()
+	{
+		if (Active_ == true)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	static void WeaponSheetActive()
+	{
+		if (false == Active_)
+		{
+			Active_ = true;
+		}
+		else
+		{
+			Active_ = false;
+		}
+	}
+
 private:	// member Var
-	GameEngineRenderer* MainRenderer_;
+	GameEngineRenderer* MainRenderer_;		// WeaponSheet(Temp) 렌더러
+	GameEngineCollision* MainCollision_;	// WeaponSheet(Temp) 충돌체
+	
+private: // 마우스충돌 관련
+	float4 MousePos_;
+
+private:
+	float4 ActiveTargetPos_;
+	float4 DisableTargetPos_;
+
+private:
+	bool Moving_;
+	float MovingSpeed;
+	float4 MovePos_;
 
 public:
 	WeaponSheet(); // default constructer 디폴트 생성자

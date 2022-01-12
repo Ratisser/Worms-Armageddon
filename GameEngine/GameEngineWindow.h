@@ -53,6 +53,7 @@ private:
 
 	float4 size_;
 	float4 pos_;
+	float4 mousepos_;
 
 	// 이녀석도 알고 있도록 하겠습니다.
 	GameEngineImageFile* windowimage_;
@@ -76,6 +77,8 @@ public:
 	float4 GetPos() {
 		return pos_;
 	}
+
+	float4 GetMousePos();
 
 public:
 	// 삭제에 대한건 받아간쪽이 알아서 해라.

@@ -54,7 +54,7 @@ void PlayLevel::Loading()
 	// 아이템창 생성
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
 	GameEngineActor* NewWeaponSheet = CreateActor<WeaponSheet>();
-	NewWeaponSheet->SetPos({ Resolution.x  - 100.f, Resolution.y - 240.f, Resolution.z, Resolution.w});
+	NewWeaponSheet->SetPos({ Resolution.x + 100.f, Resolution.y - 240.f, Resolution.z, Resolution.w}); // 화면밖에 생성
 }
 
 void PlayLevel::LevelUpdate()
