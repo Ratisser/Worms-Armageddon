@@ -18,3 +18,7 @@ namespace RS
 	GameEngineImageFile* LoadImageFromFile(const std::string& path);
 }
 void CharactorImageInit();
+
+void MapWaterImageInit();
+
+void LoadSoundInit();

@@ -37,6 +37,7 @@ void AppResourcesInit()
 		ResourceInitPJW();
 		CharactorImageInit();
 		UIImageInit();
+		MapWaterImageInit();
 	}
 
 	// 사운드 로드
@@ -168,4 +169,77 @@ GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
 	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
 
 	return GameEngineImage::GetInst().LoadGameImage(fileName, _path);
+}
+
+void MapWaterImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image\\Map\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("Water_sprite", Dir.PathToPlusFileName("Water_sprite.bmp"));
+	loadingImage->Cut({ 2560,100 });
+
+	GameEngineImage::GetInst().
+		LoadGameImage("Under_Water", Dir.PathToPlusFileName("Under_Water.bmp"));
+}
+
+void LoadSoundInit()
+{
+	// 사운드 로드
+	{
+		GameEngineDirectroy Dir = GameEngineDirectroy();
+		Dir.MoveParent("Worms-Armageddon");
+
+		if (false == Dir.MoveChild("\\Resources\\Sound\\BGM"))
+		{
+			GameEngineDebug::AssertFalse();
+			return;
+		}
+
+		GameEngineSound::GetInst().LoadSound("01_generic", Dir.PathToPlusFileName("ingame_01_generic.wav"));
+		GameEngineSound::GetInst().LoadSound("02_cavern", Dir.PathToPlusFileName("ingame_02_cavern.wav"));
+		GameEngineSound::GetInst().LoadSound("03_jungle", Dir.PathToPlusFileName("ingame_03_jungle.wav"));
+		GameEngineSound::GetInst().LoadSound("04_battlezone", Dir.PathToPlusFileName("ingame_04_battlezone.wav"));
+		GameEngineSound::GetInst().LoadSound("05_forest", Dir.PathToPlusFileName("ingame_05_forest.wav"));
+		GameEngineSound::GetInst().LoadSound("06_weird_alien_plan", Dir.PathToPlusFileName("ingame_06_weird_alien_plan.wav"));
+		GameEngineSound::GetInst().LoadSound("07_outerspace", Dir.PathToPlusFileName("ingame_07_outerspace.wav"));
+		GameEngineSound::GetInst().LoadSound("08_desert", Dir.PathToPlusFileName("ingame_08_desert.wav"));
+		GameEngineSound::GetInst().LoadSound("09_hellest", Dir.PathToPlusFileName("ingame_09_hellest.wav"));
+		GameEngineSound::GetInst().LoadSound("10_mech_workshop", Dir.PathToPlusFileName("ingame_10_mech_workshop.wav"));
+		GameEngineSound::GetInst().LoadSound("11_rain_surf", Dir.PathToPlusFileName("ingame_11_rain_surf.wav"));
+		GameEngineSound::GetInst().LoadSound("lose", Dir.PathToPlusFileName("new_lose.wav"));
+		GameEngineSound::GetInst().LoadSound("win_bronze", Dir.PathToPlusFileName("new_win_bronze.wav"));
+		GameEngineSound::GetInst().LoadSound("win_gold", Dir.PathToPlusFileName("new_win_gold.wav"));
+		GameEngineSound::GetInst().LoadSound("win_gold_special", Dir.PathToPlusFileName("new_win_gold_special.wav"));
+		GameEngineSound::GetInst().LoadSound("win_silver", Dir.PathToPlusFileName("new_win_silver.wav"));
+		GameEngineSound::GetInst().LoadSound("Stats", Dir.PathToPlusFileName("Stats.wav"));
+		GameEngineSound::GetInst().LoadSound("suddendeath1_loop", Dir.PathToPlusFileName("suddendeath1_loop.wav"));
+		GameEngineSound::GetInst().LoadSound("suddendeath2_loop", Dir.PathToPlusFileName("suddendeath2_loop.wav"));
+		GameEngineSound::GetInst().LoadSound("title", Dir.PathToPlusFileName("title.wav"));
+
+		//if (false == Dir.MoveChild("\\Resources\\Sound\\Effects\\"))
+		//{
+		//	GameEngineDebug::AssertFalse();
+		//	return;
+		//}
+
+		//if (false == Dir.MoveChild("\\Resources\\Sound\\BGM\\"))
+		//{
+		//	GameEngineDebug::AssertFalse();
+		//	return;
+		//}
+
+		//if (false == Dir.MoveChild("\\Resources\\Sound\\English\\"))
+		//{
+		//	GameEngineDebug::AssertFalse();
+		//	return;
+		//}
+	}
 }

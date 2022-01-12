@@ -28,6 +28,9 @@
     <Filter Include="Actor\PlayLevel\Background">
       <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\WaterLevel">
+      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -90,6 +93,15 @@
     <ClInclude Include="BottomNameTag.h">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UnderWater.h">
+      <Filter>Actor\WaterLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterLevel.h">
+      <Filter>Actor\WaterLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterWave.h">
+      <Filter>Actor\WaterLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -145,6 +157,15 @@
     </ClCompile>
     <ClCompile Include="BottomNameTag.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UnderWater.cpp">
+      <Filter>Actor\WaterLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterLevel.cpp">
+      <Filter>Actor\WaterLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterWave.cpp">
+      <Filter>Actor\WaterLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

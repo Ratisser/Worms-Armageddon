@@ -12,6 +12,10 @@
 #include "BottomNameTag.h"
 #include "BottomFlag.h"
 
+#include "WaterWave.h"
+#include "UnderWater.h"
+
+
 #include "BackgroundScatter.h"
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
@@ -77,6 +81,7 @@ void PlayLevel::Loading()
 
 	// UI관리자생성
 	CreateActor<UIController>();
+	MakeWaterLevel();
 }
 
 void PlayLevel::LevelUpdate()
@@ -102,4 +107,78 @@ void PlayLevel::LevelUpdate()
 	{
 		GameEngineLevel::SetCamMove(float4::RIGHT);
 	}
+}
+
+void PlayLevel::MakeWaterLevel() // 이현
+{
+	WaterLevel_ = CreateActor<WaterLevel>("WaterLevel");
+
+	WaterWave* WaterWave1 = CreateActor<WaterWave>("WaterWave1");
+	WaterWave* WaterWave2 = CreateActor<WaterWave>("WaterWave2");
+	WaterWave* WaterWave3 = CreateActor<WaterWave>("WaterWave3");
+	WaterWave* WaterWave4 = CreateActor<WaterWave>("WaterWave4");
+	WaterWave* WaterWave5 = CreateActor<WaterWave>("WaterWave5");
+	UnderWater* UnderWater1 = CreateActor<UnderWater>("UnderWater");
+
+	UnderWater1->SetPos(float4(0.f, 1580,0.f));
+
+	WaterWave1->SetRenderOrder(0);
+	WaterWave1->SetPos(float4(0.f, 900, 0.f));
+
+	WaterWave2->SetRenderOrder(0);
+	WaterWave2->SetPos(float4(0.f, 930, 0.f));
+	WaterWave2->ChangeAnimationframe(2);
+
+	WaterWave3->SetRenderOrder(1);
+	WaterWave3->SetPos(float4(0.f, 960, 0.f));
+	WaterWave3->ChangeAnimationframe(4);
+
+	WaterWave4->SetRenderOrder(1);
+	WaterWave4->SetPos(float4(0.f, 990, 0.f));
+	WaterWave4->ChangeAnimationframe(6);
+
+	WaterWave5->SetRenderOrder(1);
+	WaterWave5->SetPos(float4(0.f, 1020, 0.f));
+	WaterWave5->ChangeAnimationframe(8);
+
+
+	WaterWave* WaterWave6 = CreateActor<WaterWave>("WaterWave6");
+	WaterWave* WaterWave7 = CreateActor<WaterWave>("WaterWave7");
+	WaterWave* WaterWave8 = CreateActor<WaterWave>("WaterWave8");
+	WaterWave* WaterWave9 = CreateActor<WaterWave>("WaterWave9");
+	WaterWave* WaterWave10 = CreateActor<WaterWave>("WaterWave10");
+	UnderWater* UnderWater2 = CreateActor<UnderWater>("UnderWater2");
+	UnderWater2->SetPos(float4(2560.f, 1580, 0.f));
+
+	WaterWave6->SetRenderOrder(0);
+	WaterWave6->SetPos(float4(2560.f, 900, 0.f));
+
+	WaterWave7->SetRenderOrder(0);
+	WaterWave7->SetPos(float4(2560.f, 930, 0.f));
+	WaterWave7->ChangeAnimationframe(2);
+
+	WaterWave8->SetRenderOrder(1);
+	WaterWave8->SetPos(float4(2560.f, 960, 0.f));
+	WaterWave8->ChangeAnimationframe(4);
+
+	WaterWave9->SetRenderOrder(1);
+	WaterWave9->SetPos(float4(2560.f, 990, 0.f));
+	WaterWave9->ChangeAnimationframe(6);
+
+	WaterWave10->SetRenderOrder(1);
+	WaterWave10->SetPos(float4(2560.f, 1020,0.f));
+	WaterWave10->ChangeAnimationframe(8);
+
+	WaterLevel_->Waterlist.push_back(WaterWave1);
+	WaterLevel_->Waterlist.push_back(WaterWave2);
+	WaterLevel_->Waterlist.push_back(WaterWave3);
+	WaterLevel_->Waterlist.push_back(WaterWave4);
+	WaterLevel_->Waterlist.push_back(WaterWave5);
+	WaterLevel_->Waterlist.push_back(WaterWave6);
+	WaterLevel_->Waterlist.push_back(WaterWave7);
+	WaterLevel_->Waterlist.push_back(WaterWave8);
+	WaterLevel_->Waterlist.push_back(WaterWave9);
+	WaterLevel_->Waterlist.push_back(WaterWave10);
+	WaterLevel_->Waterlist.push_back(UnderWater1);
+	WaterLevel_->Waterlist.push_back(UnderWater2);
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineLevel.h>
+#include "WaterLevel.h"
 // 분류 : 
 // 용도 : 
 // 설명 : 
@@ -22,5 +23,10 @@ private:		//delete operator
 public:
 	void Loading() override;
 	void LevelUpdate() override;
+
+	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
+
+public:
+	void MakeWaterLevel();
 };
 

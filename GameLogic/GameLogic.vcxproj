@@ -92,6 +92,9 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="UnderWater.h" />
+    <ClInclude Include="WaterLevel.h" />
+    <ClInclude Include="WaterWave.h" />
     <ClInclude Include="WeaponSheet.h">
       <SubType>
       </SubType>
@@ -167,6 +170,9 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="UnderWater.cpp" />
+    <ClCompile Include="WaterLevel.cpp" />
+    <ClCompile Include="WaterWave.cpp" />
     <ClCompile Include="WeaponSheet.cpp">
       <SubType>
       </SubType>
