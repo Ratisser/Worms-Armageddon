@@ -6,7 +6,7 @@
 #include "MapTrain.h"
 #include "PlayLevel.h"
 #include "Worm.h"
-#include "WeaponSheet.h"
+#include "UIController.h"
 
 PlayLevel::PlayLevel() // default constructer 叼弃飘 积己磊
 {
@@ -51,10 +51,8 @@ void PlayLevel::Loading()
 
 	CreateActor<Worm>();
 
-	// 酒捞袍芒 积己
-	float4 Resolution = GameEngineWindow::GetInst().GetSize();
-	GameEngineActor* NewWeaponSheet = CreateActor<WeaponSheet>();
-	NewWeaponSheet->SetPos({ Resolution.x + 100.f, Resolution.y - 240.f, Resolution.z, Resolution.w}); // 拳搁观俊 积己
+	// UI包府磊积己
+	CreateActor<UIController>();
 }
 
 void PlayLevel::LevelUpdate()

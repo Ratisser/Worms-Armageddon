@@ -1,4 +1,5 @@
 #include "WeaponSheet.h"
+#include "eCollisionGroup.h"
 
 #include <GameEngineLevel.h>
 #include <GameEngineRenderer.h>
@@ -7,11 +8,11 @@
 #include <GameEngineWindow.h>
 #include <GameEngineTime.h>
 
-bool WeaponSheet::Active_ = false;
-
 WeaponSheet::WeaponSheet() :
+	Active_(false),
 	MainRenderer_(nullptr),
 	MainCollision_(nullptr),
+	MouseCol_(false),
 	MousePos_(float4::ZERO),
 	ActiveTargetPos_(float4::ZERO),
 	DisableTargetPos_(float4::ZERO),
@@ -38,8 +39,8 @@ void WeaponSheet::Start()
 	MainRenderer_ = CreateRenderer("WeaponSheet");
 	MainRenderer_->SetCameraEffectOff();
 
-	// 충돌체 생성 및 카메라영향 제거
-	//MainCollision_ = CreateCollision()
+	// 충돌체 생성
+	MainCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
 
 	// 활성/비활성 타겟위치 초기화
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -54,7 +55,6 @@ void WeaponSheet::UpdateBefore()
 
 	// 갱신전 마우스와 WeaponSheet 충돌체크
 
-	
 
 }
 

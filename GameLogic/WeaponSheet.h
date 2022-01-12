@@ -1,43 +1,19 @@
 #pragma once
 #include <GameEngineActor.h>
 
-
-
 class GameEngineRenderer;
 class GameEngineCollision;
 class WeaponSheet : public GameEngineActor
 {
 private:
-	static bool Active_;
-
-public:
-	static bool IsActive()
-	{
-		if (Active_ == true)
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	static void WeaponSheetActive()
-	{
-		if (false == Active_)
-		{
-			Active_ = true;
-		}
-		else
-		{
-			Active_ = false;
-		}
-	}
+	bool Active_;
 
 private:	// member Var
 	GameEngineRenderer* MainRenderer_;		// WeaponSheet(Temp) 렌더러
 	GameEngineCollision* MainCollision_;	// WeaponSheet(Temp) 충돌체
 	
 private: // 마우스충돌 관련
+	bool MouseCol_;
 	float4 MousePos_;
 
 private:
@@ -67,5 +43,28 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	bool IsActive()
+	{
+		if (Active_ == true)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	void WeaponSheetActive()
+	{
+		if (false == Active_)
+		{
+			Active_ = true;
+		}
+		else
+		{
+			Active_ = false;
+		}
+	}
 };
 
