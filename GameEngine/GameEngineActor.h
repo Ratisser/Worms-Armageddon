@@ -59,7 +59,7 @@ public:
 		RenderOrder = _RenderOrder;
 	}
 
-private:	// member Var
+protected:	// member Var
 	int ActorType;
 	float4 pos_;
 
