@@ -99,6 +99,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WindController.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Worm.h">
       <SubType>
       </SubType>
@@ -174,6 +178,10 @@
     <ClCompile Include="WaterLevel.cpp" />
     <ClCompile Include="WaterWave.cpp" />
     <ClCompile Include="WeaponSheet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindController.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -102,6 +102,9 @@
     <ClInclude Include="WaterWave.h">
       <Filter>Actor\WaterLevel</Filter>
     </ClInclude>
+    <ClInclude Include="WindController.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -166,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="WaterWave.cpp">
       <Filter>Actor\WaterLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="WindController.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
