@@ -70,7 +70,7 @@ void MouseObject::Start()
 
 	rendersize_ = mainrenderer_->GetImageSize();
 
-	ShowCursor(false);
+	//ShowCursor(false);
 }
 
 void MouseObject::UpdateBefore()

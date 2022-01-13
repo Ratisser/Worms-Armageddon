@@ -7,4 +7,7 @@
   <ItemGroup>
     <ClInclude Include="AppFunc.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\KeySetting.txt" />
+  </ItemGroup>
 </Project>

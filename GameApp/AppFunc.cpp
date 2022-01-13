@@ -31,10 +31,11 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapGround", Dir.PathToPlusFileName("MapGround.bmp"));
 
 		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));
-
+		
 		ResourceInitPJW();
 		CharactorImageInit();
 		UIImageInit();

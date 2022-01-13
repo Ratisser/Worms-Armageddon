@@ -4,6 +4,7 @@
 #include <GameEngineWindow.h>
 
 #include "MapTrain.h"
+#include "MapGround.h"
 #include "PlayLevel.h"
 #include "Worm.h"
 #include "UIController.h"
@@ -73,7 +74,7 @@ void PlayLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Right", 'd');
 	}
 
-	Worm_ = CreateActor<Worm>();
+	// Worm_ = CreateActor<Worm>();
 
 
 
@@ -117,7 +118,7 @@ void PlayLevel::LevelUpdate()
 	{
 		if (true == GameEngineInput::GetInst().IsPress("Up"))
 		{
-			GameEngineLevel::SetCamMove(float4::UP * Speed);
+			GameEngineLevel::SetCamMove(float4::UP * Speed); 
 		}
 		if (true == GameEngineInput::GetInst().IsPress("Down"))
 		{
@@ -136,6 +137,8 @@ void PlayLevel::LevelUpdate()
 
 void PlayLevel::AJYLoading()
 {
+	CreateActor<MapGround>();
+
 	if (false == GameEngineInput::GetInst().IsKey("Boom"))
 	{
 		GameEngineInput::GetInst().CreateKey("Boom", VK_LBUTTON);

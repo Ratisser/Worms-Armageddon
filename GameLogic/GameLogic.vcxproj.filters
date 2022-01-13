@@ -123,6 +123,9 @@
     <ClInclude Include="UnderWater.h">
       <Filter>Actor\WaterLevel</Filter>
     </ClInclude>
+    <ClInclude Include="MapGround.h">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClInclude>
     <ClInclude Include="WaterLevel.h">
       <Filter>Actor\WaterLevel</Filter>
     </ClInclude>
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Actor\PlayLevel\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGround.cpp">
+      <Filter>Actor\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="UnderWater.cpp">
       <Filter>Actor\WaterLevel</Filter>

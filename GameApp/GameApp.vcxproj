@@ -180,6 +180,9 @@
       </SubType>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\KeySetting.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

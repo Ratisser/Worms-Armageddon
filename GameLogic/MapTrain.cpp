@@ -56,7 +56,7 @@ void MapTrain::Render()
 
 void MapTrain::GroundUpdate()
 {
-	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + float4(1280.f, 320.f, 0.f, 0.f);
+	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + float4(1230.f, 280.f, 0.f, 0.f);
 	GameEngineImageFile* WindowImage = mainSpriteRender_->GetImage();
 	WindowImage->TransCopy(boomSpriteRender_->GetImage(),
 		mousepos,
