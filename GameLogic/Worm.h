@@ -27,58 +27,44 @@ private:
 	void initRenderer();
 	void initInput();
 	void initCollision();
+	void initState();
 
 	void addGravity(float _deltaTime);
 
-private:
-	//StateInfo startIdleLeft(StateInfo _state);
-	//StateInfo updateIdleLeft(StateInfo _state);
-	//
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
-
-	//StateInfo startIdleRight(StateInfo _state);
-	//StateInfo updateIdleRight(StateInfo _state);
+	void normalMove(float _deltaTime);
 
 private:
-	const float SPEED = 100.f;
+	StateInfo startIdle(StateInfo _state);
+	StateInfo updateIdle(StateInfo _state);
+
+	StateInfo startWalk(StateInfo _state);
+	StateInfo updateWalk(StateInfo _state);
+
+	StateInfo startJumpReady(StateInfo _state);
+	StateInfo updateJumpReady(StateInfo _state);
+
+	StateInfo startJump(StateInfo _state);
+	StateInfo updateJump(StateInfo _state);
+
+
+private:
+	const float MOVE_SPEED = 100.f;
+	const float GRAVITY_POWER = 600.f;
 
 private:
 	GameEngineRenderer* mainRender_;
-	GameEngineCollision* groundCollision_;
+	GameEngineCollision* bottomCenterCollision_;
+	GameEngineCollision* groundCheckCollision_;
 
+	GameEngineFSM<Worm> state_;
+
+	float4 accelation_;
 	float4 speed_;
 	float4 direction_;
 
+	bool bLeft_;
+	bool bGround_;
+
+	float deltaTime_;
 };
 
