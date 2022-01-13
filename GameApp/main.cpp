@@ -22,7 +22,7 @@
 
 void UpdateFunc() 
 {
-//	GameEngineDebugExtension::Update();
+	GameEngineDebugExtension::Update();
 	GameEngineLevelManager::GetInst().Update();
 }
 
@@ -38,6 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 윈도우 생성 및 기본 윈도우 창에서 게임을 돌릴 준비를 한다.
 	GameEngineWindow::GetInst().CreateMainWindowClass(hInstance, "GameWindow");
 	GameEngineWindow::GetInst().CreateMainWindow("MyWindow", { 1280, 720 }, {0, 0});
+	GameEngineDebugExtension::DebugWindowOpen({ 500, 500 }, { 0, 0 });
 
 	AppResourcesInit();
 
@@ -47,6 +48,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GameEngineLevelManager::GetInst().CreateLevel<LobbyLevel>("LobbyLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<LoadingLevel>("LoadingLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<PlayLevel>("PlayLevel");
+
 
 	// 최초 씬 지정.
 	GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel");

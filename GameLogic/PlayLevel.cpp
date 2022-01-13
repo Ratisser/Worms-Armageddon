@@ -2,6 +2,7 @@
 #include <GameEngineLevel.h>
 #include <GameEngineInput.h>
 #include <GameEngineWindow.h>
+#include <GameEngineDebugExtension.h>
 
 #include "MapTrain.h"
 #include "MapGround.h"
@@ -133,6 +134,8 @@ void PlayLevel::LevelUpdate()
 			GameEngineLevel::SetCamMove(float4::RIGHT * Speed);
 		}
 	}
+
+	GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 }
 
 void PlayLevel::AJYLoading()

@@ -56,29 +56,29 @@ void GameEngineDebugExtension::Release()
 
 void GameEngineDebugExtension::Update() 
 {
-	//float4 StartPos = float4::ZERO;
-	//
-	//for (size_t i = 0; i < debugList_.size(); i++)
-	//{
-	//	TextOutA(debugWindow_->GetBackBuffer()->GetDC()
-	//		, StartPos.ix()
-	//		, StartPos.iy()
-	//		, debugList_[i].c_str()
-	//		, static_cast<int>(debugList_[i].size())
-	//	);
-	//
-	//	StartPos.y += 20.0f;
-	//}
-	//
-	//debugList_.clear();
-	//
-	//debugWindow_->GetWindowImage()->BitCopy(debugWindow_->GetBackBuffer(), float4::ZERO, GameEngineWindow::GetInst().GetSize());
-	//
-	//Rectangle(debugWindow_->GetBackBuffer()->GetDC(),
-	//	0,
-	//	0,
-	//	debugWindow_->GetSize().ix(),
-	//	debugWindow_->GetSize().iy()
-	//);
+	float4 StartPos = float4::ZERO;
+	
+	for (size_t i = 0; i < debugList_.size(); i++)
+	{
+		TextOutA(debugWindow_->GetBackBuffer()->GetDC()
+			, StartPos.ix()
+			, StartPos.iy()
+			, debugList_[i].c_str()
+			, static_cast<int>(debugList_[i].size())
+		);
+	
+		StartPos.y += 20.0f;
+	}
+	
+	debugList_.clear();
+	
+	debugWindow_->GetWindowImage()->BitCopy(debugWindow_->GetBackBuffer(), float4::ZERO, GameEngineWindow::GetInst().GetSize());
+	
+	Rectangle(debugWindow_->GetBackBuffer()->GetDC(),
+		0,
+		0,
+		debugWindow_->GetSize().ix(),
+		debugWindow_->GetSize().iy()
+	);
 
 }
