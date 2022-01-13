@@ -38,6 +38,7 @@ void AppResourcesInit()
 		CharactorImageInit();
 		UIImageInit();
 		MapWaterImageInit();
+		GimmickObjectImageInit();
 	}
 
 	// 사운드 로드
@@ -171,7 +172,7 @@ GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
 	return GameEngineImage::GetInst().LoadGameImage(fileName, _path);
 }
 
-void MapWaterImageInit()
+void MapWaterImageInit() // 바닥 수면 이미지 로드에 사용
 {
 	GameEngineDirectroy Dir = GameEngineDirectroy();
 	Dir.MoveParent("Worms-Armageddon");
@@ -194,7 +195,7 @@ void MapWaterImageInit()
 		LoadGameImage("Under_Water", Dir.PathToPlusFileName("Under_Water.bmp"));
 }
 
-void GimmickObjectImageInit()
+void GimmickObjectImageInit() // 기믹 오브젝트 로드에 사용
 {
 	GameEngineDirectroy Dir = GameEngineDirectroy();
 	Dir.MoveParent("Worms-Armageddon");

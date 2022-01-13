@@ -28,5 +28,6 @@ public:
 
 public:
 	void MakeWaterLevel();
+	void CreateGimmickObject();
 };
 

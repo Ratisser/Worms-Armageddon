@@ -28,11 +28,11 @@
     <Filter Include="Actor\PlayLevel\Background">
       <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\PlayLevel\Water_Level">
-      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\PlayLevel\GimmickObject">
       <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\WaterLevel">
+      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -97,16 +97,19 @@
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="UnderWater.h">
-      <Filter>Actor\PlayLevel\Water_Level</Filter>
+      <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClInclude>
     <ClInclude Include="WaterLevel.h">
-      <Filter>Actor\PlayLevel\Water_Level</Filter>
+      <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClInclude>
     <ClInclude Include="WaterWave.h">
-      <Filter>Actor\PlayLevel\Water_Level</Filter>
+      <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClInclude>
     <ClInclude Include="DrumActor.h">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WindController.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,16 +168,19 @@
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
     <ClCompile Include="UnderWater.cpp">
-      <Filter>Actor\PlayLevel\Water_Level</Filter>
+      <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClCompile>
     <ClCompile Include="WaterLevel.cpp">
-      <Filter>Actor\PlayLevel\Water_Level</Filter>
+      <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClCompile>
     <ClCompile Include="WaterWave.cpp">
-      <Filter>Actor\PlayLevel\Water_Level</Filter>
+      <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClCompile>
     <ClCompile Include="DrumActor.cpp">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClCompile>
+    <ClCompile Include="WindController.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -30,10 +30,10 @@ void DrumActor::Start()
 {
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
-	mainSpriteRender_->CreateAnimation("Phase0", "oildrum1", 0, 19, false, 0.1f);
-	mainSpriteRender_->CreateAnimation("Phase1", "oildrum2", 0, 19, false, 0.1f);
-	mainSpriteRender_->CreateAnimation("Phase2", "oildrum3", 0, 19, false, 0.1f);
-	mainSpriteRender_->CreateAnimation("Phase3", "oildrum4", 0, 19, false, 0.1f);
+	mainSpriteRender_->CreateAnimation("Phase0", "oildrum1", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("Phase1", "oildrum2", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("Phase2", "oildrum3", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("Phase3", "oildrum4", 0, 19, true, 0.1f);
 
 	mainSpriteRender_->ChangeAnimation("Phase0");
 }
