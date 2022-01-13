@@ -1,5 +1,6 @@
 #include "UIController.h"
 #include "WeaponSheet.h"
+#include "Weapon.h"
 
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
@@ -15,10 +16,11 @@ UIController::UIController() :
 
 UIController::~UIController()
 {
-
 }
 
-UIController::UIController(UIController&& _other) noexcept
+UIController::UIController(UIController&& _other) noexcept :
+	curplayer_(_other.curplayer_),
+	weaponsheet_(_other.weaponsheet_)
 {
 
 }
@@ -26,6 +28,13 @@ UIController::UIController(UIController&& _other) noexcept
 void UIController::SetCurPlayer(Worm* _curplayer)
 {
 	curplayer_ = _curplayer;
+}
+
+void UIController::SetCurItemList(const std::map<std::string, Weapon*>& _WeaponList)
+{
+	// 플레이어로부터 받아온 아이템목록을
+	// WeaponSheet에 넘겨준다.
+	weaponsheet_->CreateWeaponIconList(_WeaponList);
 }
 
 void UIController::Start()

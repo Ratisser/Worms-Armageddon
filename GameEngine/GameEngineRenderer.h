@@ -168,6 +168,11 @@ public:
 		return image_;
 	}
 
+	float4 GetImageSize()
+	{
+		return imagesize_;
+	}
+
 
 
 	void SetAnimationCurrentFrame(const std::string& _Name, const int index) // 에니메이션 cur_ 변경하는 함수 

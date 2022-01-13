@@ -1,29 +1,36 @@
 #pragma once
+#include <map>
 #include <GameEngineActor.h>
 
 class GameEngineRenderer;
 class GameEngineCollision;
+class MouseObject;
+class WeaponIcon;
+class Weapon;
 class WeaponSheet : public GameEngineActor
 {
 private:
-	bool Active_;
+	bool active_;
+	bool prevstate_;
 
 private:	// member Var
-	GameEngineRenderer* MainRenderer_;		// WeaponSheet(Temp) 렌더러
-	GameEngineCollision* MainCollision_;	// WeaponSheet(Temp) 충돌체
+	GameEngineRenderer* mainrenderer;		// WeaponSheet(Temp) 렌더러
+	GameEngineCollision* maincollision_;	// WeaponSheet(Temp) 충돌체
 	
 private: // 마우스충돌 관련
-	bool MouseCol_;
-	float4 MousePos_;
+	MouseObject* mouseobject_;
+
+private: // 아이템 목록
+	std::vector<WeaponIcon*> WeaponList_;
 
 private:
-	float4 ActiveTargetPos_;
-	float4 DisableTargetPos_;
+	float4 activetargetpos_;
+	float4 disabletargetpos_;
 
 private:
-	bool Moving_;
-	float MovingSpeed;
-	float4 MovePos_;
+	bool moving_;
+	float movingspeed;
+	float4 movepos_;
 
 public:
 	WeaponSheet(); // default constructer 디폴트 생성자
@@ -42,12 +49,13 @@ public:
 	virtual void UpdateBefore() override;
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
+	virtual void Collision() override;
 	virtual void Render() override;
 
 public:
 	bool IsActive()
 	{
-		if (Active_ == true)
+		if (active_ == true)
 		{
 			return true;
 		}
@@ -57,14 +65,18 @@ public:
 
 	void WeaponSheetActive()
 	{
-		if (false == Active_)
+		if (false == active_)
 		{
-			Active_ = true;
+			active_ = true;
 		}
 		else
 		{
-			Active_ = false;
+			active_ = false;
 		}
 	}
+
+public: // 플레이어가 들고있는 무기소유목록을 받아와서 무기아이콘목록생성
+	void CreateWeaponIconList(const std::map<std::string, Weapon*>& _WeaponList);
+
 };
 

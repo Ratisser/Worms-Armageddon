@@ -6,5 +6,6 @@ enum class eCollisionGroup
 	PLAYER,
 	MONSTER,
 	UI,
+	MOUSE,
 	MAX
 };
