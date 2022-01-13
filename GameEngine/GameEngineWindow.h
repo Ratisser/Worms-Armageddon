@@ -79,6 +79,7 @@ public:
 	}
 
 	float4 GetMousePos();
+	bool SetMousePos(int _x, int _y);
 
 public:
 	// 삭제에 대한건 받아간쪽이 알아서 해라.

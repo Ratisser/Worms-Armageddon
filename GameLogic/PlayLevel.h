@@ -7,6 +7,9 @@
 class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
+	class MapTrain* Train_;
+	class Worm* Worm_;
+	bool IsCameraMove_;
 
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
@@ -29,5 +32,9 @@ public:
 public:
 	void MakeWaterLevel();
 	void CreateGimmickObject();
+
+private:
+	void AJYLoading();
+	void AJYLevelUpdate();
 };
 

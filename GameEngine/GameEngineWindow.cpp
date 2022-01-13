@@ -294,3 +294,8 @@ float4 GameEngineWindow::GetMousePos()
 
     return { (float)P.x, (float)P.y };
 }
+
+bool GameEngineWindow::SetMousePos(int _x, int _y)
+{
+    return SetCursorPos(_x, _y);
+}

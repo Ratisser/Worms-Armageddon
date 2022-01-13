@@ -6,6 +6,7 @@ enum class eCollisionGroup
 	PLAYER,
 	MONSTER,
 	UI,
+	MOUSE,
 	GIMMICK_OBJECT,
 	MAX
 };

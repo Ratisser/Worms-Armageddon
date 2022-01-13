@@ -28,11 +28,14 @@
     <Filter Include="Actor\PlayLevel\Background">
       <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\Weapon">
+      <UniqueIdentifier>{c4c4a74e-3188-4024-a912-183e94d51c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\WaterLevel">
+    <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Actor\PlayLevel\GimmickObject">
       <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\PlayLevel\WaterLevel">
-      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +98,18 @@
     </ClInclude>
     <ClInclude Include="BottomNameTag.h">
       <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseObject.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponIcon.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Actor\PlayLevel\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="eItemList.h">
+      <Filter>Enum</Filter>
     </ClInclude>
     <ClInclude Include="UnderWater.h">
       <Filter>Actor\PlayLevel\WaterLevel</Filter>
@@ -167,6 +182,9 @@
     <ClCompile Include="BottomNameTag.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
+    <ClCompile Include="MouseObject.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
     <ClCompile Include="UnderWater.cpp">
       <Filter>Actor\PlayLevel\WaterLevel</Filter>
     </ClCompile>
@@ -181,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="WindController.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponIcon.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Actor\PlayLevel\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

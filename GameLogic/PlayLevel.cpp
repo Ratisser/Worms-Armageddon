@@ -19,8 +19,11 @@
 
 #include "BackgroundScatter.h"
 
-PlayLevel::PlayLevel() :
-	WaterLevel_(nullptr)// default constructer 디폴트 생성자
+PlayLevel::PlayLevel() // default constructer 디폴트 생성자
+	: Train_(nullptr),
+	Worm_(nullptr),
+	WaterLevel_(nullptr),
+	IsCameraMove_(true)
 {
 
 }
@@ -30,20 +33,25 @@ PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
 
 }
 
-PlayLevel::PlayLevel(PlayLevel&& _other) noexcept :
-	WaterLevel_(nullptr)  // default RValue Copy constructer 디폴트 RValue 복사생성자
+PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자	
+	: Train_(nullptr),
+	Worm_(nullptr),
+	WaterLevel_(nullptr),
+	IsCameraMove_(true)
 {
 
 }
 
 void PlayLevel::Loading()
 {
+	AJYLoading();
+
 	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
 	{
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
 	}
-	CreateActor<MapTrain>();
 
+	Train_ = CreateActor<MapTrain>();
 
 	if (false == GameEngineInput::GetInst().IsKey("Up"))
 	{
@@ -62,7 +70,7 @@ void PlayLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Right", 'd');
 	}
 
-	CreateActor<Worm>();
+	Worm_ = CreateActor<Worm>();
 
 	for (int i = 0; i < 39; i++)
 	{
@@ -92,26 +100,71 @@ void PlayLevel::Loading()
 
 void PlayLevel::LevelUpdate()
 {
+	AJYLevelUpdate();
+	float Speed = 5.f;
+
+
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
 		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
 	}
 
-	if (true == GameEngineInput::GetInst().IsPress("Up"))
+	if (IsCameraMove_)
 	{
-		GameEngineLevel::SetCamMove(float4::UP);
+		if (true == GameEngineInput::GetInst().IsPress("Up"))
+		{
+			GameEngineLevel::SetCamMove(float4::UP * Speed);
+		}
+		if (true == GameEngineInput::GetInst().IsPress("Down"))
+		{
+			GameEngineLevel::SetCamMove(float4::DOWN * Speed);
+		}
+		if (true == GameEngineInput::GetInst().IsPress("Left"))
+		{
+			GameEngineLevel::SetCamMove(float4::LEFT * Speed);
+		}
+		if (true == GameEngineInput::GetInst().IsPress("Right"))
+		{
+			GameEngineLevel::SetCamMove(float4::RIGHT * Speed);
+		}
 	}
-	if (true == GameEngineInput::GetInst().IsPress("Down"))
+}
+
+void PlayLevel::AJYLoading()
+{
+	if (false == GameEngineInput::GetInst().IsKey("Boom"))
 	{
-		GameEngineLevel::SetCamMove(float4::DOWN);
+		GameEngineInput::GetInst().CreateKey("Boom", VK_LBUTTON);
 	}
-	if (true == GameEngineInput::GetInst().IsPress("Left"))
+
+	if (false == GameEngineInput::GetInst().IsKey("FreeCameraOnOff"))
 	{
-		GameEngineLevel::SetCamMove(float4::LEFT);
+		GameEngineInput::GetInst().CreateKey("FreeCameraOnOff", 0x31);
 	}
-	if (true == GameEngineInput::GetInst().IsPress("Right"))
+}
+
+void PlayLevel::AJYLevelUpdate()
+{
+	if (true == GameEngineInput::GetInst().IsDown("Boom"))
 	{
-		GameEngineLevel::SetCamMove(float4::RIGHT);
+		Train_->GroundUpdate();
+	}
+
+	if (true == GameEngineInput::GetInst().IsDown("FreeCameraOnOff"))
+	{
+		if (true == IsCameraMove_)
+		{
+			IsCameraMove_ = false;
+		}	
+		else
+		{
+			IsCameraMove_ = true;
+		}
+	}
+
+	if (false == IsCameraMove_)
+	{
+		GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
 	}
 }
 

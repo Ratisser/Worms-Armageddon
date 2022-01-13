@@ -123,6 +123,11 @@ void GameEngineLevel::UpdateBefore()
 
 		for (; Start != End; ++Start)
 		{
+			if (false == (*Start)->IsOn())
+			{
+				continue;
+			}
+
 			(*Start)->UpdateBefore();
 		}
 	}
@@ -140,6 +145,11 @@ void GameEngineLevel::Update()
 
 		for (; Start != End; ++Start)
 		{
+			if (false == (*Start)->IsOn())
+			{
+				continue;
+			}
+
 			(*Start)->Update();
 		}
 	}
@@ -157,6 +167,11 @@ void GameEngineLevel::Collision()
 
 		for (; Start != End; ++Start)
 		{
+			if (false == (*Start)->IsOn())
+			{
+				continue;
+			}
+
 			(*Start)->Collision();
 		}
 	}
@@ -175,6 +190,11 @@ void GameEngineLevel::UpdateAfter()
 
 		for (; Start != End; ++Start)
 		{
+			if (false == (*Start)->IsOn())
+			{
+				continue;
+			}
+
 			(*Start)->UpdateAfter();
 		}
 	}
@@ -303,6 +323,11 @@ void GameEngineLevel::Render()
 
 		for (; Start != End; ++Start)
 		{
+			if (false == (*Start)->IsOn())
+			{
+				continue;
+			}
+
 			(*Start)->Render();
 		}
 	}

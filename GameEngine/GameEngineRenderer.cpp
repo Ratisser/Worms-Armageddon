@@ -112,6 +112,16 @@ void GameEngineRenderer::SetImage(const std::string& _Name)
 	imagePivot_ = rendersize_.halffloat4();
 }
 
+void GameEngineRenderer::SetImageNoSize(const std::string& _name)
+{
+	image_ = GameEngineImage::GetInst().FindGameImage(_name);
+
+	if (nullptr == image_)
+	{
+		GameEngineDebug::AssertFalse();
+	}
+}
+
 void GameEngineRenderer::SetMaskImage(const std::string& _Name) 
 {
 	maskimage_ = GameEngineImage::GetInst().FindGameImage(_Name);
@@ -230,6 +240,29 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _Name, bool _forceCh
 		return;
 	}
 
+	curani_ = FindAnimation(_Name);
+	curani_->Reset();
+
+	if (nullptr == curani_)
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+}
+
+void GameEngineRenderer::ChangeAnimation(const std::string& _Name, const std::string& _name, bool _forceChange)
+{
+	// 기존 애니메이션도 진행하고 있고
+	if (nullptr != curani_ &&
+		// 강제바꾸기가 아니고
+		false == _forceChange &&
+		// 애니메이션 이름이 같으면
+		curani_->GetName() == _Name)
+	{
+		return;
+	}
+
+	SetImageNoSize(_name);
 	curani_ = FindAnimation(_Name);
 	curani_->Reset();
 

@@ -156,6 +156,7 @@ public:
 	}
 
 	void SetImage(const std::string& _Name);
+	void SetImageNoSize(const std::string& _name);
 
 	void SetMaskImage(const std::string& _Name);
 
@@ -166,6 +167,11 @@ public:
 
 	GameEngineImageFile* GetImage() {
 		return image_;
+	}
+
+	float4 GetImageSize()
+	{
+		return imagesize_;
 	}
 
 
@@ -211,6 +217,7 @@ public:
 
 	bool IsCurAnimationName(const std::string& _Name);
 	void ChangeAnimation(const std::string& _Name, bool _forceChange = false);
+	void ChangeAnimation(const std::string& _Name, const std::string& _name, bool _forceChange = false);
 	void SetChangeFrame(const std::string& _Name, int _index, float _Time);
 	void AnimationUpdate();
 	bool IsCurAnimationEnd();

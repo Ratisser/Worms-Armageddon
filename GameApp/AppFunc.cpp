@@ -32,7 +32,8 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
 
-
+		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));
 
 		ResourceInitPJW();
 		CharactorImageInit();
@@ -109,15 +110,26 @@ void ResourceInitPJW()
 void UIImageInit()
 {
 	GameEngineDirectroy Dir = GameEngineDirectroy();
-	Dir.MoveParent("Worms-Armageddon");
 
-	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\"))
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI"))
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
 
-	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("WeaponSheet", Dir.PathToPlusFileName("WeaponSheet_Temp.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("WeaponSheet", Dir.PathToPlusFileName("WeaponSheet_Temp.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Cursor", Dir.PathToPlusFileName("Cursor.bmp"));
+
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Weapon Icons"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("bazookar", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
 }
 
 void CharactorImageInit()
