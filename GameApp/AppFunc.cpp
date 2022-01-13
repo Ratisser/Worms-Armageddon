@@ -93,7 +93,8 @@ void ResourceInitPJW()
 
 	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("ScatterSnow", Dir.PathToPlusFileName("ScatterSnow.bmp"));
-
+	GameEngineImageFile* leafSprites = GameEngineImage::GetInst().LoadGameImage("ScatterLeaf", Dir.PathToPlusFileName("ScatterLeaf.bmp"));
+	leafSprites->Cut({32,32});
 	Dir.MoveParent("Image");
 
 	if (false == Dir.MoveChild("\\UI\\HPbar\\"))

@@ -25,15 +25,11 @@ BackgroundScatter::BackgroundScatter(BackgroundScatter&& _other) noexcept  // de
 
 void BackgroundScatter::Start()
 {
-	mainRender_ = CreateRenderer("ScatterStar");
+	mainRender_ = CreateRenderer("ScatterLeaf");
+	mainRender_->CreateAnimation("Type0", "ScatterLeaf",0,12,true,0.204f);
+	mainRender_->ChangeAnimation("Type0");
 	fallSpeed_ = randomGenerator_.RandomFloat(100.0f, 400.0f);
 	spawnPos_.x = randomGenerator_.RandomFloat(0.0f, 3000.0f);
-	int a = randomGenerator_.RandomInt(0, 9);
-
-	if (5 <= a)
-	{
-		mainRender_->SetImage("ScatterSnow");
-	}
 }
 
 void BackgroundScatter::UpdateBefore()
@@ -50,10 +46,11 @@ void BackgroundScatter::UpdateAfter()
 	if (this->GetPos().y > 1000.0f) // 수면보다 pos 가 낮아질 경우
 	{
 		SetPos({ randomGenerator_.RandomFloat(0.0f, 3000.0f) , spawnPos_.y}); // 위치리셋
+		fallSpeed_ = randomGenerator_.RandomFloat(100.0f, 400.0f);
 	}
 }
 
 void BackgroundScatter::Render()
 {
-	mainRender_->Render();
+	mainRender_->AnimationUpdate();
 }
