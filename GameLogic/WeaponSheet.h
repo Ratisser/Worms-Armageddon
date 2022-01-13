@@ -15,13 +15,14 @@ private:
 
 private:	// member Var
 	GameEngineRenderer* mainrenderer;		// WeaponSheet(Temp) 렌더러
-	GameEngineCollision* maincollision_;	// WeaponSheet(Temp) 충돌체
 	
 private: // 마우스충돌 관련
 	MouseObject* mouseobject_;
 
 private: // 아이템 목록
-	std::vector<WeaponIcon*> WeaponList_;
+	std::map<std::string, WeaponIcon*> weaponiconlist_;
+	std::vector<std::string> weaponnamelist_;
+	
 
 private:
 	float4 activetargetpos_;
@@ -63,17 +64,8 @@ public:
 		return false;
 	}
 
-	void WeaponSheetActive()
-	{
-		if (false == active_)
-		{
-			active_ = true;
-		}
-		else
-		{
-			active_ = false;
-		}
-	}
+	void WeaponSheetActive();
+	void SetRenderPos(const float4& _Active, const float4& _Disable);
 
 public: // 플레이어가 들고있는 무기소유목록을 받아와서 무기아이콘목록생성
 	void CreateWeaponIconList(const std::map<std::string, Weapon*>& _WeaponList);

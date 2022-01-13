@@ -43,7 +43,9 @@ void UIController::Start()
 
 	// UI별 액터 생성
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();
-	weaponsheet_->SetPos({ Resolution.x + 100.f, Resolution.y - 240.f, Resolution.z, Resolution.w });
+	float4 ActivePos = float4({ Resolution.x - 100.f, Resolution.y - 240.f });
+	float4 DisablePos = float4({ Resolution.x + 100.f, Resolution.y - 240.f });
+	weaponsheet_->SetRenderPos(ActivePos, DisablePos);
 
 	// UI별 키생성
 	if (false == GameEngineInput::GetInst().IsKey("WeaponSheet"))

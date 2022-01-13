@@ -81,6 +81,8 @@ void MouseObject::Update()
 {
 	// 위치 갱신(단, 이동범위를 벗어나면 갱신안함)
 	float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
+
+	// 범위지정이 되있다면
 	if (MousePos.x >= startrange_.x && MousePos.x <= endrange_.x &&
 		MousePos.y >= startrange_.y && MousePos.y <= endrange_.y)
 	{

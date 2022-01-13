@@ -2,9 +2,9 @@
 #include <map>
 #include <GameEngineActor.h>
 
-// 기본구조 : 플레이어가 UIController를 객체로 가지며 해당 객체에 아이템목록을 넘겨주면
-//                   해당 UIController가 해당 목록을 WeaponSheet에 넘기며
-//                   수신한 WeaponSheet가 WeaponIcon 목록을 만들어서 관리한다.
+// 구조 : 플레이어가 UIController를 객체로 가지며 해당 객체에 아이템목록을 넘겨주면
+//        해당 UIController가 해당 목록을 WeaponSheet에 넘기며
+//        수신한 WeaponSheet가 WeaponIcon 목록을 만들어서 관리한다.
 //                   
 class Worm;
 class WeaponSheet;

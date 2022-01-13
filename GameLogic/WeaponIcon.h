@@ -9,16 +9,30 @@ class GameEngineRenderer;
 class GameEngineCollision;
 class WeaponIcon : public GameEngineActor
 {
-private:	// member Var
-	std::string itemname_;
-	eItemList itemtype_;
+private:
 	int indexX_;
 	int indexY_;
-	int index_;
-	float4 renderpos_;
+
+private:
+	bool active_;
+	bool prevstate_;
+
+private:	// member Var
+	std::string weaponname_;
+	eItemList weapontype_;
+
+private:
+	float4 activetargetpos_;
+	float4 disabletargetpos_;
+
+private:
+	bool moving_;
+	float movingspeed;
+	float4 movepos_;
 
 private:
 	GameEngineRenderer* mainrenderer_;
+	GameEngineRenderer* selectrenderer_;
 	GameEngineCollision* maincollision_;
 
 public:
@@ -34,7 +48,14 @@ private:		//delete operator
 	WeaponIcon& operator=(const WeaponIcon&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:
-	
+	void SetWeaponName(const std::string& _Name);
+	void SetWeaponType(eItemList _Type);
+	void SetWeaponRenderPos(const float4& _DisableRenderPos, const float4& _ActiveRenderPos);
+	void SetWeaponIndex(int _X, int _Y);
+
+public:
+	GameEngineCollision* GetCurIconCol() const;
+	void SetActive(bool _Active);
 
 public:
 	virtual void Start() override;
