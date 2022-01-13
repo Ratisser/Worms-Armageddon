@@ -92,6 +92,7 @@ void ResourceInitPJW()
 	}
 
 	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("ScatterSnow", Dir.PathToPlusFileName("ScatterSnow.bmp"));
 
 	Dir.MoveParent("Image");
 
