@@ -168,6 +168,13 @@ public:
 		return image_;
 	}
 
+
+
+	void SetAnimationCurrentFrame(const std::string& _Name, const int index) // 에니메이션 cur_ 변경하는 함수 
+	{
+		FindAnimation(_Name)->cur_ = index;
+	}
+
 public:
 	GameEngineRenderer(); // default constructer 디폴트 생성자
 	~GameEngineRenderer(); // default destructer 디폴트 소멸자

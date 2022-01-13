@@ -27,6 +27,6 @@ public:
 	virtual void Render() override;
 
 public:
-	void ChangeAnimationframe(const int _index);
+	void SetAnimationCurrentFrame(const int _index);
 };
 
