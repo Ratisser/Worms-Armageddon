@@ -7,6 +7,7 @@
 class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
+	class MapTrain* Train_;
 
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
@@ -28,5 +29,9 @@ public:
 
 public:
 	void MakeWaterLevel();
+
+private:
+	void AJYLoading();
+	void AJYLevelUpdate();
 };
 

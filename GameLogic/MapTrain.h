@@ -6,7 +6,10 @@
 class MapTrain : public GameEngineActor
 {
 private:	// member Var
+	GameEngineRenderer* backGroundSpriteRender_;
 	GameEngineRenderer* mainSpriteRender_;
+	GameEngineRenderer* boomSpriteRender_;
+
 public:
 	MapTrain(); // default constructer 디폴트 생성자
 	~MapTrain(); // default destructer 디폴트 소멸자
@@ -25,5 +28,8 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	void GroundUpdate();
 };
 

@@ -18,8 +18,9 @@
 
 #include "BackgroundScatter.h"
 
-PlayLevel::PlayLevel() :
-	WaterLevel_(nullptr)// default constructer 디폴트 생성자
+PlayLevel::PlayLevel() // default constructer 디폴트 생성자
+	: Train_(nullptr),
+	WaterLevel_(nullptr)
 {
 
 }
@@ -29,20 +30,23 @@ PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
 
 }
 
-PlayLevel::PlayLevel(PlayLevel&& _other) noexcept :
-	WaterLevel_(nullptr)  // default RValue Copy constructer 디폴트 RValue 복사생성자
+PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자	
+	: Train_(nullptr),
+	WaterLevel_(nullptr)
 {
 
 }
 
 void PlayLevel::Loading()
 {
+	AJYLoading();
+
 	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
 	{
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
 	}
-	CreateActor<MapTrain>();
 
+	Train_ = CreateActor<MapTrain>();
 
 	if (false == GameEngineInput::GetInst().IsKey("Up"))
 	{
@@ -88,6 +92,9 @@ void PlayLevel::Loading()
 
 void PlayLevel::LevelUpdate()
 {
+	AJYLevelUpdate();
+	float Speed = 5.f;
+
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
 		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
@@ -95,19 +102,35 @@ void PlayLevel::LevelUpdate()
 
 	if (true == GameEngineInput::GetInst().IsPress("Up"))
 	{
-		GameEngineLevel::SetCamMove(float4::UP);
+		GameEngineLevel::SetCamMove(float4::UP * Speed);
 	}
 	if (true == GameEngineInput::GetInst().IsPress("Down"))
 	{
-		GameEngineLevel::SetCamMove(float4::DOWN);
+		GameEngineLevel::SetCamMove(float4::DOWN * Speed);
 	}
 	if (true == GameEngineInput::GetInst().IsPress("Left"))
 	{
-		GameEngineLevel::SetCamMove(float4::LEFT);
+		GameEngineLevel::SetCamMove(float4::LEFT * Speed);
 	}
 	if (true == GameEngineInput::GetInst().IsPress("Right"))
 	{
-		GameEngineLevel::SetCamMove(float4::RIGHT);
+		GameEngineLevel::SetCamMove(float4::RIGHT* Speed);
+	}
+}
+
+void PlayLevel::AJYLoading()
+{
+	if (false == GameEngineInput::GetInst().IsKey("Boom"))
+	{
+		GameEngineInput::GetInst().CreateKey("Boom", 'q');
+	}
+}
+
+void PlayLevel::AJYLevelUpdate()
+{
+	if (true == GameEngineInput::GetInst().IsDown("Boom"))
+	{
+		Train_->GroundUpdate();
 	}
 }
 
@@ -183,4 +206,5 @@ void PlayLevel::MakeWaterLevel() // 이현
 	WaterLevel_->Waterlist.push_back(WaterWave10);
 	WaterLevel_->Waterlist.push_back(UnderWater1);
 	WaterLevel_->Waterlist.push_back(UnderWater2);
+}
 }
