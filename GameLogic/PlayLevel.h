@@ -4,6 +4,7 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
+class WindController;
 class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
@@ -28,9 +29,13 @@ public:
 	void LevelUpdate() override;
 
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
+	
+public:
+	WindController* windController_;
 
 public:
 	void MakeWaterLevel();
+	void MakeWind();
 	void CreateGimmickObject();
 
 private:

@@ -18,12 +18,14 @@
 
 
 #include "BackgroundScatter.h"
+#include "WindController.h"
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
 	Worm_(nullptr),
 	WaterLevel_(nullptr),
-	IsCameraMove_(true)
+	IsCameraMove_(true),
+	windController_(nullptr)// default constructer 디폴트 생성자
 {
 
 }
@@ -38,6 +40,7 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	Worm_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
+	,windController_(nullptr)  // default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
 }
@@ -72,24 +75,25 @@ void PlayLevel::Loading()
 
 	Worm_ = CreateActor<Worm>();
 
-	for (int i = 0; i < 39; i++)
-	{
-		// 배경 바람에 흩날리는 엑터 생성(추후 자료구조로 관리 예정)
-		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
-	}
+
 
 	{
 		// 플레이화면 하단 체력바
 		BottomNameTag* p1NameTag = CreateActor<BottomNameTag>();
 		p1NameTag->SetPos({ 555, 700 });
-
 		BottomFlag* p1Flag = CreateActor<BottomFlag>();
 		p1Flag->SetPos({ 610, 700 });
-
 		BottomHealthBar* p1Health = CreateActor<BottomHealthBar>();
 		p1Health->SetPos({ 672, 700 });
-	}
+		windController_ = CreateActor<WindController>();
 
+	}
+	for (int i = 0; i < 39; i++)
+	{
+		// 배경 바람에 흩날리는 엑터 생성(추후 자료구조로 관리 예정)
+		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
+		newScatter->SetParent(windController_);
+	}
 	// UI관리자생성
 	CreateActor<UIController>();
 
@@ -246,5 +250,10 @@ void PlayLevel::CreateGimmickObject()
 	DrumActor* DrumActor1 = CreateActor<DrumActor>();
 
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
+
+}
+
+void PlayLevel::MakeWind()
+{
 
 }
