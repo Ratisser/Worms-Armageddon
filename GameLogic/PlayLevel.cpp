@@ -122,7 +122,7 @@ void PlayLevel::AJYLoading()
 {
 	if (false == GameEngineInput::GetInst().IsKey("Boom"))
 	{
-		GameEngineInput::GetInst().CreateKey("Boom", 'q');
+		GameEngineInput::GetInst().CreateKey("Boom", 'z');
 	}
 }
 
@@ -206,5 +206,4 @@ void PlayLevel::MakeWaterLevel() // ÀÌÇö
 	WaterLevel_->Waterlist.push_back(WaterWave10);
 	WaterLevel_->Waterlist.push_back(UnderWater1);
 	WaterLevel_->Waterlist.push_back(UnderWater2);
-}
 }
