@@ -24,7 +24,10 @@ void MapGround::Start()
 	mainRenderer_ = CreateRenderer("MapGround");
 
 	bodyCollision_ = CreateCollision(eCollisionGroup::MAP, CollisionCheckType::IMAGE);
+	bodyCollision_->SetImage("MapGround");
 	//bodyCollision_->SetColorCheck(RGB(0, 0, 0));
+
+	SetRenderOrder(100);
 }
 
 void MapGround::UpdateBefore()
@@ -41,5 +44,5 @@ void MapGround::UpdateAfter()
 
 void MapGround::Render()
 {
-	//mainRenderer_->Render();
+	mainRenderer_->Render();
 }

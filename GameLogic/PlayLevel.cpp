@@ -74,7 +74,7 @@ void PlayLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Right", 'd');
 	}
 
-	// Worm_ = CreateActor<Worm>();
+	Worm_ = CreateActor<Worm>();
 
 
 
