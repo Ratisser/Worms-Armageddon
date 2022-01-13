@@ -186,8 +186,40 @@ void MapWaterImageInit()
 		LoadGameImage("Water_sprite", Dir.PathToPlusFileName("Water_sprite.bmp"));
 	loadingImage->Cut({ 2560,100 });
 
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("Water_sprite_surfice", Dir.PathToPlusFileName("Water_sprite_surfice.bmp"));
+	loadingImage->Cut({ 2560,100 });
+
 	GameEngineImage::GetInst().
 		LoadGameImage("Under_Water", Dir.PathToPlusFileName("Under_Water.bmp"));
+}
+
+void GimmickObjectImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image\\Misc\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("oildrum1", Dir.PathToPlusFileName("oildrum1.bmp"));
+	loadingImage->Cut({ 90,90 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("oildrum2", Dir.PathToPlusFileName("oildrum2.bmp"));
+	loadingImage->Cut({ 90,90 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("oildrum3", Dir.PathToPlusFileName("oildrum3.bmp"));
+	loadingImage->Cut({ 90,90 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("oildrum4", Dir.PathToPlusFileName("oildrum4.bmp"));
+	loadingImage->Cut({ 90,90 });
 }
 
 void LoadSoundInit()

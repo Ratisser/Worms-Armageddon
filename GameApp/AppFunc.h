@@ -20,5 +20,6 @@ namespace RS
 void CharactorImageInit();
 
 void MapWaterImageInit();
+void GimmickObjectImageInit();
 
 void LoadSoundInit();

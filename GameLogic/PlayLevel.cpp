@@ -111,9 +111,9 @@ void PlayLevel::LevelUpdate()
 	}
 }
 
-void PlayLevel::MakeWaterLevel() // 이현
+void PlayLevel::MakeWaterLevel() // 맵 바닥의 수면 생성
 {
-	WaterLevel_ = CreateActor<WaterLevel>("WaterLevel");
+	WaterLevel_ = CreateActor<WaterLevel>("WaterLevel"); // 모든 파도 actor 그룹화
 
 	WaterWave* WaterWave1 = CreateActor<WaterWave>("WaterWave1");
 	WaterWave* WaterWave2 = CreateActor<WaterWave>("WaterWave2");
