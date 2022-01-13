@@ -7,9 +7,12 @@ class DrumActor : public GameEngineActor
 {
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
-	GameEngineCollision* groundCollision_;
+
+	GameEngineCollision* groundCollision_; // 바닥
+	GameEngineCollision* BodyCollision_; // 몸통
 
 	float Phase_; // 드럼통이 가열된 정도
+	bool DrumCollision_;
 
 	// 직접적인 직격, 혹은 화염에 일정시간 노출되었을 경우
 	// Phase_ 수치에 따라서 드럼통의 에니메이션(가열된 정도)이 변경되고,
@@ -34,6 +37,13 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+private:
 	void initCollision();
+
+public:
+	void DrumBoil(float kelvin);
+	void DrumExplode();
+	void DrumCollision(GameEngineCollision* Collider_);
+	bool DrumGroupCollision(int _Group_enum); // 외부 클레스에서 사용하여 충돌(폭발) 여부 파악
 };
 
