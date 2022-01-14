@@ -133,6 +133,10 @@ void UIImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("bazooka.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test1", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test2", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test3", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test4", Dir.PathToPlusFileName("hmissile.bmp"));
 
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))

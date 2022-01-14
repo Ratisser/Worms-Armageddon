@@ -15,7 +15,6 @@ private:
 
 private:
 	bool active_;
-	bool prevstate_;
 
 private:	// member Var
 	std::string weaponname_;

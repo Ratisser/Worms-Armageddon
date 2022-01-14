@@ -12,7 +12,6 @@ WeaponIcon::WeaponIcon() :
 	indexX_(-1),
 	indexY_(-1),
 	active_(false),
-	prevstate_(false),
 	weapontype_(eItemList::MAX),
 	activetargetpos_(float4::ZERO),
 	disabletargetpos_(float4::ZERO),
@@ -34,7 +33,6 @@ WeaponIcon::WeaponIcon(WeaponIcon&& _other) noexcept :
 	indexX_(_other.indexX_),
 	indexY_(_other.indexY_),
 	active_(_other.active_),
-	prevstate_(_other.prevstate_),
 	weapontype_(_other.weapontype_),
 	activetargetpos_(_other.activetargetpos_),
 	disabletargetpos_(_other.disabletargetpos_),
@@ -55,6 +53,7 @@ void WeaponIcon::SetWeaponName(const std::string& _Name)
 	if (nullptr == mainrenderer_)
 	{
 		mainrenderer_ = CreateRenderer(weaponname_);
+		mainrenderer_->SetRenderSize({ 28.f, 28.f });
 		mainrenderer_->SetCameraEffectOff();
 	}
 }
@@ -149,11 +148,6 @@ void WeaponIcon::Update()
 	if (false == moving_)
 	{
 		movepos_ = float4::ZERO;
-
-		if (prevstate_ != active_)
-		{
-			prevstate_ = active_;
-		}
 	}
 }
 

@@ -4,5 +4,9 @@ enum class eItemList
 {
 	ITEM_BAZOOKAR,
 	ITEM_HMISSILE,
+	ITEM_TEST1,
+	ITEM_TEST2,
+	ITEM_TEST3,
+	ITEM_TEST4,
 	MAX
 };

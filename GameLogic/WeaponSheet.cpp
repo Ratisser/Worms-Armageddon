@@ -170,35 +170,29 @@ void WeaponSheet::SetRenderPos(const float4& _Active, const float4& _Disable)
 	weaponnamelist_[0] = "bazooka";
 	weaponnamelist_[1] = "hmissile";
 
-	// Weapon Icon 목록을 생성한다
-	float4 PrevActivepos = float4({ Resolution.x - 143.f, Resolution.y - 424.f });
+	weaponnamelist_[2] = "test1";
+	weaponnamelist_[3] = "test2";
+	weaponnamelist_[4] = "test3";
+	weaponnamelist_[5] = "test4";
 
+	// Weapon Icon 목록을 생성한다
 	int Count = 0;
 	//for (int x = 0; x < static_cast<int>(weaponnamelist_.size()); ++x)
-	for (int x = 0; x < 1; ++x)
+	for (int x = 0; x < 5; ++x)
 	{
-		if (4 == x)
-		{
-			++Count;
-		}
-
 		// 신규 아이템아이콘 생성하며 기본 Off상태로설정됨
 		WeaponIcon* NewIcon = GetLevel()->CreateActor<WeaponIcon>();
 		NewIcon->SetWeaponName(weaponnamelist_[x]);
-		NewIcon->SetWeaponType(eItemList::ITEM_BAZOOKAR);
+		NewIcon->SetWeaponType(static_cast<eItemList>(x));
 		NewIcon->SetWeaponIndex(x, Count);
 
-		// Weapon Icon의 인덱스에따라 비활성/활성 위치 초기화(위치계산만들어야됨)
-		
-		float4 ActivePos = float4({ Resolution.x - 143.f + (x * 32.f), Resolution.y - 424.f + (Count * 32.f)});
-		
-		//float4 disEnablePos = float4({ Resolution.x + ((4 - x) * 32.f) - 143.f, Resolution.y - 424.f + (Count * 32.f) });
-		float4 disEnablePos = float4({ PrevActivepos.x + ((6 - x) * 32.f) + 8.f, Resolution.y - 424.f + (Count * 32.f) });
+		// Weapon Icon의 인덱스에따라 비활성/활성 위치 초기화
+		float4 ActivePos = float4({ Resolution.x - 142.f + ((float)x * 28.f) + (x + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1)}); // 활성화되었을때 위치계산
+		float4 disEnablePos = ActivePos;
+		disEnablePos.x = ActivePos.x + 200.f;
 		NewIcon->SetWeaponRenderPos(disEnablePos, ActivePos);
 
 		weaponiconlist_.insert(std::pair<std::string, WeaponIcon*>(weaponnamelist_[x], NewIcon));
-
-		PrevActivepos = ActivePos;
 	}
 }
 
