@@ -177,22 +177,30 @@ void WeaponSheet::SetRenderPos(const float4& _Active, const float4& _Disable)
 
 	// Weapon Icon 목록을 생성한다
 	int Count = 0;
-	//for (int x = 0; x < static_cast<int>(weaponnamelist_.size()); ++x)
-	for (int x = 0; x < 5; ++x)
+	int Index = 0;
+	for (int x = 0; x < static_cast<int>(weaponnamelist_.size()); ++x)
 	{
+		if (x % 5 == 0 && x != 0)
+		{
+			++Count;	// 5개 단위로 y값 변경
+			Index = 0;	// y값 변경되면 인덱스 초기화
+		}
+
 		// 신규 아이템아이콘 생성하며 기본 Off상태로설정됨
 		WeaponIcon* NewIcon = GetLevel()->CreateActor<WeaponIcon>();
 		NewIcon->SetWeaponName(weaponnamelist_[x]);
 		NewIcon->SetWeaponType(static_cast<eItemList>(x));
-		NewIcon->SetWeaponIndex(x, Count);
+		NewIcon->SetWeaponIndex(Index, Count);
 
 		// Weapon Icon의 인덱스에따라 비활성/활성 위치 초기화
-		float4 ActivePos = float4({ Resolution.x - 142.f + ((float)x * 28.f) + (x + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1)}); // 활성화되었을때 위치계산
+		float4 ActivePos = float4({ Resolution.x - 142.f + ((float)Index * 28.f) + (Index + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1)}); // 활성화되었을때 위치계산
 		float4 disEnablePos = ActivePos;
 		disEnablePos.x = ActivePos.x + 200.f;
 		NewIcon->SetWeaponRenderPos(disEnablePos, ActivePos);
 
 		weaponiconlist_.insert(std::pair<std::string, WeaponIcon*>(weaponnamelist_[x], NewIcon));
+
+		++Index;
 	}
 }
 
