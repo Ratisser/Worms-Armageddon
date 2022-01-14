@@ -39,7 +39,7 @@ void GameEngineDebugExtension::Release()
 	if (nullptr != debugWindow_)
 	{
 		delete debugWindow_;
-		debugWindow_;
+		debugWindow_ = nullptr;
 	}
 }
 
