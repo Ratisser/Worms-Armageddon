@@ -237,7 +237,7 @@ void WeaponSheet::CreateIconDefaultPos()
 		NewIcon->SetWeaponIndex(Index, Count);
 
 		// Weapon Icon의 인덱스에따라 비활성/활성 위치 초기화
-		float4 ActivePos = float4({ Resolution.x - 142.f + ((float)Index * 28.f) + (Index + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1) }); // 활성화되었을때 위치계산
+		float4 ActivePos = float4({ Resolution.x - 141.f + ((float)Index * 28.f) + (Index + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1) }); // 활성화되었을때 위치계산
 		float4 disEnablePos = ActivePos;
 		disEnablePos.x = ActivePos.x + 200.f;
 		NewIcon->SetWeaponRenderPos(disEnablePos, ActivePos);

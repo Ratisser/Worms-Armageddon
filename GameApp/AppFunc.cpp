@@ -131,6 +131,8 @@ void UIImageInit()
 		return;
 	}
 
+	GameEngineImage::GetInst().LoadGameImage("WeaponSelector", Dir.PathToPlusFileName("WeaponSelector.bmp"));
+
 	GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("bazooka.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
 
@@ -165,15 +167,6 @@ void UIImageInit()
 	GameEngineImage::GetInst().LoadGameImage("test28", Dir.PathToPlusFileName("bazooka.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("test29", Dir.PathToPlusFileName("hmissile.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("test30", Dir.PathToPlusFileName("bazooka.bmp"));
-
-	Dir.MoveParent("Worms-Armageddon");
-	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))
-	{
-		GameEngineDebug::AssertFalse();
-		return;
-	}
-
-	GameEngineImage::GetInst().LoadGameImage("SelectBox", Dir.PathToPlusFileName("1818.bmp"));
 }
 
 void CharactorImageInit()

@@ -2,6 +2,8 @@
 #include <GameEngineActor.h>
 #include "eItemList.h"
 
+#define WEAPON_MAX 65	// 무기 최대 개수
+
 // 분류 : 
 // 용도 : 
 // 설명 : 

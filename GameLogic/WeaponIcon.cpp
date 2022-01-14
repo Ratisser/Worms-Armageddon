@@ -102,8 +102,10 @@ void WeaponIcon::Start()
 	SetRenderOrder(10001);
 
 	// 선택렌더러 생성
-	selectrenderer_ = CreateRenderer("SelectBox");
-	selectrenderer_->Off();
+	//selectrenderer_ = CreateRenderer("WeaponSelector");
+	//selectrenderer_->SetRenderSize({ 28.f, 28.f });
+	//selectrenderer_->SetPivotPos(GetPos() * 0.5f);
+	//selectrenderer_->Off();
 
 	// 충돌체 생성
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
@@ -163,9 +165,9 @@ void WeaponIcon::Render()
 	}
 
 	// 마우스와 충돌했을때만 선택상자 렌더링
-	if (true == selectrenderer_->IsOn())
-	{
-		selectrenderer_->Render();
-	}
+	//if (true == selectrenderer_->IsOn())
+	//{
+	//	selectrenderer_->Render();
+	//}
 }
 
