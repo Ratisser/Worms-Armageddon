@@ -50,7 +50,7 @@ private:
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
-
+	const float BOTTOM_PIVOT = 14.f;
 private:
 	GameEngineRenderer* mainRender_;
 	GameEngineCollision* bottomCenterCollision_;

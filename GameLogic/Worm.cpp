@@ -32,6 +32,7 @@ Worm::~Worm() // default destructer µðÆúÆ® ¼Ò¸êÀÚ
 
 void Worm::Start()
 {
+	SetPos({ 1625.f, -235.f });
 	SetRenderOrder(100);
 	initRenderer();
 	initCollision();
@@ -43,20 +44,20 @@ void Worm::initRenderer()
 {
 	mainRender_ = CreateRenderer("walkRight.bmp");
 
-	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.1f);
-	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.1f);
+	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.033f);
+	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.033f);
 
-	mainRender_->CreateAnimation("JumpReadyLeft", "jumpReadyLeft.bmp", 0, 9, true, 0.03f);
-	mainRender_->CreateAnimation("JumpReadyRight", "jumpReadyRight.bmp", 0, 9, true, 0.03f);
+	mainRender_->CreateAnimation("JumpReadyLeft", "jumpReadyLeft.bmp", 0, 9, true, 0.033f);
+	mainRender_->CreateAnimation("JumpReadyRight", "jumpReadyRight.bmp", 0, 9, true, 0.033f);
 
-	mainRender_->CreateAnimation("FlyUpLeft", "flyUpLeft.bmp", 0, 1, true, 0.1f);
-	mainRender_->CreateAnimation("FlyUpRight", "flyUpRight.bmp", 0, 1, true, 0.1f);
+	mainRender_->CreateAnimation("FlyUpLeft", "flyUpLeft.bmp", 0, 1, true, 0.033f);
+	mainRender_->CreateAnimation("FlyUpRight", "flyUpRight.bmp", 0, 1, true, 0.033f);
 
-	mainRender_->CreateAnimation("FlyDownLeft", "flyDownLeft.bmp", 0, 1, true, 0.1f);
-	mainRender_->CreateAnimation("FlyDownRight", "flyDownRight.bmp", 0, 1, true, 0.1f);
+	mainRender_->CreateAnimation("FlyDownLeft", "flyDownLeft.bmp", 0, 1, true, 0.033f);
+	mainRender_->CreateAnimation("FlyDownRight", "flyDownRight.bmp", 0, 1, true, 0.033f);
 
-	mainRender_->CreateAnimation("FlyLinkLeft", "flyLinkLeft.bmp", 0, 6, true, 0.1f);
-	mainRender_->CreateAnimation("FlyLinkRight", "flyLinkRight.bmp", 0, 6, true, 0.1f);
+	mainRender_->CreateAnimation("FlyLinkLeft", "flyLinkLeft.bmp", 0, 6, true, 0.033f);
+	mainRender_->CreateAnimation("FlyLinkRight", "flyLinkRight.bmp", 0, 6, true, 0.033f);
 
 	mainRender_->CreateAnimation("IdleLeft", "idleLeft.bmp", 0, 5, true, 0.1f);
 	mainRender_->CreateAnimation("IdleRight", "idleRight.bmp", 0, 5, true, 0.1f);
@@ -88,11 +89,11 @@ void Worm::initCollision()
 {
 	bottomCenterCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	bottomCenterCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	bottomCenterCollision_->SetPivot({ 0.0f, 29.f });
+	bottomCenterCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 0 });
 
 	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCheckCollision_->SetPivot({ 0.0f, 30.f });
+	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 }
 
 void Worm::initState()
@@ -124,7 +125,7 @@ void Worm::normalMove(float _deltaTime)
 {
 	SetMove(speed_ * _deltaTime);
 
-	// ¶¥, ¸ð´ÏÅÍ¿¡ ¹ÚÈù°Í.
+	// ¶¥¿¡ ¹ÚÈù °Í
 	if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		while (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
@@ -135,24 +136,25 @@ void Worm::normalMove(float _deltaTime)
 	}
 	else
 	{
-		bottomCenterCollision_->SetPivot({ 0, 1 });
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 1 });
 		if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			// Á¤»ó ¶¥¿¡ µü ºÙ¾îÀÖ´Â »óÅÂ
-			bottomCenterCollision_->SetPivot({ 0, 0 });
+			bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
 			return;
 		}
 
-		bottomCenterCollision_->SetPivot({ 0, 3 });
+		// ³¶¶°·¯Áö¿¡ ¼¹´Ù
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 10 });
 		if (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			bGround_ = false;
-			bottomCenterCollision_->SetPivot({ 0, 0 });
+			bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
 			return;
 		}
 
 
-		bottomCenterCollision_->SetPivot({ 0, 0 });
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
 		// ¿©±â ¿ÔÀ¸¸é °æ»ç¶ó°í º»´Ù.
 		while (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
@@ -186,7 +188,7 @@ StateInfo Worm::updateIdle(StateInfo _state)
 		bLeft_ = true;
 		return "Walk";
 	}
-	
+
 	if (GameEngineInput::GetInst().IsDown("RightArrow"))
 	{
 		bLeft_ = false;
@@ -214,20 +216,42 @@ StateInfo Worm::startWalk(StateInfo _state)
 StateInfo Worm::updateWalk(StateInfo _state)
 {
 	addGravity(deltaTime_);
-	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
-	{
-		speed_.x = -MOVE_SPEED;
-	}
-	else if (GameEngineInput::GetInst().IsPress("RightArrow"))
-	{
-		speed_.x = MOVE_SPEED;
-	}
-	else
+
+
+	// ¶³¾îÁö´Â Áß
+	if (speed_.y > 0.0f)
 	{
 		speed_.x = 0.0f;
-		return "Idle";
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
+		}
 	}
-	//SetMove(speed_ * deltaTime_);
+	else // ¶¥¿¡ ¼­ÀÖ´Ù
+	{
+		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+		{
+			mainRender_->ChangeAnimation("WalkLeft", std::string("walkLeft.bmp"));
+			bLeft_ = true;
+			speed_.x = -MOVE_SPEED;
+		}
+		else if (GameEngineInput::GetInst().IsPress("RightArrow"))
+		{
+			mainRender_->ChangeAnimation("WalkRight", std::string("walkRight.bmp"));
+			bLeft_ = false;
+			speed_.x = MOVE_SPEED;
+		}
+		else
+		{
+			speed_.x = 0.0f;
+			return "Idle";
+		}
+	}
+
 	normalMove(deltaTime_);
 	return StateInfo();
 }
@@ -270,5 +294,7 @@ void Worm::UpdateAfter()
 void Worm::Render()
 {
 	mainRender_->Render();
+	//bottomCenterCollision_->DebugRender();
+	//groundCheckCollision_->DebugRender();
 }
 
