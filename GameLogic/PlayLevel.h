@@ -35,7 +35,6 @@ public:
 
 public:
 	void MakeWaterLevel();
-	void MakeWind();
 	void CreateGimmickObject();
 
 private:

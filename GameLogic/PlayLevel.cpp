@@ -262,8 +262,3 @@ void PlayLevel::CreateGimmickObject()
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 
 }
-
-void PlayLevel::MakeWind()
-{
-
-}

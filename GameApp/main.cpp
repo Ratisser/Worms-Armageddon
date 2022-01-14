@@ -39,7 +39,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GameEngineWindow::GetInst().CreateMainWindowClass(hInstance, "GameWindow");
 	GameEngineWindow::GetInst().CreateMainWindow("MyWindow", { 1280, 720 }, {0, 0});
 	GameEngineDebugExtension::DebugWindowOpen({ 500, 500 }, { 0, 0 });
-
+	
 	AppResourcesInit();
 
 	// 각 씬을 생성하고 로딩을 완료한후
