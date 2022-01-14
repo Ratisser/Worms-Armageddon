@@ -1,7 +1,7 @@
 #include "WindController.h"
 #include <GameEngineInput.h>
 WindController::WindController() // default constructer 디폴트 생성자
-	: windSpeed_(0.0f), fallSpeed_(0.0f), isDebugOn_(false)
+	: windSpeed_(0.0f), fallSpeed_(0.0f), isDebugOn_(false), windDir_(WindDir::NONE)
 {
 
 }
@@ -12,7 +12,7 @@ WindController::~WindController() // default destructer 디폴트 소멸자
 }
 
 WindController::WindController(WindController&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-	: windSpeed_(0.0f), fallSpeed_(0.0f), isDebugOn_(false)
+	: windSpeed_(0.0f), fallSpeed_(0.0f), isDebugOn_(false), windDir_(WindDir::NONE)
 {
 
 }
@@ -20,8 +20,9 @@ WindController::WindController(WindController&& _other) noexcept  // default RVa
 void WindController::SetWind(WindDir _windDir,float _windSpeed)
 {
 	windSpeed_ = randomGenerator_.RandomFloat(_windSpeed - 200.0f, _windSpeed + 200.0f);
-
-	switch (_windDir)
+	windDir_ = _windDir;
+	
+	switch (windDir_)
 	{
 	case WindDir::TOLEFT:
 		windSpeed_ *= -1.0f;
@@ -54,6 +55,7 @@ void WindController::Update()
 		if (true == isDebugOn_)
 		{
 			SetWind(WindDir::TOLEFT, 300.0f);
+			isDebugOn_ = false;
 			return;
 		}
 		isDebugOn_ = true;

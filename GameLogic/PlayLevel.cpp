@@ -136,6 +136,10 @@ void PlayLevel::LevelUpdate()
 	}
 
 	GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
+	GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
+
+
+
 }
 
 void PlayLevel::AJYLoading()
