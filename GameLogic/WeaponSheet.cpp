@@ -48,6 +48,12 @@ void WeaponSheet::Start()
 	SetRenderOrder(9999);
 	mainrenderer = CreateRenderer("WeaponSheet");
 	mainrenderer->SetCameraEffectOff();
+
+	// 마우스 제한된 위치이동 설정 및 마우스 생성
+	SetMouseObject();
+
+	// 아이콘 기본위치 설정 및 아이콘액터 생성
+	CreateIconDefaultPos();
 }
 
 void WeaponSheet::UpdateBefore()
@@ -155,25 +161,63 @@ void WeaponSheet::SetRenderPos(const float4& _Active, const float4& _Disable)
 	disabletargetpos_ = _Disable;
 
 	SetPos(disabletargetpos_);
+}
 
+void WeaponSheet::SetMouseObject()
+{
 	// 마우스 저장
 	float4 MouseRange = float4(activetargetpos_.x - (mainrenderer->GetImageSize().x * 0.5f), activetargetpos_.y - (mainrenderer->GetImageSize().y * 0.5f));
-
 	mouseobject_ = GetLevel()->CreateActor<MouseObject>();
 	mouseobject_->SetMoveRange(MouseRange, MouseRange + mainrenderer->GetImageSize());
 	mouseobject_->SetFinalPos(MouseRange); // 초기위치
 	mouseobject_->SetPos(MouseRange);
 	mouseobject_->Off();
+}
 
+void WeaponSheet::SetIconName()
+{
 	// Weapon Icon 이름목록을 생성한다
 	weaponnamelist_.resize(static_cast<int>(eItemList::MAX));
 	weaponnamelist_[0] = "bazooka";
 	weaponnamelist_[1] = "hmissile";
-
 	weaponnamelist_[2] = "test1";
 	weaponnamelist_[3] = "test2";
 	weaponnamelist_[4] = "test3";
 	weaponnamelist_[5] = "test4";
+	weaponnamelist_[6] = "test5";
+	weaponnamelist_[7] = "test6";
+	weaponnamelist_[8] = "test7";
+	weaponnamelist_[9] = "test8";
+	weaponnamelist_[10] = "test9";
+	weaponnamelist_[11] = "test10";
+	weaponnamelist_[12] = "test11";
+	weaponnamelist_[13] = "test12";
+	weaponnamelist_[14] = "test13";
+	weaponnamelist_[15] = "test14";
+	weaponnamelist_[16] = "test15";
+	weaponnamelist_[17] = "test16";
+	weaponnamelist_[18] = "test17";
+	weaponnamelist_[19] = "test18";
+	weaponnamelist_[20] = "test19";
+	weaponnamelist_[21] = "test20";
+	weaponnamelist_[22] = "test21";
+	weaponnamelist_[23] = "test22";
+	weaponnamelist_[24] = "test23";
+	weaponnamelist_[25] = "test24";
+	weaponnamelist_[26] = "test25";
+	weaponnamelist_[27] = "test26";
+	weaponnamelist_[28] = "test27";
+	weaponnamelist_[29] = "test28";
+	weaponnamelist_[30] = "test29";
+	weaponnamelist_[31] = "test30";
+}
+
+void WeaponSheet::CreateIconDefaultPos()
+{
+	float4 Resolution = GameEngineWindow::GetInst().GetSize();
+
+	// Weapon Icon 이름 설정
+	SetIconName();
 
 	// Weapon Icon 목록을 생성한다
 	int Count = 0;
@@ -193,7 +237,7 @@ void WeaponSheet::SetRenderPos(const float4& _Active, const float4& _Disable)
 		NewIcon->SetWeaponIndex(Index, Count);
 
 		// Weapon Icon의 인덱스에따라 비활성/활성 위치 초기화
-		float4 ActivePos = float4({ Resolution.x - 142.f + ((float)Index * 28.f) + (Index + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1)}); // 활성화되었을때 위치계산
+		float4 ActivePos = float4({ Resolution.x - 142.f + ((float)Index * 28.f) + (Index + 1), Resolution.y - 422.f + (Count * 28.f) + (Count + 1) }); // 활성화되었을때 위치계산
 		float4 disEnablePos = ActivePos;
 		disEnablePos.x = ActivePos.x + 200.f;
 		NewIcon->SetWeaponRenderPos(disEnablePos, ActivePos);

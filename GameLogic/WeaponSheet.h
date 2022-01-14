@@ -67,6 +67,11 @@ public:
 	void WeaponSheetActive();
 	void SetRenderPos(const float4& _Active, const float4& _Disable);
 
+public:
+	void SetMouseObject();
+	void SetIconName();
+	void CreateIconDefaultPos();
+
 public: // 플레이어가 들고있는 무기소유목록을 받아와서 무기아이콘목록생성
 	void CreateWeaponIconList(const std::map<std::string, Weapon*>& _WeaponList);
 

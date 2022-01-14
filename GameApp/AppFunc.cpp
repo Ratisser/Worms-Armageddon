@@ -133,10 +133,38 @@ void UIImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("bazooka.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
+
+	// test
 	GameEngineImage::GetInst().LoadGameImage("test1", Dir.PathToPlusFileName("bazooka.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("test2", Dir.PathToPlusFileName("hmissile.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("test3", Dir.PathToPlusFileName("bazooka.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("test4", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test5", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test6", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test7", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test8", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test9", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test10", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test11", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test12", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test13", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test14", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test15", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test16", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test17", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test18", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test19", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test20", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test21", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test22", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test23", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test24", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test25", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test26", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test27", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test28", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test29", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("test30", Dir.PathToPlusFileName("bazooka.bmp"));
 
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))
