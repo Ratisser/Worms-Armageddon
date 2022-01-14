@@ -9,7 +9,6 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	backGroundSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr)
 {
-	this->SetPos(GameEngineWindow::GetInst().GetSize().halffloat4());
 	SetRenderOrder(2);
 }
 

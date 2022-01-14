@@ -29,6 +29,19 @@ void GameEngineDebugExtension::DebugWindowOpen(float4 _Size, float4 _Scale)
 	if (nullptr == debugWindow_)
 	{
 		debugWindow_ = GameEngineWindow::CreateSubWindow("DebugWindow", _Size, _Scale);
+		return;
+	}
+	else if(nullptr != debugWindow_)
+	{
+		ShowWindow(debugWindow_->windowhandle_, SW_SHOW);
+	}
+}
+
+void GameEngineDebugExtension::DebugWindowClose()
+{
+	if (nullptr != debugWindow_)
+	{
+		ShowWindow(debugWindow_->windowhandle_, SW_HIDE);
 	}
 }
 

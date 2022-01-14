@@ -52,7 +52,7 @@ void WindController::UpdateBefore()
 void WindController::Update() 
 {
 	if (true == GameEngineInput::GetInst().IsDown("WindToggle"))
-	{
+	{	
 		if (true == isDebugOn_)
 		{
 			SetWind(WindDir::TOLEFT, 300.0f);
