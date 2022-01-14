@@ -20,6 +20,7 @@
 
 
 #include "BackgroundScatter.h"
+#include "Midground.h"
 #include "WindController.h"
 
 PlayLevel::PlayLevel() // default constructer 叼弃飘 积己磊
@@ -98,6 +99,9 @@ void PlayLevel::Loading()
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
 		newScatter->SetParent(windController_);
 	}
+	// 缔硅版 积己
+	CreateActor<Midground>();
+
 	// UI包府磊积己
 	CreateActor<UIController>();
 

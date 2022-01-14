@@ -8,7 +8,7 @@ BackgroundScatter::BackgroundScatter() // default constructer 디폴트 생성자
 : mainRender_(nullptr), spawnPos_({0,-1000.0f})
 {
 	this->SetPos({1,0});
-	SetRenderOrder(1);
+	SetRenderOrder(11);
 }
 
 BackgroundScatter::~BackgroundScatter() // default destructer 디폴트 소멸자

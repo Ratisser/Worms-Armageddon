@@ -85,6 +85,7 @@ void ResourceInitPJW()
 	}
 	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("LoadingSprites", Dir.PathToPlusFileName("LoadingSprites.bmp"));
 	loadingImage->Cut({ 160,160 });
+	GameEngineImage::GetInst().LoadGameImage("Midground", Dir.PathToPlusFileName("Midground.bmp"));
 
 	if (false == Dir.MoveChild("\\Misc\\"))
 	{
