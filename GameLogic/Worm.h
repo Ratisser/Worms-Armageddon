@@ -29,9 +29,9 @@ private:
 	void initCollision();
 	void initState();
 
-	void addGravity(float _deltaTime);
+	void addGravity();
 
-	void normalMove(float _deltaTime);
+	void normalMove();
 
 private:
 	StateInfo startIdle(StateInfo _state);
@@ -51,6 +51,7 @@ private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
 	const float BOTTOM_PIVOT = 14.f;
+	const float JUMP_POWER = 150.f;
 private:
 	GameEngineRenderer* mainRender_;
 	GameEngineCollision* bottomCenterCollision_;
@@ -64,6 +65,7 @@ private:
 
 	bool bLeft_;
 	bool bGround_;
+	bool bBackJump_;
 
 	float deltaTime_;
 };

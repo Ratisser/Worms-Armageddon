@@ -19,6 +19,7 @@ Worm::Worm()
 	, direction_(float4::RIGHT)
 	, bGround_(false)
 	, bLeft_(false)
+	, bBackJump_(false)
 	, state_(this)
 	, deltaTime_(0.0f)
 {
@@ -83,6 +84,10 @@ void Worm::initInput()
 	{
 		GameEngineInput::GetInst().CreateKey("RightArrow", VK_RIGHT);
 	}
+	if (false == GameEngineInput::GetInst().IsKey("Jump"))
+	{
+		GameEngineInput::GetInst().CreateKey("Jump", 'C');
+	}
 }
 
 void Worm::initCollision()
@@ -106,12 +111,12 @@ void Worm::initState()
 	state_.ChangeState("Idle");
 }
 
-void Worm::addGravity(float _deltaTime)
+void Worm::addGravity()
 {
 	if (nullptr == groundCheckCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		bGround_ = false;
-		speed_.y += GRAVITY_POWER * _deltaTime;
+		speed_.y += GRAVITY_POWER * deltaTime_;
 	}
 	else
 	{
@@ -121,9 +126,9 @@ void Worm::addGravity(float _deltaTime)
 	}
 }
 
-void Worm::normalMove(float _deltaTime)
+void Worm::normalMove()
 {
-	SetMove(speed_ * _deltaTime);
+	SetMove(speed_ * deltaTime_);
 
 	// ¶¥¿¡ ¹ÚÈù °Í
 	if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
@@ -145,7 +150,7 @@ void Worm::normalMove(float _deltaTime)
 		}
 
 		// ³¶¶°·¯Áö¿¡ ¼¹´Ù
-		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 10 });
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 5 });
 		if (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			bGround_ = false;
@@ -181,20 +186,26 @@ StateInfo Worm::startIdle(StateInfo _state)
 
 StateInfo Worm::updateIdle(StateInfo _state)
 {
-	addGravity(deltaTime_);
+	addGravity();
 
-	if (GameEngineInput::GetInst().IsDown("LeftArrow"))
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
 		bLeft_ = true;
 		return "Walk";
 	}
 
-	if (GameEngineInput::GetInst().IsDown("RightArrow"))
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
 	{
 		bLeft_ = false;
 		return "Walk";
 	}
-	normalMove(deltaTime_);
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		return "JumpReady";
+	}
+
+	normalMove();
 	return StateInfo();
 }
 
@@ -215,7 +226,7 @@ StateInfo Worm::startWalk(StateInfo _state)
 
 StateInfo Worm::updateWalk(StateInfo _state)
 {
-	addGravity(deltaTime_);
+	addGravity();
 
 
 	// ¶³¾îÁö´Â Áß
@@ -250,29 +261,95 @@ StateInfo Worm::updateWalk(StateInfo _state)
 			speed_.x = 0.0f;
 			return "Idle";
 		}
+
+		if (GameEngineInput::GetInst().IsDown("Jump"))
+		{
+			return "JumpReady";
+		}
 	}
 
-	normalMove(deltaTime_);
+	normalMove();
 	return StateInfo();
 }
 
 StateInfo Worm::startJumpReady(StateInfo _state)
 {
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("JumpReadyLeft", std::string("jumpReadyLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("JumpReadyRight", std::string("jumpReadyRight.bmp"));
+	}
 	return StateInfo();
 }
 
 StateInfo Worm::updateJumpReady(StateInfo _state)
 {
+	if (mainRender_->IsCurAnimationEnd())
+	{
+		return "Jump";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		bBackJump_ = true;
+	}
+
 	return StateInfo();
 }
 
 StateInfo Worm::startJump(StateInfo _state)
 {
+	if (bLeft_)
+	{
+		speed_.x = -JUMP_POWER;
+		speed_.y = -JUMP_POWER;
+		SetMove({ 0.0f, -6.f });
+		mainRender_->ChangeAnimation("FlyUpLeft", std::string("flyUpLeft.bmp"));
+	}
+	else
+	{
+		speed_.x = JUMP_POWER;
+		speed_.y = -JUMP_POWER;
+		SetMove({ 0.0f, -6.f });
+		mainRender_->ChangeAnimation("FlyUpRight", std::string("flyUpRight.bmp"));
+	}
+
+	if (bBackJump_)
+	{
+		speed_.x *= -1.0f;
+		bBackJump_ = false;
+	}
 	return StateInfo();
 }
 
 StateInfo Worm::updateJump(StateInfo _state)
 {
+	addGravity();
+
+	if (speed_.y > 0.0f)
+	{
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
+		}
+	}
+
+
+	if (nullptr != groundCheckCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		speed_ = { 0.0f, 0.0f };
+		return "Idle";
+	}
+
+	//SetMove(speed_ * deltaTime_);
+	normalMove();
 	return StateInfo();
 }
 
