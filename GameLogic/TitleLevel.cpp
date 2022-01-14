@@ -22,6 +22,7 @@ void TitleLevel::Loading()
 	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
 	{
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
+		GameEngineInput::GetInst().CreateKey("Debug_Toggle", VK_TAB);
 	}
 
 	CreateActor<TitleImage>();

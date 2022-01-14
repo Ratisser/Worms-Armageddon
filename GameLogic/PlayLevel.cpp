@@ -27,7 +27,8 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	Worm_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true),
-	windController_(nullptr)// default constructer 디폴트 생성자
+	windController_(nullptr),
+	isDebugOn_(true)// default constructer 디폴트 생성자
 {
 
 }
@@ -42,7 +43,8 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	Worm_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
-	,windController_(nullptr)  // default RValue Copy constructer 디폴트 RValue 복사생성자
+	,windController_(nullptr),
+	isDebugOn_(true)// default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
 }
@@ -107,6 +109,7 @@ void PlayLevel::Loading()
 void PlayLevel::LevelUpdate()
 {
 	AJYLevelUpdate();
+	PJWLevelUpdate();
 	float Speed = 5.f;
 
 
@@ -272,4 +275,21 @@ void PlayLevel::CreateGimmickObject()
 
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 
+}
+
+void PlayLevel::PJWLevelUpdate()
+{
+	if (true == GameEngineInput::GetInst().IsDown("Debug_Toggle"))
+	{
+		if (true == isDebugOn_)
+		{
+			GameEngineDebugExtension::DebugWindowClose();
+			
+			isDebugOn_ = false;
+			return;
+		}
+		GameEngineDebugExtension::DebugWindowOpen({ 500, 500 }, { 0, 0 });
+		isDebugOn_ = true;
+		return;
+	}
 }

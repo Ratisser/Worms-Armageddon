@@ -11,7 +11,7 @@ private:	// member Var
 	class MapTrain* Train_;
 	class Worm* Worm_;
 	bool IsCameraMove_;
-
+	bool isDebugOn_;
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
 	~PlayLevel(); // default destructer 디폴트 소멸자
@@ -39,5 +39,6 @@ public:
 private:
 	void AJYLoading();
 	void AJYLevelUpdate();
+	void PJWLevelUpdate();
 };
 
