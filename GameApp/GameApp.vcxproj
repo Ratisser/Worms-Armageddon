@@ -182,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\KeySetting.txt" />
+    <Text Include="에니메이션 호출 함수 예제 코드.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -28,5 +28,6 @@ public:
 
 public:
 	void SetAnimationCurrentFrame(const int _index);
+
 };
 

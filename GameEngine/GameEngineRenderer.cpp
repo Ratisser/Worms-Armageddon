@@ -18,6 +18,17 @@ GameEngineRenderer::FrameAnimation::FrameAnimation()
 
 }
 
+GameEngineRenderer::FrameAnimation::~FrameAnimation()
+{
+	auto iterfirst = FrameFunctionList_.begin();
+	auto iterEnd = FrameFunctionList_.end();
+	for (; iterfirst != iterEnd; ++iterfirst)
+	{
+		delete *iterfirst;
+		FrameFunctionList_.erase(iterfirst);
+	}
+}
+
 void GameEngineRenderer::FrameAnimation::Update()
 {
 	isend_ = false;
@@ -31,8 +42,28 @@ void GameEngineRenderer::FrameAnimation::Update()
 		++cur_;
 		// 프레임이 증가했다.
 		// 애니메이션의 끝을 넘겼어.
+
+
+		//에니메이션 프레임당 할당된 호출 함수가 있나 검사 및 실행;
+		auto iter1 = FrameFunctionList_.begin();
+		auto iter2 = FrameFunctionList_.end();
+		for (; iter1 != iter2; ++iter1)
+		{
+			if ((*iter1)->Frame_ == cur_)
+			{
+				(*iter1)->FrameFunction_();
+			}
+		}
+		//
+
+
 		if (end_ < cur_)
 		{
+			if (nullptr != EndFunction_)
+			{
+				EndFunction_(); // 에니메이션 종료시 호출 함수;
+			}
+
 			isend_ = true;
 			// 루프가 true면
 			if (true == loop_)
@@ -47,7 +78,6 @@ void GameEngineRenderer::FrameAnimation::Update()
 		}
 
 		curframeTime_ = frameTime_[cur_ - start_];
-
 	}
 
 	renderer_->SetCutIndex(cur_, pivot_);
@@ -83,9 +113,22 @@ GameEngineRenderer::~GameEngineRenderer()
 			continue;
 		}
 
+		// 에니메이션 프레임 호출 함수 소멸 : 이현
+		//int size = AniStart->second->vecNotify_.size();
+
+		//for (int i = 0; i < size; ++i)
+		//{
+		//	delete AniStart->second->vecNotify_[i];
+		//	AniStart->second->vecNotify_[i] = nullptr;
+
+		//}
+		//
+
 		delete AniStart->second;
 		AniStart->second = nullptr;
 	}
+
+
 
 	allAnimation_.clear();
 }

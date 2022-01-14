@@ -10,7 +10,9 @@
 #define MOVE_SPEED 100.f
 
 WaterLevel::WaterLevel() // default constructer 디폴트 생성자
-	:mainSpriteRender_(nullptr)
+	:mainSpriteRender_(nullptr),
+	waterLevel_(0.f)
+
 {
 }
 
@@ -20,7 +22,8 @@ WaterLevel::~WaterLevel() // default destructer 디폴트 소멸자
 }
 
 WaterLevel::WaterLevel(WaterLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-	:mainSpriteRender_(nullptr)
+	:mainSpriteRender_(nullptr),
+	waterLevel_(0.f)
 {
 }
 

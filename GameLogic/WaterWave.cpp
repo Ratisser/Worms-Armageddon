@@ -23,8 +23,9 @@ void WaterWave::Start()
 {
 	mainSpriteRender_ = CreateRenderer("Water_sprite");
 	mainSpriteRender_->CreateAnimation("Start", "Water_sprite", 0, 10, true, 0.1f);
-
 	mainSpriteRender_->ChangeAnimation("Start");
+
+
 }
 
 void WaterWave::UpdateBefore()
