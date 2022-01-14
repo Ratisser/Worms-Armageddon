@@ -30,11 +30,9 @@ void UIController::SetCurPlayer(Worm* _curplayer)
 	curplayer_ = _curplayer;
 }
 
-void UIController::SetCurItemList(const std::map<std::string, Weapon*>& _WeaponList)
+void UIController::CreateWeaponList(const std::vector<eItemList>& _weaponlist)
 {
-	// 플레이어로부터 받아온 아이템목록을
-	// WeaponSheet에 넘겨준다.
-	weaponsheet_->CreateWeaponIconList(_WeaponList);
+	weaponsheet_->CreateWeaponIconList(_weaponlist);
 }
 
 void UIController::Start()

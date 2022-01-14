@@ -1,5 +1,6 @@
 #include "MouseObject.h"
 #include "eCollisionGroup.h"
+#include "WeaponSheet.h"
 
 #include <GameEngineLevel.h>
 #include <GameEngineRenderer.h>
@@ -7,6 +8,7 @@
 
 #include <GameEngineWindow.h>
 #include <GameEngineTime.h>
+#include <GameEngineInput.h>
 
 MouseObject::MouseObject() :
 	mainrenderer_(nullptr),
@@ -75,6 +77,21 @@ void MouseObject::Start()
 
 void MouseObject::UpdateBefore()
 {
+	// 무기창 활성화되었을때 무기아이콘과 충돌상태일때
+	// 마우스왼쪽버튼 클릭시 해당 무기 선택으로판단하여 현재채택무기를 변경하고
+	// 무기창을 비활성화시킨다.
+	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::UI));
+	if (nullptr != ColUI)
+	{
+		// 마우스왼쪽버튼클릭일때
+		//if (true == GameEngineInput::GetInst().IsDown(""))
+		//{
+		//	// 플레이어에게 현재무기 타입을 넘겨주고,
+
+		//	// 현재 무기창을 비활성화 시킨다.
+
+		//}
+	}
 }
 
 void MouseObject::Update()
@@ -82,80 +99,90 @@ void MouseObject::Update()
 	// 위치 갱신(단, 이동범위를 벗어나면 갱신안함)
 	float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
 
-	// 범위지정이 되있다면
-	if (MousePos.x >= startrange_.x && MousePos.x <= endrange_.x &&
-		MousePos.y >= startrange_.y && MousePos.y <= endrange_.y)
+	// 무기창이 활성화되면 지정된범위 밖으로 커서 이동불가
+	// 무기창이 비활성화면 자유롭게 이동
+	if (true == WeaponSheet::isweaponsheet())
+	{
+		// 범위지정이 되있다면
+		if (MousePos.x >= startrange_.x && MousePos.x <= endrange_.x &&
+			MousePos.y >= startrange_.y && MousePos.y <= endrange_.y)
+		{
+			SetPos(MousePos);
+		}
+
+		if (MousePos.y <= startrange_.y)
+		{
+			if (MousePos.x <= startrange_.x)
+			{
+				SetPos(float4(startrange_.x, startrange_.y));
+			}
+			else if (MousePos.x >= endrange_.x)
+			{
+				SetPos(float4(endrange_.x, endrange_.y));
+			}
+			else
+			{
+				SetPos(float4(MousePos.x, startrange_.y));
+			}
+		}
+
+		if (MousePos.y >= endrange_.y)
+		{
+			if (MousePos.x <= startrange_.x)
+			{
+				SetPos(float4(startrange_.x, endrange_.y));
+			}
+			else if (MousePos.x >= endrange_.x)
+			{
+				SetPos(float4(endrange_.x, endrange_.y));
+			}
+			else
+			{
+				SetPos(float4(MousePos.x, endrange_.y));
+			}
+		}
+
+		if (MousePos.x <= startrange_.x)
+		{
+			if (MousePos.y <= startrange_.y)
+			{
+				SetPos(float4(startrange_.x, startrange_.y));
+			}
+			else if (MousePos.y >= endrange_.y)
+			{
+				SetPos(float4(startrange_.x, endrange_.y));
+			}
+			else
+			{
+				SetPos(float4(startrange_.x, MousePos.y));
+			}
+		}
+
+		if (MousePos.x >= endrange_.x)
+		{
+			if (MousePos.y <= startrange_.y)
+			{
+				SetPos(float4(endrange_.x, startrange_.y));
+			}
+			else if (MousePos.y >= endrange_.y)
+			{
+				SetPos(float4(endrange_.x, endrange_.y));
+			}
+			else
+			{
+				SetPos(float4(endrange_.x, MousePos.y));
+			}
+		}
+	}
+	else
 	{
 		SetPos(MousePos);
-	}
-
-	if (MousePos.y <= startrange_.y)
-	{
-		if (MousePos.x <= startrange_.x)
-		{
-			SetPos(float4(startrange_.x, startrange_.y));
-		}
-		else if (MousePos.x >= endrange_.x)
-		{
-			SetPos(float4(endrange_.x, endrange_.y));
-		}
-		else
-		{
-			SetPos(float4(MousePos.x, startrange_.y));
-		}
-	}
-
-	if (MousePos.y >= endrange_.y)
-	{
-		if (MousePos.x <= startrange_.x)
-		{
-			SetPos(float4(startrange_.x, endrange_.y));
-		}
-		else if (MousePos.x >= endrange_.x)
-		{
-			SetPos(float4(endrange_.x, endrange_.y));
-		}
-		else
-		{
-			SetPos(float4(MousePos.x, endrange_.y));
-		}
-	}
-
-	if (MousePos.x <= startrange_.x)
-	{
-		if (MousePos.y <= startrange_.y)
-		{
-			SetPos(float4(startrange_.x, startrange_.y));
-		}
-		else if (MousePos.y >= endrange_.y)
-		{
-			SetPos(float4(startrange_.x, endrange_.y));
-		}
-		else
-		{
-			SetPos(float4(startrange_.x, MousePos.y));
-		}
-	}
-
-	if (MousePos.x >= endrange_.x)
-	{
-		if (MousePos.y <= startrange_.y)
-		{
-			SetPos(float4(endrange_.x, startrange_.y));
-		}
-		else if (MousePos.y >= endrange_.y)
-		{
-			SetPos(float4(endrange_.x, endrange_.y));
-		}
-		else
-		{
-			SetPos(float4(endrange_.x, MousePos.y));
-		}
 	}
 }
 
 void MouseObject::UpdateAfter()
 {
+
 }
 
 void MouseObject::Render()

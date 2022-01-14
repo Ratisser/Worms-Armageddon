@@ -194,7 +194,7 @@ public:		//delete operator
 	GameEngineRenderer& operator=(const GameEngineRenderer&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:		//member Func
-	void SetCutIndex(size_t _Index, RENDERPIVOT _Pivot = RENDERPIVOT::CENTER);
+	void SetCutIndex(size_t _Index, RENDERPIVOT _Pivot = RENDERPIVOT::LEFTTOP);
 	void Render();
 
 private:

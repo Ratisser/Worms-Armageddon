@@ -56,7 +56,17 @@ public:
 
 public:
 	GameEngineCollision* GetCurIconCol() const;
+	eItemList GetWeaponType() const;
+	const std::string& GetWeaponName() const;
+
+public:
 	void SetActive(bool _Active);
+	void SelWeapon();
+	void SetMainRendererOn();
+	void SetMainRendererOff();
+	
+public: // 아이템아이콘활성화여부체크
+	bool IsMainrendererOn();
 
 public:
 	virtual void Start() override;

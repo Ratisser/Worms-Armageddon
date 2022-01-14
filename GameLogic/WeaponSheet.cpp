@@ -3,6 +3,7 @@
 
 #include "MouseObject.h"
 #include "WeaponIcon.h"
+#include "Weapon.h"
 
 #include <GameEngineLevel.h>
 #include <GameEngineRenderer.h>
@@ -10,6 +11,13 @@
 
 #include <GameEngineWindow.h>
 #include <GameEngineTime.h>
+
+bool WeaponSheet::weaponsheetactive_ = false;
+
+bool WeaponSheet::isweaponsheet()
+{
+	return weaponsheetactive_;
+}
 
 WeaponSheet::WeaponSheet() :
 	active_(false),
@@ -74,10 +82,14 @@ void WeaponSheet::Update()
 		else
 		{
 			moving_ = false;
+			weaponsheetactive_ = true;
 		}
 	}
 	else // 활성화 -> 비활성화
 	{
+		// 비활성시에는 바로 마우스위치 제자리로돌린다.
+		weaponsheetactive_ = false;
+
 		if (disabletargetpos_.x >= GetPos().x)
 		{
 			movepos_ += float4::RIGHT * GameEngineTime::GetInst().GetDeltaTime();
@@ -93,7 +105,6 @@ void WeaponSheet::Update()
 		// 비활성화시에는 바로 Off시킴
 		if (true == prevstate_)
 		{
-			mouseobject_->Off();
 			mouseobject_->SetFinalPos(mouseobject_->GetPos());
 		}
 	}
@@ -105,12 +116,6 @@ void WeaponSheet::Update()
 
 		if (prevstate_ != active_)
 		{
-			if (true == active_)
-			{
-				mouseobject_->On();
-				mouseobject_->MoveMousePos();
-			}
-
 			prevstate_ = active_;
 		}
 	}
@@ -120,11 +125,6 @@ void WeaponSheet::UpdateAfter()
 {
 }
 
-void WeaponSheet::Collision()
-{	
-
-}
-
 void WeaponSheet::Render()
 {
 	mainrenderer->Render();
@@ -132,6 +132,7 @@ void WeaponSheet::Render()
 
 void WeaponSheet::WeaponSheetActive()
 {
+	// 객체마다의 활성화/비활성화 여부 설정
 	if (false == active_)
 	{
 		active_ = true;
@@ -171,7 +172,6 @@ void WeaponSheet::SetMouseObject()
 	mouseobject_->SetMoveRange(MouseRange, MouseRange + mainrenderer->GetImageSize());
 	mouseobject_->SetFinalPos(MouseRange); // 초기위치
 	mouseobject_->SetPos(MouseRange);
-	mouseobject_->Off();
 }
 
 void WeaponSheet::SetIconName()
@@ -248,25 +248,48 @@ void WeaponSheet::CreateIconDefaultPos()
 	}
 }
 
-void WeaponSheet::CreateWeaponIconList(const std::map<std::string, Weapon*>& _WeaponList)
+void WeaponSheet::CreateWeaponIconList(const std::vector<eItemList>& _WeaponList)
 {
-	// 플레이어로부터 받은 아이템목록을 이용하여 활성화된 아이템아이콘을 생성하며 위치계산을 하여 초기 위치를 설정
-	std::map<std::string, Weapon*> CurWeaponList = _WeaponList;
-
-	std::map<std::string, Weapon*>::iterator ListStart = CurWeaponList.begin();
-	std::map<std::string, Weapon*>::iterator ListEnd = CurWeaponList.end();
-	for (; ListStart != ListEnd; ++ListStart)
+	// 수신한 무기활성화 갯수 임시저장
+	std::vector<eItemList> ActiveWeapon = _WeaponList;
+	size_t ActiveWeaponCnt = ActiveWeapon.size();
+	size_t SearchCnt = 0;
+	for (size_t i = 0; i < ActiveWeaponCnt; ++i)
 	{
-		// 아이템 명
+		// 전체항목을 반복해서 모두 찾았다면 해당 반복은 중단
+		if (SearchCnt >= ActiveWeaponCnt)
+		{
+			break;
+		}
 
+		std::map<std::string, WeaponIcon*>::iterator StartIter = weaponiconlist_.begin();
+		std::map<std::string, WeaponIcon*>::iterator EndIter = weaponiconlist_.end();
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			// 활성화된 무기의 타입이같고, 해당 무기아이콘이 비활성화상태(이미찾은항목을 다시찾는경우의수제거)라면
+			if (ActiveWeapon[i] == StartIter->second->GetWeaponType() && false == StartIter->second->IsMainrendererOn())
+			{
+				// 해당 무기아이콘 활성화상태
+				StartIter->second->SetMainRendererOn();
 
+				// 실제 무기정보목록 생성(초기생성)
+				// 아이템 개수는 일단 3개 고정
+				Weapon* NewWeapon = new Weapon();
+				NewWeapon->SetItemSpec(StartIter->first, ActiveWeapon[i], 3, true);
+				weapon_.insert(std::pair<eItemList, Weapon*>(ActiveWeapon[i], NewWeapon));
 
-
+				// 활성화된 목록을 찾아내서 활성화시킨뒤, 다시 활성화목록을 탐색
+				++SearchCnt;
+				i = 0;
+				StartIter = weaponiconlist_.begin();
+				break;
+			}
+		}
 	}
+}
 
-	
-
-
-
+Weapon* WeaponSheet::GetCruWeapon()
+{
+	return nullptr;
 }
 

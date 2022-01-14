@@ -2,6 +2,8 @@
 #include <map>
 #include <GameEngineActor.h>
 
+#include "eItemList.h"
+
 class GameEngineRenderer;
 class GameEngineCollision;
 class MouseObject;
@@ -9,6 +11,12 @@ class WeaponIcon;
 class Weapon;
 class WeaponSheet : public GameEngineActor
 {
+private:
+	static bool weaponsheetactive_;
+
+public:
+	static bool isweaponsheet();
+
 private:
 	bool active_;
 	bool prevstate_;
@@ -19,11 +27,13 @@ private:	// member Var
 private: // 마우스충돌 관련
 	MouseObject* mouseobject_;
 
-private: // 아이템 목록
+private: // 무기아이콘 목록
 	std::map<std::string, WeaponIcon*> weaponiconlist_;
 	std::vector<std::string> weaponnamelist_;
-	
 
+private: // 실질적인 무기관리
+	std::map<eItemList, Weapon*> weapon_;
+	
 private:
 	float4 activetargetpos_;
 	float4 disabletargetpos_;
@@ -50,7 +60,6 @@ public:
 	virtual void UpdateBefore() override;
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
-	virtual void Collision() override;
 	virtual void Render() override;
 
 public:
@@ -73,7 +82,9 @@ public:
 	void CreateIconDefaultPos();
 
 public: // 플레이어가 들고있는 무기소유목록을 받아와서 무기아이콘목록생성
-	void CreateWeaponIconList(const std::map<std::string, Weapon*>& _WeaponList);
+	void CreateWeaponIconList(const std::vector<eItemList>& _WeaponList);
 
+public: // 실질적인 무기목록(관리용)관련
+	Weapon* GetCruWeapon();
 };
 

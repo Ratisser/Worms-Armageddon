@@ -135,6 +135,7 @@ void UIImageInit()
 	GameEngineImage::GetInst().LoadGameImage("WeaponSelector", Dir.PathToPlusFileName("WeaponSelector.bmp"));
 
 	GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("bazooka.bmp"));
+	//GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("WeaponSelector.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
 
 	// test

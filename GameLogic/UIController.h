@@ -1,11 +1,13 @@
 #pragma once
 #include <map>
+#include <vector>
 #include <GameEngineActor.h>
+
+#include "eItemList.h"
 
 // 구조 : 플레이어가 UIController를 객체로 가지며 해당 객체에 아이템목록을 넘겨주면
 //        해당 UIController가 해당 목록을 WeaponSheet에 넘기며
 //        수신한 WeaponSheet가 WeaponIcon 목록을 만들어서 관리한다.
-//         플레이어가 가지는 무기목록 : 가지고있는 무기의 번호 목록
 class Worm;
 class WeaponSheet;
 class Weapon;
@@ -15,7 +17,6 @@ private:	// member Var
 	Worm* curplayer_;	// 현재 해당 제어관리자를 사용하는 객체
 
 private:	// 관리하는 모든 UI
-
 	// Weapon Sheet 관련
 	WeaponSheet* weaponsheet_;
 
@@ -33,7 +34,7 @@ private:		//delete operator
 
 public:
 	void SetCurPlayer(Worm* _curplayer);
-	void SetCurItemList(const std::map<std::string, Weapon*>& _WeaponList);
+	void CreateWeaponList(const std::vector<eItemList>& _weaponlist);
 
 public:
 	virtual void Start() override;
