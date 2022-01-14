@@ -30,6 +30,9 @@ void MapTrain::Start()
 	backGroundSpriteRender_ = CreateRenderer("Ground");
 	mainSpriteRender_ = CreateRenderer("MapTrain");
 	boomSpriteRender_ = CreateRenderer("Boom");
+
+	float4 imageSize = mainSpriteRender_->GetImageSize();
+	mainSpriteRender_->SetPivotPos(imageSize.halffloat4());
 }
 
 void MapTrain::UpdateBefore()

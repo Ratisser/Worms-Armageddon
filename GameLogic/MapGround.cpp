@@ -22,6 +22,8 @@ MapGround::~MapGround()
 void MapGround::Start()
 {
 	mainRenderer_ = CreateRenderer("MapGround");
+	float4 imageSize = mainRenderer_->GetImageSize();
+	mainRenderer_->SetPivotPos(imageSize.halffloat4());
 
 	bodyCollision_ = CreateCollision(eCollisionGroup::MAP, CollisionCheckType::IMAGE);
 	bodyCollision_->SetImage("MapGround");
