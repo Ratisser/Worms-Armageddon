@@ -28,9 +28,8 @@ public:
 	void Loading() override;
 	void LevelUpdate() override;
 
-	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
-	
 public:
+	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
 	WindController* windController_;
 
 public:

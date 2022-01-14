@@ -7,6 +7,8 @@ class WaterLevel : public GameEngineActor
 {
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
+	float waterLevel_;
+
 public:
 	WaterLevel(); // default constructer 디폴트 생성자
 	~WaterLevel(); // default destructer 디폴트 소멸자
@@ -33,6 +35,9 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
-private:
-	int waterLevel_;
+public:
+	const float GetWaterLevel()
+	{
+		return waterLevel_;
+	}
 };
