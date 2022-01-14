@@ -32,4 +32,7 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+private:
+	int waterLevel_;
 };
