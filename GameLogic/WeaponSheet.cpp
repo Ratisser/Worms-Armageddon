@@ -49,9 +49,6 @@ void WeaponSheet::Start()
 	mainrenderer = CreateRenderer("WeaponSheet");
 	mainrenderer->SetCameraEffectOff();
 
-	// 마우스 제한된 위치이동 설정 및 마우스 생성
-	SetMouseObject();
-
 	// 아이콘 기본위치 설정 및 아이콘액터 생성
 	CreateIconDefaultPos();
 }
@@ -161,6 +158,9 @@ void WeaponSheet::SetRenderPos(const float4& _Active, const float4& _Disable)
 	disabletargetpos_ = _Disable;
 
 	SetPos(disabletargetpos_);
+
+	// 마우스 제한된 위치이동 설정 및 마우스 생성
+	SetMouseObject();
 }
 
 void WeaponSheet::SetMouseObject()
