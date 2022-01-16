@@ -5,9 +5,6 @@
 
 #include "eItemList.h"
 
-// 구조 : 플레이어가 UIController를 객체로 가지며 해당 객체에 아이템목록을 넘겨주면
-//        해당 UIController가 해당 목록을 WeaponSheet에 넘기며
-//        수신한 WeaponSheet가 WeaponIcon 목록을 만들어서 관리한다.
 class Worm;
 class WeaponSheet;
 class Weapon;
@@ -32,9 +29,16 @@ private:		//delete operator
 	UIController& operator=(const UIController& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	UIController& operator=(const UIController&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
+public: // 플레이어가 객체 생성시 반드시 설정해야하는 항목
+	void SetCurPlayer(Worm* _curplayer);																	// 플레이어설정
+	void CreateWeaponList(const std::vector<eItemList>& _weaponlist);			// 가지고있는 무기목록설정(최초설정시)
+	
+public: // 플레이어가 기믹오브젝트 획득 또는 아이템사용시 설정해야하는 항목
+	void AddWeapon(eItemList _Weapon);																// 기믹오브젝트에 의해 무기를 획득했을때
+	void UseWeapon(eItemList _Weapon);																// 무기를 사용했을때
+
 public:
-	void SetCurPlayer(Worm* _curplayer);
-	void CreateWeaponList(const std::vector<eItemList>& _weaponlist);
+	Worm* GetCurPlayer() const;
 
 public:
 	virtual void Start() override;

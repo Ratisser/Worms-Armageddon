@@ -132,43 +132,100 @@ void UIImageInit()
 		return;
 	}
 
+	// 무기선택박스
 	GameEngineImage::GetInst().LoadGameImage("WeaponSelector", Dir.PathToPlusFileName("WeaponSelector.bmp"));
 
-	GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("bazooka.bmp"));
-	//GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("WeaponSelector.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
+	// 무기창의 무기목록
+	// Weapon Sheet Utile Line
+	GameEngineImage::GetInst().LoadGameImage("jetpack", Dir.PathToPlusFileName("jetpack.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("gravity", Dir.PathToPlusFileName("gravity.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("speed", Dir.PathToPlusFileName("speed.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("laser", Dir.PathToPlusFileName("laser.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("invisibl", Dir.PathToPlusFileName("invisibl.bmp"));
 
-	// test
-	GameEngineImage::GetInst().LoadGameImage("test1", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test2", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test3", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test4", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test5", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test6", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test7", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test8", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test9", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test10", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test11", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test12", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test13", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test14", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test15", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test16", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test17", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test18", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test19", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test20", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test21", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test22", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test23", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test24", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test25", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test26", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test27", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test28", Dir.PathToPlusFileName("bazooka.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test29", Dir.PathToPlusFileName("hmissile.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("test30", Dir.PathToPlusFileName("bazooka.bmp"));
+	// Weapon Sheet F1 Line
+	GameEngineImage::GetInst().LoadGameImage("bazooka", Dir.PathToPlusFileName("bazooka.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("hmissile", Dir.PathToPlusFileName("hmissile.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("mortar", Dir.PathToPlusFileName("mortar.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("pigeon", Dir.PathToPlusFileName("pigeon.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("launch", Dir.PathToPlusFileName("launch.bmp"));
+
+	// Weapon Sheet F2 Line
+	GameEngineImage::GetInst().LoadGameImage("grenade", Dir.PathToPlusFileName("grenade.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("cluster", Dir.PathToPlusFileName("cluster.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("banana", Dir.PathToPlusFileName("banana.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("axe", Dir.PathToPlusFileName("axe.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("quake", Dir.PathToPlusFileName("quake.bmp"));
+
+	// Weapon Sheet F3 Line
+	GameEngineImage::GetInst().LoadGameImage("shotgun", Dir.PathToPlusFileName("shotgun.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("handgun", Dir.PathToPlusFileName("handgun.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("uzi", Dir.PathToPlusFileName("uzi.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("minigun", Dir.PathToPlusFileName("minigun.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("longbow", Dir.PathToPlusFileName("longbow.bmp"));
+
+	// Weapon Sheet F4 Line
+	GameEngineImage::GetInst().LoadGameImage("firepnch", Dir.PathToPlusFileName("firepnch.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("dragball", Dir.PathToPlusFileName("dragball.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("kamikaze", Dir.PathToPlusFileName("kamikaze.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("suicide", Dir.PathToPlusFileName("suicide.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("prod", Dir.PathToPlusFileName("prod.bmp"));
+
+	// Weapon Sheet F5 Line
+	GameEngineImage::GetInst().LoadGameImage("dynamite", Dir.PathToPlusFileName("dynamite.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("mine", Dir.PathToPlusFileName("mine.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("sheep", Dir.PathToPlusFileName("sheep.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("aqua", Dir.PathToPlusFileName("aqua.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("mole", Dir.PathToPlusFileName("mole.bmp"));
+
+	// Weapon Sheet F6 Line
+	GameEngineImage::GetInst().LoadGameImage("airstrke", Dir.PathToPlusFileName("airstrke.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("firestrk", Dir.PathToPlusFileName("firestrk.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("postal", Dir.PathToPlusFileName("postal.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("minestrk", Dir.PathToPlusFileName("minestrk.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("molestrk", Dir.PathToPlusFileName("molestrk.bmp"));
+
+	// Weapon Sheet F7 Line
+	GameEngineImage::GetInst().LoadGameImage("blwtorch", Dir.PathToPlusFileName("blwtorch.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("drill", Dir.PathToPlusFileName("drill.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("girder", Dir.PathToPlusFileName("girder.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("baseball", Dir.PathToPlusFileName("baseball.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("girders", Dir.PathToPlusFileName("girders.bmp"));
+
+	// Weapon Sheet F8 Line
+	GameEngineImage::GetInst().LoadGameImage("rope", Dir.PathToPlusFileName("rope.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("bungee", Dir.PathToPlusFileName("bungee.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("parachut", Dir.PathToPlusFileName("parachut.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("teleport", Dir.PathToPlusFileName("teleport.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("scales", Dir.PathToPlusFileName("scales.bmp"));
+
+	// Weapon Sheet F9 Line
+	GameEngineImage::GetInst().LoadGameImage("sbanana", Dir.PathToPlusFileName("sbanana.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("hgrenade", Dir.PathToPlusFileName("hgrenade.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("thrower", Dir.PathToPlusFileName("thrower.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("tamborin", Dir.PathToPlusFileName("tamborin.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("mbbomb", Dir.PathToPlusFileName("mbbomb.bmp"));
+
+	// Weapon Sheet F10 Line
+	GameEngineImage::GetInst().LoadGameImage("petrolbm", Dir.PathToPlusFileName("petrolbm.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("skunk", Dir.PathToPlusFileName("skunk.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("mingvase", Dir.PathToPlusFileName("mingvase.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("shpstrke", Dir.PathToPlusFileName("shpstrke.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("carpet", Dir.PathToPlusFileName("carpet.bmp"));
+
+	// Weapon Sheet F11 Line
+	GameEngineImage::GetInst().LoadGameImage("cow", Dir.PathToPlusFileName("cow.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("oldwoman", Dir.PathToPlusFileName("oldwoman.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("donkey", Dir.PathToPlusFileName("donkey.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("nuke", Dir.PathToPlusFileName("nuke.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("armagedn", Dir.PathToPlusFileName("armagedn.bmp"));
+
+	// Weapon Sheet F12 Line
+	GameEngineImage::GetInst().LoadGameImage("skipgo", Dir.PathToPlusFileName("skipgo.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("surender", Dir.PathToPlusFileName("surender.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("select", Dir.PathToPlusFileName("select.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("freeze", Dir.PathToPlusFileName("freeze.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("bullet", Dir.PathToPlusFileName("bullet.bmp"));
 }
 
 void CharactorImageInit()

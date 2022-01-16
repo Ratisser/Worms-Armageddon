@@ -2,15 +2,17 @@
 #include <GameEngineActor.h>
 #include "eItemList.h"
 
-#define WEAPON_MAX 65	// 무기 최대 개수
-
 // 분류 : 
 // 용도 : 
 // 설명 : 
 class GameEngineRenderer;
 class GameEngineCollision;
+class WeaponSheet;
 class WeaponIcon : public GameEngineActor
 {
+private: // 본인이 속한 WeaponSheet
+	WeaponSheet* parentsheet_;
+
 private:
 	int indexX_;
 	int indexY_;
@@ -58,8 +60,10 @@ public:
 	GameEngineCollision* GetCurIconCol() const;
 	eItemList GetWeaponType() const;
 	const std::string& GetWeaponName() const;
+	WeaponSheet* GetParentSheet() const;
 
 public:
+	void SetParentSheet(WeaponSheet* _Sheet);
 	void SetActive(bool _Active);
 	void SelWeapon();
 	void SetMainRendererOn();

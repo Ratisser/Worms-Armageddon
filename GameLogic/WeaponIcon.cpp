@@ -1,4 +1,5 @@
 #include "WeaponIcon.h"
+#include "WeaponSheet.h"
 #include "eCollisionGroup.h"
 
 #include <GameEngineLevel.h>
@@ -9,6 +10,7 @@
 #include <GameEngineTime.h>
 
 WeaponIcon::WeaponIcon() :
+	parentsheet_(nullptr),
 	indexX_(-1),
 	indexY_(-1),
 	active_(false),
@@ -30,6 +32,7 @@ WeaponIcon::~WeaponIcon() // default destructer 디폴트 소멸자
 }
 
 WeaponIcon::WeaponIcon(WeaponIcon&& _other) noexcept :
+	parentsheet_(_other.parentsheet_),
 	indexX_(_other.indexX_),
 	indexY_(_other.indexY_),
 	active_(_other.active_),
@@ -51,6 +54,7 @@ void WeaponIcon::SetWeaponName(const std::string& _Name)
 	weaponname_ = _Name;
 	SetName(_Name);
 
+	// 해당 무기 최초 비활성화상태로 렌더
 	if (nullptr == mainrenderer_)
 	{
 		SetRenderOrder(10001);
@@ -103,6 +107,16 @@ eItemList WeaponIcon::GetWeaponType() const
 const std::string& WeaponIcon::GetWeaponName() const
 {
 	return weaponname_;
+}
+
+WeaponSheet* WeaponIcon::GetParentSheet() const
+{
+	return parentsheet_;
+}
+
+void WeaponIcon::SetParentSheet(WeaponSheet* _Sheet)
+{
+	parentsheet_ = _Sheet;
 }
 
 void WeaponIcon::SetActive(bool _Active)
@@ -216,10 +230,10 @@ void WeaponIcon::Render()
 	if (nullptr != mainrenderer_)
 	{
 		// 임시주석 : 아이템아이콘은 기본을 off상태로 설정예정
-		//if (true == mainrenderer_->IsOn())
-		//{
+		if (true == mainrenderer_->IsOn())
+		{
 			mainrenderer_->Render();
-		//}
+		}
 	}
 }
 
