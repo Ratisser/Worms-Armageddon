@@ -27,6 +27,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Midground.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BackgroundScatter.h">
       <SubType>
       </SubType>
@@ -154,6 +158,10 @@
     <ClInclude Include="eCollisionCheckColor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Midground.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BackgroundScatter.cpp">
       <SubType>
       </SubType>
@@ -273,6 +281,9 @@
       <SubType>
       </SubType>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="UIController사용법.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

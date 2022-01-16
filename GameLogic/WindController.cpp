@@ -1,6 +1,5 @@
 #include "WindController.h"
 #include <GameEngineInput.h>
-#include <GameEngineDebugExtension.h>
 WindController::WindController() // default constructer 디폴트 생성자
 	: windSpeed_(0.0f), fallSpeed_(0.0f), isDebugOn_(false), windDir_(WindDir::NONE)
 {

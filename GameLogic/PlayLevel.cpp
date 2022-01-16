@@ -24,6 +24,7 @@
 #include "Explosion.h"
 
 #include "BackgroundScatter.h"
+#include "Midground.h"
 #include "WindController.h"
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
@@ -31,7 +32,8 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	Worm_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true),
-	windController_(nullptr)// default constructer 디폴트 생성자
+	windController_(nullptr),
+	isDebugOn_(true)// default constructer 디폴트 생성자
 {
 
 }
@@ -46,7 +48,8 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	Worm_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
-	,windController_(nullptr)  // default RValue Copy constructer 디폴트 RValue 복사생성자
+	,windController_(nullptr),
+	isDebugOn_(true)// default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
 }
@@ -100,8 +103,19 @@ void PlayLevel::Loading()
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
 		newScatter->SetParent(windController_);
 	}
+	// 뒷배경 생성
+	CreateActor<Midground>();
+
 	// UI관리자생성
-	CreateActor<UIController>();
+	UIController* CurUIController = CreateActor<UIController>();
+	CurUIController->SetCurPlayer(Worm_);
+	std::vector<eItemList> ItemListTest;
+	ItemListTest.resize(2);
+	ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
+	ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
+	CurUIController->CreateWeaponList(ItemListTest);									// 플레이어가 처음 가지고있는 아이템목록(최초지정)
+	CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
+	//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
 
 	MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	CreateGimmickObject();
@@ -111,6 +125,7 @@ void PlayLevel::Loading()
 void PlayLevel::LevelUpdate()
 {
 	AJYLevelUpdate();
+	PJWLevelUpdate();
 	float Speed = 5.f;
 
 
@@ -141,6 +156,8 @@ void PlayLevel::LevelUpdate()
 
 	{
 		// 디버깅 출력 내용입니다.
+		GameEngineDebugExtension::PrintDebugWindowText("Resolution : ", GameEngineWindow::GetInst().GetSize().x, " X ", GameEngineWindow::GetInst().GetSize().y);
+
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Worm_->GetPos().x, ", Pos Y : ", Worm_->GetPos().y);
@@ -148,7 +165,7 @@ void PlayLevel::LevelUpdate()
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", "0", ", Pos Y : ", "0");
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", "0", ", Pos Y : ", "0");
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
-		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", ", NumberofTides : ", WaterLevel_->Waterlist.size());
+		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
 
 	
@@ -272,9 +289,23 @@ void PlayLevel::CreateGimmickObject()
 {
 	DrumActor* DrumActor1 = CreateActor<DrumActor>();
 
-	CreateActor<EffectBundle::Explosion::Size100>();
-
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 
 }
 
+void PlayLevel::PJWLevelUpdate()
+{
+	if (true == GameEngineInput::GetInst().IsDown("Debug_Toggle"))
+	{
+		if (true == isDebugOn_)
+		{
+			GameEngineDebugExtension::DebugWindowClose();
+			
+			isDebugOn_ = false;
+			return;
+		}
+		GameEngineDebugExtension::DebugWindowOpen({ 500, 500 }, { 0, 0 });
+		isDebugOn_ = true;
+		return;
+	}
+}

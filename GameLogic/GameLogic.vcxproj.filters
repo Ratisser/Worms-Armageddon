@@ -67,6 +67,12 @@
     <Filter Include="Actor\EffectActor\EffectBundle\Explosion">
       <UniqueIdentifier>{2a87addd-d575-4183-b412-a2ae74c22fbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Mouse">
+      <UniqueIdentifier>{23215ac4-852a-4709-a9fe-fe46da056843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\Controller">
+      <UniqueIdentifier>{53203308-5d0e-4dce-a11d-6a1b4d69204a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -108,12 +114,6 @@
     <ClInclude Include="LoadingImage.h">
       <Filter>Actor\LoadingLevel</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponSheet.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIController.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
     <ClInclude Include="eCollisionCheckColor.h">
       <Filter>Enum</Filter>
     </ClInclude>
@@ -127,12 +127,6 @@
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="BottomNameTag.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseObject.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="WeaponIcon.h">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
@@ -183,6 +177,21 @@
     <ClInclude Include="EffectBundleActor.h">
       <Filter>Actor\EffectActor\EffectBundle</Filter>
     </ClInclude>
+    <ClInclude Include="Midground.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponIcon.h">
+      <Filter>Actor\PlayLevel\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSheet.h">
+      <Filter>Actor\PlayLevel\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseObject.h">
+      <Filter>Actor\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="UIController.h">
+      <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -221,12 +230,6 @@
     <ClCompile Include="LoadingImage.cpp">
       <Filter>Actor\LoadingLevel</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponSheet.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIController.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
     <ClCompile Include="BackgroundScatter.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
@@ -239,17 +242,11 @@
     <ClCompile Include="BottomNameTag.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
-    <ClCompile Include="MouseObject.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
     <ClCompile Include="DrumActor.cpp">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
     </ClCompile>
     <ClCompile Include="WindController.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
-    </ClCompile>
-    <ClCompile Include="WeaponIcon.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Actor\PlayLevel\Weapon</Filter>
@@ -290,5 +287,25 @@
     <ClCompile Include="EffectBundleActor.cpp">
       <Filter>Actor\EffectActor\EffectBundle</Filter>
     </ClCompile>
+    <ClCompile Include="Midground.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponIcon.cpp">
+      <Filter>Actor\PlayLevel\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSheet.cpp">
+      <Filter>Actor\PlayLevel\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseObject.cpp">
+      <Filter>Actor\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="UIController.cpp">
+      <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="UIController사용법.txt">
+      <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -202,7 +202,6 @@ GameEngineWindow* GameEngineWindow::CreateSubWindow(const std::string& _titlenam
     // 윈도우를 한번 갱신해줘.
     UpdateWindow(NewWindow->windowhandle_);
 
-
     NewWindow->devicecontext_ = ::GetDC(NewWindow->windowhandle_);
     // MainWindow전용이라 해주면 안됩니다.
     // GameEngineImage::GetInst().InitializeWindowImage(Devicecontext);

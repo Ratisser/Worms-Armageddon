@@ -19,6 +19,7 @@ Worm::Worm()
 	, direction_(float4::RIGHT)
 	, bGround_(false)
 	, bLeft_(false)
+	, bBackJump_(false)
 	, state_(this)
 	, deltaTime_(0.0f)
 {
@@ -32,6 +33,7 @@ Worm::~Worm() // default destructer µðÆúÆ® ¼Ò¸êÀÚ
 
 void Worm::Start()
 {
+	SetPos({ 1625.f, -235.f });
 	SetRenderOrder(100);
 	initRenderer();
 	initCollision();
@@ -43,20 +45,20 @@ void Worm::initRenderer()
 {
 	mainRender_ = CreateRenderer("walkRight.bmp");
 
-	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.1f);
-	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.1f);
+	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.033f);
+	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.033f);
 
-	mainRender_->CreateAnimation("JumpReadyLeft", "jumpReadyLeft.bmp", 0, 9, true, 0.03f);
-	mainRender_->CreateAnimation("JumpReadyRight", "jumpReadyRight.bmp", 0, 9, true, 0.03f);
+	mainRender_->CreateAnimation("JumpReadyLeft", "jumpReadyLeft.bmp", 0, 9, true, 0.033f);
+	mainRender_->CreateAnimation("JumpReadyRight", "jumpReadyRight.bmp", 0, 9, true, 0.033f);
 
-	mainRender_->CreateAnimation("FlyUpLeft", "flyUpLeft.bmp", 0, 1, true, 0.1f);
-	mainRender_->CreateAnimation("FlyUpRight", "flyUpRight.bmp", 0, 1, true, 0.1f);
+	mainRender_->CreateAnimation("FlyUpLeft", "flyUpLeft.bmp", 0, 1, true, 0.033f);
+	mainRender_->CreateAnimation("FlyUpRight", "flyUpRight.bmp", 0, 1, true, 0.033f);
 
-	mainRender_->CreateAnimation("FlyDownLeft", "flyDownLeft.bmp", 0, 1, true, 0.1f);
-	mainRender_->CreateAnimation("FlyDownRight", "flyDownRight.bmp", 0, 1, true, 0.1f);
+	mainRender_->CreateAnimation("FlyDownLeft", "flyDownLeft.bmp", 0, 1, true, 0.033f);
+	mainRender_->CreateAnimation("FlyDownRight", "flyDownRight.bmp", 0, 1, true, 0.033f);
 
-	mainRender_->CreateAnimation("FlyLinkLeft", "flyLinkLeft.bmp", 0, 6, true, 0.1f);
-	mainRender_->CreateAnimation("FlyLinkRight", "flyLinkRight.bmp", 0, 6, true, 0.1f);
+	mainRender_->CreateAnimation("FlyLinkLeft", "flyLinkLeft.bmp", 0, 6, true, 0.033f);
+	mainRender_->CreateAnimation("FlyLinkRight", "flyLinkRight.bmp", 0, 6, true, 0.033f);
 
 	mainRender_->CreateAnimation("IdleLeft", "idleLeft.bmp", 0, 5, true, 0.1f);
 	mainRender_->CreateAnimation("IdleRight", "idleRight.bmp", 0, 5, true, 0.1f);
@@ -82,17 +84,21 @@ void Worm::initInput()
 	{
 		GameEngineInput::GetInst().CreateKey("RightArrow", VK_RIGHT);
 	}
+	if (false == GameEngineInput::GetInst().IsKey("Jump"))
+	{
+		GameEngineInput::GetInst().CreateKey("Jump", 'C');
+	}
 }
 
 void Worm::initCollision()
 {
 	bottomCenterCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	bottomCenterCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	bottomCenterCollision_->SetPivot({ 0.0f, 29.f });
+	bottomCenterCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 0 });
 
 	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCheckCollision_->SetPivot({ 0.0f, 30.f });
+	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 }
 
 void Worm::initState()
@@ -105,12 +111,12 @@ void Worm::initState()
 	state_.ChangeState("Idle");
 }
 
-void Worm::addGravity(float _deltaTime)
+void Worm::addGravity()
 {
 	if (nullptr == groundCheckCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		bGround_ = false;
-		speed_.y += GRAVITY_POWER * _deltaTime;
+		speed_.y += GRAVITY_POWER * deltaTime_;
 	}
 	else
 	{
@@ -120,11 +126,11 @@ void Worm::addGravity(float _deltaTime)
 	}
 }
 
-void Worm::normalMove(float _deltaTime)
+void Worm::normalMove()
 {
-	SetMove(speed_ * _deltaTime);
+	SetMove(speed_ * deltaTime_);
 
-	// ¶¥, ¸ð´ÏÅÍ¿¡ ¹ÚÈù°Í.
+	// ¶¥¿¡ ¹ÚÈù °Í
 	if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		while (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
@@ -135,24 +141,25 @@ void Worm::normalMove(float _deltaTime)
 	}
 	else
 	{
-		bottomCenterCollision_->SetPivot({ 0, 1 });
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 1 });
 		if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			// Á¤»ó ¶¥¿¡ µü ºÙ¾îÀÖ´Â »óÅÂ
-			bottomCenterCollision_->SetPivot({ 0, 0 });
+			bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
 			return;
 		}
 
-		bottomCenterCollision_->SetPivot({ 0, 3 });
+		// ³¶¶°·¯Áö¿¡ ¼¹´Ù
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 5 });
 		if (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			bGround_ = false;
-			bottomCenterCollision_->SetPivot({ 0, 0 });
+			bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
 			return;
 		}
 
 
-		bottomCenterCollision_->SetPivot({ 0, 0 });
+		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
 		// ¿©±â ¿ÔÀ¸¸é °æ»ç¶ó°í º»´Ù.
 		while (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
@@ -179,20 +186,26 @@ StateInfo Worm::startIdle(StateInfo _state)
 
 StateInfo Worm::updateIdle(StateInfo _state)
 {
-	addGravity(deltaTime_);
+	addGravity();
 
-	if (GameEngineInput::GetInst().IsDown("LeftArrow"))
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
 		bLeft_ = true;
 		return "Walk";
 	}
-	
-	if (GameEngineInput::GetInst().IsDown("RightArrow"))
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
 	{
 		bLeft_ = false;
 		return "Walk";
 	}
-	normalMove(deltaTime_);
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		return "JumpReady";
+	}
+
+	normalMove();
 	return StateInfo();
 }
 
@@ -213,42 +226,130 @@ StateInfo Worm::startWalk(StateInfo _state)
 
 StateInfo Worm::updateWalk(StateInfo _state)
 {
-	addGravity(deltaTime_);
-	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
-	{
-		speed_.x = -MOVE_SPEED;
-	}
-	else if (GameEngineInput::GetInst().IsPress("RightArrow"))
-	{
-		speed_.x = MOVE_SPEED;
-	}
-	else
+	addGravity();
+
+
+	// ¶³¾îÁö´Â Áß
+	if (speed_.y > 0.0f)
 	{
 		speed_.x = 0.0f;
-		return "Idle";
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
+		}
 	}
-	//SetMove(speed_ * deltaTime_);
-	normalMove(deltaTime_);
+	else // ¶¥¿¡ ¼­ÀÖ´Ù
+	{
+		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+		{
+			mainRender_->ChangeAnimation("WalkLeft", std::string("walkLeft.bmp"));
+			bLeft_ = true;
+			speed_.x = -MOVE_SPEED;
+		}
+		else if (GameEngineInput::GetInst().IsPress("RightArrow"))
+		{
+			mainRender_->ChangeAnimation("WalkRight", std::string("walkRight.bmp"));
+			bLeft_ = false;
+			speed_.x = MOVE_SPEED;
+		}
+		else
+		{
+			speed_.x = 0.0f;
+			return "Idle";
+		}
+
+		if (GameEngineInput::GetInst().IsDown("Jump"))
+		{
+			return "JumpReady";
+		}
+	}
+
+	normalMove();
 	return StateInfo();
 }
 
 StateInfo Worm::startJumpReady(StateInfo _state)
 {
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("JumpReadyLeft", std::string("jumpReadyLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("JumpReadyRight", std::string("jumpReadyRight.bmp"));
+	}
 	return StateInfo();
 }
 
 StateInfo Worm::updateJumpReady(StateInfo _state)
 {
+	if (mainRender_->IsCurAnimationEnd())
+	{
+		return "Jump";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		bBackJump_ = true;
+	}
+
 	return StateInfo();
 }
 
 StateInfo Worm::startJump(StateInfo _state)
 {
+	if (bLeft_)
+	{
+		speed_.x = -JUMP_POWER;
+		speed_.y = -JUMP_POWER;
+		SetMove({ 0.0f, -6.f });
+		mainRender_->ChangeAnimation("FlyUpLeft", std::string("flyUpLeft.bmp"));
+	}
+	else
+	{
+		speed_.x = JUMP_POWER;
+		speed_.y = -JUMP_POWER;
+		SetMove({ 0.0f, -6.f });
+		mainRender_->ChangeAnimation("FlyUpRight", std::string("flyUpRight.bmp"));
+	}
+
+	if (bBackJump_)
+	{
+		speed_.x *= -1.0f;
+		bBackJump_ = false;
+	}
 	return StateInfo();
 }
 
 StateInfo Worm::updateJump(StateInfo _state)
 {
+	addGravity();
+
+	if (speed_.y > 0.0f)
+	{
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
+		}
+	}
+
+
+	if (nullptr != groundCheckCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		speed_ = { 0.0f, 0.0f };
+		return "Idle";
+	}
+
+	//SetMove(speed_ * deltaTime_);
+	normalMove();
 	return StateInfo();
 }
 
@@ -270,5 +371,7 @@ void Worm::UpdateAfter()
 void Worm::Render()
 {
 	mainRender_->Render();
+	//bottomCenterCollision_->DebugRender();
+	//groundCheckCollision_->DebugRender();
 }
 

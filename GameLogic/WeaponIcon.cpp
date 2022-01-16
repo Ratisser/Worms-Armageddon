@@ -1,4 +1,5 @@
 #include "WeaponIcon.h"
+#include "WeaponSheet.h"
 #include "eCollisionGroup.h"
 
 #include <GameEngineLevel.h>
@@ -9,6 +10,7 @@
 #include <GameEngineTime.h>
 
 WeaponIcon::WeaponIcon() :
+	parentsheet_(nullptr),
 	indexX_(-1),
 	indexY_(-1),
 	active_(false),
@@ -21,7 +23,7 @@ WeaponIcon::WeaponIcon() :
 	mainrenderer_(nullptr),
 	selectrenderer_(nullptr),
 	maincollision_(nullptr)
-{\
+{
 }
 
 WeaponIcon::~WeaponIcon() // default destructer 디폴트 소멸자
@@ -30,6 +32,7 @@ WeaponIcon::~WeaponIcon() // default destructer 디폴트 소멸자
 }
 
 WeaponIcon::WeaponIcon(WeaponIcon&& _other) noexcept :
+	parentsheet_(_other.parentsheet_),
 	indexX_(_other.indexX_),
 	indexY_(_other.indexY_),
 	active_(_other.active_),
@@ -49,12 +52,16 @@ void WeaponIcon::SetWeaponName(const std::string& _Name)
 {
 	// 이름이 설정될때 렌더링객체를 지정
 	weaponname_ = _Name;
+	SetName(_Name);
 
+	// 해당 무기 최초 비활성화상태로 렌더
 	if (nullptr == mainrenderer_)
 	{
+		SetRenderOrder(10001);
 		mainrenderer_ = CreateRenderer(weaponname_);
 		mainrenderer_->SetRenderSize({ 28.f, 28.f });
 		mainrenderer_->SetCameraEffectOff();
+		mainrenderer_->Off();
 	}
 }
 
@@ -92,27 +99,78 @@ GameEngineCollision* WeaponIcon::GetCurIconCol() const
 	return maincollision_;
 }
 
+eItemList WeaponIcon::GetWeaponType() const
+{
+	return weapontype_;
+}
+
+const std::string& WeaponIcon::GetWeaponName() const
+{
+	return weaponname_;
+}
+
+WeaponSheet* WeaponIcon::GetParentSheet() const
+{
+	return parentsheet_;
+}
+
+void WeaponIcon::SetParentSheet(WeaponSheet* _Sheet)
+{
+	parentsheet_ = _Sheet;
+}
+
 void WeaponIcon::SetActive(bool _Active)
 {
 	active_ = _Active;
 }
 
+void WeaponIcon::SelWeapon()
+{
+	// 현재 마우스와 충돌한 무기선택박스 활성화
+	selectrenderer_->On();
+}
+
+void WeaponIcon::SetMainRendererOn()
+{
+	mainrenderer_->On();
+}
+
+void WeaponIcon::SetMainRendererOff()
+{
+	mainrenderer_->Off();
+}
+
+bool WeaponIcon::IsMainrendererOn()
+{
+	return mainrenderer_->IsOn();
+}
+
 void WeaponIcon::Start()
 {
-	SetRenderOrder(10001);
-
 	// 선택렌더러 생성
-	//selectrenderer_ = CreateRenderer("WeaponSelector");
-	//selectrenderer_->SetRenderSize({ 28.f, 28.f });
-	//selectrenderer_->SetPivotPos(GetPos() * 0.5f);
-	//selectrenderer_->Off();
+	selectrenderer_ = CreateRenderer("WeaponSelector");
+	selectrenderer_->SetRenderSize({ 26.f, 26.f });
+	selectrenderer_->SetImagePivot({ 15.f, 15.f });
+	selectrenderer_->SetCameraEffectOff();
+	selectrenderer_->Off();
 
 	// 충돌체 생성
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
+	maincollision_->SetSize({ 26.f, 26.f });
 }
 
 void WeaponIcon::UpdateBefore()
 {
+	// 마우스와 충돌체크
+	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
+	if (nullptr != ColUI)
+	{
+		selectrenderer_->On();
+	}
+	else
+	{
+		selectrenderer_->Off();
+	}
 }
 
 void WeaponIcon::Update()
@@ -159,15 +217,23 @@ void WeaponIcon::UpdateAfter()
 
 void WeaponIcon::Render()
 {
-	if (nullptr != mainrenderer_)
+	// 마우스와 충돌했을때만 선택상자 렌더링
+	if (nullptr != selectrenderer_)
 	{
-		mainrenderer_->Render();
+		// 선택상자는 초기 off상태
+		if (true == selectrenderer_->IsOn())
+		{
+			selectrenderer_->Render();
+		}
 	}
 
-	// 마우스와 충돌했을때만 선택상자 렌더링
-	//if (true == selectrenderer_->IsOn())
-	//{
-	//	selectrenderer_->Render();
-	//}
+	if (nullptr != mainrenderer_)
+	{
+		// 임시주석 : 아이템아이콘은 기본을 off상태로 설정예정
+		if (true == mainrenderer_->IsOn())
+		{
+			mainrenderer_->Render();
+		}
+	}
 }
 

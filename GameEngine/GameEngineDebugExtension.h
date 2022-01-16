@@ -16,7 +16,7 @@ public:
 
 public:	// member Var
 	static void DebugWindowOpen(float4 _Size, float4 _Scale);
-
+	static void DebugWindowClose();
 	static void Release();
 
 private:		

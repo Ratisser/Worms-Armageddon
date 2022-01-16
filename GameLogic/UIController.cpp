@@ -30,11 +30,25 @@ void UIController::SetCurPlayer(Worm* _curplayer)
 	curplayer_ = _curplayer;
 }
 
-void UIController::SetCurItemList(const std::map<std::string, Weapon*>& _WeaponList)
+void UIController::CreateWeaponList(const std::vector<eItemList>& _weaponlist)
 {
-	// 플레이어로부터 받아온 아이템목록을
-	// WeaponSheet에 넘겨준다.
-	weaponsheet_->CreateWeaponIconList(_WeaponList);
+	// 각각의 플레이어마다의 무기리스트 생성
+	weaponsheet_->CreateWeaponIconList(_weaponlist);
+}
+
+void UIController::AddWeapon(eItemList _Weapon)
+{
+	weaponsheet_->AddWeapon(_Weapon);
+}
+
+void UIController::UseWeapon(eItemList _Weapon)
+{
+	weaponsheet_->UseWeapon(_Weapon);
+}
+
+Worm* UIController::GetCurPlayer() const
+{
+	return curplayer_;
 }
 
 void UIController::Start()
@@ -42,10 +56,16 @@ void UIController::Start()
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
 
 	// UI별 액터 생성
-	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();
-	float4 ActivePos = float4({ Resolution.x - 100.f, Resolution.y - 240.f });
-	float4 DisablePos = float4({ Resolution.x + 100.f, Resolution.y - 240.f });
-	weaponsheet_->SetRenderPos(ActivePos, DisablePos);
+	// Weapon Sheet 생성
+	float4 ActivePos = float4({ Resolution.x - 100.f, Resolution.y - 240.f });		// WeaponSheet ActivePos(활성화위치)
+	float4 DisablePos = float4({ Resolution.x + 100.f, Resolution.y - 240.f });	// WeaponSheet DisablePos(비활성화위치)
+	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
+	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정
+	weaponsheet_->SetParentController(this);														// 해당 WeaponSheet를 생성한 UIController 저장
+
+	// ...
+
+
 
 	// UI별 키생성
 	if (false == GameEngineInput::GetInst().IsKey("WeaponSheet"))
