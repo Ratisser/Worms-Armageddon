@@ -19,7 +19,8 @@ void Effect::Flame1::Start()
 	mainSpriteRender_->CreateAnimation("Flame1", "Flame1", 0, 7, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Flame1");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Flame1", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Flame1", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Flame1::UpdateBefore()
@@ -59,7 +60,8 @@ void Effect::Flame2::Start()
 	mainSpriteRender_->CreateAnimation("Flame2", "Flame2", 0, 7, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Flame2");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Flame2", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Flame2", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Flame2::UpdateBefore()

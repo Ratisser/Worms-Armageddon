@@ -40,38 +40,38 @@
     <Filter Include="Actor\PlayLevel\Effect">
       <UniqueIdentifier>{69f89989-73f7-4bca-a3e9-e400a91cc847}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\EffectActor">
-      <UniqueIdentifier>{a6515c33-f7df-48b3-833b-94ee274ea89b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\EffectBundle">
-      <UniqueIdentifier>{4f80e2e2-f00f-431c-9283-b18dc47afde8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\Effect">
-      <UniqueIdentifier>{16d22a7e-5b67-4168-a5d4-434f633993a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\Effect\Circle">
-      <UniqueIdentifier>{b98effd3-a5a9-4e5c-bf4b-673c92203b19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\Effect\Elipse">
-      <UniqueIdentifier>{31299e6f-b18d-47a5-9b1d-04367eb6ade1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\Effect\Flame">
-      <UniqueIdentifier>{c961afde-e5e5-43b2-aa5f-02a1432f4d13}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\Effect\Smkdrk">
-      <UniqueIdentifier>{51964ce9-8a5e-4f5f-982d-a1212d84f4d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\Effect\Smkit">
-      <UniqueIdentifier>{a20ecfa7-dfd0-426a-a2cc-b6a881a9453c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Actor\EffectActor\EffectBundle\Explosion">
-      <UniqueIdentifier>{2a87addd-d575-4183-b412-a2ae74c22fbb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\Mouse">
       <UniqueIdentifier>{23215ac4-852a-4709-a9fe-fe46da056843}</UniqueIdentifier>
     </Filter>
     <Filter Include="Actor\PlayLevel\UI\Controller">
       <UniqueIdentifier>{53203308-5d0e-4dce-a11d-6a1b4d69204a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect">
+      <UniqueIdentifier>{a6515c33-f7df-48b3-833b-94ee274ea89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor">
+      <UniqueIdentifier>{16d22a7e-5b67-4168-a5d4-434f633993a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\Circle">
+      <UniqueIdentifier>{b98effd3-a5a9-4e5c-bf4b-673c92203b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\Elipse">
+      <UniqueIdentifier>{31299e6f-b18d-47a5-9b1d-04367eb6ade1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\Flame">
+      <UniqueIdentifier>{c961afde-e5e5-43b2-aa5f-02a1432f4d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\Smkdrk">
+      <UniqueIdentifier>{51964ce9-8a5e-4f5f-982d-a1212d84f4d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\Smkit">
+      <UniqueIdentifier>{a20ecfa7-dfd0-426a-a2cc-b6a881a9453c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\02. EffectBundleActor">
+      <UniqueIdentifier>{4f80e2e2-f00f-431c-9283-b18dc47afde8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Effect\02. EffectBundleActor\Explosion">
+      <UniqueIdentifier>{2a87addd-d575-4183-b412-a2ae74c22fbb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -154,28 +154,28 @@
       <Filter>Actor\WaterLevel</Filter>
     </ClInclude>
     <ClInclude Include="EffectSmklt.h">
-      <Filter>Actor\EffectActor\Effect\Smkit</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Smkit</Filter>
     </ClInclude>
     <ClInclude Include="EffectSmkdrk.h">
-      <Filter>Actor\EffectActor\Effect\Smkdrk</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Smkdrk</Filter>
     </ClInclude>
     <ClInclude Include="EffectFlame.h">
-      <Filter>Actor\EffectActor\Effect\Flame</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Flame</Filter>
     </ClInclude>
     <ClInclude Include="EffectElipse.h">
-      <Filter>Actor\EffectActor\Effect\Elipse</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Elipse</Filter>
     </ClInclude>
     <ClInclude Include="EffectCircle.h">
-      <Filter>Actor\EffectActor\Effect\Circle</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Circle</Filter>
     </ClInclude>
     <ClInclude Include="Explosion.h">
-      <Filter>Actor\EffectActor\EffectBundle\Explosion</Filter>
+      <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClInclude>
     <ClInclude Include="EffectActor.h">
-      <Filter>Actor\EffectActor\Effect</Filter>
+      <Filter>Actor\Effect\01. EffectActor</Filter>
     </ClInclude>
     <ClInclude Include="EffectBundleActor.h">
-      <Filter>Actor\EffectActor\EffectBundle</Filter>
+      <Filter>Actor\Effect\02. EffectBundleActor</Filter>
     </ClInclude>
     <ClInclude Include="Midground.h">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -264,28 +264,28 @@
       <Filter>Actor\WaterLevel</Filter>
     </ClCompile>
     <ClCompile Include="EffectSmklt.cpp">
-      <Filter>Actor\EffectActor\Effect\Smkit</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Smkit</Filter>
     </ClCompile>
     <ClCompile Include="EffectSmkdrk.cpp">
-      <Filter>Actor\EffectActor\Effect\Smkdrk</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Smkdrk</Filter>
     </ClCompile>
     <ClCompile Include="EffectFlame.cpp">
-      <Filter>Actor\EffectActor\Effect\Flame</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Flame</Filter>
     </ClCompile>
     <ClCompile Include="EffectElipse.cpp">
-      <Filter>Actor\EffectActor\Effect\Elipse</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Elipse</Filter>
     </ClCompile>
     <ClCompile Include="EffectCircle.cpp">
-      <Filter>Actor\EffectActor\Effect\Circle</Filter>
+      <Filter>Actor\Effect\01. EffectActor\Circle</Filter>
     </ClCompile>
     <ClCompile Include="Explosion.cpp">
-      <Filter>Actor\EffectActor\EffectBundle\Explosion</Filter>
+      <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClCompile>
     <ClCompile Include="EffectActor.cpp">
-      <Filter>Actor\EffectActor\Effect</Filter>
+      <Filter>Actor\Effect\01. EffectActor</Filter>
     </ClCompile>
     <ClCompile Include="EffectBundleActor.cpp">
-      <Filter>Actor\EffectActor\EffectBundle</Filter>
+      <Filter>Actor\Effect\02. EffectBundleActor</Filter>
     </ClCompile>
     <ClCompile Include="Midground.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -306,6 +306,9 @@
   <ItemGroup>
     <Text Include="UIController사용법.txt">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </Text>
+    <Text Include="이펙트 메모.txt">
+      <Filter>Actor\Effect</Filter>
     </Text>
   </ItemGroup>
 </Project>

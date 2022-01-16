@@ -19,6 +19,9 @@ void Effect::Smkdrk20::Start()
 	mainSpriteRender_ = CreateRenderer("Smkdrk20");
 	mainSpriteRender_->CreateAnimation("Smkdrk20", "Smkdrk20", 0, 7, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smkdrk20");
+
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smkdrk20", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smkdrk20::UpdateBefore()
@@ -54,7 +57,8 @@ void Effect::Smkdrk30::Start()
 	mainSpriteRender_->CreateAnimation("Smkdrk30", "Smkdrk30", 0, 7, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smkdrk30");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Smkdrk30",this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smkdrk30",this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smkdrk30::UpdateBefore()
@@ -90,7 +94,8 @@ void Effect::Smkdrk40::Start()
 	mainSpriteRender_->CreateAnimation("Smkdrk40", "Smkdrk40", 0, 3, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smkdrk40");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Smkdrk40", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smkdrk40", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smkdrk40::UpdateBefore()

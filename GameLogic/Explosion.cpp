@@ -22,8 +22,6 @@ EffectBundle::Explosion::Size25::Size25(Size25&& _other) noexcept
 
 void EffectBundle::Explosion::Size25::Start()
 {
-	EffectActorList.push_back(GameLevel_->CreateActor<Effect::Circle100>());
-	EffectActorList.push_back(GameLevel_->CreateActor<Effect::Elipse100>());
 }
 
 void EffectBundle::Explosion::Size25::UpdateBefore()
@@ -130,6 +128,8 @@ EffectBundle::Explosion::Size100::Size100(Size100&& _other) noexcept
 
 void EffectBundle::Explosion::Size100::Start()
 {
+	EffectActorList.push_back(GameLevel_->CreateActor<Effect::Circle100>());
+	EffectActorList.push_back(GameLevel_->CreateActor<Effect::Elipse100>());
 }
 
 void EffectBundle::Explosion::Size100::UpdateBefore()

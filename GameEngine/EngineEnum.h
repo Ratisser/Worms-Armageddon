@@ -14,3 +14,16 @@ enum class CollisionCheckType
 	POLYGON3D,
 	MAX,
 };
+
+enum class RenderOrder
+{
+	// 각자 추가, 배치하여 사용하길 바람 - 이현
+	None,
+	BackGround,
+	WaterLevel_Back,
+	Map,
+	WaterLevel_Front,
+	Weapon,
+	UI,
+	Max
+};

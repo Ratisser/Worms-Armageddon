@@ -284,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="UIController사용법.txt" />
+    <Text Include="이펙트 메모.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

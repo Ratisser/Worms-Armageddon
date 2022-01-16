@@ -21,7 +21,8 @@ void Effect::Smklt25::Start()
 	mainSpriteRender_->CreateAnimation("Smklt25", "Smklt25", 0, 7, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smklt25");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Smklt25", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smklt25", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smklt25::UpdateBefore()
@@ -57,7 +58,8 @@ void Effect::Smklt50::Start()
 	mainSpriteRender_->CreateAnimation("Smklt50", "Smklt50", 0, 7, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smklt50");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Smklt50", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smklt50", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smklt50::UpdateBefore()
@@ -93,7 +95,8 @@ void Effect::Smklt75::Start()
 	mainSpriteRender_->CreateAnimation("Smklt75", "Smklt75", 0, 3, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smklt75");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Smklt75", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smklt75", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smklt75::UpdateBefore()
@@ -129,7 +132,8 @@ void Effect::Smklt100::Start()
 	mainSpriteRender_->CreateAnimation("Smklt100", "Smklt100", 0, 3, true, 0.1f);
 	mainSpriteRender_->ChangeAnimation("Smklt100");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>("Smklt100", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
+		("Smklt100", this, &GameEngineObjectBase::Death);
 }
 
 void Effect::Smklt100::UpdateBefore()

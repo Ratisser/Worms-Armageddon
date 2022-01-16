@@ -4,6 +4,9 @@
 // 폭발 이펙트 namespace
 namespace Effect
 {
+	// 생성후, 정해진 방향으로 이동, 위로 튀다가 중력의 영향을 받아 아래로 향하다 사라지게끔
+	// update 에서 연기 이펙트를 소환하고, 연기 이펙트는 에니메이션 종료후 삭제
+
 	class Flame1 : public EffectActor
 	{
 	public:
