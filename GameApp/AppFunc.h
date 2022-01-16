@@ -21,5 +21,6 @@ void CharactorImageInit();
 
 void MapWaterImageInit();
 void GimmickObjectImageInit();
+void EffectImageInit();
 
 void LoadSoundInit();

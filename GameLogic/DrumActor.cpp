@@ -13,7 +13,8 @@ DrumActor::DrumActor():
 	mainSpriteRender_(nullptr),
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false)
+	DrumCollision_(false),
+	GameLevel_(nullptr)
 	// default constructer 디폴트 생성자
 {
 
@@ -29,7 +30,8 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	mainSpriteRender_(nullptr) , // default RValue Copy constructer 디폴트 RValue 복사생성자
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false)// default RValue Copy constructer 디폴트 RValue 복사생성자
+	DrumCollision_(false),
+	GameLevel_(nullptr)// default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
 }

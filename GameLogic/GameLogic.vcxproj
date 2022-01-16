@@ -43,13 +43,31 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EffectActor.h" />
+    <ClInclude Include="EffectBundleActor.h" />
+    <ClInclude Include="EffectCircle.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DrumActor.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="eCollisionGroup.h" />
     <ClInclude Include="eItemList.h" />
+    <ClInclude Include="EffectElipse.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FadeObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EffectFlame.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -79,6 +97,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EffectSmkdrk.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EffectSmklt.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -144,11 +170,29 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EffectActor.cpp" />
+    <ClCompile Include="EffectBundleActor.cpp" />
+    <ClCompile Include="EffectCircle.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DrumActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EffectElipse.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FadeObject.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EffectFlame.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -178,6 +222,11 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EffectSmkdrk.cpp" />
+    <ClCompile Include="EffectSmklt.cpp">
       <SubType>
       </SubType>
     </ClCompile>

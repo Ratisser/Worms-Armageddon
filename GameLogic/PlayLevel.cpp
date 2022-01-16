@@ -18,6 +18,10 @@
 #include "WaterWave.h"
 #include "UnderWater.h"
 
+#include "EffectActor.h"
+#include "EffectBundleActor.h"
+
+#include "Explosion.h"
 
 #include "BackgroundScatter.h"
 #include "WindController.h"
@@ -268,6 +272,9 @@ void PlayLevel::CreateGimmickObject()
 {
 	DrumActor* DrumActor1 = CreateActor<DrumActor>();
 
+	CreateActor<EffectBundle::Explosion::Size100>();
+
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 
 }
+

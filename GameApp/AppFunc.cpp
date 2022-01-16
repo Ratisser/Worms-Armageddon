@@ -41,6 +41,7 @@ void AppResourcesInit()
 		UIImageInit();
 		MapWaterImageInit();
 		GimmickObjectImageInit();
+		EffectImageInit();
 	}
 
 	// 사운드 로드
@@ -270,6 +271,116 @@ void GimmickObjectImageInit() // 기믹 오브젝트 로드에 사용
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("oildrum4", Dir.PathToPlusFileName("oildrum4.bmp"));
 	loadingImage->Cut({ 90,90 });
+}
+
+void EffectImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image\\Effects\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("circle25", Dir.PathToPlusFileName("circle25.bmp"));
+	loadingImage->Cut({ 50,50 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("circle50", Dir.PathToPlusFileName("circle50.bmp"));
+	loadingImage->Cut({ 100,100 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("circle75", Dir.PathToPlusFileName("circle75.bmp"));
+	loadingImage->Cut({ 150,150 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("circle100", Dir.PathToPlusFileName("circle100.bmp"));
+	loadingImage->Cut({ 200,200 });
+
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("elips100", Dir.PathToPlusFileName("elipse100.bmp"));
+	loadingImage->Cut({ 300,300 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("elipse75", Dir.PathToPlusFileName("elipse75.bmp"));
+	loadingImage->Cut({ 224,224 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("elipse50", Dir.PathToPlusFileName("elipse50.bmp"));
+	loadingImage->Cut({ 150,150 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("elipse25", Dir.PathToPlusFileName("elipse25.bmp"));
+	loadingImage->Cut({ 74,74 });
+
+	//말풍선 효과음, 아직 사용 안됨
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("exbiff", Dir.PathToPlusFileName("exbiff.bmp"));
+	loadingImage->Cut({60,60 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("exfoom", Dir.PathToPlusFileName("exfoom.bmp"));
+	loadingImage->Cut({ 100,100 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("expoot", Dir.PathToPlusFileName("expoot.bmp"));
+	loadingImage->Cut({ 70,70 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("expow", Dir.PathToPlusFileName("expow.bmp"));
+	loadingImage->Cut({ 60,60 });
+
+	//
+
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("flame1", Dir.PathToPlusFileName("flame1.bmp"));
+	loadingImage->Cut({ 60,60 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("flame2", Dir.PathToPlusFileName("flame2.bmp"));
+	loadingImage->Cut({ 60,60 });
+
+
+	// 아직 사용 안됨(클레스 없음)
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("skdsmoke", Dir.PathToPlusFileName("skdsmoke.bmp"));
+	loadingImage->Cut({ 20,20 });
+	//
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smkdrk20", Dir.PathToPlusFileName("smkdrk20.bmp"));
+	loadingImage->Cut({ 30,30 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smkdrk30", Dir.PathToPlusFileName("smkdrk30.bmp"));
+	loadingImage->Cut({ 40,40 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smkdrk40", Dir.PathToPlusFileName("smkdrk40.bmp"));
+	loadingImage->Cut({ 40,40 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smklt25", Dir.PathToPlusFileName("smklt25.bmp"));
+	loadingImage->Cut({ 44,44 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smklt50", Dir.PathToPlusFileName("smklt50.bmp"));
+	loadingImage->Cut({ 60,60 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smklt75", Dir.PathToPlusFileName("smklt75.bmp"));
+	loadingImage->Cut({ 90,90 });
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("smklt100", Dir.PathToPlusFileName("smklt100.bmp"));
+	loadingImage->Cut({ 134,134 });
+
 }
 
 void LoadSoundInit()

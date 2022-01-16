@@ -21,3 +21,4 @@ ex) mainSpriteRender_ ->SetAnimationFrameFunction<WaterWave>("Start", 4, this, &
 
 비고 
 GameEngineRenderer 클레스 함수임
+GameEngineRenderer::FrameAnimation::Update() 에서 실행됨

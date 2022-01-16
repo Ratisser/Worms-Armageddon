@@ -25,7 +25,6 @@ GameEngineRenderer::FrameAnimation::~FrameAnimation()
 	for (; iterfirst != iterEnd; ++iterfirst)
 	{
 		delete *iterfirst;
-		FrameFunctionList_.erase(iterfirst);
 	}
 }
 

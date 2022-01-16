@@ -11,6 +11,8 @@ private:	// member Var
 	GameEngineCollision* groundCollision_; // 바닥
 	GameEngineCollision* BodyCollision_; // 몸통
 
+	GameEngineLevel* GameLevel_;
+
 	float Phase_; // 드럼통이 가열된 정도
 	bool DrumCollision_;
 

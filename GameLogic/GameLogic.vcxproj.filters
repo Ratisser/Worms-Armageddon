@@ -37,6 +37,36 @@
     <Filter Include="Actor\PlayLevel\GimmickObject">
       <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\Effect">
+      <UniqueIdentifier>{69f89989-73f7-4bca-a3e9-e400a91cc847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor">
+      <UniqueIdentifier>{a6515c33-f7df-48b3-833b-94ee274ea89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\EffectBundle">
+      <UniqueIdentifier>{4f80e2e2-f00f-431c-9283-b18dc47afde8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\Effect">
+      <UniqueIdentifier>{16d22a7e-5b67-4168-a5d4-434f633993a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\Effect\Circle">
+      <UniqueIdentifier>{b98effd3-a5a9-4e5c-bf4b-673c92203b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\Effect\Elipse">
+      <UniqueIdentifier>{31299e6f-b18d-47a5-9b1d-04367eb6ade1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\Effect\Flame">
+      <UniqueIdentifier>{c961afde-e5e5-43b2-aa5f-02a1432f4d13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\Effect\Smkdrk">
+      <UniqueIdentifier>{51964ce9-8a5e-4f5f-982d-a1212d84f4d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\Effect\Smkit">
+      <UniqueIdentifier>{a20ecfa7-dfd0-426a-a2cc-b6a881a9453c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EffectActor\EffectBundle\Explosion">
+      <UniqueIdentifier>{2a87addd-d575-4183-b412-a2ae74c22fbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FadeObject.h">
@@ -129,6 +159,30 @@
     <ClInclude Include="WaterLevel.h">
       <Filter>Actor\WaterLevel</Filter>
     </ClInclude>
+    <ClInclude Include="EffectSmklt.h">
+      <Filter>Actor\EffectActor\Effect\Smkit</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectSmkdrk.h">
+      <Filter>Actor\EffectActor\Effect\Smkdrk</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectFlame.h">
+      <Filter>Actor\EffectActor\Effect\Flame</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectElipse.h">
+      <Filter>Actor\EffectActor\Effect\Elipse</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectCircle.h">
+      <Filter>Actor\EffectActor\Effect\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Actor\EffectActor\EffectBundle\Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectActor.h">
+      <Filter>Actor\EffectActor\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectBundleActor.h">
+      <Filter>Actor\EffectActor\EffectBundle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -211,6 +265,30 @@
     </ClCompile>
     <ClCompile Include="WaterWave.cpp">
       <Filter>Actor\WaterLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectSmklt.cpp">
+      <Filter>Actor\EffectActor\Effect\Smkit</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectSmkdrk.cpp">
+      <Filter>Actor\EffectActor\Effect\Smkdrk</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectFlame.cpp">
+      <Filter>Actor\EffectActor\Effect\Flame</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectElipse.cpp">
+      <Filter>Actor\EffectActor\Effect\Elipse</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectCircle.cpp">
+      <Filter>Actor\EffectActor\Effect\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Actor\EffectActor\EffectBundle\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectActor.cpp">
+      <Filter>Actor\EffectActor\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectBundleActor.cpp">
+      <Filter>Actor\EffectActor\EffectBundle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
