@@ -225,4 +225,9 @@
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="UIController사용법.txt">
+      <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

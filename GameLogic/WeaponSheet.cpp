@@ -329,9 +329,8 @@ void WeaponSheet::CreateIconDefaultPos()
 	}
 }
 
-void WeaponSheet::CreateWeaponIconList(const std::vector<eItemList>& _WeaponList) // 플레이어가 최초설정해주어야한다
+void WeaponSheet::CreateWeaponIconList(const std::vector<eItemList>& _WeaponList)
 {
-	// 수신한 무기활성화 갯수 임시저장
 	std::vector<eItemList> ActiveWeapon = _WeaponList;
 	size_t ActiveWeaponCnt = ActiveWeapon.size();
 	for (size_t i = 0; i < ActiveWeaponCnt; ++i)
@@ -358,6 +357,12 @@ void WeaponSheet::CreateWeaponIconList(const std::vector<eItemList>& _WeaponList
 
 void WeaponSheet::AddWeapon(eItemList _Weapon)
 {
+	// 무기아이콘목록에 현재 추가되는 무기가 없다면 (일단 보류)
+	// 현재 모든 무기아이콘목록이 디폴트로 저장되어있으므로
+	// 새로운 무기가 추가되는것은 보류한다.
+	// 단, 최초생성된 무기정보목록에는 없으나, 무기아이콘목록에
+	// 존재하는 무기는 새로운무기가 아니므로 무기정보만을 생성한다.
+
 	// 무기아이콘리스트에서 해당 무기 탐색
 	bool search = false;
 	std::map<std::string, WeaponIcon*>::iterator StartIter = weaponiconlist_.begin();
@@ -399,12 +404,6 @@ void WeaponSheet::AddWeapon(eItemList _Weapon)
 		NewWeaponInfo->SetItemSpec(weaponnamelist_[static_cast<int>(_Weapon)], _Weapon, 1, true);
 		weaponlist_.insert(std::pair<eItemList, Weapon*>(_Weapon, NewWeaponInfo));
 	}
-
-	// 무기아이콘목록에 현재 추가되는 무기가 없다면 (일단 보류)
-	// 현재 모든 무기아이콘목록이 디폴트로 저장되어있으므로
-	// 새로운 무기가 추가되는것은 보류한다.
-	// 단, 최초생성된 무기정보목록에는 없으나, 무기아이콘목록에
-	// 존재하는 무기는 새로운무기가 아니므로 무기정보만을 생성한다.
 }
 
 void WeaponSheet::UseWeapon(eItemList _Weapon)
@@ -450,7 +449,10 @@ Weapon* WeaponSheet::GetCurWeapon(eItemList _SearchWeapon)
 	std::map<eItemList, Weapon*>::iterator EndIter = weaponlist_.end();
 	for (; StartIter != EndIter; ++StartIter)
 	{
-
+		if (_SearchWeapon == StartIter->first)
+		{
+			return StartIter->second;
+		}
 	}
 
 	return nullptr;

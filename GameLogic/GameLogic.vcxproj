@@ -233,6 +233,9 @@
       </SubType>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="UIController사용법.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
