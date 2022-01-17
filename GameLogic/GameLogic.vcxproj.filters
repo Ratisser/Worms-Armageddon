@@ -82,6 +82,9 @@
     <Filter Include="Actor\_Backup">
       <UniqueIdentifier>{6c25d0ca-4418-4762-a878-5c79360246df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level\Global">
+      <UniqueIdentifier>{4ed8676a-7913-4c12-8eb3-f56a804afb49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="LobbySelectMapImage.h">
       <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
+    <ClInclude Include="GlobalValue.h">
+      <Filter>Level\Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -340,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
+      <Filter>Level\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

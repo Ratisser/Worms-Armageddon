@@ -28,6 +28,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="GlobalValue.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LobbySelectMapImage.h" />
     <ClInclude Include="Midground.h">
       <SubType>
@@ -173,6 +177,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="GlobalValue.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp" />
     <ClCompile Include="Midground.cpp">
       <SubType>

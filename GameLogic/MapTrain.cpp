@@ -1,4 +1,5 @@
 #include "MapTrain.h"
+#include "GlobalValue.h"
 #include <GameEngineWindow.h>
 #include <GameEngineRenderer.h>
 #include "GameEngineImage.h"

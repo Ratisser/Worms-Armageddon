@@ -1,5 +1,6 @@
 #include "LobbySelectMapImage.h"
 #include "eCollisionGroup.h"
+#include "GlobalValue.h"
 
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
@@ -32,17 +33,24 @@ void LobbySelectMapImage::CreateSelMapImageNameList(const std::vector<std::strin
 	mapimagenamelist_ = _NameList;
 }
 
+void LobbySelectMapImage::SetCurMapIndex(int _Index)
+{
+	curmapimage_ = _Index;
+}
+
 void LobbySelectMapImage::Start()
 {
 	float4 HarfResolution = GameEngineWindow::GetInst().GetSize().halffloat4();
 
 	SetRenderOrder(static_cast<int>(RenderOrder::UI));
-	mainrenderer_ = CreateRenderer("MapSel1");
-	mainrenderer_->SetRenderSize({ HarfResolution.x- 120.f, 200.f });
+	mainrenderer_ = CreateRenderer("LobbyMap_MapTrain");
+	mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 200.f });
 	mainrenderer_->SetImagePivot({ 0.f, 0.f });
 	mainrenderer_->SetCameraEffectOff();
 
-	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::MOUSE), CollisionCheckType::RECT);
+	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
+	maincollision_->SetSize({ 520.f, 220.f});
+	maincollision_->SetPivot({ 260.f, 110.f });	// 충돌체 크기 * 0.5 한곳이 기준점
 }
 
 void LobbySelectMapImage::UpdateBefore()
@@ -67,6 +75,12 @@ void LobbySelectMapImage::UpdateBefore()
 			mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 200.f });
 			mainrenderer_->SetImagePivot({ 0.f, 0.f });
 			mainrenderer_->SetCameraEffectOff();
+
+			// 전역변수에 현재선택된 맵이름 저장
+			// 단, 맵이름을 넘겨줄때 LobbyMap_ 문자열을 제외한 문자열을 넘긴다.
+			std::string CurMapName = mapimagenamelist_[curmapimage_];
+			CurMapName = CurMapName.substr(9);
+			GlobalValue::CurPlayMap = CurMapName;
 		}
 	}
 }
