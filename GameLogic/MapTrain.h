@@ -30,6 +30,6 @@ public:
 	virtual void Render() override;
 
 public:
-	void GroundUpdate();
+	void GroundUpdate(float4 pos);
 };
 

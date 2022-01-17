@@ -9,7 +9,7 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	backGroundSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr)
 {
-	SetRenderOrder(2);
+	SetRenderOrder(102);
 }
 
 MapTrain::~MapTrain() // default destructer 디폴트 소멸자
@@ -56,9 +56,9 @@ void MapTrain::Render()
 	mainSpriteRender_->Render();
 }
 
-void MapTrain::GroundUpdate()
+void MapTrain::GroundUpdate(float4 pos)
 {
-	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + float4(1230.f, 280.f, 0.f, 0.f);
+	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + pos;
 	GameEngineImageFile* WindowImage = mainSpriteRender_->GetImage();
 	WindowImage->TransCopy(boomSpriteRender_->GetImage(),
 		mousepos,
