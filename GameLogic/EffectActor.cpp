@@ -1,10 +1,10 @@
 #include <GameEngineRenderer.h>
-
 #include "EffectActor.h"
 
 EffectActor::EffectActor() :
 	mainSpriteRender_(nullptr),
-	GameLevel_(nullptr)
+	Destroy_(false),
+	Dir_{}
 {
 }
 
@@ -14,7 +14,8 @@ EffectActor::~EffectActor()
 
 EffectActor::EffectActor(EffectActor&& _other) noexcept :
 	mainSpriteRender_(nullptr),
-	GameLevel_(nullptr)
+	Destroy_(false),
+	Dir_{}
 {
 }
 

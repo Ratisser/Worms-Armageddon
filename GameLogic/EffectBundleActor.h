@@ -1,5 +1,7 @@
 #pragma once
 #include <GameEngineActor.h>
+#include "EffectActor.h"
+#include "GameEngineMath.h"
 
 // 분류 : GameEngineActor
 // 용도 : 이펙트 묶음(번들) 부모 클레스
@@ -9,8 +11,7 @@ class EffectBundleActor : public GameEngineActor
 {
 
 protected:	// member Var
-	std::list<GameEngineActor*> EffectActorList;
-	class GameEngineLevel* GameLevel_;
+	std::list<EffectActor*> EffectActorList;
 
 public:
 	EffectBundleActor(); // default constructer 디폴트 생성자
@@ -29,6 +30,5 @@ public:
 	virtual void Render() override;
 
 protected:
-	void SetGameLevel(GameEngineLevel* GameLevel);
 };
 

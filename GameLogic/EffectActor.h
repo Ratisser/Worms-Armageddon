@@ -10,7 +10,9 @@ class EffectActor : public GameEngineActor
 {	
 protected:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
-	GameEngineLevel* GameLevel_;
+	bool	Destroy_;
+
+	float4 Dir_; //크기가 반드시 1이여야 하는 방향 단위 벡터
 
 public:
 	EffectActor();
@@ -29,8 +31,24 @@ public:
 	virtual void Render() override;
 
 protected:
-	void SetGameLevel(GameEngineLevel* GameLevel)
+	void SetDir(float4 Dir)
 	{
-		GameLevel_ = GameLevel;
+		Dir_ = Dir;
+	}
+
+public:
+	void EffectDestroy()
+	{
+		Destroy_ = true;
+	}
+
+	bool IsEffectDestroy()
+	{
+		return Destroy_;
+	}
+
+	float4 GetDir()
+	{
+		return Dir_;
 	}
 };

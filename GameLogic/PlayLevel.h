@@ -28,6 +28,8 @@ public:
 	void Loading() override;
 	void LevelUpdate() override;
 
+	void Testfunc(); // 테스트용, 테스트후 함수 비우기
+	void TestUpdate();
 public:
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
 	WindController* windController_;
@@ -35,6 +37,7 @@ public:
 public:
 	void MakeWaterLevel();
 	void CreateGimmickObject();
+	void CreateExplosion(); //test
 
 private:
 	void AJYLoading();

@@ -119,11 +119,14 @@ void PlayLevel::Loading()
 
 	MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	CreateGimmickObject();
+	
+	Testfunc(); // 테스트해볼 함수를 집어넣는 함수, 사용후 비워둘것
 
 }
 
 void PlayLevel::LevelUpdate()
 {
+	TestUpdate(); //디버그용 테스트 함수
 	AJYLevelUpdate();
 	PJWLevelUpdate();
 	float Speed = 5.f;
@@ -192,6 +195,10 @@ void PlayLevel::AJYLevelUpdate()
 	if (true == GameEngineInput::GetInst().IsDown("Boom"))
 	{
 		Train_->GroundUpdate();
+
+		//테스트 삽입 이현
+
+		CreateExplosion();
 	}
 
 	if (true == GameEngineInput::GetInst().IsDown("FreeCameraOnOff"))
@@ -294,6 +301,14 @@ void PlayLevel::CreateGimmickObject()
 
 }
 
+void PlayLevel::CreateExplosion()
+{
+	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + float4(1230.f, 280.f, 0.f, 0.f);
+	EffectBundle::Explosion::Size100* actor =CreateActor<EffectBundle::Explosion::Size100>
+		(mousepos);
+	actor->SetRenderOrder((int)RenderOrder::Max);
+}
+
 void PlayLevel::PJWLevelUpdate()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Toggle"))
@@ -309,4 +324,13 @@ void PlayLevel::PJWLevelUpdate()
 		isDebugOn_ = true;
 		return;
 	}
+}
+
+void PlayLevel::Testfunc() // 테스트해볼 함수를 집어넣는 함수, 사용후 비워둘것
+{
+	CreateExplosion();
+}
+
+void PlayLevel::TestUpdate()
+{
 }

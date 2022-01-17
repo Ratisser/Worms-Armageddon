@@ -17,12 +17,12 @@ Effect::Smklt25::Smklt25(Smklt25&& _other) noexcept
 
 void Effect::Smklt25::Start()
 {
-	mainSpriteRender_ = CreateRenderer("Smklt25");
-	mainSpriteRender_->CreateAnimation("Smklt25", "Smklt25", 0, 7, true, 0.1f);
-	mainSpriteRender_->ChangeAnimation("Smklt25");
+	mainSpriteRender_ = CreateRenderer("smklt25");
+	mainSpriteRender_->CreateAnimation("smklt25", "smklt25", 0, 7, true, 0.1f);
+	mainSpriteRender_->ChangeAnimation("smklt25");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
-		("Smklt25", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
+		("smklt25", this, &EffectActor::EffectDestroy);
 }
 
 void Effect::Smklt25::UpdateBefore()
@@ -54,12 +54,12 @@ Effect::Smklt50::Smklt50(Smklt50&& _other) noexcept
 
 void Effect::Smklt50::Start()
 {
-	mainSpriteRender_ = CreateRenderer("Smklt50");
-	mainSpriteRender_->CreateAnimation("Smklt50", "Smklt50", 0, 7, true, 0.1f);
-	mainSpriteRender_->ChangeAnimation("Smklt50");
+	mainSpriteRender_ = CreateRenderer("smklt50");
+	mainSpriteRender_->CreateAnimation("smklt50", "smklt50", 0, 27, true, 0.1f);
+	mainSpriteRender_->ChangeAnimation("smklt50");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
-		("Smklt50", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
+		("smklt50", this, &EffectActor::EffectDestroy);
 }
 
 void Effect::Smklt50::UpdateBefore()
@@ -91,12 +91,12 @@ Effect::Smklt75::Smklt75(Smklt75&& _other) noexcept
 
 void Effect::Smklt75::Start()
 {
-	mainSpriteRender_ = CreateRenderer("Smklt75");
-	mainSpriteRender_->CreateAnimation("Smklt75", "Smklt75", 0, 3, true, 0.1f);
-	mainSpriteRender_->ChangeAnimation("Smklt75");
+	mainSpriteRender_ = CreateRenderer("smklt75");
+	mainSpriteRender_->CreateAnimation("smklt75", "smklt75", 0, 27, true, 0.1f);
+	mainSpriteRender_->ChangeAnimation("smklt75");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
-		("Smklt75", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
+		("smklt75", this, &EffectActor::EffectDestroy);
 }
 
 void Effect::Smklt75::UpdateBefore()
@@ -128,12 +128,12 @@ Effect::Smklt100::Smklt100(Smklt100&& _other) noexcept
 
 void Effect::Smklt100::Start()
 {
-	mainSpriteRender_ = CreateRenderer("Smklt100");
-	mainSpriteRender_->CreateAnimation("Smklt100", "Smklt100", 0, 3, true, 0.1f);
-	mainSpriteRender_->ChangeAnimation("Smklt100");
+	mainSpriteRender_ = CreateRenderer("smklt100");
+	mainSpriteRender_->CreateAnimation("smklt100", "smklt100", 0, 27, true, 0.05f);
+	mainSpriteRender_->ChangeAnimation("smklt100");
 
-	mainSpriteRender_->SetAnimationEndFunction<GameEngineObjectBase>
-		("Smklt100", this, &GameEngineObjectBase::Death);
+	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
+		("smklt100", this, &EffectActor::EffectDestroy);
 }
 
 void Effect::Smklt100::UpdateBefore()

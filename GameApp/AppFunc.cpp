@@ -361,7 +361,7 @@ void EffectImageInit()
 
 
 	loadingImage = GameEngineImage::GetInst().
-		LoadGameImage("elips100", Dir.PathToPlusFileName("elipse100.bmp"));
+		LoadGameImage("elipse100", Dir.PathToPlusFileName("elipse100.bmp"));
 	loadingImage->Cut({ 300,300 });
 
 	loadingImage = GameEngineImage::GetInst().
@@ -414,11 +414,11 @@ void EffectImageInit()
 
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("smkdrk20", Dir.PathToPlusFileName("smkdrk20.bmp"));
-	loadingImage->Cut({ 30,30 });
+	loadingImage->Cut({ 20,20 });
 
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("smkdrk30", Dir.PathToPlusFileName("smkdrk30.bmp"));
-	loadingImage->Cut({ 40,40 });
+	loadingImage->Cut({ 30,30 });
 
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("smkdrk40", Dir.PathToPlusFileName("smkdrk40.bmp"));

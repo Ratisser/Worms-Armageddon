@@ -59,6 +59,11 @@ public:
 		RenderOrder = _RenderOrder;
 	}
 
+	int GetRenderOrder()
+	{
+		return RenderOrder;
+	}
+
 protected:	// member Var
 	int ActorType;
 	float4 pos_;

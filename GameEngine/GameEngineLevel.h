@@ -129,6 +129,61 @@ public:
 		}
 
 		NewActor->SetName(_actorName);
+		NewActor->SetLevel(this);
+
+		allActorMap_.insert(std::map<std::string, GameEngineActor*>::value_type(_actorName, NewActor));
+		return NewActor;
+	}
+
+
+
+	template<typename ActorType>
+	ActorType* CreateActor(float4 Pos)
+	{
+		std::map<int, std::list<GameEngineActor*>>::iterator UpdateIter = allActorUpdateList_.find(0);
+		if (allActorUpdateList_.end() == UpdateIter)
+		{
+			GameEngineDebug::AssertFalse();
+			return nullptr;
+		}
+
+		std::map<int, std::list<GameEngineActor*>>::iterator RenderIter = allActorRenderList_.find(0);
+		if (allActorRenderList_.end() == RenderIter)
+		{
+			GameEngineDebug::AssertFalse();
+			return nullptr;
+		}
+
+		this; // <- 가 Level
+
+		ActorType* NewActor = new ActorType();
+		NewActor->SetName("Actor");
+		NewActor->SetLevel(this);
+		NewActor->SetPos(Pos);
+
+		// 엔진이 지원해줄수 있는 준비가 이름이나 준비가 
+		// 전부다 끝난 상태에서 1번 실행해주는 함수.
+		NewActor->Start();
+
+		UpdateIter->second.push_back(NewActor);
+		RenderIter->second.push_back(NewActor);
+		return NewActor;
+	}
+
+	template<typename ActorType>
+	ActorType* CreateActor(const std::string& _actorName, float4 Pos)
+	{
+		ActorType* NewActor = CreateActor<ActorType>();
+
+		if (allActorMap_.end() != allActorMap_.find(_actorName))
+		{
+			GameEngineDebug::AssertFalse();
+			return nullptr;
+		}
+
+		NewActor->SetName(_actorName);
+		NewActor->SetLevel(this);
+		NewActor->SetPos(Pos);
 
 		allActorMap_.insert(std::map<std::string, GameEngineActor*>::value_type(_actorName, NewActor));
 		return NewActor;
