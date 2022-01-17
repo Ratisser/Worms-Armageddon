@@ -7,11 +7,14 @@
 #include <GameEngineLevel.h>
 #include <GameEngineCollision.h>
 
+#include <GameEngineDebugExtension.h>
+
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
+	, crosshairRender_(nullptr)
 	, bottomCenterCollision_(nullptr)
 	, groundCheckCollision_(nullptr)
 	, accelation_(float4::ZERO)
@@ -23,7 +26,7 @@ Worm::Worm()
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, weaponEquipDelay_(0.0f)
-	, aimRotate_(0.0f)
+	, aimRotation_(90.0f * GameEngineMath::DegreeToRadian)
 	, state_(this)
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
 	, nextState_("")
@@ -39,7 +42,7 @@ Worm::~Worm() // default destructer 디폴트 소멸자
 void Worm::Start()
 {
 	SetPos({ 1625.f, -235.f });
-	SetRenderOrder((int)RenderOrder::Worm);
+	SetRenderOrder(static_cast<int>(RenderOrder::Worm));
 	initRenderer();
 	initCollision();
 	initInput();
@@ -78,6 +81,11 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("BazAimRight", "bazAimRight.bmp", 0, 31, false, 1.0f);
 
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+
+	crosshairRender_ = CreateRenderer("crshairr.bmp");
+	crosshairRender_->CreateAnimation("Aim", "crshairr.bmp", 0, 31, false, 1.0f);
+	crosshairRender_->ChangeAnimation("Aim");
+	crosshairRender_->Off();
 }
 
 void Worm::initInput()
@@ -189,6 +197,23 @@ void Worm::normalMove()
 	}
 }
 
+int Worm::getAimingFrame()
+{
+	return static_cast<int>(aimRotation_ / (AIM_STEP_RADIAN));
+}
+
+void Worm::setAimingForward()
+{
+	if (bLeft_)
+	{
+		forward_ = float4::RadianToRotatefloat2(float4::DOWN, aimRotation_);
+	}
+	else
+	{
+		forward_ = float4::RadianToRotatefloat2(float4::DOWN, -aimRotation_);
+	}
+}
+
 StateInfo Worm::startIdle(StateInfo _state)
 {
 	if (bLeft_)
@@ -219,12 +244,12 @@ StateInfo Worm::updateIdle(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsPress("UpArrow"))
 	{
-		return "WeaponAim";
+		return "WeaponOn";
 	}
 
 	if (GameEngineInput::GetInst().IsPress("DownArrow"))
 	{
-		return "WeaponAim";
+		return "WeaponOn";
 	}
 
 	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
@@ -402,6 +427,12 @@ StateInfo Worm::startWeaponAim(StateInfo _state)
 	{
 		mainRender_->ChangeAnimation("BazAimRight", std::string("bazAimRight.bmp"));
 	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+	setAimingForward();
+	crosshairRender_->On();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
 	return StateInfo();
 }
 
@@ -410,29 +441,46 @@ StateInfo Worm::updateWeaponAim(StateInfo _state)
 	addGravity();
 	if (GameEngineInput::GetInst().IsPress("UpArrow"))
 	{
-		if (bLeft_)
+		if (aimRotation_ >= 180.f * GameEngineMath::DegreeToRadian)
 		{
-			aimRotate_ += deltaTime_;
+			aimRotation_ = 180.f * GameEngineMath::DegreeToRadian;
 		}
 		else
 		{
-			aimRotate_ -= deltaTime_;
+			aimRotation_ += deltaTime_;
 		}
-
-		
 	}
-	
+
 	if (GameEngineInput::GetInst().IsPress("DownArrow"))
 	{
-		if (bLeft_)
+		if (aimRotation_ <= 0.0f)
 		{
-			aimRotate_ -= deltaTime_;
+			aimRotation_ = 0.0f;
 		}
 		else
 		{
-			aimRotate_ += deltaTime_;
+			aimRotation_ -= deltaTime_;
 		}
 	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+
+	if (bLeft_)
+	{
+		crosshairRender_->SetAnimationCurrentFrame(frame);
+	}
+	else
+	{
+		crosshairRender_->SetAnimationCurrentFrame(31 - frame);
+	}
+
+	setAimingForward();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+
+	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
+	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
+
 
 	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
@@ -490,6 +538,7 @@ StateInfo Worm::startWeaponOff(StateInfo _state)
 	{
 		mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
 	}
+	crosshairRender_->Off();
 	return StateInfo();
 }
 
@@ -505,6 +554,7 @@ StateInfo Worm::updateWeaponOff(StateInfo _state)
 void Worm::UpdateBefore()
 {
 	mainRender_->AnimationUpdate();
+	crosshairRender_->AnimationUpdate();
 }
 
 void Worm::Update()
@@ -520,6 +570,11 @@ void Worm::UpdateAfter()
 void Worm::Render()
 {
 	mainRender_->Render();
+	if (crosshairRender_->IsOn())
+	{
+		crosshairRender_->Render();
+	}
+
 	//bottomCenterCollision_->DebugRender();
 	//groundCheckCollision_->DebugRender();
 }

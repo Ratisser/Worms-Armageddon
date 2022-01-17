@@ -268,49 +268,33 @@ void CharactorImageInit()
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Image\\Worms");
 
-	GameEngineImageFile* image = nullptr; 
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("walkLeft.bmp"));
-	image->Cut({ 60, 60 });
+	float4 cutSize = float4(60.f, 60.f);
 
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("walkRight.bmp"));
-	image->Cut({ 60, 60 });
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("jumpReadyLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("jumpReadyRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyUpLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyUpRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyDownLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyDownRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyLinkLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyLinkRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("idleLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("idleRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazAimLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazAimRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOnRight.bmp", cutSize);
 
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("jumpReadyLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("jumpReadyRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyUpLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyUpRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyDownLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyDownRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyLinkLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyLinkRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleRight.bmp"));
-	image->Cut({ 60, 60 });
-	
-	RS::LoadImageFromFileAndCut(dir / "bazAimLeft.bmp", float4(60.f, 60.f));
-	RS::LoadImageFromFileAndCut(dir / "bazAimRight.bmp", float4(60.f, 60.f));
-	RS::LoadImageFromFileAndCut(dir / "bazOffLeft.bmp", float4(60.f, 60.f));
-	RS::LoadImageFromFileAndCut(dir / "bazOffRight.bmp", float4(60.f, 60.f));
-	RS::LoadImageFromFileAndCut(dir / "bazOnLeft.bmp", float4(60.f, 60.f));
-	RS::LoadImageFromFileAndCut(dir / "bazOnRight.bmp", float4(60.f, 60.f));
+	{
+		GameEngineDirectroy dir = GameEngineDirectroy();
+		dir.MoveParent("Worms-Armageddon");
+		dir.MoveChild("\\Resources\\Image\\Misc\\Aim_Taget");
+		RS::LoadImageFromFileAndCut(dir / "crshairr.bmp", cutSize);
+	}
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)

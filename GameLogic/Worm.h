@@ -34,6 +34,8 @@ private:
 	void addGravity();
 
 	void normalMove();
+	int getAimingFrame();
+	void setAimingForward();
 
 private:
 	StateInfo startIdle(StateInfo _state);
@@ -62,10 +64,12 @@ private:
 	const float GRAVITY_POWER = 600.f;
 	const float BOTTOM_PIVOT = 14.f;
 	const float JUMP_POWER = 150.f;
-	const float WEAPON_EQUIP_DELAY = 1.5f;
-	const float AIM_STEP_DEGREE = 5.65f;
+	const float WEAPON_EQUIP_DELAY = 0.5f;
+	const float AIM_STEP_RADIAN = 0.0986111f; // 180 / 32 * RADIAN
+
 private:
 	GameEngineRenderer* mainRender_;
+	GameEngineRenderer* crosshairRender_;
 	GameEngineCollision* bottomCenterCollision_;
 	GameEngineCollision* groundCheckCollision_;
 
@@ -82,8 +86,7 @@ private:
 
 	float deltaTime_;
 	float weaponEquipDelay_;
-
-	float aimRotate_;
+	float aimRotation_;
 
 	eItemList currentWeapon_;
 
