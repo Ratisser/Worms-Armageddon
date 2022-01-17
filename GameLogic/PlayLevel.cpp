@@ -211,7 +211,6 @@ void PlayLevel::AJYLevelUpdate()
 		Bazooka_ = CreateActor<Bazooka>();
 		float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + CameraPos_;
 		Bazooka_->SetPos(mousepos);
-		CollisionOrderCheck();
 	}
 
 	if (true == GameEngineInput::GetInst().IsDown("FreeCameraOnOff"))
