@@ -22,7 +22,7 @@ LobbyImage::LobbyImage(LobbyImage&& _other) noexcept  // default RValue Copy con
 void LobbyImage::Start()
 {
 	float4 Resoultion = GameEngineWindow::GetInst().GetSize();
-	
+
 	SetRenderOrder(static_cast<int>(RenderOrder::BackGround));
 	mainSpriteRender_ = CreateRenderer("Lobby_Backdrop");
 	mainSpriteRender_->SetRenderSize(Resoultion);

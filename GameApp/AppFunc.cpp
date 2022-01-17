@@ -43,6 +43,7 @@ void AppResourcesInit()
 		MapWaterImageInit();
 		GimmickObjectImageInit();
 		EffectImageInit();
+		LobbyImageInit();
 	}
 
 	// 사운드 로드
@@ -232,6 +233,25 @@ void UIImageInit()
 	GameEngineImage::GetInst().LoadGameImage("select", Dir.PathToPlusFileName("select.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("freeze", Dir.PathToPlusFileName("freeze.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("bullet", Dir.PathToPlusFileName("bullet.bmp"));
+}
+
+void LobbyImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_Backdrop", Dir.PathToPlusFileName("Lobby_Backdrop.bmp"));
+
+	// 선택가능 맵 이미지 로딩
+	GameEngineImage::GetInst().LoadGameImage("MapSel1", Dir.PathToPlusFileName("Lobby_MapSelectImage.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("MapSel2", Dir.PathToPlusFileName("Lobby_MapSelectImage2.bmp"));
+
 }
 
 void CharactorImageInit()
