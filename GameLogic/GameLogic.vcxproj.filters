@@ -213,6 +213,9 @@
     <ClInclude Include="WindBarHider.h">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
+    <ClInclude Include="LobbySelectMapImage.h">
+      <Filter>Actor\LobbyLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -334,6 +337,9 @@
     </ClCompile>
     <ClCompile Include="WindBarHider.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbySelectMapImage.cpp">
+      <Filter>Actor\LobbyLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

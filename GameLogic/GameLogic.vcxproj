@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="LobbySelectMapImage.h" />
     <ClInclude Include="Midground.h">
       <SubType>
       </SubType>
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="LobbySelectMapImage.cpp" />
     <ClCompile Include="Midground.cpp">
       <SubType>
       </SubType>

@@ -1,7 +1,13 @@
-#include "LobbyImage.h"
 #include "LobbyLevel.h"
+#include "LobbyImage.h"
+#include "LobbySelectMapImage.h"
+#include "MouseObject.h"
+
 #include <GameEngineInput.h>
 #include <GameEngineLevelManager.h>
+#include <GameEngineWindow.h>
+#include <GameEngineImage.h>
+
 LobbyLevel::LobbyLevel() // default constructer 디폴트 생성자
 {
 
@@ -25,7 +31,8 @@ void LobbyLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
 	}
 
-	CreateActor<LobbyImage>();
+	// 대기실화면 배경 및 맵선택 이미지
+	Loading_SJH();
 
 }
 
@@ -35,4 +42,33 @@ void LobbyLevel::LevelUpdate()
 	{
 		GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel");
 	}
+}
+
+void LobbyLevel::Loading_SJH()
+{
+	// 로딩시에 로드한 모든 이미지파일의 이름을 체크하여 MapSel* 으로시작하는 이미지파일이름 모두 찾아서
+	// LobbySelectMapImage 액터에 넘겨준다.
+	std::vector<std::string> ImageNameList = GameEngineImage::GetInst().FindAllSpecKeyImage("MapSel");
+
+	// 맵선택 키 생성
+	if (false == GameEngineInput::GetInst().IsKey("Lobby_MapSelect"))
+	{
+		GameEngineInput::GetInst().CreateKey("Lobby_MapSelect", VK_RBUTTON);
+	}
+
+	float4 HalfResoultion = GameEngineWindow::GetInst().GetSize().halffloat4();
+
+	// 대기실 배경
+	CreateActor<LobbyImage>();
+
+	// 대기실오브젝트(바람액터)
+
+	// 맵선택이미지
+	LobbySelectMapImage* SelectMapImage = CreateActor<LobbySelectMapImage>();
+	SelectMapImage->SetPos({ HalfResoultion.x + 100.f, 20.f });
+	SelectMapImage->CreateSelMapImageNameList(ImageNameList);
+
+	// 마우스
+	CreateActor<MouseObject>();
+
 }
