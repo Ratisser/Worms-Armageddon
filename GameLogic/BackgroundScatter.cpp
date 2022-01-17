@@ -5,10 +5,10 @@
 #include <GameEngineMath.h>
 
 BackgroundScatter::BackgroundScatter() // default constructer 디폴트 생성자
-: mainRender_(nullptr), spawnPos_({0,-1000.0f})
+: mainRender_(nullptr), spawnPos_(float4::ZERO)
 {
-	this->SetPos({1,0});
 	SetRenderOrder(11);
+	SetPos({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -1000.0f });
 }
 
 BackgroundScatter::~BackgroundScatter() // default destructer 디폴트 소멸자
@@ -17,7 +17,7 @@ BackgroundScatter::~BackgroundScatter() // default destructer 디폴트 소멸자
 }
 
 BackgroundScatter::BackgroundScatter(BackgroundScatter&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-	: mainRender_(nullptr), spawnPos_({ 0,-1000.0f })
+	: mainRender_(nullptr), spawnPos_(float4::ZERO)
 {
 
 }
