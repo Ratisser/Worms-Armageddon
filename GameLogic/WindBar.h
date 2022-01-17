@@ -10,6 +10,10 @@ class WindBar : public GameEngineActor
 private:	// member Var
 	GameEngineRenderer* mainRender_;
 	WindController* parentController_;
+
+private:
+	float originalSizeX_;
+
 public:
 	WindBar(); // default constructer 디폴트 생성자
 	~WindBar(); // default destructer 디폴트 소멸자
@@ -28,6 +32,8 @@ public:
 		parentController_ = _parent;
 		return;
 	}
+
+	void WindBarUpdate();
 
 public:
 	virtual void Start() override;
