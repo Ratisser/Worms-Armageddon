@@ -11,6 +11,7 @@ class PlayLevel : public GameEngineLevel
 private:	// member Var
 	class MapTrain* Train_;
 	class MapGround* Ground_;
+	class Bazooka* Bazooka_;
 	class Worm* Worm_;
 	bool IsCameraMove_;
 	bool isDebugOn_;
@@ -39,6 +40,7 @@ public:
 public:
 	void MakeWaterLevel();
 	void CreateGimmickObject();
+	void AJYGround(float4 _pos);
 
 private:
 	void AJYLoading();

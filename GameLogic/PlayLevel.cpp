@@ -10,6 +10,7 @@
 #include "Worm.h"
 #include "UIController.h"
 #include "DrumActor.h"
+#include "Bazooka.h"
 
 #include "BottomHealthBar.h"
 #include "BottomNameTag.h"
@@ -33,6 +34,7 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
 	Ground_(nullptr),
 	Worm_(nullptr),
+	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true),
 	windController_(nullptr),
@@ -51,6 +53,7 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	: Train_(nullptr),
 	Ground_(nullptr),
 	Worm_(nullptr),
+	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
 	,windController_(nullptr),
@@ -187,6 +190,7 @@ void PlayLevel::LevelUpdate()
 
 void PlayLevel::AJYLoading()
 {
+	//Bazooka_ = CreateActor<Bazooka>();
 	Ground_ = CreateActor<MapGround>();
 
 	if (false == GameEngineInput::GetInst().IsKey("Boom"))
@@ -204,8 +208,10 @@ void PlayLevel::AJYLevelUpdate()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Boom"))
 	{
-		Train_->GroundUpdate(CameraPos_);
-		Ground_->GroundUpdate(CameraPos_);
+		Bazooka_ = CreateActor<Bazooka>();
+		float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + CameraPos_;
+		Bazooka_->SetPos(mousepos);
+		CollisionOrderCheck();
 	}
 
 	if (true == GameEngineInput::GetInst().IsDown("FreeCameraOnOff"))
@@ -224,6 +230,12 @@ void PlayLevel::AJYLevelUpdate()
 	{
 		GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
 	}
+}
+
+void PlayLevel::AJYGround(float4 _pos)
+{
+	Train_->GroundUpdate(_pos);
+	Ground_->GroundUpdate(_pos);
 }
 
 void PlayLevel::MakeWaterLevel() // 맵 바닥의 수면 생성

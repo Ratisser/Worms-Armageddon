@@ -186,6 +186,9 @@
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="Bazooka.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
     <ClInclude Include="WindBarBlank.h">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
@@ -301,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="UIController.cpp">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Bazooka.cpp">
+      <Filter>Actor</Filter>
     </ClCompile>
     <ClCompile Include="WindBarBlank.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>

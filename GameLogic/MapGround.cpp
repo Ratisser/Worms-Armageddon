@@ -56,10 +56,10 @@ void MapGround::Render()
 
 void MapGround::GroundUpdate(float4 pos)
 {
-	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + pos;
+	//float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + pos;
 	GameEngineImageFile* WindowImage = mainRenderer_->GetImage();
 	WindowImage->TransCopy(boomSpriteRender_->GetImage(),
-		mousepos,
+		pos,
 		{ 100.f, 100.f },
 		{ 0.f, 0.f },
 		{ 100.f, 100.f },

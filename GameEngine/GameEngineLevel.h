@@ -171,7 +171,7 @@ protected:
 
 
 
-private:		//member Func
+protected:		//member Func
 	void UpdateOrderCheck();
 	void CollisionOrderCheck();
 	void RenderOrderCheck();
