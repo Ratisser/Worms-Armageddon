@@ -3,6 +3,8 @@
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
 
+#include "eItemList.h"
+
 class GameEngineRenderer;
 class Worm : public GameEngineActor
 {
@@ -52,6 +54,7 @@ private:
 	const float GRAVITY_POWER = 600.f;
 	const float BOTTOM_PIVOT = 14.f;
 	const float JUMP_POWER = 150.f;
+	const float WEAPON_EQUIP_DELAY = 0.5f;
 private:
 	GameEngineRenderer* mainRender_;
 	GameEngineCollision* bottomCenterCollision_;
@@ -68,5 +71,8 @@ private:
 	bool bBackJump_;
 
 	float deltaTime_;
+	float weaponEquipDelay_;
+
+	eItemList currentWeapon_;
 };
 
