@@ -256,7 +256,9 @@ void LobbyImageInit()
 	}
 
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapTrain", Dir.PathToPlusFileName("LobbyMap_MapTrain.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("LobbyMap_Map", Dir.PathToPlusFileName("LobbyMap_Map.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCars", Dir.PathToPlusFileName("LobbyMap_MapCars.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCity", Dir.PathToPlusFileName("LobbyMap_MapCity.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapBooks", Dir.PathToPlusFileName("LobbyMap_MapBooks.bmp"));
 
 }
 

@@ -6,7 +6,8 @@
 class GlobalValue
 {
 public:
-	static std::string CurPlayMap;	// 현재 생성되는 맵(대기실화면에서 셋팅)
+	static std::string CurPlayMap;				// 현재 생성되는 맵(대기실화면에서 셋팅)
+	static std::string CurPlayColMap;		// 현재 생성되는 맵타입의 충돌맵(대기실화면에서 셋팅)
 
 
 
