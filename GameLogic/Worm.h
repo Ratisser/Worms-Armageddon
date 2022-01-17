@@ -48,13 +48,22 @@ private:
 	StateInfo startJump(StateInfo _state);
 	StateInfo updateJump(StateInfo _state);
 
+	StateInfo startWeaponAim(StateInfo _state);
+	StateInfo updateWeaponAim(StateInfo _state);
+
+	StateInfo startWeaponOn(StateInfo _state);
+	StateInfo updateWeaponOn(StateInfo _state);
+	
+	StateInfo startWeaponOff(StateInfo _state);
+	StateInfo updateWeaponOff(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
 	const float BOTTOM_PIVOT = 14.f;
 	const float JUMP_POWER = 150.f;
-	const float WEAPON_EQUIP_DELAY = 0.5f;
+	const float WEAPON_EQUIP_DELAY = 1.5f;
+	const float AIM_STEP_DEGREE = 5.65f;
 private:
 	GameEngineRenderer* mainRender_;
 	GameEngineCollision* bottomCenterCollision_;
@@ -65,6 +74,7 @@ private:
 	float4 accelation_;
 	float4 speed_;
 	float4 direction_;
+	float4 forward_;
 
 	bool bLeft_;
 	bool bGround_;
@@ -73,6 +83,10 @@ private:
 	float deltaTime_;
 	float weaponEquipDelay_;
 
+	float aimRotate_;
+
 	eItemList currentWeapon_;
+
+	std::string nextState_;
 };
 

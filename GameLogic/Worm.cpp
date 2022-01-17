@@ -17,13 +17,16 @@ Worm::Worm()
 	, accelation_(float4::ZERO)
 	, speed_(float4::ZERO)
 	, direction_(float4::RIGHT)
+	, forward_(float4::RIGHT)
 	, bGround_(false)
 	, bLeft_(false)
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, weaponEquipDelay_(0.0f)
+	, aimRotate_(0.0f)
 	, state_(this)
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
+	, nextState_("")
 {
 
 }
@@ -64,6 +67,15 @@ void Worm::initRenderer()
 
 	mainRender_->CreateAnimation("IdleLeft", "idleLeft.bmp", 0, 5, true, 0.1f);
 	mainRender_->CreateAnimation("IdleRight", "idleRight.bmp", 0, 5, true, 0.1f);
+
+	mainRender_->CreateAnimation("BazOnLeft", "bazOnLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("BazOnRight", "bazOnRight.bmp", 0, 6, false, 0.033f);
+
+	mainRender_->CreateAnimation("BazOffLeft", "bazOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("BazOffRight", "bazOffRight.bmp", 0, 6, false, 0.033f);
+
+	mainRender_->CreateAnimation("BazAimLeft", "bazAimLeft.bmp", 0, 31, false, 1.0f);
+	mainRender_->CreateAnimation("BazAimRight", "bazAimRight.bmp", 0, 31, false, 1.0f);
 
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 }
@@ -109,6 +121,10 @@ void Worm::initState()
 	state_.CreateState("Walk", &Worm::startWalk, &Worm::updateWalk);
 	state_.CreateState("JumpReady", &Worm::startJumpReady, &Worm::updateJumpReady);
 	state_.CreateState("Jump", &Worm::startJump, &Worm::updateJump);
+	state_.CreateState("WeaponAim", &Worm::startWeaponAim, &Worm::updateWeaponAim);
+	state_.CreateState("WeaponOn", &Worm::startWeaponOn, &Worm::updateWeaponOn);
+	state_.CreateState("WeaponOff", &Worm::startWeaponOff, &Worm::updateWeaponOff);
+
 
 	state_.ChangeState("Idle");
 }
@@ -183,12 +199,33 @@ StateInfo Worm::startIdle(StateInfo _state)
 	{
 		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 	}
+
+	weaponEquipDelay_ = 0.0f;
+
 	return StateInfo();
 }
 
 StateInfo Worm::updateIdle(StateInfo _state)
 {
 	addGravity();
+
+	weaponEquipDelay_ += deltaTime_;
+
+	if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
+	{
+		weaponEquipDelay_ = 0.0f;
+		return "WeaponOn";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("UpArrow"))
+	{
+		return "WeaponAim";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("DownArrow"))
+	{
+		return "WeaponAim";
+	}
 
 	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
@@ -352,6 +389,116 @@ StateInfo Worm::updateJump(StateInfo _state)
 
 	//SetMove(speed_ * deltaTime_);
 	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startWeaponAim(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazAimRight", std::string("bazAimRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateWeaponAim(StateInfo _state)
+{
+	addGravity();
+	if (GameEngineInput::GetInst().IsPress("UpArrow"))
+	{
+		if (bLeft_)
+		{
+			aimRotate_ += deltaTime_;
+		}
+		else
+		{
+			aimRotate_ -= deltaTime_;
+		}
+
+		
+	}
+	
+	if (GameEngineInput::GetInst().IsPress("DownArrow"))
+	{
+		if (bLeft_)
+		{
+			aimRotate_ -= deltaTime_;
+		}
+		else
+		{
+			aimRotate_ += deltaTime_;
+		}
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startWeaponOn(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateWeaponOn(StateInfo _state)
+{
+	if (mainRender_->IsCurAnimationEnd())
+	{
+		return "WeaponAim";
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::startWeaponOff(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateWeaponOff(StateInfo _state)
+{
+	if (mainRender_->IsCurAnimationEnd())
+	{
+		return nextState_;
+	}
 	return StateInfo();
 }
 

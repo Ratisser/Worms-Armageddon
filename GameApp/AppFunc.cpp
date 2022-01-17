@@ -296,6 +296,13 @@ void CharactorImageInit()
 
 	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleRight.bmp"));
 	image->Cut({ 60, 60 });
+	
+	RS::LoadImageFromFileAndCut(dir / "bazAimLeft.bmp", float4(60.f, 60.f));
+	RS::LoadImageFromFileAndCut(dir / "bazAimRight.bmp", float4(60.f, 60.f));
+	RS::LoadImageFromFileAndCut(dir / "bazOffLeft.bmp", float4(60.f, 60.f));
+	RS::LoadImageFromFileAndCut(dir / "bazOffRight.bmp", float4(60.f, 60.f));
+	RS::LoadImageFromFileAndCut(dir / "bazOnLeft.bmp", float4(60.f, 60.f));
+	RS::LoadImageFromFileAndCut(dir / "bazOnRight.bmp", float4(60.f, 60.f));
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
@@ -304,6 +311,15 @@ GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
 	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
 
 	return GameEngineImage::GetInst().LoadGameImage(fileName, _path);
+}
+
+void RS::LoadImageFromFileAndCut(const std::string& _path, const float4& _cutSize)
+{
+	size_t fileNameStartIndex = _path.rfind("\\") + 1;
+	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
+
+	GameEngineImageFile* image = GameEngineImage::GetInst().LoadGameImage(fileName, _path);
+	image->Cut(_cutSize);
 }
 
 void MapWaterImageInit() // 바닥 수면 이미지 로드에 사용
