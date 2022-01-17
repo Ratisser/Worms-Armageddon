@@ -167,3 +167,9 @@ GameEngineFile GameEngineDirectroy::PathToGetFile(const std::string& _FileName)
 {
 	return GameEngineFile(PathToPlusFileName(_FileName));
 }
+
+
+std::string GameEngineDirectroy::operator/(const std::string& _rhs)
+{
+	return path_ + _rhs;;
+}
