@@ -44,6 +44,7 @@ void WindBarHider::WindBarUpdate()
 void WindBarHider::Start()
 {
 	mainRender_ = CreateRenderer("windBarHider");
+	mainRender_->SetCameraEffectOff();
 }
 void WindBarHider::UpdateBefore()
 {
