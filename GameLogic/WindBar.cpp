@@ -54,18 +54,16 @@ void WindBar::WindBarUpdate()
 	{
 		mainRender_->ChangeAnimation("windToLeft");
 		float curWindSpeed = parentController_->GetCurrentWindSpeed(); // 현재 풍속 받기 (-500~0)
-		float fixedWindSpeed = curWindSpeed / 500.0f;
-		this->SetPos({ 1135 - (fixedWindSpeed * 100), 700 });
-		this->mainRender_->SetRenderSize({(fixedWindSpeed*100), 13.0f});
+		float fixedWindSpeed = -1 * curWindSpeed / 500.0f;
+		this->SetPos({ 1135 + (100 - fixedWindSpeed * 100), 700 });
 		break;
 	}
 	case WindDir::TORIGHT:
 	{
-		SetPos({ 1225,700 });
 		mainRender_->ChangeAnimation("windToRight");
 		float curWindSpeed = parentController_->GetCurrentWindSpeed(); // 현재 풍속 받기 (0~ 500)
 		float fixedWindSpeed = curWindSpeed / 500.0f;
-		this->mainRender_->SetRenderSize({(fixedWindSpeed*100),13.0f});
+		this->SetPos({ 1225 - (100 - fixedWindSpeed * 100), 700 });
 		break;
 	}
 	case WindDir::NONE:

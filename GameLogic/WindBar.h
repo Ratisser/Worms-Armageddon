@@ -35,11 +35,11 @@ public:
 
 	void WindBarUpdate();
 
-public:
-	virtual void Start() override;
+public:	virtual void Start() override;
 	virtual void UpdateBefore() override;
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
 };
 

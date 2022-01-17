@@ -17,6 +17,7 @@
 #include "BottomFlag.h"
 #include "WindBarBlank.h"
 #include "WindBar.h"
+#include "WindBarHider.h"
 
 #include "WaterWave.h"
 #include "UnderWater.h"
@@ -118,6 +119,8 @@ void PlayLevel::Loading()
 	CreateActor<WindBarBlank>();
 	WindBar* windBar = CreateActor<WindBar>();
 	windBar->SetParentController(windController_);
+	WindBarHider* windBarHider = CreateActor<WindBarHider>();
+	windBarHider->SetParentController(windController_);
 	// UI包府磊积己
 	UIController* CurUIController = CreateActor<UIController>();
 	CurUIController->SetCurPlayer(Worm_);

@@ -156,6 +156,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WindBarHider.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WindController.h">
       <SubType>
       </SubType>
@@ -288,6 +292,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="WindBarBlank.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindBarHider.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -210,6 +210,9 @@
     <ClInclude Include="FadeObject.h">
       <Filter>Actor\_Backup</Filter>
     </ClInclude>
+    <ClInclude Include="WindBarHider.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -328,6 +331,9 @@
     </ClCompile>
     <ClCompile Include="TestActor.cpp">
       <Filter>Actor\_Backup</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarHider.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
