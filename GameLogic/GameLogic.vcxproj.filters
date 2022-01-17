@@ -73,16 +73,19 @@
     <Filter Include="Actor\Effect\02. EffectBundleActor\Explosion">
       <UniqueIdentifier>{2a87addd-d575-4183-b412-a2ae74c22fbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\Map">
+      <UniqueIdentifier>{06f99db7-cf17-4e7d-88b5-e61f5dcbe075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\Player">
+      <UniqueIdentifier>{6121f2d6-25c9-4831-96c5-2d2bf394ff4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\_Backup">
+      <UniqueIdentifier>{6c25d0ca-4418-4762-a878-5c79360246df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FadeObject.h">
-      <Filter>Actor</Filter>
-    </ClInclude>
     <ClInclude Include="TestLevel.h">
       <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="TestActor.h">
-      <Filter>Actor</Filter>
     </ClInclude>
     <ClInclude Include="eCollisionGroup.h">
       <Filter>Enum</Filter>
@@ -99,14 +102,8 @@
     <ClInclude Include="TitleImage.h">
       <Filter>Actor\TitleLevel</Filter>
     </ClInclude>
-    <ClInclude Include="MapTrain.h">
-      <Filter>Actor\PlayLevel</Filter>
-    </ClInclude>
     <ClInclude Include="LobbyImage.h">
       <Filter>Actor\LobbyLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="Worm.h">
-      <Filter>Actor\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="LoadingLevel.h">
       <Filter>Level</Filter>
@@ -146,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="UnderWater.h">
       <Filter>Actor\WaterLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGround.h">
-      <Filter>Actor\PlayLevel</Filter>
     </ClInclude>
     <ClInclude Include="WaterLevel.h">
       <Filter>Actor\WaterLevel</Filter>
@@ -192,16 +186,37 @@
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="Bazooka.h">
+      <Filter>Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBarBlank.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBar.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MapTrain.h">
+      <Filter>Actor\PlayLevel\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGround.h">
+      <Filter>Actor\PlayLevel\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>Actor\PlayLevel\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="TestActor.h">
+      <Filter>Actor\_Backup</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeObject.h">
+      <Filter>Actor\_Backup</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBarHider.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FadeObject.cpp">
-      <Filter>Actor</Filter>
-    </ClCompile>
     <ClCompile Include="TestLevel.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="TestActor.cpp">
-      <Filter>Actor</Filter>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
@@ -215,14 +230,8 @@
     <ClCompile Include="TitleImage.cpp">
       <Filter>Actor\TitleLevel</Filter>
     </ClCompile>
-    <ClCompile Include="MapTrain.cpp">
-      <Filter>Actor\PlayLevel</Filter>
-    </ClCompile>
     <ClCompile Include="LobbyImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="Worm.cpp">
-      <Filter>Actor\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="LoadingLevel.cpp">
       <Filter>Level</Filter>
@@ -250,9 +259,6 @@
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
       <Filter>Actor\PlayLevel\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="MapGround.cpp">
-      <Filter>Actor\PlayLevel</Filter>
     </ClCompile>
     <ClCompile Include="UnderWater.cpp">
       <Filter>Actor\WaterLevel</Filter>
@@ -301,6 +307,33 @@
     </ClCompile>
     <ClCompile Include="UIController.cpp">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Bazooka.cpp">
+      <Filter>Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarBlank.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBar.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGround.cpp">
+      <Filter>Actor\PlayLevel\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTrain.cpp">
+      <Filter>Actor\PlayLevel\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>Actor\PlayLevel\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeObject.cpp">
+      <Filter>Actor\_Backup</Filter>
+    </ClCompile>
+    <ClCompile Include="TestActor.cpp">
+      <Filter>Actor\_Backup</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarHider.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

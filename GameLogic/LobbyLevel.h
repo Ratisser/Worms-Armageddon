@@ -22,5 +22,8 @@ private:		//delete operator
 public:
 	void Loading() override;
 	void LevelUpdate() override;
+
+public:
+	void Loading_SJH();
 };
 

@@ -27,6 +27,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bazooka.h" />
     <ClInclude Include="Midground.h">
       <SubType>
       </SubType>
@@ -147,6 +148,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WindBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WindBarBlank.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WindBarHider.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WindController.h">
       <SubType>
       </SubType>
@@ -158,6 +171,7 @@
     <ClInclude Include="eCollisionCheckColor.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bazooka.cpp" />
     <ClCompile Include="Midground.cpp">
       <SubType>
       </SubType>
@@ -270,6 +284,18 @@
     <ClCompile Include="WaterLevel.cpp" />
     <ClCompile Include="WaterWave.cpp" />
     <ClCompile Include="WeaponSheet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindBar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindBarBlank.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindBarHider.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -35,6 +35,7 @@ void AppResourcesInit()
 
 		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
 		
 		ResourceInitPJW();
 		CharactorImageInit();
@@ -96,6 +97,10 @@ void ResourceInitPJW()
 
 	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("ScatterSnow", Dir.PathToPlusFileName("ScatterSnow.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("windGauge", Dir.PathToPlusFileName("windGauge.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("windBarHider", Dir.PathToPlusFileName("windBarHider.bmp"));
+	GameEngineImageFile* windBarSprites = GameEngineImage::GetInst().LoadGameImage("windBar", Dir.PathToPlusFileName("windBar.bmp"));
+	windBarSprites->Cut({87,13});
 	GameEngineImageFile* leafSprites = GameEngineImage::GetInst().LoadGameImage("ScatterLeaf", Dir.PathToPlusFileName("ScatterLeaf.bmp"));
 	leafSprites->Cut({32,32});
 	Dir.MoveParent("Image");

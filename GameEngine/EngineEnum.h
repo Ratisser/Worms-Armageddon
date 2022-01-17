@@ -25,5 +25,6 @@ enum class RenderOrder
 	WaterLevel_Front,
 	Weapon,
 	UI,
+	Mouse,
 	Max
 };

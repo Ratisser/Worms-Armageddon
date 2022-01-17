@@ -20,8 +20,10 @@ Worm::Worm()
 	, bGround_(false)
 	, bLeft_(false)
 	, bBackJump_(false)
-	, state_(this)
 	, deltaTime_(0.0f)
+	, weaponEquipDelay_(0.0f)
+	, state_(this)
+	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
 {
 
 }

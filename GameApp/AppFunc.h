@@ -12,6 +12,9 @@ void ResourceInitPJW();
 // UI 이미지 커밋 충돌 방지용 함수 묶음 - 신종하
 void UIImageInit();
 
+// 대기실씬 이미지 로딩 - 신종하
+void LobbyImageInit();
+
 // 2022-01-12 조규현 : 
 namespace RS
 {

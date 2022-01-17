@@ -28,5 +28,9 @@ public:
 private:
 	GameEngineRenderer* mainRenderer_;
 	GameEngineCollision* bodyCollision_;
+	GameEngineRenderer* boomSpriteRender_;
+
+public:
+	void GroundUpdate(float4 pos);
 };
 

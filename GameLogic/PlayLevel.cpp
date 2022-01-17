@@ -10,10 +10,14 @@
 #include "Worm.h"
 #include "UIController.h"
 #include "DrumActor.h"
+#include "Bazooka.h"
 
 #include "BottomHealthBar.h"
 #include "BottomNameTag.h"
 #include "BottomFlag.h"
+#include "WindBarBlank.h"
+#include "WindBar.h"
+#include "WindBarHider.h"
 
 #include "WaterWave.h"
 #include "UnderWater.h"
@@ -29,10 +33,13 @@
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
+	Ground_(nullptr),
 	Worm_(nullptr),
+	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true),
 	windController_(nullptr),
+	CameraPos_(0.f, 0.f),
 	isDebugOn_(true)// default constructer 디폴트 생성자
 {
 
@@ -45,10 +52,13 @@ PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
 
 PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자	
 	: Train_(nullptr),
+	Ground_(nullptr),
 	Worm_(nullptr),
+	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
 	,windController_(nullptr),
+	CameraPos_(0.f, 0.f),
 	isDebugOn_(true)// default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
@@ -105,7 +115,12 @@ void PlayLevel::Loading()
 	}
 	// 뒷배경 생성
 	CreateActor<Midground>();
-
+	// 바람 UI 바 생성
+	CreateActor<WindBarBlank>();
+	WindBar* windBar = CreateActor<WindBar>();
+	windBar->SetParentController(windController_);
+	WindBarHider* windBarHider = CreateActor<WindBarHider>();
+	windBarHider->SetParentController(windController_);
 	// UI관리자생성
 	UIController* CurUIController = CreateActor<UIController>();
 	CurUIController->SetCurPlayer(Worm_);
@@ -141,19 +156,23 @@ void PlayLevel::LevelUpdate()
 	{
 		if (true == GameEngineInput::GetInst().IsPress("Up"))
 		{
-			GameEngineLevel::SetCamMove(float4::UP * Speed); 
+			GameEngineLevel::SetCamMove(float4::UP * Speed);
+			CameraPos_ += float4::UP * Speed;
 		}
 		if (true == GameEngineInput::GetInst().IsPress("Down"))
 		{
 			GameEngineLevel::SetCamMove(float4::DOWN * Speed);
+			CameraPos_ += float4::DOWN * Speed;
 		}
 		if (true == GameEngineInput::GetInst().IsPress("Left"))
 		{
 			GameEngineLevel::SetCamMove(float4::LEFT * Speed);
+			CameraPos_ += float4::LEFT * Speed;
 		}
 		if (true == GameEngineInput::GetInst().IsPress("Right"))
 		{
 			GameEngineLevel::SetCamMove(float4::RIGHT * Speed);
+			CameraPos_ += float4::RIGHT * Speed;
 		}
 	}
 
@@ -177,7 +196,8 @@ void PlayLevel::LevelUpdate()
 
 void PlayLevel::AJYLoading()
 {
-	CreateActor<MapGround>();
+	//Bazooka_ = CreateActor<Bazooka>();
+	Ground_ = CreateActor<MapGround>();
 
 	if (false == GameEngineInput::GetInst().IsKey("Boom"))
 	{
@@ -194,6 +214,9 @@ void PlayLevel::AJYLevelUpdate()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Boom"))
 	{
+		Bazooka_ = CreateActor<Bazooka>();
+		float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + CameraPos_;
+		Bazooka_->SetPos(mousepos);
 		Train_->GroundUpdate();
 
 		//테스트 삽입 이현
@@ -217,6 +240,12 @@ void PlayLevel::AJYLevelUpdate()
 	{
 		GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
 	}
+}
+
+void PlayLevel::AJYGround(float4 _pos)
+{
+	Train_->GroundUpdate(_pos);
+	Ground_->GroundUpdate(_pos);
 }
 
 void PlayLevel::MakeWaterLevel() // 맵 바닥의 수면 생성

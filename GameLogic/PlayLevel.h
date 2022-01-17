@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineLevel.h>
 #include "WaterLevel.h"
+#include "MapGround.h"
 // 분류 : 
 // 용도 : 
 // 설명 : 
@@ -9,9 +10,13 @@ class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
 	class MapTrain* Train_;
+	class MapGround* Ground_;
+	class Bazooka* Bazooka_;
 	class Worm* Worm_;
 	bool IsCameraMove_;
 	bool isDebugOn_;
+	float4 CameraPos_;
+
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
 	~PlayLevel(); // default destructer 디폴트 소멸자
@@ -38,6 +43,7 @@ public:
 	void MakeWaterLevel();
 	void CreateGimmickObject();
 	void CreateExplosion(); //test
+	void AJYGround(float4 _pos);
 
 private:
 	void AJYLoading();

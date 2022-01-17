@@ -86,6 +86,7 @@ GameEngineCollision* GameEngineActor::CreateCollision(int _Group, CollisionCheck
 	collisionList_.push_back(NewCollision);
 
 	GetLevel()->PushCollision(NewCollision);
+	GetLevel()->CollisionOrderCheck();
 
 	return NewCollision;
 }

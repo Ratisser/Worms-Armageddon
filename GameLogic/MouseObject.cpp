@@ -8,6 +8,7 @@
 #include <GameEngineLevel.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
+#include <EngineEnum.h>
 
 #include <GameEngineWindow.h>
 #include <GameEngineTime.h>
@@ -66,7 +67,7 @@ void MouseObject::MoveMousePos(bool _Flag)
 
 void MouseObject::Start()
 {
-	SetRenderOrder(10009);
+	SetRenderOrder(static_cast<int>(RenderOrder::Mouse));
 	mainrenderer_ = CreateRenderer("Cursor");
 	mainrenderer_->SetRenderSize(float4(32.f, 32.f));
 	mainrenderer_->SetCameraEffectOff();
