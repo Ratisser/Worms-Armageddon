@@ -217,11 +217,11 @@ void PlayLevel::AJYLevelUpdate()
 		Bazooka_ = CreateActor<Bazooka>();
 		float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + CameraPos_;
 		Bazooka_->SetPos(mousepos);
-		Train_->GroundUpdate();
+		//Train_->GroundUpdate();
 
 		//Å×½ºÆ® »ðÀÔ ÀÌÇö
 
-		CreateExplosion();
+		//CreateExplosion();
 	}
 
 	if (true == GameEngineInput::GetInst().IsDown("FreeCameraOnOff"))
@@ -246,6 +246,10 @@ void PlayLevel::AJYGround(float4 _pos)
 {
 	Train_->GroundUpdate(_pos);
 	Ground_->GroundUpdate(_pos);
+
+	EffectBundle::Explosion::Size100* actor = CreateActor<EffectBundle::Explosion::Size100>
+		(float4(_pos.x + 50.f, _pos.y + 50.f));
+	actor->SetRenderOrder((int)RenderOrder::Max);
 }
 
 void PlayLevel::MakeWaterLevel() // ¸Ê ¹Ù´ÚÀÇ ¼ö¸é »ý¼º

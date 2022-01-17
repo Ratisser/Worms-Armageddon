@@ -10,6 +10,7 @@
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 #include "PlayLevel.h"
+#include "Explosion.h"
 
 Bazooka::Bazooka()
 	: mainRender_(nullptr)
