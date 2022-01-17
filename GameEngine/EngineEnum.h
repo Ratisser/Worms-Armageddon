@@ -21,9 +21,12 @@ enum class RenderOrder
 	None,
 	BackGround,
 	WaterLevel_Back,
+	MapBack,
 	Map,
+	Worm,
 	WaterLevel_Front,
 	Weapon,
+	Effect,
 	UI,
 	Mouse,
 	Max

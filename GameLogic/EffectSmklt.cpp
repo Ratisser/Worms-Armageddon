@@ -18,7 +18,7 @@ Effect::Smklt25::Smklt25(Smklt25&& _other) noexcept
 void Effect::Smklt25::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt25");
-	mainSpriteRender_->CreateAnimation("smklt25", "smklt25", 0, 7, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("smklt25", "smklt25", 0, 7, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("smklt25");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
@@ -55,7 +55,7 @@ Effect::Smklt50::Smklt50(Smklt50&& _other) noexcept
 void Effect::Smklt50::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt50");
-	mainSpriteRender_->CreateAnimation("smklt50", "smklt50", 0, 27, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("smklt50", "smklt50", 0, 27, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("smklt50");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
@@ -92,7 +92,7 @@ Effect::Smklt75::Smklt75(Smklt75&& _other) noexcept
 void Effect::Smklt75::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt75");
-	mainSpriteRender_->CreateAnimation("smklt75", "smklt75", 0, 27, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("smklt75", "smklt75", 0, 27, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("smklt75");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
@@ -129,7 +129,7 @@ Effect::Smklt100::Smklt100(Smklt100&& _other) noexcept
 void Effect::Smklt100::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt100");
-	mainSpriteRender_->CreateAnimation("smklt100", "smklt100", 0, 27, true, 0.05f);
+	mainSpriteRender_->CreateAnimation("smklt100", "smklt100", 0, 27, false, 0.025f);
 	mainSpriteRender_->ChangeAnimation("smklt100");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>

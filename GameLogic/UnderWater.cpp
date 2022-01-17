@@ -19,7 +19,6 @@ UnderWater::UnderWater(UnderWater&& _other) noexcept  // default RValue Copy con
 void UnderWater::Start()
 {
 	mainSpriteRender_ = CreateRenderer("Under_Water");
-	SetRenderOrder(2);
 }
 
 void UnderWater::UpdateBefore()

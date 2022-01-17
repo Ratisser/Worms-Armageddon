@@ -9,7 +9,7 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	backGroundSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr)
 {
-	SetRenderOrder(102);
+	SetRenderOrder((int)RenderOrder::Map);
 }
 
 MapTrain::~MapTrain() // default destructer 디폴트 소멸자

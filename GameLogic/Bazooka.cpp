@@ -33,7 +33,7 @@ Bazooka::~Bazooka() // default destructer 디폴트 소멸자
 
 void Bazooka::Start()
 {
-	SetRenderOrder(100000);
+	SetRenderOrder((int)RenderOrder::Weapon);
 
 	mainRender_ = CreateRenderer("Bazooka");
 

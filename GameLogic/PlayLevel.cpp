@@ -249,7 +249,7 @@ void PlayLevel::AJYGround(float4 _pos)
 
 	EffectBundle::Explosion::Size100* actor = CreateActor<EffectBundle::Explosion::Size100>
 		(float4(_pos.x + 50.f, _pos.y + 50.f));
-	actor->SetRenderOrder((int)RenderOrder::Max);
+	actor->SetRenderOrder((int)RenderOrder::Effect);
 }
 
 void PlayLevel::MakeWaterLevel() // ¸Ê ¹Ù´ÚÀÇ ¼ö¸é »ý¼º
@@ -339,7 +339,7 @@ void PlayLevel::CreateExplosion()
 	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + float4(1230.f, 280.f, 0.f, 0.f);
 	EffectBundle::Explosion::Size100* actor =CreateActor<EffectBundle::Explosion::Size100>
 		(mousepos);
-	actor->SetRenderOrder((int)RenderOrder::Max);
+	actor->SetRenderOrder((int)RenderOrder::Effect);
 }
 
 void PlayLevel::PJWLevelUpdate()

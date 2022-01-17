@@ -17,7 +17,7 @@ Effect::Smkdrk20::Smkdrk20(Smkdrk20&& _other) noexcept
 void Effect::Smkdrk20::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smkdrk20");
-	mainSpriteRender_->CreateAnimation("smkdrk20", "smkdrk20", 0, 7, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("smkdrk20", "smkdrk20", 0, 7, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("smkdrk20");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
@@ -54,7 +54,7 @@ Effect::Smkdrk30::Smkdrk30(Smkdrk30&& _other) noexcept
 void Effect::Smkdrk30::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smkdrk30");
-	mainSpriteRender_->CreateAnimation("smkdrk30", "smkdrk30", 0, 7, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("smkdrk30", "smkdrk30", 0, 7, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("smkdrk30");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
@@ -91,7 +91,7 @@ Effect::Smkdrk40::Smkdrk40(Smkdrk40&& _other) noexcept
 void Effect::Smkdrk40::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smkdrk40");
-	mainSpriteRender_->CreateAnimation("smkdrk40", "smkdrk40", 0, 3, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("smkdrk40", "smkdrk40", 0, 3, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("smkdrk40");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>

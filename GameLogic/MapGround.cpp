@@ -33,7 +33,7 @@ void MapGround::Start()
 	bodyCollision_->SetImage("MapGround");
 	//bodyCollision_->SetColorCheck(RGB(0, 0, 0));
 
-	SetRenderOrder(100);
+	SetRenderOrder((int)RenderOrder::Map);
 }
 
 void MapGround::UpdateBefore()

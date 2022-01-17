@@ -127,6 +127,8 @@ EffectBundle::Explosion::Size100::Size100(Size100&& _other) noexcept
 
 void EffectBundle::Explosion::Size100::Start()
 {
+	SetRenderOrder((int)RenderOrder::Effect);
+
 	/*
 	Æø¹ß ÀÌÆåÆ®
 

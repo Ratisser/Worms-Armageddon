@@ -36,7 +36,7 @@ Worm::~Worm() // default destructer 디폴트 소멸자
 void Worm::Start()
 {
 	SetPos({ 1625.f, -235.f });
-	SetRenderOrder(100);
+	SetRenderOrder((int)RenderOrder::Worm);
 	initRenderer();
 	initCollision();
 	initInput();

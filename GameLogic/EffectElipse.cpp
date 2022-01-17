@@ -17,7 +17,7 @@ Effect::Elipse25::Elipse25(Elipse25&& _other) noexcept
 void Effect::Elipse25::Start()
 {
 	mainSpriteRender_ = CreateRenderer("elipse25");
-	mainSpriteRender_->CreateAnimation("elipse25", "elipse25", 0, 7, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("elipse25", "elipse25", 0, 7, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("elipse25");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>("elipse25", this, &EffectActor::EffectDestroy);
@@ -53,7 +53,7 @@ Effect::Elipse50::Elipse50(Elipse50&& _other) noexcept
 void Effect::Elipse50::Start()
 {
 	mainSpriteRender_ = CreateRenderer("elipse50");
-	mainSpriteRender_->CreateAnimation("elipse50", "elipse50", 0, 7, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("elipse50", "elipse50", 0, 7, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("elipse50");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>("elipse50", this, &EffectActor::EffectDestroy);
@@ -89,7 +89,7 @@ Effect::Elipse75::Elipse75(Elipse75&& _other) noexcept
 void Effect::Elipse75::Start()
 {
 	mainSpriteRender_ = CreateRenderer("elipse75");
-	mainSpriteRender_->CreateAnimation("elipse75", "elipse75", 0, 9, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("elipse75", "elipse75", 0, 9, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("elipse75");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>("elipse75", this, &EffectActor::EffectDestroy);
@@ -125,7 +125,7 @@ Effect::Elipse100::Elipse100(Elipse100&& _other) noexcept
 void Effect::Elipse100::Start()
 {
 	mainSpriteRender_ = CreateRenderer("elipse100");
-	mainSpriteRender_->CreateAnimation("elipse100", "elipse100", 0, 9, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("elipse100", "elipse100", 0, 9, false, 0.05f);
 	mainSpriteRender_->ChangeAnimation("elipse100");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>("elipse100", this, &EffectActor::EffectDestroy);
