@@ -8,6 +8,7 @@
 #include <GameEngineLevel.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
+#include <EngineEnum.h>
 
 #include <GameEngineWindow.h>
 #include <GameEngineTime.h>
@@ -64,7 +65,7 @@ WeaponSheet::WeaponSheet(WeaponSheet&& _other) noexcept :
 void WeaponSheet::Start()
 {
 	// 렌더러 생성 및 카메라영향 제거
-	SetRenderOrder(9999);
+	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 	mainrenderer = CreateRenderer("WeaponSheet");
 	mainrenderer->SetCameraEffectOff();
 

@@ -2,6 +2,7 @@
 #include <map>
 #include <string>
 #include <list>
+#include <vector>
 #include <Windows.h>
 
 // 분류 :
@@ -56,6 +57,8 @@ public:
 	GameEngineImageFile* LoadGameImage(std::string _name, std::string _path);
 
 	GameEngineImageFile* FindGameImage(std::string _name);
+
+	std::vector<std::string> FindAllSpecKeyImage(const std::string& _SpecKey);
 
 public:		
 	GameEngineImage(); // default constructer 디폴트 생성자

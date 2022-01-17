@@ -5,6 +5,7 @@
 #include <GameEngineLevel.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
+#include <EngineEnum.h>
 
 #include <GameEngineWindow.h>
 #include <GameEngineTime.h>
@@ -57,7 +58,7 @@ void WeaponIcon::SetWeaponName(const std::string& _Name)
 	// 해당 무기 최초 비활성화상태로 렌더
 	if (nullptr == mainrenderer_)
 	{
-		SetRenderOrder(10001);
+		SetRenderOrder(static_cast<int>(RenderOrder::UI) + 1);
 		mainrenderer_ = CreateRenderer(weaponname_);
 		mainrenderer_->SetRenderSize({ 28.f, 28.f });
 		mainrenderer_->SetCameraEffectOff();

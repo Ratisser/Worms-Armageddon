@@ -89,6 +89,29 @@ GameEngineImageFile* GameEngineImage::FindGameImage(std::string _name)
 	return FindIter->second;
 }
 
+std::vector<std::string> GameEngineImage::FindAllSpecKeyImage(const std::string& _SpecKey)
+{
+	std::vector<std::string> Res;
+
+	std::string SpecString = _SpecKey;
+
+	std::map<std::string, GameEngineImageFile*>::iterator StartIter = globalManagedimages_.begin();
+	std::map<std::string, GameEngineImageFile*>::iterator EndIter = globalManagedimages_.end();
+	for (; StartIter != EndIter; ++StartIter)
+	{
+		size_t Find = 0;
+		if ((Find = (*StartIter).first.find(_SpecKey)) != std::string::npos)
+		{
+			// 특정문자열을 포함한 키가 존재한다면
+			std::string KeyName;
+			KeyName = (*StartIter).first;
+			Res.push_back(KeyName);
+		}
+	}
+
+	return Res;
+}
+
 GameEngineImageFile* GameEngineImage::LoadGameImage(std::string _name, std::string _path)
 {
 	if (nullptr != FindGameImage(_name))
