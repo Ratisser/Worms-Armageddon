@@ -194,7 +194,10 @@ public:
 		FindAnimation(_Name)->cur_ = index;
 	}
 
-
+	void SetAnimationCurrentFrame(const int index) // 에니메이션 cur_ 변경하는 함수 
+	{
+		curani_->cur_ = index;
+	}
 
 	// 에니메이션 프레임 호출함수 : 이현
 	template <typename T>
