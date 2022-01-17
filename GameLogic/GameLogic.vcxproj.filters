@@ -192,6 +192,12 @@
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="WindBarBlank.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBar.h">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FadeObject.cpp">
@@ -301,6 +307,12 @@
     </ClCompile>
     <ClCompile Include="UIController.cpp">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarBlank.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBar.cpp">
+      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,8 @@
 #include "BottomHealthBar.h"
 #include "BottomNameTag.h"
 #include "BottomFlag.h"
+#include "WindBarBlank.h"
+#include "WindBar.h"
 
 #include "WaterWave.h"
 #include "UnderWater.h"
@@ -109,7 +111,10 @@ void PlayLevel::Loading()
 	}
 	// 缔硅版 积己
 	CreateActor<Midground>();
-
+	// 官恩 UI 官 积己
+	CreateActor<WindBarBlank>();
+	WindBar* windBar = CreateActor<WindBar>();
+	windBar->SetParentController(windController_);
 	// UI包府磊积己
 	UIController* CurUIController = CreateActor<UIController>();
 	CurUIController->SetCurPlayer(Worm_);

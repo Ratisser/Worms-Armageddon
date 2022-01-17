@@ -147,6 +147,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WindBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="WindBarBlank.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WindController.h">
       <SubType>
       </SubType>
@@ -270,6 +278,14 @@
     <ClCompile Include="WaterLevel.cpp" />
     <ClCompile Include="WaterWave.cpp" />
     <ClCompile Include="WeaponSheet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindBar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WindBarBlank.cpp">
       <SubType>
       </SubType>
     </ClCompile>
