@@ -49,6 +49,4 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	name += std::to_string(currentIndex_++);
 	Worm* newWorm = parentLevel_->CreateActor<Worm>(name);
 	newWorm->SetPos({ randomGenerator.RandomFloat(_minX, _maxX) , -500.0f });
-
-
 }
