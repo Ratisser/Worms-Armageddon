@@ -134,14 +134,10 @@ void PlayLevel::Loading()
 
 	MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	CreateGimmickObject();
-	
-	Testfunc(); // 테스트해볼 함수를 집어넣는 함수, 사용후 비워둘것
-
 }
 
 void PlayLevel::LevelUpdate()
 {
-	TestUpdate(); //디버그용 테스트 함수
 	AJYLevelUpdate();
 	PJWLevelUpdate();
 	float Speed = 5.f;
@@ -247,8 +243,42 @@ void PlayLevel::AJYGround(float4 _pos)
 	Train_->GroundUpdate(_pos);
 	Ground_->GroundUpdate(_pos);
 
+	CreateExplosion100(_pos);
+}
+
+void PlayLevel::CreateExplosion100(float4 Pos)
+{
+	float4 _Pos = float4(Pos.x + 50.f, Pos.y + 50.f);
+
 	EffectBundle::Explosion::Size100* actor = CreateActor<EffectBundle::Explosion::Size100>
-		(float4(_pos.x + 50.f, _pos.y + 50.f));
+		(_Pos);
+	actor->SetRenderOrder((int)RenderOrder::Effect);
+}
+
+void PlayLevel::CreateExplosion75(float4 Pos)
+{
+	float4 _Pos = float4(Pos.x + 37.5f, Pos.y + 37.5f);
+
+	EffectBundle::Explosion::Size75* actor = CreateActor<EffectBundle::Explosion::Size75>
+		(_Pos);
+	actor->SetRenderOrder((int)RenderOrder::Effect);
+}
+
+void PlayLevel::CreateExplosion50(float4 Pos)
+{
+	float4 _Pos = float4(Pos.x + 25.f, Pos.y + 25.f);
+
+	EffectBundle::Explosion::Size50* actor = CreateActor<EffectBundle::Explosion::Size50>
+		(_Pos);
+	actor->SetRenderOrder((int)RenderOrder::Effect);
+}
+
+void PlayLevel::CreateExplosion25(float4 Pos)
+{
+	float4 _Pos = float4(Pos.x + 12.5f, Pos.y + 12.5f);
+
+	EffectBundle::Explosion::Size25* actor = CreateActor<EffectBundle::Explosion::Size25>
+		(_Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
 }
 
@@ -334,14 +364,6 @@ void PlayLevel::CreateGimmickObject()
 
 }
 
-void PlayLevel::CreateExplosion()
-{
-	float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + float4(1230.f, 280.f, 0.f, 0.f);
-	EffectBundle::Explosion::Size100* actor =CreateActor<EffectBundle::Explosion::Size100>
-		(mousepos);
-	actor->SetRenderOrder((int)RenderOrder::Effect);
-}
-
 void PlayLevel::PJWLevelUpdate()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Toggle"))
@@ -359,11 +381,3 @@ void PlayLevel::PJWLevelUpdate()
 	}
 }
 
-void PlayLevel::Testfunc() // 테스트해볼 함수를 집어넣는 함수, 사용후 비워둘것
-{
-	CreateExplosion();
-}
-
-void PlayLevel::TestUpdate()
-{
-}

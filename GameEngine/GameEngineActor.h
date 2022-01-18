@@ -87,6 +87,13 @@ public:
 		pos_ += _pos;
 	}
 
+	void SetMove(float _posx, float _posy, float _Posz = 0.f)
+	{
+		pos_.x += _posx;
+		pos_.y += _posy;
+		pos_.z += _Posz;
+	}
+
 protected:
 	GameEngineActor(); // default constructer 디폴트 생성자
 	~GameEngineActor() override; // default destructer 디폴트 소멸자

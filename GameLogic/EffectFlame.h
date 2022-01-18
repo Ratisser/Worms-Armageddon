@@ -12,6 +12,16 @@ namespace Effect
 	public:
 		Flame1();
 		~Flame1();
+	public:
+		float4 Dir_;
+
+		float GravityAcc;
+		float GravitySpeed;
+
+		float ExplodeSpeed;
+
+		float gentime;
+
 	protected:		// delete constructer
 		Flame1(const Flame1& _other) = delete;
 		Flame1(Flame1&& _other) noexcept;
@@ -24,6 +34,11 @@ namespace Effect
 		virtual void Update() override;
 		virtual void UpdateAfter() override;
 		virtual void Render() override;
+
+		void SetDir(float4 Dir)
+		{
+			Dir_ = Dir;
+		}
 	};
 
 	class Flame2 : public EffectActor
@@ -31,6 +46,17 @@ namespace Effect
 	public:
 		Flame2();
 		~Flame2();
+
+	public:
+		float4 Dir_;
+
+		float GravityAcc;
+		float GravitySpeed;
+
+		float ExplodeSpeed;
+
+		float gentime;
+
 	protected:		// delete constructer
 		Flame2(const Flame2& _other) = delete;
 		Flame2(Flame2&& _other) noexcept;
@@ -43,5 +69,10 @@ namespace Effect
 		virtual void Update() override;
 		virtual void UpdateAfter() override;
 		virtual void Render() override;
+
+		void SetDir(float4 Dir)
+		{
+			Dir_ = Dir;
+		}
 	};
 };

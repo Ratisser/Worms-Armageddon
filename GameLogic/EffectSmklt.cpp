@@ -18,11 +18,16 @@ Effect::Smklt25::Smklt25(Smklt25&& _other) noexcept
 void Effect::Smklt25::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt25");
-	mainSpriteRender_->CreateAnimation("smklt25", "smklt25", 0, 7, false, 0.1f);
+	mainSpriteRender_->CreateAnimation("smklt25", "smklt25", 0, 27, false, 0.025f);
 	mainSpriteRender_->ChangeAnimation("smklt25");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
-		("smklt25", this, &EffectActor::EffectDestroy);
+		("smklt25", this, &EffectActor::Death);
+
+	GameEngineMath::Random random;
+	int randint = random.RandomInt(0, 7);
+
+	mainSpriteRender_->SetAnimationCurrentFrame("smklt25", randint);
 }
 
 void Effect::Smklt25::UpdateBefore()
@@ -55,11 +60,16 @@ Effect::Smklt50::Smklt50(Smklt50&& _other) noexcept
 void Effect::Smklt50::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt50");
-	mainSpriteRender_->CreateAnimation("smklt50", "smklt50", 0, 27, false, 0.1f);
+	mainSpriteRender_->CreateAnimation("smklt50", "smklt50", 0, 27, false, 0.025f);
 	mainSpriteRender_->ChangeAnimation("smklt50");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
-		("smklt50", this, &EffectActor::EffectDestroy);
+		("smklt50", this, &EffectActor::Death);
+
+	GameEngineMath::Random random;
+	int randint = random.RandomInt(0, 7);
+
+	mainSpriteRender_->SetAnimationCurrentFrame("smklt50", randint);
 }
 
 void Effect::Smklt50::UpdateBefore()
@@ -92,11 +102,16 @@ Effect::Smklt75::Smklt75(Smklt75&& _other) noexcept
 void Effect::Smklt75::Start()
 {
 	mainSpriteRender_ = CreateRenderer("smklt75");
-	mainSpriteRender_->CreateAnimation("smklt75", "smklt75", 0, 27, false, 0.1f);
+	mainSpriteRender_->CreateAnimation("smklt75", "smklt75", 0, 27, false, 0.025f);
 	mainSpriteRender_->ChangeAnimation("smklt75");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
-		("smklt75", this, &EffectActor::EffectDestroy);
+		("smklt75", this, &EffectActor::Death);
+
+	GameEngineMath::Random random;
+	int randint = random.RandomInt(0, 7);
+
+	mainSpriteRender_->SetAnimationCurrentFrame("smklt75", randint);
 }
 
 void Effect::Smklt75::UpdateBefore()
@@ -133,7 +148,12 @@ void Effect::Smklt100::Start()
 	mainSpriteRender_->ChangeAnimation("smklt100");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>
-		("smklt100", this, &EffectActor::EffectDestroy);
+		("smklt100", this, &EffectActor::Death);
+
+	GameEngineMath::Random random;
+	int randint = random.RandomInt(0, 7);
+
+	mainSpriteRender_->SetAnimationCurrentFrame("smklt100", randint);
 }
 
 void Effect::Smklt100::UpdateBefore()

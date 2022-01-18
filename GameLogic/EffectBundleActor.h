@@ -11,7 +11,6 @@ class EffectBundleActor : public GameEngineActor
 {
 
 protected:	// member Var
-	std::list<EffectActor*> EffectActorList;
 
 public:
 	EffectBundleActor(); // default constructer 디폴트 생성자
@@ -29,6 +28,5 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
-protected:
 };
 
