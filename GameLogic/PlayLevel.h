@@ -14,8 +14,6 @@ private:	// member Var
 	class MapTrain* Train_;
 	class MapGround* Ground_;
 	class Bazooka* Bazooka_;
-	class Worm* Worm_[8];
-	int FocusWormNumber_;
 	bool IsCameraMove_;
 	bool isDebugOn_;
 	float4 CameraPos_;
@@ -60,6 +58,7 @@ public:
 	void CreateExplosion25(float4 Pos); //test
 private:
 	void AJYLoading();
+	void wormLoading();
 	void AJYLevelUpdate();
 	void PJWLevelUpdate();
 private:

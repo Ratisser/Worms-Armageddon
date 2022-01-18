@@ -21,7 +21,7 @@ class GameEngineActor : public GameEngineNameBase
 private:
 	friend GameEngineLevel;
 
-private:
+protected:
 	GameEngineLevel* parentLevel_;
 	int UpdateOrder;
 	int RenderOrder;

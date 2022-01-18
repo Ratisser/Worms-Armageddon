@@ -9,6 +9,7 @@
 #include "PlayLevel.h"
 #include "Worm.h"
 #include "UIController.h"
+#include "GameController.h"
 #include "DrumActor.h"
 #include "Bazooka.h"
 
@@ -32,6 +33,9 @@
 #include "WindController.h"
 #include "FadeObject.h"
 
+#include "GlobalValue.h"
+
+
 FadeObject* PlayLevel::fadeObject_ = nullptr;
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
@@ -49,12 +53,11 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	isWormLanded_(false),// default constructer 디폴트 생성자
 	fadeInterTime_(0.0f),
 	isFadeIn_(false)
-	
 {
-	for (size_t i = 0; i < 8; i++)
-	{
-		Worm_[i] = nullptr;
-	}
+	//for (size_t i = 0; i < 8; i++)
+	//{
+	//	Worm_[i] = nullptr;
+	//}
 }
 
 PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
@@ -69,7 +72,7 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
-	,windController_(nullptr),
+	, windController_(nullptr),
 	CameraPos_(0.f, 0.f),
 	isDebugOn_(true),
 	randomGenerator_(),
@@ -77,10 +80,10 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	fadeInterTime_(0.0f),
 	isFadeIn_(false) // default RValue Copy constructer 디폴트 RValue 복사생성자
 {
-	for (size_t i = 0; i < 8; i++)
-	{
-		Worm_[i] = nullptr;
-	}
+	//for (size_t i = 0; i < 8; i++)
+	//{
+	//	Worm_[i] = nullptr;
+	//}
 }
 
 void PlayLevel::Loading()
@@ -93,6 +96,7 @@ void PlayLevel::Loading()
 	}
 
 	Train_ = CreateActor<MapTrain>();
+	Train_->UpdateBefore();
 
 	if (false == GameEngineInput::GetInst().IsKey("Up"))
 	{
@@ -140,7 +144,7 @@ void PlayLevel::Loading()
 	windBarHider->SetParentController(windController_);
 	// UI관리자생성
 	UIController* CurUIController = CreateActor<UIController>();
-	CurUIController->SetCurPlayer(Worm_[0]);
+	//CurUIController->SetCurPlayer(Worm_);
 	std::vector<eItemList> ItemListTest;
 	ItemListTest.resize(2);
 	ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
@@ -151,6 +155,10 @@ void PlayLevel::Loading()
 
 	MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	CreateGimmickObject();
+
+
+
+	wormLoading();
 }
 
 void PlayLevel::LevelUpdate()
@@ -199,28 +207,28 @@ void PlayLevel::LevelUpdate()
 
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Worm_[0]->GetPos().x, ", Pos Y : ", Worm_[0]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", Worm_[1]->GetPos().x, ", Pos Y : ", Worm_[1]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", Worm_[2]->GetPos().x, ", Pos Y : ", Worm_[2]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[3]->GetPos().x, ", Pos Y : ", Worm_[3]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[4]->GetPos().x, ", Pos Y : ", Worm_[4]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[5]->GetPos().x, ", Pos Y : ", Worm_[5]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[6]->GetPos().x, ", Pos Y : ", Worm_[6]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[7]->GetPos().x, ", Pos Y : ", Worm_[7]->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Worm_->GetPos().x, ", Pos Y : ", Worm_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", Worm2P_->GetPos().x, ", Pos Y : ", Worm2P_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", Worm3P_->GetPos().x, ", Pos Y : ", Worm3P_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm4P_->GetPos().x, ", Pos Y : ", Worm4P_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 5 Pos X : ", Worm5P_->GetPos().x, ", Pos Y : ", Worm5P_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 6 Pos X : ", Worm6P_->GetPos().x, ", Pos Y : ", Worm6P_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 7 Pos X : ", Worm7P_->GetPos().x, ", Pos Y : ", Worm7P_->GetPos().y);
+		//GameEngineDebugExtension::PrintDebugWindowText("Worm 8 Pos X : ", Worm8P_->GetPos().x, ", Pos Y : ", Worm8P_->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
 
-	
+
 
 }
 
 void PlayLevel::AJYLoading()
 {
-	for (size_t i = 0; i < 8; i++)
-	{
-		Worm_[i] = CreateActor<Worm>();;
-	}
+	//for (size_t i = 0; i < 8; i++)
+	//{
+	//	Worm_[i] = CreateActor<Worm>();;
+	//}
 
 	//Bazooka_ = CreateActor<Bazooka>();
 	//Ground_ = CreateActor<MapGround>();
@@ -233,6 +241,20 @@ void PlayLevel::AJYLoading()
 	if (false == GameEngineInput::GetInst().IsKey("CameraFocus"))
 	{
 		GameEngineInput::GetInst().CreateKey("CameraFocus", 0x31);
+	}
+}
+
+void PlayLevel::wormLoading()
+{
+	GameController* gameController = CreateActor<GameController>("GameController");
+
+
+	float4 minMaxInfo = GlobalValue::MapMinMaxInfo[GlobalValue::CurPlayMap];
+
+
+	for (size_t i = 0; i < 8; i++)
+	{
+		gameController->CreateWorm(minMaxInfo.x, minMaxInfo.y);
 	}
 }
 
@@ -252,46 +274,40 @@ void PlayLevel::AJYLevelUpdate()
 
 	if (true == GameEngineInput::GetInst().IsDown("CameraFocus"))
 	{
-		++FocusWormNumber_;
-
-		if (true == IsCameraMove_)
-		{
-			for (int i = 0; i < 8; i++)
-			{
-				Worm_[i]->SetFocus(false);
-			}
-
-			FocusWormNumber_ = 0;
-			IsCameraMove_ = false;
-		}
-
-		if (FocusWormNumber_ >= 8)
-		{
-			for (int i = 0; i < 8; i++)
-			{
-				Worm_[i]->SetFocus(false);
-			}
-
-			IsCameraMove_ = true;
-		}
+		//++FocusWormNumber_;
+		//
+		//if (true == IsCameraMove_)
+		//{
+		//	for (int i = 0; i < 8; i++)
+		//	{
+		//		Worm_[i]->SetFocus(false);
+		//	}
+		//
+		//	FocusWormNumber_ = 0;
+		//	IsCameraMove_ = false;
+		//}	
+		//else
+		//{
+		//	IsCameraMove_ = true;
+		//}
 	}
 
 	if (false == IsCameraMove_)
 	{
-		GameEngineLevel::SetCamPos(Worm_[FocusWormNumber_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
-
-		for (int i = 0; i < 8; i++)
-		{
-			if (i == FocusWormNumber_)
-			{
-				Worm_[FocusWormNumber_]->SetFocus(true);
-			}
-			else
-			{
-				Worm_[i]->SetFocus(false);
-			}
-		}
+		GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
 	}
+	//	for (int i = 0; i < 8; i++)
+	//	{
+	//		if (i == FocusWormNumber_)
+	//		{
+	//			Worm_[FocusWormNumber_]->SetFocus(true);
+	//		}
+	//		else
+	//		{
+	//			Worm_[i]->SetFocus(false);
+	//		}
+	//	}
+	//}
 }
 
 void PlayLevel::AJYGround(float4 _pos)
@@ -372,7 +388,7 @@ void PlayLevel::MakeWaterLevel() // 맵 바닥의 수면 생성
 	WaterLevel_->Waterlist.push_back(WaterWaveactor);
 
 	UnderWater* UnderWaterActor = CreateActor<UnderWater>("UnderWater");
-	UnderWaterActor->SetPos(float4(0.f, 1580,0.f));
+	UnderWaterActor->SetPos(float4(0.f, 1580, 0.f));
 	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
 	WaterLevel_->Waterlist.push_back(UnderWaterActor);
 
@@ -401,7 +417,7 @@ void PlayLevel::MakeWaterLevel() // 맵 바닥의 수면 생성
 
 	WaterWaveactor = CreateActor<WaterWave>("WaterWave10");
 	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(2560.f, 1020,0.f));
+	WaterWaveactor->SetPos(float4(2560.f, 1020, 0.f));
 	WaterWaveactor->SetAnimationCurrentFrame(8);
 	WaterLevel_->Waterlist.push_back(WaterWaveactor);
 
@@ -427,7 +443,7 @@ void PlayLevel::PJWLevelUpdate()
 		if (true == isDebugOn_)
 		{
 			GameEngineDebugExtension::DebugWindowClose();
-			
+
 			isDebugOn_ = false;
 			return;
 		}
@@ -442,10 +458,14 @@ void PlayLevel::RandomWormArrange(float _minX, float _maxX)
 	// 웜이 물에 빠지지 않게 선택된 맵의 좌 우 x값 좌표 조정 해 주세요.
 	if (false == isWormLanded_)
 	{
-		for (size_t i = 0; i < 8; i++)
-		{
-			Worm_[i]->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		}
+		Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
 		isWormLanded_ = true;
 	}
 	

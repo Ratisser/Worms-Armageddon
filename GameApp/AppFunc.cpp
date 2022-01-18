@@ -14,8 +14,15 @@
 #include <list>
 #include <vector>
 
+#include <GlobalValue.h>
+
 void AppResourcesInit() 
 {
+	// 맵 최소, 최대값 초기화
+	{
+		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapTrain", { 800.f, 3300.f }));
+	}
+
 	// 이미지 로드
 	{
 		GameEngineDirectroy Dir = GameEngineDirectroy();
