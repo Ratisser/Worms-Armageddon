@@ -47,7 +47,7 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	IsCameraMove_(true),
 	windController_(nullptr),
 	CameraPos_(0.f, 0.f),
-	FocusWormNumber_(8),
+	//FocusWormNumber_(8),
 	isDebugOn_(true),
 	randomGenerator_(),
 	isWormLanded_(false),// default constructer 디폴트 생성자
@@ -294,7 +294,7 @@ void PlayLevel::AJYLevelUpdate()
 
 	if (false == IsCameraMove_)
 	{
-		GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+		//GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
 	}
 	//	for (int i = 0; i < 8; i++)
 	//	{
@@ -458,14 +458,14 @@ void PlayLevel::RandomWormArrange(float _minX, float _maxX)
 	// 웜이 물에 빠지지 않게 선택된 맵의 좌 우 x값 좌표 조정 해 주세요.
 	if (false == isWormLanded_)
 	{
-		Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		//Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
 		isWormLanded_ = true;
 	}
 	

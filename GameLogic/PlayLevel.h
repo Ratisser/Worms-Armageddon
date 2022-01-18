@@ -40,7 +40,6 @@ private:		//delete operator
 public:
 	void Loading() override;
 	void LevelUpdate() override;
-	void LevelUpdateBefore() override;
 
 
 public:
