@@ -5,6 +5,7 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
+class FadeObject;
 class WindController;
 class PlayLevel : public GameEngineLevel
 {
@@ -27,6 +28,9 @@ private: // 2P ~ 8P
 	Worm* Worm8P_;
 	GameEngineMath::Random randomGenerator_;
 	bool isWormLanded_;
+	bool isFadeIn_;
+	static FadeObject* fadeObject_;
+	float fadeInterTime_;
 
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
@@ -43,6 +47,8 @@ private:		//delete operator
 public:
 	void Loading() override;
 	void LevelUpdate() override;
+	void LevelUpdateBefore() override;
+
 
 	void Testfunc(); // 테스트용, 테스트후 함수 비우기
 	void TestUpdate();

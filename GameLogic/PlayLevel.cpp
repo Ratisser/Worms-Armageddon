@@ -30,6 +30,9 @@
 #include "BackgroundScatter.h"
 #include "Midground.h"
 #include "WindController.h"
+#include "FadeObject.h"
+
+FadeObject* PlayLevel::fadeObject_ = nullptr;
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
@@ -49,7 +52,9 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	Worm7P_(nullptr),
 	Worm8P_(nullptr),
 	randomGenerator_(),
-	isWormLanded_(false)// default constructer 디폴트 생성자
+	isWormLanded_(false),// default constructer 디폴트 생성자
+	fadeInterTime_(0.0f),
+	isFadeIn_(false)
 	
 {
 
@@ -78,7 +83,9 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	Worm7P_(nullptr),
 	Worm8P_(nullptr),
 	randomGenerator_(),
-	isWormLanded_(false)// default RValue Copy constructer 디폴트 RValue 복사생성자
+	isWormLanded_(false),
+	fadeInterTime_(0.0f),
+	isFadeIn_(false) // default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
 }
@@ -163,6 +170,10 @@ void PlayLevel::Loading()
 
 }
 
+void PlayLevel::LevelUpdateBefore()
+{
+}
+
 void PlayLevel::LevelUpdate()
 {
 	TestUpdate(); //디버그용 테스트 함수
@@ -171,8 +182,8 @@ void PlayLevel::LevelUpdate()
 	float Speed = 5.f;
 
 	if (false == isWormLanded_)
-	{	// 랜덤한 위치에 웜 떨구기
-		RandomWormArrange(1000.0f, 2000.0f);
+	{	// 랜덤한 위치에 웜 떨구기 (900~3300 Train 맵 기준 최소~최대 구간입니다.)
+		RandomWormArrange(900.0f, 3300.0f);
 	}
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
@@ -211,9 +222,13 @@ void PlayLevel::LevelUpdate()
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Worm_->GetPos().x, ", Pos Y : ", Worm_->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", "0", ", Pos Y : ", "0");
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", "0", ", Pos Y : ", "0");
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", "0", ", Pos Y : ", "0");
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", Worm2P_->GetPos().x, ", Pos Y : ", Worm2P_->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", Worm3P_->GetPos().x, ", Pos Y : ", Worm3P_->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm4P_->GetPos().x, ", Pos Y : ", Worm4P_->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 5 Pos X : ", Worm5P_->GetPos().x, ", Pos Y : ", Worm5P_->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 6 Pos X : ", Worm6P_->GetPos().x, ", Pos Y : ", Worm6P_->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 7 Pos X : ", Worm7P_->GetPos().x, ", Pos Y : ", Worm7P_->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 8 Pos X : ", Worm8P_->GetPos().x, ", Pos Y : ", Worm8P_->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
@@ -398,17 +413,18 @@ void PlayLevel::TestUpdate()
 
 void PlayLevel::RandomWormArrange(float _minX, float _maxX)
 {
+	// 웜이 물에 빠지지 않게 선택된 맵의 좌 우 x값 좌표 조정 해 주세요.
 	if (false == isWormLanded_)
 	{
-		Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
-		Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
 		isWormLanded_ = true;
 	}
-
+	
 }
