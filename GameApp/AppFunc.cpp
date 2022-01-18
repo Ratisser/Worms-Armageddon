@@ -30,8 +30,20 @@ void AppResourcesInit()
 		// Àý´ë °æ·Î
 		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
+
+		// ¸Ê Á¾·ù
+
+		// ¸Ê
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
-		GameEngineImage::GetInst().LoadGameImage("MapGround", Dir.PathToPlusFileName("MapGround.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapBooks", Dir.PathToPlusFileName("MapBooks.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCars", Dir.PathToPlusFileName("MapCars.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCity", Dir.PathToPlusFileName("MapCity.bmp"));
+
+		// Ãæµ¹¸Ê
+		GameEngineImage::GetInst().LoadGameImage("MapTrain_Ground", Dir.PathToPlusFileName("MapTrain_Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapBooks_Ground", Dir.PathToPlusFileName("MapBooks_Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCars_Ground", Dir.PathToPlusFileName("MapCars_Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCity_Ground", Dir.PathToPlusFileName("MapCity_Ground.bmp"));
 
 		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));

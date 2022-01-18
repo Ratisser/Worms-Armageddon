@@ -32,6 +32,6 @@ void LoadingLevel::LevelUpdate()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
-		GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel");
+		GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel", true);
 	}
 }

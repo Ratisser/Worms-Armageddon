@@ -225,7 +225,7 @@ void PlayLevel::LevelUpdate()
 void PlayLevel::AJYLoading()
 {
 	//Bazooka_ = CreateActor<Bazooka>();
-	Ground_ = CreateActor<MapGround>();
+	//Ground_ = CreateActor<MapGround>();
 
 	if (false == GameEngineInput::GetInst().IsKey("Boom"))
 	{

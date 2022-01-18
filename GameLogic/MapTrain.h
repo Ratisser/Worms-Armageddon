@@ -5,9 +5,12 @@
 // Ό³Έν : 
 class MapTrain : public GameEngineActor
 {
+private:
+	bool firstupdate_;
+
 private:	// member Var
-	GameEngineRenderer* backGroundSpriteRender_;
 	GameEngineRenderer* mainSpriteRender_;
+	GameEngineRenderer* colSpriteRender_;
 	GameEngineRenderer* boomSpriteRender_;
 
 public:
