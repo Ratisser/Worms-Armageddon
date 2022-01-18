@@ -40,7 +40,17 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	IsCameraMove_(true),
 	windController_(nullptr),
 	CameraPos_(0.f, 0.f),
-	isDebugOn_(true)// default constructer 디폴트 생성자
+	isDebugOn_(true),
+	Worm2P_(nullptr),
+	Worm3P_(nullptr),
+	Worm4P_(nullptr),
+	Worm5P_(nullptr),
+	Worm6P_(nullptr),
+	Worm7P_(nullptr),
+	Worm8P_(nullptr),
+	randomGenerator_(),
+	isWormLanded_(false)// default constructer 디폴트 생성자
+	
 {
 
 }
@@ -59,7 +69,16 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	IsCameraMove_(true)
 	,windController_(nullptr),
 	CameraPos_(0.f, 0.f),
-	isDebugOn_(true)// default RValue Copy constructer 디폴트 RValue 복사생성자
+	isDebugOn_(true),
+	Worm2P_(nullptr),
+	Worm3P_(nullptr),
+	Worm4P_(nullptr),
+	Worm5P_(nullptr),
+	Worm6P_(nullptr),
+	Worm7P_(nullptr),
+	Worm8P_(nullptr),
+	randomGenerator_(),
+	isWormLanded_(false)// default RValue Copy constructer 디폴트 RValue 복사생성자
 {
 
 }
@@ -93,8 +112,13 @@ void PlayLevel::Loading()
 	}
 
 	Worm_ = CreateActor<Worm>();
-
-
+	Worm2P_ = CreateActor<Worm>();
+	Worm3P_ = CreateActor<Worm>();
+	Worm4P_ = CreateActor<Worm>();
+	Worm5P_ = CreateActor<Worm>();
+	Worm6P_ = CreateActor<Worm>();
+	Worm7P_ = CreateActor<Worm>();
+	Worm8P_ = CreateActor<Worm>();
 
 	{
 		// 플레이화면 하단 체력바
@@ -146,6 +170,10 @@ void PlayLevel::LevelUpdate()
 	PJWLevelUpdate();
 	float Speed = 5.f;
 
+	if (false == isWormLanded_)
+	{	// 랜덤한 위치에 웜 떨구기
+		RandomWormArrange(1000.0f, 2000.0f);
+	}
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
@@ -366,4 +394,21 @@ void PlayLevel::Testfunc() // 테스트해볼 함수를 집어넣는 함수, 사용후 비워둘것
 
 void PlayLevel::TestUpdate()
 {
+}
+
+void PlayLevel::RandomWormArrange(float _minX, float _maxX)
+{
+	if (false == isWormLanded_)
+	{
+		Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -1000.0f });
+		isWormLanded_ = true;
+	}
+
 }

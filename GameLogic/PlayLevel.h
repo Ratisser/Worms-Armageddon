@@ -17,6 +17,17 @@ private:	// member Var
 	bool isDebugOn_;
 	float4 CameraPos_;
 
+private: // 2P ~ 8P 
+	Worm* Worm2P_;
+	Worm* Worm3P_;
+	Worm* Worm4P_;
+	Worm* Worm5P_;
+	Worm* Worm6P_;
+	Worm* Worm7P_;
+	Worm* Worm8P_;
+	GameEngineMath::Random randomGenerator_;
+	bool isWormLanded_;
+
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
 	~PlayLevel(); // default destructer 디폴트 소멸자
@@ -49,5 +60,7 @@ private:
 	void AJYLoading();
 	void AJYLevelUpdate();
 	void PJWLevelUpdate();
+private:
+	void RandomWormArrange(float _minX, float _maxX);
 };
 
