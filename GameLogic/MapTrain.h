@@ -12,6 +12,7 @@ private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
 	GameEngineRenderer* colSpriteRender_;
 	GameEngineRenderer* boomSpriteRender_;
+	GameEngineCollision* bodyCollision_;
 
 public:
 	MapTrain(); // default constructer 디폴트 생성자
