@@ -18,7 +18,8 @@ void LobbyImageInit();
 // 2022-01-12 Á¶±ÔÇö : 
 namespace RS
 {
-	GameEngineImageFile* LoadImageFromFile(const std::string& path);
+	GameEngineImageFile* LoadImageFromFile(const std::string& _path);
+	void LoadImageFromFileAndCut(const std::string& _path, const float4& _cutSize);
 }
 void CharactorImageInit();
 

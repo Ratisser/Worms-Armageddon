@@ -30,8 +30,20 @@ void AppResourcesInit()
 		// 절대 경로
 		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
+
+		// 맵 종류
+
+		// 맵
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
-		GameEngineImage::GetInst().LoadGameImage("MapGround", Dir.PathToPlusFileName("MapGround.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapBooks", Dir.PathToPlusFileName("MapBooks.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCars", Dir.PathToPlusFileName("MapCars.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCity", Dir.PathToPlusFileName("MapCity.bmp"));
+
+		// 충돌맵
+		GameEngineImage::GetInst().LoadGameImage("MapTrain_Ground", Dir.PathToPlusFileName("MapTrain_Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapBooks_Ground", Dir.PathToPlusFileName("MapBooks_Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCars_Ground", Dir.PathToPlusFileName("MapCars_Ground.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("MapCity_Ground", Dir.PathToPlusFileName("MapCity_Ground.bmp"));
 
 		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));
@@ -238,7 +250,6 @@ void UIImageInit()
 void LobbyImageInit()
 {
 	GameEngineDirectroy Dir = GameEngineDirectroy();
-
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image"))
 	{
@@ -249,8 +260,17 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_Backdrop", Dir.PathToPlusFileName("Lobby_Backdrop.bmp"));
 
 	// 선택가능 맵 이미지 로딩
-	GameEngineImage::GetInst().LoadGameImage("MapSel1", Dir.PathToPlusFileName("Lobby_MapSelectImage.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("MapSel2", Dir.PathToPlusFileName("Lobby_MapSelectImage2.bmp"));
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\SelectMap"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapTrain", Dir.PathToPlusFileName("LobbyMap_MapTrain.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCars", Dir.PathToPlusFileName("LobbyMap_MapCars.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCity", Dir.PathToPlusFileName("LobbyMap_MapCity.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapBooks", Dir.PathToPlusFileName("LobbyMap_MapBooks.bmp"));
 
 }
 
@@ -260,42 +280,33 @@ void CharactorImageInit()
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Image\\Worms");
 
-	GameEngineImageFile* image = nullptr; 
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("walkLeft.bmp"));
-	image->Cut({ 60, 60 });
+	float4 cutSize = float4(60.f, 60.f);
 
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("walkRight.bmp"));
-	image->Cut({ 60, 60 });
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("jumpReadyLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("jumpReadyRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyUpLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyUpRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyDownLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyDownRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyLinkLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("flyLinkRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("idleLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("idleRight.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazAimLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazAimRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "bazOnRight.bmp", cutSize);
 
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("jumpReadyLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("jumpReadyRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyUpLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyUpRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyDownLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyDownRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyLinkLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("flyLinkRight.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleLeft.bmp"));
-	image->Cut({ 60, 60 });
-
-	image = RS::LoadImageFromFile(dir.PathToPlusFileName("idleRight.bmp"));
-	image->Cut({ 60, 60 });
+	{
+		GameEngineDirectroy dir = GameEngineDirectroy();
+		dir.MoveParent("Worms-Armageddon");
+		dir.MoveChild("\\Resources\\Image\\Misc\\Aim_Taget");
+		RS::LoadImageFromFileAndCut(dir / "crshairr.bmp", cutSize);
+	}
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
@@ -304,6 +315,15 @@ GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
 	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
 
 	return GameEngineImage::GetInst().LoadGameImage(fileName, _path);
+}
+
+void RS::LoadImageFromFileAndCut(const std::string& _path, const float4& _cutSize)
+{
+	size_t fileNameStartIndex = _path.rfind("\\") + 1;
+	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
+
+	GameEngineImageFile* image = GameEngineImage::GetInst().LoadGameImage(fileName, _path);
+	image->Cut(_cutSize);
 }
 
 void MapWaterImageInit() // 바닥 수면 이미지 로드에 사용

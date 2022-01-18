@@ -76,11 +76,14 @@
     <Filter Include="Actor\PlayLevel\Map">
       <UniqueIdentifier>{06f99db7-cf17-4e7d-88b5-e61f5dcbe075}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\PlayLevel\Player">
-      <UniqueIdentifier>{6121f2d6-25c9-4831-96c5-2d2bf394ff4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\_Backup">
       <UniqueIdentifier>{6c25d0ca-4418-4762-a878-5c79360246df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Global">
+      <UniqueIdentifier>{4ed8676a-7913-4c12-8eb3-f56a804afb49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\Player">
+      <UniqueIdentifier>{6121f2d6-25c9-4831-96c5-2d2bf394ff4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +205,7 @@
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClInclude>
     <ClInclude Include="Worm.h">
-      <Filter>Actor\PlayLevel\Player</Filter>
+      <Filter>Actor\PlayLevel\UI\Player</Filter>
     </ClInclude>
     <ClInclude Include="TestActor.h">
       <Filter>Actor\_Backup</Filter>
@@ -215,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="LobbySelectMapImage.h">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalValue.h">
+      <Filter>Level\Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,7 +333,7 @@
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClCompile>
     <ClCompile Include="Worm.cpp">
-      <Filter>Actor\PlayLevel\Player</Filter>
+      <Filter>Actor\PlayLevel\UI\Player</Filter>
     </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <Filter>Actor\_Backup</Filter>
@@ -340,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
+      <Filter>Level\Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -29,6 +29,9 @@ public:		//member Func
 	bool MoveChild(const std::string& _DirName);
 
 public:
+	std::string operator/(const std::string& _rhs);
+
+public:
 	std::string PathToPlusFileName(const std::string& _DirName);
 	GameEngineFile PathToCreateFile(const std::string& _FileName);
 

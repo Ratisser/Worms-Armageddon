@@ -30,19 +30,31 @@
 #include "BackgroundScatter.h"
 #include "Midground.h"
 #include "WindController.h"
+#include "FadeObject.h"
+
+FadeObject* PlayLevel::fadeObject_ = nullptr;
 
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
 	Ground_(nullptr),
-	Worm_(nullptr),
+	// Worm_(nullptr),
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true),
 	windController_(nullptr),
 	CameraPos_(0.f, 0.f),
-	isDebugOn_(true)// default constructer 디폴트 생성자
+	FocusWormNumber_(8),
+	isDebugOn_(true),
+	randomGenerator_(),
+	isWormLanded_(false),// default constructer 디폴트 생성자
+	fadeInterTime_(0.0f),
+	isFadeIn_(false)
+	
 {
-
+	for (size_t i = 0; i < 8; i++)
+	{
+		Worm_[i] = nullptr;
+	}
 }
 
 PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
@@ -53,15 +65,22 @@ PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
 PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자	
 	: Train_(nullptr),
 	Ground_(nullptr),
-	Worm_(nullptr),
+	// Worm_(nullptr),
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	IsCameraMove_(true)
 	,windController_(nullptr),
 	CameraPos_(0.f, 0.f),
-	isDebugOn_(true)// default RValue Copy constructer 디폴트 RValue 복사생성자
+	isDebugOn_(true),
+	randomGenerator_(),
+	isWormLanded_(false),
+	fadeInterTime_(0.0f),
+	isFadeIn_(false) // default RValue Copy constructer 디폴트 RValue 복사생성자
 {
-
+	for (size_t i = 0; i < 8; i++)
+	{
+		Worm_[i] = nullptr;
+	}
 }
 
 void PlayLevel::Loading()
@@ -92,9 +111,7 @@ void PlayLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Right", 'd');
 	}
 
-	Worm_ = CreateActor<Worm>();
-
-
+	//Worm_ = CreateActor<Worm>();
 
 	{
 		// 플레이화면 하단 체력바
@@ -123,7 +140,7 @@ void PlayLevel::Loading()
 	windBarHider->SetParentController(windController_);
 	// UI관리자생성
 	UIController* CurUIController = CreateActor<UIController>();
-	CurUIController->SetCurPlayer(Worm_);
+	CurUIController->SetCurPlayer(Worm_[0]);
 	std::vector<eItemList> ItemListTest;
 	ItemListTest.resize(2);
 	ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
@@ -142,6 +159,10 @@ void PlayLevel::LevelUpdate()
 	PJWLevelUpdate();
 	float Speed = 5.f;
 
+	if (false == isWormLanded_)
+	{	// 랜덤한 위치에 웜 떨구기 (900~3300 Train 맵 기준 최소~최대 구간입니다.)
+		RandomWormArrange(900.0f, 3300.0f);
+	}
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
@@ -178,10 +199,14 @@ void PlayLevel::LevelUpdate()
 
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Worm_->GetPos().x, ", Pos Y : ", Worm_->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", "0", ", Pos Y : ", "0");
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", "0", ", Pos Y : ", "0");
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", "0", ", Pos Y : ", "0");
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Worm_[0]->GetPos().x, ", Pos Y : ", Worm_[0]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", Worm_[1]->GetPos().x, ", Pos Y : ", Worm_[1]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", Worm_[2]->GetPos().x, ", Pos Y : ", Worm_[2]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[3]->GetPos().x, ", Pos Y : ", Worm_[3]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[4]->GetPos().x, ", Pos Y : ", Worm_[4]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[5]->GetPos().x, ", Pos Y : ", Worm_[5]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[6]->GetPos().x, ", Pos Y : ", Worm_[6]->GetPos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Worm_[7]->GetPos().x, ", Pos Y : ", Worm_[7]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
@@ -192,17 +217,22 @@ void PlayLevel::LevelUpdate()
 
 void PlayLevel::AJYLoading()
 {
+	for (size_t i = 0; i < 8; i++)
+	{
+		Worm_[i] = CreateActor<Worm>();;
+	}
+
 	//Bazooka_ = CreateActor<Bazooka>();
-	Ground_ = CreateActor<MapGround>();
+	//Ground_ = CreateActor<MapGround>();
 
 	if (false == GameEngineInput::GetInst().IsKey("Boom"))
 	{
 		GameEngineInput::GetInst().CreateKey("Boom", VK_LBUTTON);
 	}
 
-	if (false == GameEngineInput::GetInst().IsKey("FreeCameraOnOff"))
+	if (false == GameEngineInput::GetInst().IsKey("CameraFocus"))
 	{
-		GameEngineInput::GetInst().CreateKey("FreeCameraOnOff", 0x31);
+		GameEngineInput::GetInst().CreateKey("CameraFocus", 0x31);
 	}
 }
 
@@ -220,21 +250,47 @@ void PlayLevel::AJYLevelUpdate()
 		//CreateExplosion();
 	}
 
-	if (true == GameEngineInput::GetInst().IsDown("FreeCameraOnOff"))
+	if (true == GameEngineInput::GetInst().IsDown("CameraFocus"))
 	{
+		++FocusWormNumber_;
+
 		if (true == IsCameraMove_)
 		{
+			for (int i = 0; i < 8; i++)
+			{
+				Worm_[i]->SetFocus(false);
+			}
+
+			FocusWormNumber_ = 0;
 			IsCameraMove_ = false;
-		}	
-		else
+		}
+
+		if (FocusWormNumber_ >= 8)
 		{
+			for (int i = 0; i < 8; i++)
+			{
+				Worm_[i]->SetFocus(false);
+			}
+
 			IsCameraMove_ = true;
 		}
 	}
 
 	if (false == IsCameraMove_)
 	{
-		GameEngineLevel::SetCamPos(Worm_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+		GameEngineLevel::SetCamPos(Worm_[FocusWormNumber_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+
+		for (int i = 0; i < 8; i++)
+		{
+			if (i == FocusWormNumber_)
+			{
+				Worm_[FocusWormNumber_]->SetFocus(true);
+			}
+			else
+			{
+				Worm_[i]->SetFocus(false);
+			}
+		}
 	}
 }
 
@@ -381,3 +437,16 @@ void PlayLevel::PJWLevelUpdate()
 	}
 }
 
+void PlayLevel::RandomWormArrange(float _minX, float _maxX)
+{
+	// 웜이 물에 빠지지 않게 선택된 맵의 좌 우 x값 좌표 조정 해 주세요.
+	if (false == isWormLanded_)
+	{
+		for (size_t i = 0; i < 8; i++)
+		{
+			Worm_[i]->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
+		}
+		isWormLanded_ = true;
+	}
+	
+}

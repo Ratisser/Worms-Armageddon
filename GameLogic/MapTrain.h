@@ -5,10 +5,14 @@
 // 설명 : 
 class MapTrain : public GameEngineActor
 {
+private:
+	bool firstupdate_;
+
 private:	// member Var
-	GameEngineRenderer* backGroundSpriteRender_;
 	GameEngineRenderer* mainSpriteRender_;
+	GameEngineRenderer* colSpriteRender_;
 	GameEngineRenderer* boomSpriteRender_;
+	GameEngineCollision* bodyCollision_;
 
 public:
 	MapTrain(); // default constructer 디폴트 생성자

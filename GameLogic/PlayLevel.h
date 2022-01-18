@@ -5,6 +5,8 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
+
+class FadeObject;
 class WindController;
 class PlayLevel : public GameEngineLevel
 {
@@ -12,10 +14,18 @@ private:	// member Var
 	class MapTrain* Train_;
 	class MapGround* Ground_;
 	class Bazooka* Bazooka_;
-	class Worm* Worm_;
+	class Worm* Worm_[8];
+	int FocusWormNumber_;
 	bool IsCameraMove_;
 	bool isDebugOn_;
 	float4 CameraPos_;
+
+private:
+	GameEngineMath::Random randomGenerator_;
+	bool isWormLanded_;
+	bool isFadeIn_;
+	static FadeObject* fadeObject_;
+	float fadeInterTime_;
 
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
@@ -32,6 +42,8 @@ private:		//delete operator
 public:
 	void Loading() override;
 	void LevelUpdate() override;
+	void LevelUpdateBefore() override;
+
 
 public:
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
@@ -50,5 +62,7 @@ private:
 	void AJYLoading();
 	void AJYLevelUpdate();
 	void PJWLevelUpdate();
+private:
+	void RandomWormArrange(float _minX, float _maxX);
 };
 

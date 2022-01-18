@@ -32,6 +32,7 @@ private:		//delete operator
 
 public:
 	void CreateSelMapImageNameList(const std::vector<std::string>& _NameList);
+	void SetCurMapIndex(int _Index);
 
 public:
 	virtual void Start() override;

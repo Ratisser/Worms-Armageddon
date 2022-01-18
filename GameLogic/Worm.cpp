@@ -7,23 +7,30 @@
 #include <GameEngineLevel.h>
 #include <GameEngineCollision.h>
 
+#include <GameEngineDebugExtension.h>
+
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
+	, crosshairRender_(nullptr)
 	, bottomCenterCollision_(nullptr)
 	, groundCheckCollision_(nullptr)
 	, accelation_(float4::ZERO)
 	, speed_(float4::ZERO)
 	, direction_(float4::RIGHT)
+	, forward_(float4::RIGHT)
 	, bGround_(false)
 	, bLeft_(false)
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, weaponEquipDelay_(0.0f)
+	, aimRotation_(90.0f * GameEngineMath::DegreeToRadian)
 	, state_(this)
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
+	, nextState_("")
+	, bFocus_(true)
 {
 
 }
@@ -36,7 +43,7 @@ Worm::~Worm() // default destructer 디폴트 소멸자
 void Worm::Start()
 {
 	SetPos({ 1625.f, -235.f });
-	SetRenderOrder((int)RenderOrder::Worm);
+	SetRenderOrder(static_cast<int>(RenderOrder::Worm));
 	initRenderer();
 	initCollision();
 	initInput();
@@ -65,7 +72,21 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("IdleLeft", "idleLeft.bmp", 0, 5, true, 0.1f);
 	mainRender_->CreateAnimation("IdleRight", "idleRight.bmp", 0, 5, true, 0.1f);
 
+	mainRender_->CreateAnimation("BazOnLeft", "bazOnLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("BazOnRight", "bazOnRight.bmp", 0, 6, false, 0.033f);
+
+	mainRender_->CreateAnimation("BazOffLeft", "bazOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("BazOffRight", "bazOffRight.bmp", 0, 6, false, 0.033f);
+
+	mainRender_->CreateAnimation("BazAimLeft", "bazAimLeft.bmp", 0, 31, false, 1.0f);
+	mainRender_->CreateAnimation("BazAimRight", "bazAimRight.bmp", 0, 31, false, 1.0f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+
+	crosshairRender_ = CreateRenderer("crshairr.bmp");
+	crosshairRender_->CreateAnimation("Aim", "crshairr.bmp", 0, 31, false, 1.0f);
+	crosshairRender_->ChangeAnimation("Aim");
+	crosshairRender_->Off();
 }
 
 void Worm::initInput()
@@ -109,6 +130,10 @@ void Worm::initState()
 	state_.CreateState("Walk", &Worm::startWalk, &Worm::updateWalk);
 	state_.CreateState("JumpReady", &Worm::startJumpReady, &Worm::updateJumpReady);
 	state_.CreateState("Jump", &Worm::startJump, &Worm::updateJump);
+	state_.CreateState("WeaponAim", &Worm::startWeaponAim, &Worm::updateWeaponAim);
+	state_.CreateState("WeaponOn", &Worm::startWeaponOn, &Worm::updateWeaponOn);
+	state_.CreateState("WeaponOff", &Worm::startWeaponOff, &Worm::updateWeaponOff);
+
 
 	state_.ChangeState("Idle");
 }
@@ -173,6 +198,23 @@ void Worm::normalMove()
 	}
 }
 
+int Worm::getAimingFrame()
+{
+	return static_cast<int>(aimRotation_ / (AIM_STEP_RADIAN));
+}
+
+void Worm::setAimingForward()
+{
+	if (bLeft_)
+	{
+		forward_ = float4::RadianToRotatefloat2(float4::DOWN, aimRotation_);
+	}
+	else
+	{
+		forward_ = float4::RadianToRotatefloat2(float4::DOWN, -aimRotation_);
+	}
+}
+
 StateInfo Worm::startIdle(StateInfo _state)
 {
 	if (bLeft_)
@@ -183,6 +225,9 @@ StateInfo Worm::startIdle(StateInfo _state)
 	{
 		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 	}
+
+	weaponEquipDelay_ = 0.0f;
+
 	return StateInfo();
 }
 
@@ -190,24 +235,45 @@ StateInfo Worm::updateIdle(StateInfo _state)
 {
 	addGravity();
 
-	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	weaponEquipDelay_ += deltaTime_;
+	if ( true == bFocus_)
 	{
-		bLeft_ = true;
-		return "Walk";
+		if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
+		{
+			weaponEquipDelay_ = 0.0f;
+			return "WeaponOn";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("UpArrow"))
+		{
+			return "WeaponOn";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("DownArrow"))
+		{
+			return "WeaponOn";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+		{
+			bLeft_ = true;
+			return "Walk";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("RightArrow"))
+		{
+			bLeft_ = false;
+			return "Walk";
+		}
+
+		if (GameEngineInput::GetInst().IsDown("Jump"))
+		{
+			return "JumpReady";
+		}
+
+		normalMove();
 	}
 
-	if (GameEngineInput::GetInst().IsPress("RightArrow"))
-	{
-		bLeft_ = false;
-		return "Walk";
-	}
-
-	if (GameEngineInput::GetInst().IsDown("Jump"))
-	{
-		return "JumpReady";
-	}
-
-	normalMove();
 	return StateInfo();
 }
 
@@ -355,9 +421,141 @@ StateInfo Worm::updateJump(StateInfo _state)
 	return StateInfo();
 }
 
+StateInfo Worm::startWeaponAim(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazAimRight", std::string("bazAimRight.bmp"));
+	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+	setAimingForward();
+	crosshairRender_->On();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+	return StateInfo();
+}
+
+StateInfo Worm::updateWeaponAim(StateInfo _state)
+{
+	addGravity();
+	if (GameEngineInput::GetInst().IsPress("UpArrow"))
+	{
+		aimRotation_ += deltaTime_;
+		if (aimRotation_ >= 180.f * GameEngineMath::DegreeToRadian)
+		{
+			aimRotation_ = 180.f * GameEngineMath::DegreeToRadian;
+		}
+	}
+
+	if (GameEngineInput::GetInst().IsPress("DownArrow"))
+	{
+		aimRotation_ -= deltaTime_;
+		if (aimRotation_ <= 0.0f)
+		{
+			aimRotation_ = 0.0f;
+		}
+	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+
+	if (bLeft_)
+	{
+		crosshairRender_->SetAnimationCurrentFrame(frame);
+	}
+	else
+	{
+		crosshairRender_->SetAnimationCurrentFrame(31 - frame);
+	}
+
+	setAimingForward();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+
+	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
+	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
+
+	if (true == bFocus_)
+	{
+		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+		{
+			bLeft_ = true;
+			nextState_ = "Walk";
+			return "WeaponOff";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("RightArrow"))
+		{
+			bLeft_ = false;
+			nextState_ = "Walk";
+			return "WeaponOff";
+		}
+
+		if (GameEngineInput::GetInst().IsDown("Jump"))
+		{
+			nextState_ = "JumpReady";
+			return "WeaponOff";
+		}
+
+		normalMove();
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::startWeaponOn(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateWeaponOn(StateInfo _state)
+{
+	if (mainRender_->IsCurAnimationEnd())
+	{
+		return "WeaponAim";
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::startWeaponOff(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
+	}
+	crosshairRender_->Off();
+	return StateInfo();
+}
+
+StateInfo Worm::updateWeaponOff(StateInfo _state)
+{
+	if (mainRender_->IsCurAnimationEnd())
+	{
+		return nextState_;
+	}
+	return StateInfo();
+}
+
 void Worm::UpdateBefore()
 {
 	mainRender_->AnimationUpdate();
+	crosshairRender_->AnimationUpdate();
 }
 
 void Worm::Update()
@@ -373,6 +571,11 @@ void Worm::UpdateAfter()
 void Worm::Render()
 {
 	mainRender_->Render();
+	if (crosshairRender_->IsOn())
+	{
+		crosshairRender_->Render();
+	}
+
 	//bottomCenterCollision_->DebugRender();
 	//groundCheckCollision_->DebugRender();
 }

@@ -34,6 +34,8 @@ private:
 	void addGravity();
 
 	void normalMove();
+	int getAimingFrame();
+	void setAimingForward();
 
 private:
 	StateInfo startIdle(StateInfo _state);
@@ -48,6 +50,14 @@ private:
 	StateInfo startJump(StateInfo _state);
 	StateInfo updateJump(StateInfo _state);
 
+	StateInfo startWeaponAim(StateInfo _state);
+	StateInfo updateWeaponAim(StateInfo _state);
+
+	StateInfo startWeaponOn(StateInfo _state);
+	StateInfo updateWeaponOn(StateInfo _state);
+	
+	StateInfo startWeaponOff(StateInfo _state);
+	StateInfo updateWeaponOff(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;
@@ -55,8 +65,11 @@ private:
 	const float BOTTOM_PIVOT = 14.f;
 	const float JUMP_POWER = 150.f;
 	const float WEAPON_EQUIP_DELAY = 0.5f;
+	const float AIM_STEP_RADIAN = 0.0986111f; // 180 / 32 * RADIAN
+
 private:
 	GameEngineRenderer* mainRender_;
+	GameEngineRenderer* crosshairRender_;
 	GameEngineCollision* bottomCenterCollision_;
 	GameEngineCollision* groundCheckCollision_;
 
@@ -65,14 +78,25 @@ private:
 	float4 accelation_;
 	float4 speed_;
 	float4 direction_;
+	float4 forward_;
 
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
+	bool bFocus_; 
 
 	float deltaTime_;
 	float weaponEquipDelay_;
+	float aimRotation_;
 
 	eItemList currentWeapon_;
+
+	std::string nextState_;
+
+public:
+	void SetFocus(bool _bFocus)
+	{
+		bFocus_ = _bFocus;
+	}
 };
 
