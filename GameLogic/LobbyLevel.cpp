@@ -57,7 +57,7 @@ void LobbyLevel::Loading_SJH()
 		// 첫 맵이 LobbyMap_MapTrain 이므로 해당 인덱스를 찾는다.
 		if (ImageNameList[i] == "LobbyMap_MapTrain")
 		{
-			CurMapIndex = i;
+			CurMapIndex = static_cast<int>(i);
 			break;
 		}
 	}
