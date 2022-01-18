@@ -83,6 +83,7 @@ private:
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
+	bool bFocus_; 
 
 	float deltaTime_;
 	float weaponEquipDelay_;
@@ -91,5 +92,11 @@ private:
 	eItemList currentWeapon_;
 
 	std::string nextState_;
+
+public:
+	void SetFocus(bool _bFocus)
+	{
+		bFocus_ = _bFocus;
+	}
 };
 

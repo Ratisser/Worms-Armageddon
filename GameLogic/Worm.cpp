@@ -30,6 +30,7 @@ Worm::Worm()
 	, state_(this)
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
 	, nextState_("")
+	, bFocus_(true)
 {
 
 }
@@ -235,41 +236,44 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	addGravity();
 
 	weaponEquipDelay_ += deltaTime_;
-
-	if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
+	if ( true == bFocus_)
 	{
-		weaponEquipDelay_ = 0.0f;
-		return "WeaponOn";
+		if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
+		{
+			weaponEquipDelay_ = 0.0f;
+			return "WeaponOn";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("UpArrow"))
+		{
+			return "WeaponOn";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("DownArrow"))
+		{
+			return "WeaponOn";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+		{
+			bLeft_ = true;
+			return "Walk";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("RightArrow"))
+		{
+			bLeft_ = false;
+			return "Walk";
+		}
+
+		if (GameEngineInput::GetInst().IsDown("Jump"))
+		{
+			return "JumpReady";
+		}
+
+		normalMove();
 	}
 
-	if (GameEngineInput::GetInst().IsPress("UpArrow"))
-	{
-		return "WeaponOn";
-	}
-
-	if (GameEngineInput::GetInst().IsPress("DownArrow"))
-	{
-		return "WeaponOn";
-	}
-
-	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
-	{
-		bLeft_ = true;
-		return "Walk";
-	}
-
-	if (GameEngineInput::GetInst().IsPress("RightArrow"))
-	{
-		bLeft_ = false;
-		return "Walk";
-	}
-
-	if (GameEngineInput::GetInst().IsDown("Jump"))
-	{
-		return "JumpReady";
-	}
-
-	normalMove();
 	return StateInfo();
 }
 
@@ -475,28 +479,31 @@ StateInfo Worm::updateWeaponAim(StateInfo _state)
 	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
 	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
 
-
-	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	if (true == bFocus_)
 	{
-		bLeft_ = true;
-		nextState_ = "Walk";
-		return "WeaponOff";
+		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+		{
+			bLeft_ = true;
+			nextState_ = "Walk";
+			return "WeaponOff";
+		}
+
+		if (GameEngineInput::GetInst().IsPress("RightArrow"))
+		{
+			bLeft_ = false;
+			nextState_ = "Walk";
+			return "WeaponOff";
+		}
+
+		if (GameEngineInput::GetInst().IsDown("Jump"))
+		{
+			nextState_ = "JumpReady";
+			return "WeaponOff";
+		}
+
+		normalMove();
 	}
 
-	if (GameEngineInput::GetInst().IsPress("RightArrow"))
-	{
-		bLeft_ = false;
-		nextState_ = "Walk";
-		return "WeaponOff";
-	}
-
-	if (GameEngineInput::GetInst().IsDown("Jump"))
-	{
-		nextState_ = "JumpReady";
-		return "WeaponOff";
-	}
-
-	normalMove();
 	return StateInfo();
 }
 

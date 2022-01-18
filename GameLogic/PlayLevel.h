@@ -5,6 +5,7 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
+
 class FadeObject;
 class WindController;
 class PlayLevel : public GameEngineLevel
@@ -13,19 +14,13 @@ private:	// member Var
 	class MapTrain* Train_;
 	class MapGround* Ground_;
 	class Bazooka* Bazooka_;
-	class Worm* Worm_;
+	class Worm* Worm_[8];
+	int FocusWormNumber_;
 	bool IsCameraMove_;
 	bool isDebugOn_;
 	float4 CameraPos_;
 
-private: // 2P ~ 8P 
-	Worm* Worm2P_;
-	Worm* Worm3P_;
-	Worm* Worm4P_;
-	Worm* Worm5P_;
-	Worm* Worm6P_;
-	Worm* Worm7P_;
-	Worm* Worm8P_;
+private:
 	GameEngineMath::Random randomGenerator_;
 	bool isWormLanded_;
 	bool isFadeIn_;
