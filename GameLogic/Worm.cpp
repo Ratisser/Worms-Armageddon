@@ -441,25 +441,19 @@ StateInfo Worm::updateWeaponAim(StateInfo _state)
 	addGravity();
 	if (GameEngineInput::GetInst().IsPress("UpArrow"))
 	{
+		aimRotation_ += deltaTime_;
 		if (aimRotation_ >= 180.f * GameEngineMath::DegreeToRadian)
 		{
 			aimRotation_ = 180.f * GameEngineMath::DegreeToRadian;
-		}
-		else
-		{
-			aimRotation_ += deltaTime_;
 		}
 	}
 
 	if (GameEngineInput::GetInst().IsPress("DownArrow"))
 	{
+		aimRotation_ -= deltaTime_;
 		if (aimRotation_ <= 0.0f)
 		{
 			aimRotation_ = 0.0f;
-		}
-		else
-		{
-			aimRotation_ -= deltaTime_;
 		}
 	}
 
