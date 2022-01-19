@@ -66,26 +66,6 @@ void GameController::UpdateBefore()
 
 void GameController::Update()
 {
-	// UI
-	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
-	{
-		if (wormIndex_ != MAX_WORM_COUNT)
-		{
-			// 이전 플레이어와 현재플레이어가 달라지면
-			// 이전플레이어의 무기창이 비활성화되고
-			// 현재 플레이어의 무기창이 활성화된다.
-			if (prevwormIndex_ != wormIndex_ && prevwormIndex_ != MAX_WORM_COUNT)
-			{
-				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-			}
-			else
-			{
-				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-			}
-		}
-	}
-
 	if (true == GameEngineInput::GetInst().IsPress("Up"))
 	{
 		GetLevel()->SetCamMove(float4::UP * cameraMoveSpeed_);
@@ -146,6 +126,29 @@ void GameController::Update()
 	else
 	{
 		GetLevel()->SetCamPos(wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+	}
+
+	// UI
+	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
+	{
+		if (wormIndex_ != MAX_WORM_COUNT)
+		{
+			// 이전 플레이어와 현재플레이어가 달라지면
+			// 이전플레이어의 무기창이 비활성화되고
+			// 현재 플레이어의 무기창이 활성화된다.
+			if (prevwormIndex_ != wormIndex_ && prevwormIndex_ != MAX_WORM_COUNT &&
+				true == wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->IsActive())
+			{
+				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+
+				prevwormIndex_ = wormIndex_;
+			}
+			else
+			{
+				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+			}
+		}
 	}
 }
 
