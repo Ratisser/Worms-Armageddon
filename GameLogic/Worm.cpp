@@ -9,8 +9,12 @@
 
 #include <GameEngineDebugExtension.h>
 
+#include <limits>
+
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
+
+#include "Bazooka.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -26,12 +30,13 @@ Worm::Worm()
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, weaponEquipDelay_(0.0f)
+	, firePower_(0.0f)
 	, aimRotation_(90.0f * GameEngineMath::DegreeToRadian)
 	, currentRotation_(90.f * GameEngineMath::DegreeToRadian)
 	, state_(this)
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
 	, nextState_("")
-	, bFocus_(true)
+	, bFocus_(false)
 {
 
 }
@@ -79,8 +84,8 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("BazOffLeft", "bazOffLeft.bmp", 0, 6, false, 0.033f);
 	mainRender_->CreateAnimation("BazOffRight", "bazOffRight.bmp", 0, 6, false, 0.033f);
 
-	mainRender_->CreateAnimation("BazAimLeft", "bazAimLeft.bmp", 0, 31, false, 1.0f);
-	mainRender_->CreateAnimation("BazAimRight", "bazAimRight.bmp", 0, 31, false, 1.0f);
+	mainRender_->CreateAnimation("BazAimLeft", "bazAimLeft.bmp", 0, 31, false, FLT_MAX); // std::numeric_limit<float>::max()
+	mainRender_->CreateAnimation("BazAimRight", "bazAimRight.bmp", 0, 31, false, FLT_MAX);
 
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
@@ -112,17 +117,21 @@ void Worm::initInput()
 	{
 		GameEngineInput::GetInst().CreateKey("Jump", 'C');
 	}
+	if (false == GameEngineInput::GetInst().IsKey("Fire"))
+	{
+		GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
+	}
 }
 
 void Worm::initCollision()
 {
 	bottomCenterCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	bottomCenterCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	bottomCenterCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 0 });
+	bottomCenterCollision_->SetPivot({ 0.0f, PLAYER_BOTTOM_PIVOT + 0 });
 
 	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
+	groundCheckCollision_->SetPivot({ 0.0f, PLAYER_BOTTOM_PIVOT + 1.f });
 }
 
 void Worm::initState()
@@ -131,10 +140,11 @@ void Worm::initState()
 	state_.CreateState("Walk", &Worm::startWalk, &Worm::updateWalk);
 	state_.CreateState("JumpReady", &Worm::startJumpReady, &Worm::updateJumpReady);
 	state_.CreateState("Jump", &Worm::startJump, &Worm::updateJump);
-	state_.CreateState("WeaponAim", &Worm::startWeaponAim, &Worm::updateWeaponAim);
 	state_.CreateState("WeaponOn", &Worm::startWeaponOn, &Worm::updateWeaponOn);
 	state_.CreateState("WeaponOff", &Worm::startWeaponOff, &Worm::updateWeaponOff);
 
+	state_.CreateState("BazookaAim", &Worm::startBazookaAim, &Worm::updateBazookaAim);
+	state_.CreateState("BazookaFire", &Worm::startBazookaFire, &Worm::updateBazookaFire);
 
 	state_.ChangeState("Idle");
 }
@@ -169,25 +179,25 @@ void Worm::normalMove()
 	}
 	else
 	{
-		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 1 });
+		bottomCenterCollision_->SetPivot({ 0, PLAYER_BOTTOM_PIVOT + 1 });
 		if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			// 정상 땅에 딱 붙어있는 상태
-			bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
+			bottomCenterCollision_->SetPivot({ 0, PLAYER_BOTTOM_PIVOT + 0 });
 			return;
 		}
 
 		// 낭떠러지에 섰다
-		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 5 });
+		bottomCenterCollision_->SetPivot({ 0, PLAYER_BOTTOM_PIVOT + 5 });
 		if (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			bGround_ = false;
-			bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
+			bottomCenterCollision_->SetPivot({ 0, PLAYER_BOTTOM_PIVOT + 0 });
 			return;
 		}
 
 
-		bottomCenterCollision_->SetPivot({ 0, BOTTOM_PIVOT + 0 });
+		bottomCenterCollision_->SetPivot({ 0, PLAYER_BOTTOM_PIVOT + 0 });
 		// 여기 왔으면 경사라고 본다.
 		while (nullptr == bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
@@ -202,6 +212,448 @@ void Worm::normalMove()
 int Worm::getAimingFrame()
 {
 	return static_cast<int>(aimRotation_ / (AIM_STEP_RADIAN));
+}
+
+std::string Worm::getWeaponAimState()
+{
+	switch (currentWeapon_)
+	{
+	case eItemList::WEAPON_JETPACK:
+		break;
+	case eItemList::WEAPON_LOWGRAVITY:
+		break;
+	case eItemList::WEAPON_FASTWALK:
+		break;
+	case eItemList::WEAPON_LASERSIGHT:
+		break;
+	case eItemList::WEAPON_INVISIBILITY:
+		break;
+	case eItemList::WEAPON_BAZOOKA:
+		return "BazookaAim";
+		break;
+	case eItemList::WEAPON_HOMINGMISSILE:
+		break;
+	case eItemList::WEAPON_MORTAR:
+		break;
+	case eItemList::WEAPON_HOMINGPIGEON:
+		break;
+	case eItemList::WEAPON_SHEEPLAUNCHER:
+		break;
+	case eItemList::WEAPON_GRENADE:
+		break;
+	case eItemList::WEAPON_CLUSTERBOMB:
+		break;
+	case eItemList::WEAPON_BANNANABOMB:
+		break;
+	case eItemList::WEAPON_BATTLEAXE:
+		break;
+	case eItemList::WEAPON_EARTHQUAKE:
+		break;
+	case eItemList::WEAPON_SHOTGUN:
+		break;
+	case eItemList::WEAPON_HANDGUN:
+		break;
+	case eItemList::WEAPON_UZI:
+		break;
+	case eItemList::WEAPON_MINIGUN:
+		break;
+	case eItemList::WEAPON_LONGBOW:
+		break;
+	case eItemList::WEAPON_FIREPUNCH:
+		break;
+	case eItemList::WEAPON_DRAGONBALL:
+		break;
+	case eItemList::WEAPON_KAMIKAZE:
+		break;
+	case eItemList::WEAPON_SUICIDEBOMBER:
+		break;
+	case eItemList::WEAPON_PROD:
+		break;
+	case eItemList::WEAPON_DYNAMITE:
+		break;
+	case eItemList::WEAPON_MINE:
+		break;
+	case eItemList::WEAPON_SHEEP:
+		break;
+	case eItemList::WEAPON_SUPERSHEEP:
+		break;
+	case eItemList::WEAPON_MOLEBOMB:
+		break;
+	case eItemList::WEAPON_AIRSTRIKE:
+		break;
+	case eItemList::WEAPON_NAPALMSTRIKE:
+		break;
+	case eItemList::WEAPON_MAILSTRIKE:
+		break;
+	case eItemList::WEAPON_MINESTRIKE:
+		break;
+	case eItemList::WEAPON_MOLESQUADRON:
+		break;
+	case eItemList::WEAPON_BLOWTORCH:
+		break;
+	case eItemList::WEAPON_PNEUMATICDRILL:
+		break;
+	case eItemList::WEAPON_GIRDER:
+		break;
+	case eItemList::WEAPON_BASEBALLBAT:
+		break;
+	case eItemList::WEAPON_GIRDERSTARTERPACK:
+		break;
+	case eItemList::WEAPON_NINJAROPE:
+		break;
+	case eItemList::WEAPON_BUNGEE:
+		break;
+	case eItemList::WEAPON_PARACHUTE:
+		break;
+	case eItemList::WEAPON_TELEPORT:
+		break;
+	case eItemList::WEAPON_SCALESOFJUSTICE:
+		break;
+	case eItemList::WEAPON_SUPERBANANABOMB:
+		break;
+	case eItemList::WEAPON_HOLYHANDGRENDADE:
+		break;
+	case eItemList::WEAPON_FLAMETHROWER:
+		break;
+	case eItemList::WEAPON_SALVATIONARMY:
+		break;
+	case eItemList::WEAPON_MBBOMB:
+		break;
+	case eItemList::WEAPON_PETROLBOMB:
+		break;
+	case eItemList::WEAPON_SKUNK:
+		break;
+	case eItemList::WEAPON_PRICELESSMINGVASE:
+		break;
+	case eItemList::WEAPON_FRENCHSHEEPSTRIKE:
+		break;
+	case eItemList::WEAPON_MIKESCARPETBOMB:
+		break;
+	case eItemList::WEAPON_MADCOWS:
+		break;
+	case eItemList::WEAPON_OLDWOMAN:
+		break;
+	case eItemList::WEAPON_CONCREATEDONKEY:
+		break;
+	case eItemList::WEAPON_INDIANNUCLEAR:
+		break;
+	case eItemList::WEAPON_ARMAGEDDON:
+		break;
+	case eItemList::WEAPON_SKIPGO:
+		break;
+	case eItemList::WEAPON_SURRENDER:
+		break;
+	case eItemList::WEAPON_SELECTWORM:
+		break;
+	case eItemList::WEAPON_FREEZE:
+		break;
+	case eItemList::WEAPON_PATSYSMAGICBULLET:
+		break;
+	case eItemList::MAX:
+		break;
+	default:
+		break;
+	}
+
+	return "";
+}
+
+void Worm::setAnimationWeaponOn()
+{
+	switch (currentWeapon_)
+	{
+	case eItemList::WEAPON_JETPACK:
+		break;
+	case eItemList::WEAPON_LOWGRAVITY:
+		break;
+	case eItemList::WEAPON_FASTWALK:
+		break;
+	case eItemList::WEAPON_LASERSIGHT:
+		break;
+	case eItemList::WEAPON_INVISIBILITY:
+		break;
+	case eItemList::WEAPON_BAZOOKA:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
+		}
+		break;
+	case eItemList::WEAPON_HOMINGMISSILE:
+		break;
+	case eItemList::WEAPON_MORTAR:
+		break;
+	case eItemList::WEAPON_HOMINGPIGEON:
+		break;
+	case eItemList::WEAPON_SHEEPLAUNCHER:
+		break;
+	case eItemList::WEAPON_GRENADE:
+		break;
+	case eItemList::WEAPON_CLUSTERBOMB:
+		break;
+	case eItemList::WEAPON_BANNANABOMB:
+		break;
+	case eItemList::WEAPON_BATTLEAXE:
+		break;
+	case eItemList::WEAPON_EARTHQUAKE:
+		break;
+	case eItemList::WEAPON_SHOTGUN:
+		break;
+	case eItemList::WEAPON_HANDGUN:
+		break;
+	case eItemList::WEAPON_UZI:
+		break;
+	case eItemList::WEAPON_MINIGUN:
+		break;
+	case eItemList::WEAPON_LONGBOW:
+		break;
+	case eItemList::WEAPON_FIREPUNCH:
+		break;
+	case eItemList::WEAPON_DRAGONBALL:
+		break;
+	case eItemList::WEAPON_KAMIKAZE:
+		break;
+	case eItemList::WEAPON_SUICIDEBOMBER:
+		break;
+	case eItemList::WEAPON_PROD:
+		break;
+	case eItemList::WEAPON_DYNAMITE:
+		break;
+	case eItemList::WEAPON_MINE:
+		break;
+	case eItemList::WEAPON_SHEEP:
+		break;
+	case eItemList::WEAPON_SUPERSHEEP:
+		break;
+	case eItemList::WEAPON_MOLEBOMB:
+		break;
+	case eItemList::WEAPON_AIRSTRIKE:
+		break;
+	case eItemList::WEAPON_NAPALMSTRIKE:
+		break;
+	case eItemList::WEAPON_MAILSTRIKE:
+		break;
+	case eItemList::WEAPON_MINESTRIKE:
+		break;
+	case eItemList::WEAPON_MOLESQUADRON:
+		break;
+	case eItemList::WEAPON_BLOWTORCH:
+		break;
+	case eItemList::WEAPON_PNEUMATICDRILL:
+		break;
+	case eItemList::WEAPON_GIRDER:
+		break;
+	case eItemList::WEAPON_BASEBALLBAT:
+		break;
+	case eItemList::WEAPON_GIRDERSTARTERPACK:
+		break;
+	case eItemList::WEAPON_NINJAROPE:
+		break;
+	case eItemList::WEAPON_BUNGEE:
+		break;
+	case eItemList::WEAPON_PARACHUTE:
+		break;
+	case eItemList::WEAPON_TELEPORT:
+		break;
+	case eItemList::WEAPON_SCALESOFJUSTICE:
+		break;
+	case eItemList::WEAPON_SUPERBANANABOMB:
+		break;
+	case eItemList::WEAPON_HOLYHANDGRENDADE:
+		break;
+	case eItemList::WEAPON_FLAMETHROWER:
+		break;
+	case eItemList::WEAPON_SALVATIONARMY:
+		break;
+	case eItemList::WEAPON_MBBOMB:
+		break;
+	case eItemList::WEAPON_PETROLBOMB:
+		break;
+	case eItemList::WEAPON_SKUNK:
+		break;
+	case eItemList::WEAPON_PRICELESSMINGVASE:
+		break;
+	case eItemList::WEAPON_FRENCHSHEEPSTRIKE:
+		break;
+	case eItemList::WEAPON_MIKESCARPETBOMB:
+		break;
+	case eItemList::WEAPON_MADCOWS:
+		break;
+	case eItemList::WEAPON_OLDWOMAN:
+		break;
+	case eItemList::WEAPON_CONCREATEDONKEY:
+		break;
+	case eItemList::WEAPON_INDIANNUCLEAR:
+		break;
+	case eItemList::WEAPON_ARMAGEDDON:
+		break;
+	case eItemList::WEAPON_SKIPGO:
+		break;
+	case eItemList::WEAPON_SURRENDER:
+		break;
+	case eItemList::WEAPON_SELECTWORM:
+		break;
+	case eItemList::WEAPON_FREEZE:
+		break;
+	case eItemList::WEAPON_PATSYSMAGICBULLET:
+		break;
+	case eItemList::MAX:
+		break;
+	default:
+		break;
+	}
+}
+
+void Worm::setAnimationWeaponOff()
+{
+	switch (currentWeapon_)
+	{
+	case eItemList::WEAPON_JETPACK:
+		break;
+	case eItemList::WEAPON_LOWGRAVITY:
+		break;
+	case eItemList::WEAPON_FASTWALK:
+		break;
+	case eItemList::WEAPON_LASERSIGHT:
+		break;
+	case eItemList::WEAPON_INVISIBILITY:
+		break;
+	case eItemList::WEAPON_BAZOOKA:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
+		}
+		break;
+	case eItemList::WEAPON_HOMINGMISSILE:
+		break;
+	case eItemList::WEAPON_MORTAR:
+		break;
+	case eItemList::WEAPON_HOMINGPIGEON:
+		break;
+	case eItemList::WEAPON_SHEEPLAUNCHER:
+		break;
+	case eItemList::WEAPON_GRENADE:
+		break;
+	case eItemList::WEAPON_CLUSTERBOMB:
+		break;
+	case eItemList::WEAPON_BANNANABOMB:
+		break;
+	case eItemList::WEAPON_BATTLEAXE:
+		break;
+	case eItemList::WEAPON_EARTHQUAKE:
+		break;
+	case eItemList::WEAPON_SHOTGUN:
+		break;
+	case eItemList::WEAPON_HANDGUN:
+		break;
+	case eItemList::WEAPON_UZI:
+		break;
+	case eItemList::WEAPON_MINIGUN:
+		break;
+	case eItemList::WEAPON_LONGBOW:
+		break;
+	case eItemList::WEAPON_FIREPUNCH:
+		break;
+	case eItemList::WEAPON_DRAGONBALL:
+		break;
+	case eItemList::WEAPON_KAMIKAZE:
+		break;
+	case eItemList::WEAPON_SUICIDEBOMBER:
+		break;
+	case eItemList::WEAPON_PROD:
+		break;
+	case eItemList::WEAPON_DYNAMITE:
+		break;
+	case eItemList::WEAPON_MINE:
+		break;
+	case eItemList::WEAPON_SHEEP:
+		break;
+	case eItemList::WEAPON_SUPERSHEEP:
+		break;
+	case eItemList::WEAPON_MOLEBOMB:
+		break;
+	case eItemList::WEAPON_AIRSTRIKE:
+		break;
+	case eItemList::WEAPON_NAPALMSTRIKE:
+		break;
+	case eItemList::WEAPON_MAILSTRIKE:
+		break;
+	case eItemList::WEAPON_MINESTRIKE:
+		break;
+	case eItemList::WEAPON_MOLESQUADRON:
+		break;
+	case eItemList::WEAPON_BLOWTORCH:
+		break;
+	case eItemList::WEAPON_PNEUMATICDRILL:
+		break;
+	case eItemList::WEAPON_GIRDER:
+		break;
+	case eItemList::WEAPON_BASEBALLBAT:
+		break;
+	case eItemList::WEAPON_GIRDERSTARTERPACK:
+		break;
+	case eItemList::WEAPON_NINJAROPE:
+		break;
+	case eItemList::WEAPON_BUNGEE:
+		break;
+	case eItemList::WEAPON_PARACHUTE:
+		break;
+	case eItemList::WEAPON_TELEPORT:
+		break;
+	case eItemList::WEAPON_SCALESOFJUSTICE:
+		break;
+	case eItemList::WEAPON_SUPERBANANABOMB:
+		break;
+	case eItemList::WEAPON_HOLYHANDGRENDADE:
+		break;
+	case eItemList::WEAPON_FLAMETHROWER:
+		break;
+	case eItemList::WEAPON_SALVATIONARMY:
+		break;
+	case eItemList::WEAPON_MBBOMB:
+		break;
+	case eItemList::WEAPON_PETROLBOMB:
+		break;
+	case eItemList::WEAPON_SKUNK:
+		break;
+	case eItemList::WEAPON_PRICELESSMINGVASE:
+		break;
+	case eItemList::WEAPON_FRENCHSHEEPSTRIKE:
+		break;
+	case eItemList::WEAPON_MIKESCARPETBOMB:
+		break;
+	case eItemList::WEAPON_MADCOWS:
+		break;
+	case eItemList::WEAPON_OLDWOMAN:
+		break;
+	case eItemList::WEAPON_CONCREATEDONKEY:
+		break;
+	case eItemList::WEAPON_INDIANNUCLEAR:
+		break;
+	case eItemList::WEAPON_ARMAGEDDON:
+		break;
+	case eItemList::WEAPON_SKIPGO:
+		break;
+	case eItemList::WEAPON_SURRENDER:
+		break;
+	case eItemList::WEAPON_SELECTWORM:
+		break;
+	case eItemList::WEAPON_FREEZE:
+		break;
+	case eItemList::WEAPON_PATSYSMAGICBULLET:
+		break;
+	case eItemList::MAX:
+		break;
+	default:
+		break;
+	}
 }
 
 void Worm::setAimingForward()
@@ -238,7 +690,7 @@ StateInfo Worm::updateIdle(StateInfo _state)
 
 	weaponEquipDelay_ += deltaTime_;
 
-	if ( true == bFocus_)
+	if (true == bFocus_)
 	{
 		if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
 		{
@@ -423,7 +875,7 @@ StateInfo Worm::updateJump(StateInfo _state)
 	return StateInfo();
 }
 
-StateInfo Worm::startWeaponAim(StateInfo _state)
+StateInfo Worm::startBazookaAim(StateInfo _state)
 {
 	if (bLeft_)
 	{
@@ -442,9 +894,15 @@ StateInfo Worm::startWeaponAim(StateInfo _state)
 	return StateInfo();
 }
 
-StateInfo Worm::updateWeaponAim(StateInfo _state)
+StateInfo Worm::updateBazookaAim(StateInfo _state)
 {
 	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
 	if (GameEngineInput::GetInst().IsPress("UpArrow"))
 	{
 		aimRotation_ += deltaTime_;
@@ -481,27 +939,29 @@ StateInfo Worm::updateWeaponAim(StateInfo _state)
 	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
 	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
 
-	if (true == bFocus_)
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
-		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
-		{
-			bLeft_ = true;
-			nextState_ = "Walk";
-			return "WeaponOff";
-		}
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
 
-		if (GameEngineInput::GetInst().IsPress("RightArrow"))
-		{
-			bLeft_ = false;
-			nextState_ = "Walk";
-			return "WeaponOff";
-		}
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
 
-		if (GameEngineInput::GetInst().IsDown("Jump"))
-		{
-			nextState_ = "JumpReady";
-			return "WeaponOff";
-		}
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		return "BazookaFire";
 	}
 
 	normalMove();
@@ -509,16 +969,43 @@ StateInfo Worm::updateWeaponAim(StateInfo _state)
 	return StateInfo();
 }
 
+StateInfo Worm::startBazookaFire(StateInfo _state)
+{
+	firePower_ = 100.0f;
+	return StateInfo();
+}
+
+StateInfo Worm::updateBazookaFire(StateInfo _state)
+{
+	if (GameEngineInput::GetInst().IsUp("Fire"))
+	{
+		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
+		newBaz->SetPos(pos_ + float4(forward_ * 20.f));
+		newBaz->SetBazooka(forward_, forward_ * firePower_, 1000.f, firePower_);
+		//bFocus_ = false;
+		return "Idle";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		firePower_ += deltaTime_ * 1000.f;
+
+		if (firePower_ > 1000.f)
+		{
+			Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
+			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
+			newBaz->SetBazooka(forward_, forward_ * firePower_, 1000.f, firePower_);
+			//bFocus_ = false;
+			return "Idle";
+		}
+	}
+
+	return StateInfo();
+}
+
 StateInfo Worm::startWeaponOn(StateInfo _state)
 {
-	if (bLeft_)
-	{
-		mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
-	}
-	else
-	{
-		mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
-	}
+	setAnimationWeaponOn();
 	return StateInfo();
 }
 
@@ -526,21 +1013,15 @@ StateInfo Worm::updateWeaponOn(StateInfo _state)
 {
 	if (mainRender_->IsCurAnimationEnd())
 	{
-		return "WeaponAim";
+		return getWeaponAimState();
 	}
+
 	return StateInfo();
 }
 
 StateInfo Worm::startWeaponOff(StateInfo _state)
 {
-	if (bLeft_)
-	{
-		mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
-	}
-	else
-	{
-		mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
-	}
+	setAnimationWeaponOff();
 	crosshairRender_->Off();
 	return StateInfo();
 }
@@ -580,5 +1061,10 @@ void Worm::Render()
 
 	//bottomCenterCollision_->DebugRender();
 	//groundCheckCollision_->DebugRender();
+}
+
+void Worm::ChangeState(std::string _stateName)
+{
+	state_.ChangeState(_stateName);
 }
 
