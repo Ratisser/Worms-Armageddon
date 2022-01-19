@@ -727,6 +727,31 @@ StateInfo Worm::updateIdle(StateInfo _state)
 		}
 	}
 
+	// ¶³¾îÁö´Â Áß
+	if (speed_.y > 0.0f)
+	{
+		speed_.x = 0.0f;
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
+		}
+	}
+	else
+	{
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+		}
+	}
+
 	normalMove();
 
 	return StateInfo();
@@ -982,14 +1007,14 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 	{
 		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
 		newBaz->SetPos(pos_ + float4(forward_ * 20.f));
-		newBaz->SetBazooka(forward_, forward_ * firePower_, 1000.f, firePower_);
+		newBaz->SetBazooka(forward_, forward_ * firePower_, 500.f, firePower_);
 		//bFocus_ = false;
 		return "BazookaWait";
 	}
 
 	if (GameEngineInput::GetInst().IsPress("Fire"))
 	{
-		firePower_ += deltaTime_ * 1000.f;
+		firePower_ += deltaTime_ * 500.f;
 
 		if (firePower_ > 1000.f)
 		{
@@ -1012,7 +1037,12 @@ StateInfo Worm::startBazookaWait(StateInfo _state)
 StateInfo Worm::updateBazookaWait(StateInfo _state)
 {
 	nextState_ = "Idle";
-	return StateInfo("WeaponOff", 1.f);
+	return "WeaponOff";
+}
+
+void Worm::SetFocus(bool _bFocus)
+{
+	bFocus_ = _bFocus;
 }
 
 StateInfo Worm::startWeaponOn(StateInfo _state)

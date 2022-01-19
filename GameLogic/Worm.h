@@ -25,7 +25,9 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+public:
 	void ChangeState(std::string _stateName);
+	void SetFocus(bool _bFocus);
 
 private:
 	void initRenderer();
@@ -106,11 +108,5 @@ private:
 	eItemList currentWeapon_;
 
 	std::string nextState_;
-
-public:
-	void SetFocus(bool _bFocus)
-	{
-		bFocus_ = _bFocus;
-	}
 };
 
