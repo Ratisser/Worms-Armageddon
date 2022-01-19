@@ -29,6 +29,11 @@ public:
 
 	void CreateWorm(const float _minX, const float _maxX);
 
+	std::vector<Worm*> GetWormList() const
+	{
+		return wormList_;
+	}
+
 private:
 	const int MAX_WORM_COUNT = 8;
 
@@ -37,5 +42,8 @@ private:
 
 	size_t currentIndex_;
 	Worm* currentWorm_;
+	float cameraMoveSpeed_;
+	int wormIndex_;
+	bool IsCameraMove_;
 };
 

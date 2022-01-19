@@ -12,11 +12,9 @@ class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
 	class MapTrain* Train_;
-	class MapGround* Ground_;
 	class Bazooka* Bazooka_;
-	bool IsCameraMove_;
+	class GameController* Controller_;
 	bool isDebugOn_;
-	float4 CameraPos_;
 
 private:
 	GameEngineMath::Random randomGenerator_;
@@ -49,7 +47,7 @@ public:
 public:
 	void MakeWaterLevel();
 	void CreateGimmickObject();
-	void AJYGround(float4 _pos);
+	void GroundExplosion(float4 _pos);
 
 	void CreateExplosion100(float4 Pos); //test
 	void CreateExplosion75(float4 Pos); //test

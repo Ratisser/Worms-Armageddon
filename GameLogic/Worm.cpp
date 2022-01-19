@@ -236,6 +236,7 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	addGravity();
 
 	weaponEquipDelay_ += deltaTime_;
+
 	if ( true == bFocus_)
 	{
 		if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
@@ -270,9 +271,9 @@ StateInfo Worm::updateIdle(StateInfo _state)
 		{
 			return "JumpReady";
 		}
-
-		normalMove();
 	}
+
+	normalMove();
 
 	return StateInfo();
 }
@@ -500,9 +501,9 @@ StateInfo Worm::updateWeaponAim(StateInfo _state)
 			nextState_ = "JumpReady";
 			return "WeaponOff";
 		}
-
-		normalMove();
 	}
+
+	normalMove();
 
 	return StateInfo();
 }
