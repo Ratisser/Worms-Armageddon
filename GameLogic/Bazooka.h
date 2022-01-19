@@ -4,8 +4,10 @@
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
 
+#include "WeaponBase.h"
+
 class GameEngineRenderer;
-class Bazooka : public GameEngineActor
+class Bazooka : public WeaponBase
 {
 public:
 	Bazooka();
