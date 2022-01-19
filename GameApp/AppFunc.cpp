@@ -39,6 +39,7 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
 
 		// 맵 종류
+		GameEngineImage::GetInst().LoadGameImage("Gradient", Dir.PathToPlusFileName("gradient.bmp"));
 
 		// 그라데이션
 		GameEngineImage::GetInst().LoadGameImage("Gradient", Dir.PathToPlusFileName("gradient.bmp"));
