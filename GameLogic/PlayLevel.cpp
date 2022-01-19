@@ -95,7 +95,7 @@ void PlayLevel::Loading()
 		windController_ = CreateActor<WindController>();
 	}
 
-	for (int i = 0; i < 49; i++)
+	for (int i = 0; i < 69; i++)
 	{
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
 		newScatter->SetParent(windController_);

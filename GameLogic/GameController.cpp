@@ -142,7 +142,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	std::vector<float>::iterator endIter = xPosList_.end();
 	for (; startIter != endIter; startIter++)
 	{
-		if (randomFloatContainer_ >= *startIter - 100.0f && randomFloatContainer_ <= *startIter + 100.0f)
+		if (randomFloatContainer_ >= *startIter - 50.0f && randomFloatContainer_ <= *startIter + 50.0f)
 		{
 			randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
 		}
