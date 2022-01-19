@@ -206,6 +206,10 @@ void GameController::CreateWormUI()
 		wormList_[i]->SetUIController(CurUIController);
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
+		std::string SheetName = wormList_[i]->GetName();
+		SheetName += "_WeaponSheet";
+		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
+
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
 		ItemListTest.resize(2);
