@@ -9,6 +9,7 @@ private:
 	bool firstupdate_;
 
 private:	// member Var
+	GameEngineRenderer* gradationSpriteRender_;
 	GameEngineRenderer* mainSpriteRender_;
 	GameEngineRenderer* colSpriteRender_;
 	GameEngineRenderer* boomSpriteRender_;

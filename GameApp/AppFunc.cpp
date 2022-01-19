@@ -40,6 +40,9 @@ void AppResourcesInit()
 
 		// ¸Ê Á¾·ù
 
+		// ±×¶óµ¥ÀÌ¼Ç
+		GameEngineImage::GetInst().LoadGameImage("Gradient", Dir.PathToPlusFileName("gradient.bmp"));
+
 		// ¸Ê
 		GameEngineImage::GetInst().LoadGameImage("MapTrain", Dir.PathToPlusFileName("MapTrain.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("MapBooks", Dir.PathToPlusFileName("MapBooks.bmp"));
