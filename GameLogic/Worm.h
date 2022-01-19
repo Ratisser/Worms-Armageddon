@@ -88,6 +88,7 @@ private:
 	float deltaTime_;
 	float weaponEquipDelay_;
 	float aimRotation_;
+	float currentRotation_;
 
 	eItemList currentWeapon_;
 

@@ -82,7 +82,7 @@
     <Filter Include="Level\Global">
       <UniqueIdentifier>{4ed8676a-7913-4c12-8eb3-f56a804afb49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\PlayLevel\UI\Player">
+    <Filter Include="Actor\PlayLevel\Player">
       <UniqueIdentifier>{6121f2d6-25c9-4831-96c5-2d2bf394ff4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -189,9 +189,6 @@
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="Bazooka.h">
-      <Filter>Actor</Filter>
-    </ClInclude>
     <ClInclude Include="WindBarBlank.h">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
@@ -205,7 +202,7 @@
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClInclude>
     <ClInclude Include="Worm.h">
-      <Filter>Actor\PlayLevel\UI\Player</Filter>
+      <Filter>Actor\PlayLevel\Player</Filter>
     </ClInclude>
     <ClInclude Include="TestActor.h">
       <Filter>Actor\_Backup</Filter>
@@ -223,6 +220,9 @@
       <Filter>Level\Global</Filter>
     </ClInclude>
     <ClInclude Include="GameController.h">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Bazooka.h">
       <Filter>Actor\PlayLevel</Filter>
     </ClInclude>
   </ItemGroup>
@@ -320,9 +320,6 @@
     <ClCompile Include="UIController.cpp">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="Bazooka.cpp">
-      <Filter>Actor</Filter>
-    </ClCompile>
     <ClCompile Include="WindBarBlank.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
@@ -336,7 +333,7 @@
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClCompile>
     <ClCompile Include="Worm.cpp">
-      <Filter>Actor\PlayLevel\UI\Player</Filter>
+      <Filter>Actor\PlayLevel\Player</Filter>
     </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <Filter>Actor\_Backup</Filter>
@@ -354,6 +351,9 @@
       <Filter>Level\Global</Filter>
     </ClCompile>
     <ClCompile Include="GameController.cpp">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Bazooka.cpp">
       <Filter>Actor\PlayLevel</Filter>
     </ClCompile>
   </ItemGroup>
