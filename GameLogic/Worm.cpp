@@ -87,6 +87,18 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("BazAimLeft", "bazAimLeft.bmp", 0, 31, false, FLT_MAX); // std::numeric_limit<float>::max()
 	mainRender_->CreateAnimation("BazAimRight", "bazAimRight.bmp", 0, 31, false, FLT_MAX);
 
+	mainRender_->CreateAnimation("ThrowStartLeft", "throwStartLeft.bmp", 0, 31, false, FLT_MAX); // 투척물 던진 직후 한 순간만 적용됩니다.
+	mainRender_->CreateAnimation("ThrowStartRight", "throwStartRight.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("ThrowOffLeft", "throwOffLeft.bmp", 0, 9, false, 0.033f); // 던진 직후, 손을 다시 넣어 idle 로 가는 애니메이션
+	mainRender_->CreateAnimation("ThrowOffRight", "throwOffRight.bmp", 0, 9, false, 0.033f);
+
+	mainRender_->CreateAnimation("GrnAimLeft", "grnAimLeft.bmp", 0, 31, false, FLT_MAX); // 수류탄 애니메이션들입니다.
+	mainRender_->CreateAnimation("GrnAimRight", "grnAimRight.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("GrnOnLeft", "grnOnLeft.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("GrnOnRight", "grnOnRight.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("GrnOffLeft", "grnOffLeft.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("GrnOffRight", "grnOffRight.bmp", 0, 9, false, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
