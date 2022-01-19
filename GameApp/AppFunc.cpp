@@ -21,6 +21,10 @@ void AppResourcesInit()
 	// 맵 최소, 최대값 초기화
 	{
 		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapTrain", { 800.f, 3300.f }));
+		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapBooks", { 200.f, 3640.f }));
+		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapCars", { 200.f, 3640.f }));
+		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapCity", { 400.f, 3440.f }));
+
 	}
 
 	// 이미지 로드
@@ -309,6 +313,20 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "bazOffRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "bazOnLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "bazOnRight.bmp", cutSize);
+	// throwStart : 투척물 던진 후 "그 각도에 맞는 스프라이트로" 잠시 고정되는 애니메이션입니다.
+	// throwOff : 투척물 던진 후, throwStart 가 끝나면 다시 손을 넣는 애니메이션입니다.
+	RS::LoadImageFromFileAndCut(dir / "throwStartLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "throwStartRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "throwOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "throwOffRight.bmp", cutSize);
+	// 수류탄 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "grnAimLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "grnAimRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "grnOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "grnOnRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "grnOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "grnOffRight.bmp", cutSize);
+
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();
