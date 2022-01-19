@@ -30,6 +30,7 @@ public:
 	virtual void Render() override;
 
 	void CreateWorm(const float _minX, const float _maxX);
+	void CreateWormUI();
 
 	std::vector<Worm*> GetWormList() const
 	{
@@ -46,6 +47,7 @@ private:
 	Worm* currentWorm_;
 	float cameraMoveSpeed_;
 	int wormIndex_;
+	int prevwormIndex_;
 	bool IsCameraMove_;
 };
 

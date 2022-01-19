@@ -6,6 +6,7 @@
 #include "eItemList.h"
 
 class GameEngineRenderer;
+class UIController;
 class Worm : public GameEngineActor
 {
 public:
@@ -108,5 +109,12 @@ private:
 	eItemList currentWeapon_;
 
 	std::string nextState_;
+
+	UIController* uicontroller_;
+
+public:
+	void SetCurWeapon(eItemList _WeaponType);
+	void SetUIController(UIController* _uicontroller);
+	UIController* GetCurUIController() const;
 };
 

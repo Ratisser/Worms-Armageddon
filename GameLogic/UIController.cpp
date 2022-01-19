@@ -51,6 +51,11 @@ Worm* UIController::GetCurPlayer() const
 	return curplayer_;
 }
 
+WeaponSheet* UIController::GetCurWeaponSheet() const
+{
+	return weaponsheet_;
+}
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -60,18 +65,9 @@ void UIController::Start()
 	float4 ActivePos = float4({ Resolution.x - 100.f, Resolution.y - 240.f });		// WeaponSheet ActivePos(활성화위치)
 	float4 DisablePos = float4({ Resolution.x + 100.f, Resolution.y - 240.f });	// WeaponSheet DisablePos(비활성화위치)
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
-	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정
-	weaponsheet_->SetParentController(this);														// 해당 WeaponSheet를 생성한 UIController 저장
+	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정														// 해당 WeaponSheet를 생성한 UIController 저장
 
 	// ...
-
-
-
-	// UI별 키생성
-	if (false == GameEngineInput::GetInst().IsKey("WeaponSheet"))
-	{
-		GameEngineInput::GetInst().CreateKey("WeaponSheet", VK_RBUTTON);
-	}
 }
 
 void UIController::UpdateBefore()
@@ -80,11 +76,6 @@ void UIController::UpdateBefore()
 
 void UIController::Update()
 {
-	// Weapon Sheet Active/DisEnable
-	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
-	{
-		weaponsheet_->WeaponSheetActive();
-	}
 }
 
 void UIController::UpdateAfter()

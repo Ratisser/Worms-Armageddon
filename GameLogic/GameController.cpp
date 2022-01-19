@@ -5,12 +5,17 @@
 #include <GameEngineLevel.h>
 #include <GameEngineInput.h>
 #include "Worm.h"
+#include "UIController.h"
+#include "WeaponSheet.h"
+#include "WeaponIcon.h"
+#include "Weapon.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
 	, cameraMoveSpeed_(10.f)
 	, wormIndex_(MAX_WORM_COUNT)
+	, prevwormIndex_(MAX_WORM_COUNT)
 	, IsCameraMove_(true)
 {
 
@@ -47,6 +52,12 @@ void GameController::Start()
 	{
 		GameEngineInput::GetInst().CreateKey("CameraFocus", 0x31);
 	}
+
+	// UI
+	if (false == GameEngineInput::GetInst().IsKey("WeaponSheet"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponSheet", VK_RBUTTON);
+	}
 }
 
 void GameController::UpdateBefore()
@@ -55,6 +66,26 @@ void GameController::UpdateBefore()
 
 void GameController::Update()
 {
+	// UI
+	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
+	{
+		if (wormIndex_ != MAX_WORM_COUNT)
+		{
+			// 이전 플레이어와 현재플레이어가 달라지면
+			// 이전플레이어의 무기창이 비활성화되고
+			// 현재 플레이어의 무기창이 활성화된다.
+			if (prevwormIndex_ != wormIndex_ && prevwormIndex_ != MAX_WORM_COUNT)
+			{
+				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+			}
+			else
+			{
+				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+			}
+		}
+	}
+
 	if (true == GameEngineInput::GetInst().IsPress("Up"))
 	{
 		GetLevel()->SetCamMove(float4::UP * cameraMoveSpeed_);
@@ -77,6 +108,8 @@ void GameController::Update()
 
 	if (true == GameEngineInput::GetInst().IsDown("CameraFocus"))
 	{
+		prevwormIndex_ = wormIndex_;
+
 		++wormIndex_;
 
 		if (true == IsCameraMove_)
@@ -152,4 +185,34 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	newWorm->SetFocus(false);
 	wormList_.push_back(newWorm);
 	xPosList_.push_back(randomFloatContainer_);
+}
+
+void GameController::CreateWormUI()
+{
+	size_t wormcnt = wormList_.size();
+	for (size_t i = 0; i < wormcnt; ++i)
+	{
+		std::string Name = wormList_[i]->GetName();
+		Name += "_UI";
+
+		// UI관리자생성
+		UIController* CurUIController = parentLevel_->CreateActor<UIController>(Name);
+		CurUIController->SetCurPlayer(wormList_[i]);
+
+		// 플레이어당 UIController 지정
+		wormList_[i]->SetUIController(CurUIController);
+		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
+
+		// 초기 아이템 목록지정
+		std::vector<eItemList> ItemListTest;
+		ItemListTest.resize(2);
+		ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
+		ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
+		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
+
+		// 
+		CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
+		//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
+		ItemListTest.clear();
+	}
 }

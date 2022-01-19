@@ -1,4 +1,5 @@
 #include "Worm.h"
+#include "UIController.h"
 
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
@@ -37,6 +38,7 @@ Worm::Worm()
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
 	, nextState_("")
 	, bFocus_(false)
+	, uicontroller_(nullptr)
 {
 
 }
@@ -1050,6 +1052,21 @@ StateInfo Worm::updateBazookaWait(StateInfo _state)
 {
 	nextState_ = "Idle";
 	return "WeaponOff";
+}
+
+void Worm::SetCurWeapon(eItemList _WeaponType)
+{
+	currentWeapon_ = _WeaponType;
+}
+
+void Worm::SetUIController(UIController* _uicontroller)
+{
+	uicontroller_ = _uicontroller;
+}
+
+UIController* Worm::GetCurUIController() const
+{
+	return uicontroller_;
 }
 
 void Worm::SetFocus(bool _bFocus)

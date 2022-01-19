@@ -103,11 +103,7 @@ void MouseObject::UpdateBefore()
 					if (nullptr != CurPlayer)
 					{
 						// 현재플레이어가 있다면 해당 타입 전달
-						//CurPlayer
-
-
-
-						int a = 0;
+						CurPlayer->SetCurWeapon(CollisionWeapon->GetWeaponType());
 					}
 
 					// 선택완료되었다고 판단하여 무기창을 비활성화한다.

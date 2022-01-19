@@ -7,7 +7,6 @@
 #include "MapTrain.h"
 #include "PlayLevel.h"
 #include "Worm.h"
-#include "UIController.h"
 #include "GameController.h"
 #include "DrumActor.h"
 #include "Bazooka.h"
@@ -109,16 +108,6 @@ void PlayLevel::Loading()
 	windBar->SetParentController(windController_);
 	WindBarHider* windBarHider = CreateActor<WindBarHider>();
 	windBarHider->SetParentController(windController_);
-	// UI관리자생성
-	UIController* CurUIController = CreateActor<UIController>();
-	//CurUIController->SetCurPlayer(Worm_);
-	std::vector<eItemList> ItemListTest;
-	ItemListTest.resize(2);
-	ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
-	ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
-	CurUIController->CreateWeaponList(ItemListTest);									// 플레이어가 처음 가지고있는 아이템목록(최초지정)
-	CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
-	//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
 
 	MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	CreateGimmickObject();
@@ -176,6 +165,9 @@ void PlayLevel::wormLoading()
 	{
 		Controller_->CreateWorm(minMaxInfo.x, minMaxInfo.y);
 	}
+
+	// 플레이어별 UIController 생성
+	Controller_->CreateWormUI();
 }
 
 void PlayLevel::AJYLevelUpdate()

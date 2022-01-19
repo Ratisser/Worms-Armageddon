@@ -39,6 +39,7 @@ public: // 플레이어가 기믹오브젝트 획득 또는 아이템사용시 설정해야하는 항목
 
 public:
 	Worm* GetCurPlayer() const;
+	WeaponSheet* GetCurWeaponSheet() const;
 
 public:
 	virtual void Start() override;
