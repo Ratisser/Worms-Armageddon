@@ -31,6 +31,9 @@ private:
 	LARGE_INTEGER startCheck_;
 	LARGE_INTEGER endCheck_;
 	double deltaTime_;
+	float Second_;
+	int F_;
+	int FPS_;
 
 public:
 	// 여기에 이렇게 헤더에 구현한 이유
@@ -38,6 +41,11 @@ public:
 	double GetDeltaTimeD()
 	{
 		return deltaTime_;
+	}
+
+	int GetFPS()
+	{
+		return FPS_;
 	}
 
 	float GetDeltaTime()

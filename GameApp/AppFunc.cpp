@@ -360,6 +360,8 @@ void GimmickObjectImageInit() // 기믹 오브젝트 로드에 사용
 		return;
 	}
 
+	//oildrum
+
 	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("oildrum1", Dir.PathToPlusFileName("oildrum1.bmp"));
 	loadingImage->Cut({ 90,90 });
@@ -375,6 +377,52 @@ void GimmickObjectImageInit() // 기믹 오브젝트 로드에 사용
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("oildrum4", Dir.PathToPlusFileName("oildrum4.bmp"));
 	loadingImage->Cut({ 90,90 });
+
+
+	//petrol
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol60", Dir.PathToPlusFileName("petrol60.bmp"));
+	loadingImage->Cut({ 60,60 }); //20
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol50", Dir.PathToPlusFileName("petrol50.bmp"));
+	loadingImage->Cut({ 50,50 }); //20
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol40", Dir.PathToPlusFileName("petrol40.bmp"));
+	loadingImage->Cut({ 40,40 }); //20
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol30", Dir.PathToPlusFileName("petrol30.bmp"));
+	loadingImage->Cut({ 30,30 }); //20
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol20", Dir.PathToPlusFileName("petrol20.bmp"));
+	loadingImage->Cut({ 20,20 }); //20
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol10", Dir.PathToPlusFileName("petrol10.bmp"));
+	loadingImage->Cut({ 10,10 }); //10
+
+
+	//petrol-
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol-1", Dir.PathToPlusFileName("petrol-1.bmp"));
+	loadingImage->Cut({ 60,60 }); //64
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol-2", Dir.PathToPlusFileName("petrol-2.bmp"));
+	loadingImage->Cut({ 60,60 }); //64
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol-3", Dir.PathToPlusFileName("petrol-3.bmp"));
+	loadingImage->Cut({ 60,60 }); //64
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("petrol-4", Dir.PathToPlusFileName("petrol-4.bmp"));
+	loadingImage->Cut({ 60,60 }); //64
 }
 
 void EffectImageInit()

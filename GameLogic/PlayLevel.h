@@ -50,7 +50,7 @@ public:
 	WindController* windController_;
 
 public:
-	void MakeWaterLevel();
+	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
 	void AJYGround(float4 _pos);
 

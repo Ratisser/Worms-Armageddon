@@ -6,8 +6,6 @@ namespace Effect
 {
 	class Smklt25 : public EffectActor
 	{
-		friend class EffectExplosion;
-
 	public:
 		Smklt25();
 		~Smklt25();
@@ -27,7 +25,6 @@ namespace Effect
 
 	class Smklt50 : public EffectActor
 	{
-	
 	public:
 		Smklt50();
 		~Smklt50();
@@ -47,7 +44,6 @@ namespace Effect
 
 	class Smklt75 : public EffectActor
 	{
-
 	public:
 		Smklt75();
 		~Smklt75();
@@ -67,7 +63,6 @@ namespace Effect
 
 	class Smklt100 : public EffectActor
 	{
-	
 	public:
 		Smklt100();
 		~Smklt100();

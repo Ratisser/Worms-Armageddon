@@ -106,6 +106,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Petroleum.h" />
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
@@ -253,6 +254,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Petroleum.cpp" />
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>

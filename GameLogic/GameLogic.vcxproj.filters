@@ -34,9 +34,6 @@
     <Filter Include="Actor\WaterLevel">
       <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\PlayLevel\GimmickObject">
-      <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\PlayLevel\Effect">
       <UniqueIdentifier>{69f89989-73f7-4bca-a3e9-e400a91cc847}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,9 @@
     </Filter>
     <Filter Include="Actor\PlayLevel\UI\Player">
       <UniqueIdentifier>{6121f2d6-25c9-4831-96c5-2d2bf394ff4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\GimmickObject">
+      <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="eItemList.h">
       <Filter>Enum</Filter>
-    </ClInclude>
-    <ClInclude Include="DrumActor.h">
-      <Filter>Actor\PlayLevel\GimmickObject</Filter>
     </ClInclude>
     <ClInclude Include="WindController.h">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -222,6 +219,12 @@
     <ClInclude Include="GlobalValue.h">
       <Filter>Level\Global</Filter>
     </ClInclude>
+    <ClInclude Include="DrumActor.h">
+      <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Petroleum.h">
+      <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -259,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="BottomNameTag.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="DrumActor.cpp">
-      <Filter>Actor\PlayLevel\GimmickObject</Filter>
     </ClCompile>
     <ClCompile Include="WindController.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -349,6 +349,12 @@
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>Level\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="DrumActor.cpp">
+      <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Petroleum.cpp">
+      <Filter>Actor\PlayLevel\GimmickObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -40,4 +40,9 @@ public:
 	{
 		return waterLevel_;
 	}
+
+	void SetwaterLevel(float _waterLevel)
+	{
+		waterLevel_ = _waterLevel;
+	}
 };

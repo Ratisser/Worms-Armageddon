@@ -49,6 +49,23 @@ public:
 		return parentLevel_;
 	}
 
+
+	template<typename T>
+	T* GetLevel()
+	{
+		if (nullptr == parentLevel_)
+		{
+			GameEngineDebug::AssertFalse();
+			return nullptr;
+		}
+
+		T* gamelevel = (T*)parentLevel_;
+
+		return gamelevel;
+	}
+
+
+
 	void SetUpdateOrder(int _UpdateOrder)
 	{
 		UpdateOrder = _UpdateOrder;

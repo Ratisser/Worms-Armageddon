@@ -11,9 +11,7 @@ private:	// member Var
 	GameEngineCollision* groundCollision_; // 바닥
 	GameEngineCollision* BodyCollision_; // 몸통
 
-	GameEngineLevel* GameLevel_;
-
-	float Phase_; // 드럼통이 가열된 정도
+	float Phase_; // 드럼통이 가열된 정도, Max = 3.f
 	bool DrumCollision_;
 
 	// 직접적인 직격, 혹은 화염에 일정시간 노출되었을 경우
@@ -46,6 +44,5 @@ public:
 	void DrumBoil(float kelvin);
 	void DrumExplode();
 	void DrumCollision(GameEngineCollision* Collider_);
-	bool DrumGroupCollision(int _Group_enum); // 외부 클레스에서 사용하여 충돌(폭발) 여부 파악
 };
 

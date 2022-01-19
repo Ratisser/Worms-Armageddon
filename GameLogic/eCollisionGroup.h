@@ -8,7 +8,8 @@ enum class eCollisionGroup
 	UI,
 	MOUSE,
 	GIMMICK_OBJECT,
-	FLAME,
+	PETROLEUM,
+	DRUM,
 	WEAPON,
 	MAX
 };

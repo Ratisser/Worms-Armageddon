@@ -484,6 +484,7 @@ void EffectBundle::Explosion::Size100::Start()
 		Effect = GetLevel()->CreateActor<Effect::Smklt100>();
 		Effect->SetPos(OwnerPos);
 		Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Effect->SetDir(RandomRot);
 	}
 
 	// Flame 중심 pos 부터 +- 15도 임의 방향으로 나가게끔 임의 생성

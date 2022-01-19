@@ -3,6 +3,7 @@
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
 #include <GameEngineTime.h>
+#include "PlayLevel.h"
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
@@ -13,8 +14,7 @@ DrumActor::DrumActor():
 	mainSpriteRender_(nullptr),
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false),
-	GameLevel_(nullptr)
+	DrumCollision_(false)
 	// default constructer 디폴트 생성자
 {
 
@@ -30,8 +30,7 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	mainSpriteRender_(nullptr) , // default RValue Copy constructer 디폴트 RValue 복사생성자
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false),
-	GameLevel_(nullptr)// default RValue Copy constructer 디폴트 RValue 복사생성자
+	DrumCollision_(false)
 {
 
 }
@@ -58,25 +57,43 @@ void DrumActor::UpdateBefore()
 void DrumActor::Update()
 {
 	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-
-	if (DrumGroupCollision((int)eCollisionGroup::FLAME)) // 불꽃, 네이팜 등과 충돌시 온도를 올리고, // 일정 온도 도달시 폭발
+	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM)))
 	{
-		Phase_ += 10.f * deltaTime;
+		Phase_ +=  deltaTime;
 
-		if (Phase_ >= 100.f)
+		if (Phase_ >= 3.f)
 		{
 			DrumExplode();
 		}
+
+		else if (Phase_ > 2.f)
+		{
+			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
+			mainSpriteRender_->ChangeAnimation("Phase3");
+			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
+		}
+		else if (Phase_ > 1.f)
+		{
+			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
+			mainSpriteRender_->ChangeAnimation("Phase2");
+			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
+		}
+		else if (Phase_ > 0.f)
+		{
+			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
+			mainSpriteRender_->ChangeAnimation("Phase1");
+			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
+		}
 	}
 
-	if (DrumGroupCollision((int)eCollisionGroup::WEAPON))
+	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::WEAPON)))
 	{
 		DrumExplode();
 	}
 
 	if (true == DrumCollision_)
 	{
-		DrumExplode();
+		DrumExplode(); // 위 코드 외에 폭발이 적용될 경우
 	}
 }
 
@@ -92,23 +109,26 @@ void DrumActor::Render()
 
 void DrumActor::initCollision()
 {
-	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::GIMMICK_OBJECT), CollisionCheckType::POINT);
+	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCollision_->SetPivot({ 0.0f, 30.f });
 
-	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::GIMMICK_OBJECT), CollisionCheckType::POINT);
+	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::POINT);
 	BodyCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	BodyCollision_->SetPivot({ 0.0f, 30.f });
+	BodyCollision_->SetPivot({ 30.f, 30.f });
 }
 
 void DrumActor::DrumBoil(float kelvin)
 {
-	Phase_ = kelvin;
+	Phase_ += kelvin;
 }
 
 void DrumActor::DrumExplode()
 {
-	// 펑
+	GetLevel<PlayLevel>()->CreateExplosion75(pos_);
+	// 기름 이펙트 생성 함수
+	Death();
+
 }
 
 void DrumActor::DrumCollision(GameEngineCollision* Collider_)
@@ -119,21 +139,5 @@ void DrumActor::DrumCollision(GameEngineCollision* Collider_)
 	}
 }
 
-bool DrumActor::DrumGroupCollision(int _Group_enum)
-{
-	std::list<GameEngineCollision*> Clist = BodyCollision_->CollisionGroupCheck(_Group_enum);
 
-	auto iterfirst = Clist.begin();
-	auto iterEnd = Clist.end();
-
-	for(; iterfirst != iterEnd; iterfirst++)
-	{
-		if ((*iterfirst)->CollisionCheck(BodyCollision_))
-		{
-			DrumCollision_ = true;
-			return true;
-		}
-	}
-	return false;
-}
 

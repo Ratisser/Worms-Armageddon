@@ -1,7 +1,10 @@
+#include "EffectActor.h"
 #include "EffectSmklt.h"
 #include <GameEngineWindow.h>
 #include <GameEngineRenderer.h>
-#include "EffectActor.h"
+#include <GameEngineTime.h>
+
+#define MoveSpeed 2.5f
 
 Effect::Smklt25::Smklt25()
 {
@@ -36,6 +39,9 @@ void Effect::Smklt25::UpdateBefore()
 
 void Effect::Smklt25::Update()
 {
+	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_* MoveSpeed * deltaTime);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime * 5.f));
 }
 
 void Effect::Smklt25::UpdateAfter()
@@ -78,6 +84,9 @@ void Effect::Smklt50::UpdateBefore()
 
 void Effect::Smklt50::Update()
 {
+	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_ * MoveSpeed * deltaTime);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime * 5.f));
 }
 
 void Effect::Smklt50::UpdateAfter()
@@ -120,6 +129,9 @@ void Effect::Smklt75::UpdateBefore()
 
 void Effect::Smklt75::Update()
 {
+	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_ * MoveSpeed * deltaTime);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime * 5.f));
 }
 
 void Effect::Smklt75::UpdateAfter()
@@ -162,6 +174,9 @@ void Effect::Smklt100::UpdateBefore()
 
 void Effect::Smklt100::Update()
 {
+	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_ * MoveSpeed * deltaTime);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime*5.f));
 }
 
 void Effect::Smklt100::UpdateAfter()
