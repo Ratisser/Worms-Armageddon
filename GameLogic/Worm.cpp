@@ -145,6 +145,7 @@ void Worm::initState()
 
 	state_.CreateState("BazookaAim", &Worm::startBazookaAim, &Worm::updateBazookaAim);
 	state_.CreateState("BazookaFire", &Worm::startBazookaFire, &Worm::updateBazookaFire);
+	state_.CreateState("BazookaWait", &Worm::startBazookaWait, &Worm::updateBazookaWait);
 
 	state_.ChangeState("Idle");
 }
@@ -983,7 +984,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 		newBaz->SetBazooka(forward_, forward_ * firePower_, 1000.f, firePower_);
 		//bFocus_ = false;
-		return "Idle";
+		return "BazookaWait";
 	}
 
 	if (GameEngineInput::GetInst().IsPress("Fire"))
@@ -996,11 +997,22 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 			newBaz->SetBazooka(forward_, forward_ * firePower_, 1000.f, firePower_);
 			//bFocus_ = false;
-			return "Idle";
+			return "BazookaWait";
 		}
 	}
 
 	return StateInfo();
+}
+
+StateInfo Worm::startBazookaWait(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateBazookaWait(StateInfo _state)
+{
+	nextState_ = "Idle";
+	return StateInfo("WeaponOff", 1.f);
 }
 
 StateInfo Worm::startWeaponOn(StateInfo _state)

@@ -66,9 +66,10 @@ private:
 
 	StateInfo startBazookaAim(StateInfo _state);
 	StateInfo updateBazookaAim(StateInfo _state);
-
 	StateInfo startBazookaFire(StateInfo _state);
 	StateInfo updateBazookaFire(StateInfo _state);
+	StateInfo startBazookaWait(StateInfo _state);
+	StateInfo updateBazookaWait(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;
