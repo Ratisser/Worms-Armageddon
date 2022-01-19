@@ -3,10 +3,12 @@
 #include <vector>
 #include <GameEngineActor.h>
 
+class GameEngineMath;
 class Worm;
 class GameController : public GameEngineActor
 {
 private:	// member Var
+	float randomFloatContainer_;
 
 public:
 	GameController(); // default constructer 디폴트 생성자
@@ -39,7 +41,7 @@ private:
 
 private:
 	std::vector<Worm*> wormList_;
-
+	std::vector<float> xPosList_;
 	size_t currentIndex_;
 	Worm* currentWorm_;
 	float cameraMoveSpeed_;

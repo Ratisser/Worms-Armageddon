@@ -136,7 +136,20 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	std::string name = "Worm";
 	name += std::to_string(currentIndex_++);
 	Worm* newWorm = parentLevel_->CreateActor<Worm>(name);
-	newWorm->SetPos({ randomGenerator.RandomFloat(_minX, _maxX) , -500.0f });
+	randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX); // 전에 생성한 좌표를 저장
+
+	std::vector<float>::iterator startIter = xPosList_.begin();
+	std::vector<float>::iterator endIter = xPosList_.end();
+	for (; startIter != endIter; startIter++)
+	{
+		if (randomFloatContainer_ >= *startIter - 100.0f && randomFloatContainer_ <= *startIter + 100.0f)
+		{
+			randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
+		}
+	}
+	
+	newWorm->SetPos({ randomFloatContainer_ , -500.0f });
 	newWorm->SetFocus(false);
 	wormList_.push_back(newWorm);
+	xPosList_.push_back(randomFloatContainer_);
 }

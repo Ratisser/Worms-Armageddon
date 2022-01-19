@@ -95,9 +95,8 @@ void PlayLevel::Loading()
 		windController_ = CreateActor<WindController>();
 	}
 
-	for (int i = 0; i < 39; i++)
+	for (int i = 0; i < 49; i++)
 	{
-		// 배경 바람에 흩날리는 엑터 생성(추후 자료구조로 관리 예정)
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
 		newScatter->SetParent(windController_);
 	}
@@ -132,10 +131,6 @@ void PlayLevel::LevelUpdate()
 	AJYLevelUpdate();
 	PJWLevelUpdate();
 
-	if (false == isWormLanded_)
-	{	// 랜덤한 위치에 웜 떨구기 (900~3300 Train 맵 기준 최소~최대 구간입니다.)
-		RandomWormArrange(900.0f, 3300.0f);
-	}
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
@@ -336,21 +331,4 @@ void PlayLevel::PJWLevelUpdate()
 		isDebugOn_ = true;
 		return;
 	}
-}
-
-void PlayLevel::RandomWormArrange(float _minX, float _maxX)
-{
-	// 웜이 물에 빠지지 않게 선택된 맵의 좌 우 x값 좌표 조정 해 주세요.
-	if (false == isWormLanded_)
-	{
-		//Worm_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm2P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm3P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm4P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm5P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm6P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm7P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		//Worm8P_->SetPos({ randomGenerator_.RandomFloat(_minX, _maxX) , -500.0f });
-		isWormLanded_ = true;
-	}	
 }
