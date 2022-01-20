@@ -92,6 +92,11 @@ void MouseObject::Start()
 
 	// 마우스 커서 off
 	//ShowCursor(false);
+
+	if (false == GameEngineInput::GetInst().IsKey("Select_Weapon"))
+	{
+		GameEngineInput::GetInst().CreateKey("Select_Weapon", VK_LBUTTON);
+	}
 }
 
 void MouseObject::UpdateBefore()
@@ -106,7 +111,7 @@ void MouseObject::UpdateBefore()
 		if (nullptr != CollisionWeapon)
 		{
 			// 마우스왼쪽버튼클릭이라면
-			if (true == GameEngineInput::GetInst().IsDown("Boom"))
+			if (true == GameEngineInput::GetInst().IsDown("Select_Weapon"))
 			{
 				if (true == CollisionWeapon->GetParentSheet()->IsActive())
 				{
