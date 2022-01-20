@@ -91,7 +91,7 @@ void MouseObject::Start()
 	rendersize_ = mainrenderer_->GetImageSize();
 
 	// 마우스 커서 off
-	//ShowCursor(false);
+	ShowCursor(false);
 
 	if (false == GameEngineInput::GetInst().IsKey("Select_Weapon"))
 	{
