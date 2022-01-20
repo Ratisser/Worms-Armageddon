@@ -711,6 +711,7 @@ StateInfo Worm::startIdle(StateInfo _state)
 	}
 
 	weaponEquipDelay_ = 0.0f;
+	speed_.x = 0.0f;
 
 	return StateInfo();
 }
@@ -1127,6 +1128,7 @@ UIController* Worm::GetCurUIController() const
 void Worm::SetFocus(bool _bFocus)
 {
 	bFocus_ = _bFocus;
+	state_.ChangeState("Idle");
 }
 
 StateInfo Worm::startWeaponOn(StateInfo _state)
