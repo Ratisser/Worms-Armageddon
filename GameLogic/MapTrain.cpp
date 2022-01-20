@@ -90,9 +90,6 @@ void MapTrain::Render()
 
 	// ÁøÂ¥ ¸Ê
 	mainSpriteRender_->Render();
-
-	//
-	boomSpriteRender_->Render();
 }
 
 void MapTrain::GroundUpdate(float4 pos)

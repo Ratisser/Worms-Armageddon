@@ -198,9 +198,6 @@
     <ClInclude Include="MapTrain.h">
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClInclude>
-    <ClInclude Include="MapGround.h">
-      <Filter>Actor\PlayLevel\Map</Filter>
-    </ClInclude>
     <ClInclude Include="Worm.h">
       <Filter>Actor\PlayLevel\Player</Filter>
     </ClInclude>
@@ -331,9 +328,6 @@
     </ClCompile>
     <ClCompile Include="WindBar.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="MapGround.cpp">
-      <Filter>Actor\PlayLevel\Map</Filter>
     </ClCompile>
     <ClCompile Include="MapTrain.cpp">
       <Filter>Actor\PlayLevel\Map</Filter>

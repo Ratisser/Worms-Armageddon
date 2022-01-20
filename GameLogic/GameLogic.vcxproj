@@ -101,7 +101,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MapGround.h" />
     <ClInclude Include="MapTrain.h">
       <SubType>
       </SubType>
@@ -257,7 +256,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="MapGround.cpp" />
     <ClCompile Include="MapTrain.cpp">
       <SubType>
       </SubType>
