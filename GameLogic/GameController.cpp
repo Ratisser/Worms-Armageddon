@@ -212,13 +212,17 @@ void GameController::CreateWormUI()
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
-		ItemListTest.resize(2);
+		ItemListTest.resize(6);
 		ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
 		ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
+		ItemListTest[2] = eItemList::WEAPON_FIREPUNCH;
+		ItemListTest[3] = eItemList::WEAPON_MINE;
+		ItemListTest[4] = eItemList::WEAPON_GRENADE;
+		ItemListTest[5] = eItemList::WEAPON_CLUSTERBOMB;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
 		// 
-		CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
+		//CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
 		//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
 		ItemListTest.clear();
 	}
