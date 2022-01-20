@@ -7,7 +7,8 @@ GameEngineTime* GameEngineTime::Inst = new GameEngineTime();
 GameEngineTime::GameEngineTime() :
 	F_(0.f),
 	FPS_(0.f),
-	Second_(0.f)
+	Second_(0.f),
+	deltaTime_(0.f)
 {
 	TimeCheckReset();
 }
@@ -22,7 +23,8 @@ GameEngineTime::GameEngineTime(const GameEngineTime&& _Other)
 	endCheck_(_Other.endCheck_),
 	F_(0.f),
 	FPS_(0.f),
-	Second_(0.f)
+	Second_(0.f),
+	deltaTime_(0.f)
 {
 }
 

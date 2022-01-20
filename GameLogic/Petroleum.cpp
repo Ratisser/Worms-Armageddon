@@ -35,11 +35,19 @@ Petroleum::Petroleum(Petroleum&& _other) noexcept :
 
 void Petroleum::Start()
 {
-	mainSpriteRender_ = CreateRenderer("");
+	mainSpriteRender_ = CreateRenderer("petrol60");
+	mainSpriteRender_->CreateAnimation("petrol60", "petrol60", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol50", "petrol60", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol40", "petrol60", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol30", "petrol60", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol20", "petrol60", 0, 19, true, 0.1f);
 
-	mainSpriteRender_->CreateAnimation("", "", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol-1", "petrol-1", 0, 63, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol-2", "petrol-2", 0, 63, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol-3", "petrol-3", 0, 63, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("petrol-4", "petrol-4", 0, 63, true, 0.1f);
 
-	mainSpriteRender_->ChangeAnimation("");
+	mainSpriteRender_->ChangeAnimation("petrol60");
 
 	initCollision();
 }

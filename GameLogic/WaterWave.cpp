@@ -49,5 +49,5 @@ void WaterWave::Render()
 
 void WaterWave::SetAnimationCurrentFrame(const int _index)
 {
-	mainSpriteRender_->SetAnimationCurrentFrame("Start",_index);
+	mainSpriteRender_->SetAnimationCurrentFrame(_index);
 }
