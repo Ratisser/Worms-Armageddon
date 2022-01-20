@@ -96,6 +96,48 @@ void WeaponSheet::Update()
 			moving_ = false;
 			weaponsheetactive_ = true;
 		}
+
+		// 마우스커서 위치 강제 범위지정
+		// 윈도우 커서가 해당 범위를 벗어나면 MAX값으로 이동하도록 설정
+		float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
+		float4 LeftTop = activetargetpos_ - mainrenderer->GetImageSize().halffloat4();
+		float4 RightBot = activetargetpos_ + mainrenderer->GetImageSize().halffloat4();
+
+
+		// GameEngineWindow::GetInst().SetMousePos(LeftTop.ix(), LeftTop.iy());
+		// LeftTop의 x보다 작아질때
+		// LeftTop의 y보다 작아질때
+		// RightBot의 x보다 커질때
+		// RightBot의 y보다 커질때
+
+		//if (MousePos.y <= LeftTop.y)
+		//{
+		//	if (MousePos.x <= LeftTop.x)
+		//	{
+		//		GameEngineWindow::GetInst().SetMousePos(LeftTop.ix(), LeftTop.iy());
+		//	}
+		//	else if (MousePos.x >= RightBot.x)
+		//	{
+		//		GameEngineWindow::GetInst().SetMousePos(RightBot.ix(), RightBot.iy());
+		//	}
+		//	else
+		//	{
+		//		GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), LeftTop.y);
+		//	}
+		//}
+		//else if (MousePos.y >= RightBot.y)
+		//{
+		//	//
+		//	if (MousePos.x <= LeftTop.x)
+		//	{
+
+		//	}
+		//	if (MousePos.x >= RightBot.x)
+		//	{
+
+		//	}
+		//}
+
 	}
 	else // 활성화 -> 비활성화
 	{
@@ -457,5 +499,15 @@ Weapon* WeaponSheet::GetCurWeapon(eItemList _SearchWeapon)
 	}
 
 	return nullptr;
+}
+
+float4 WeaponSheet::GetSheetActivePos()
+{
+	return activetargetpos_;
+}
+
+float4 WeaponSheet::GetSheetDisablePos()
+{
+	return disabletargetpos_;
 }
 

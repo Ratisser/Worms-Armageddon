@@ -142,11 +142,20 @@ void GameController::Update()
 				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
 				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
 
+				// 마우스커서위치 강제셋팅
+				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
+				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
+
+				// 
 				prevwormIndex_ = wormIndex_;
 			}
 			else
 			{
 				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+
+				// 마우스커서위치 강제셋팅
+				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
+				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
 			}
 		}
 	}
