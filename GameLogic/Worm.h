@@ -30,6 +30,10 @@ public:
 	void ChangeState(std::string _stateName);
 	void SetFocus(bool _bFocus);
 
+	void SetCurWeapon(eItemList _WeaponType);
+	void SetUIController(UIController* _uicontroller);
+	UIController* GetCurUIController() const;
+
 private:
 	void initRenderer();
 	void initInput();
@@ -87,6 +91,9 @@ private:
 	GameEngineRenderer* crosshairRender_;
 	GameEngineCollision* bottomCenterCollision_;
 	GameEngineCollision* groundCheckCollision_;
+	GameEngineCollision* leftSideCollision_;
+	GameEngineCollision* rightSideCollision_;
+	GameEngineCollision* headCollision_;
 
 	GameEngineFSM<Worm> state_;
 
@@ -111,10 +118,5 @@ private:
 	std::string nextState_;
 
 	UIController* uicontroller_;
-
-public:
-	void SetCurWeapon(eItemList _WeaponType);
-	void SetUIController(UIController* _uicontroller);
-	UIController* GetCurUIController() const;
 };
 
