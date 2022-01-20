@@ -287,6 +287,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_DYNAMITE:
 		break;
 	case eItemList::WEAPON_MINE:
+		//11
 		break;
 	case eItemList::WEAPON_SHEEP:
 		break;
@@ -1056,7 +1057,11 @@ StateInfo Worm::updateBazookaWait(StateInfo _state)
 
 void Worm::SetCurWeapon(eItemList _WeaponType)
 {
+	// 현재무기를 무기창에서 선택한 무기로 변경하고,
 	currentWeapon_ = _WeaponType;
+
+	// 현재 상태 변경
+	getWeaponAimState();
 }
 
 void Worm::SetUIController(UIController* _uicontroller)

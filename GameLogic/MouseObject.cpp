@@ -98,9 +98,15 @@ void MouseObject::UpdateBefore()
 					Worm* CurPlayer = CollisionWeapon->GetParentSheet()->GetParentController()->GetCurPlayer();
 					if (nullptr != CurPlayer)
 					{
-						CurPlayer->SetCurWeapon(CollisionWeapon->GetWeaponType());
+						// 현재 충돌한 아이콘이 활성화 상태일때만 선택가능
+						if (true == CollisionWeapon->IsMainrendererOn())
+						{
+							// 현재 플레이어 현재무기 변경
+							CurPlayer->SetCurWeapon(CollisionWeapon->GetWeaponType());
 
-						CurPlayer->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+							// 현재 플레이어의 무기창 비활성화
+							CurPlayer->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+						}
 					}
 				}
 			}
