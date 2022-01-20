@@ -1061,7 +1061,9 @@ void Worm::SetCurWeapon(eItemList _WeaponType)
 	currentWeapon_ = _WeaponType;
 
 	// 현재 상태 변경
-	getWeaponAimState();
+	ChangeState("WeaponOn");
+
+	//getWeaponAimState();
 }
 
 void Worm::SetUIController(UIController* _uicontroller)

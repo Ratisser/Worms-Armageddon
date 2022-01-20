@@ -190,7 +190,7 @@ void WeaponSheet::SetMouseObject()
 {
 	// 마우스 저장
 	float4 MouseRange = float4(activetargetpos_.x - (mainrenderer->GetImageSize().x * 0.5f), activetargetpos_.y - (mainrenderer->GetImageSize().y * 0.5f));
-	mouseobject_ = GetLevel()->CreateActor<MouseObject>();
+	mouseobject_ = dynamic_cast<MouseObject*>( GetLevel()->FindActor("PlayLevelMouse"));
 	mouseobject_->SetMoveRange(MouseRange, MouseRange + mainrenderer->GetImageSize());
 	mouseobject_->SetFinalPos(MouseRange); // 초기위치
 	mouseobject_->SetPos(MouseRange);

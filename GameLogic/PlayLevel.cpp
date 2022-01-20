@@ -5,6 +5,7 @@
 #include <GameEngineDebugExtension.h>
 #include <GameEngineTime.h>
 
+#include "MouseObject.h"
 #include "MapTrain.h"
 #include "PlayLevel.h"
 #include "Worm.h"
@@ -167,6 +168,9 @@ void PlayLevel::wormLoading()
 	{
 		Controller_->CreateWorm(minMaxInfo.x, minMaxInfo.y);
 	}
+
+	MouseObject* MainMouse = CreateActor<MouseObject>("PlayLevelMouse");
+	MainMouse->SetGameController(Controller_);
 
 	// 플레이어별 UIController 생성
 	Controller_->CreateWormUI();

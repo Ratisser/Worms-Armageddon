@@ -1,5 +1,6 @@
 #include "MouseObject.h"
 #include "eCollisionGroup.h"
+#include "GameController.h"
 #include "Worm.h"
 #include "UIController.h"
 #include "WeaponSheet.h"
@@ -17,6 +18,8 @@
 MouseObject::MouseObject() :
 	mainrenderer_(nullptr),
 	maincollision_(nullptr),
+	gamecontroller_(nullptr),
+	weaponsheeton_(false),
 	finalpos_(float4::ZERO),
 	startrange_(float4::ZERO),
 	endrange_(float4::ZERO)
@@ -31,6 +34,8 @@ MouseObject::~MouseObject() // default destructer 디폴트 소멸자
 MouseObject::MouseObject(MouseObject&& _other) noexcept :
 	mainrenderer_(_other.mainrenderer_),
 	maincollision_(_other.maincollision_),
+	gamecontroller_(_other.gamecontroller_),
+	weaponsheeton_(_other.weaponsheeton_),
 	finalpos_(_other.finalpos_),
 	startrange_(_other.startrange_),
 	endrange_(_other.endrange_)
@@ -65,17 +70,24 @@ void MouseObject::MoveMousePos(bool _Flag)
 	}
 }
 
+void MouseObject::SetGameController(GameController* _MainController)
+{
+	gamecontroller_ = _MainController;
+}
+
 void MouseObject::Start()
 {
+	// 마우스 커서생성
 	SetRenderOrder(static_cast<int>(RenderOrder::Mouse));
 	mainrenderer_ = CreateRenderer("Cursor");
 	mainrenderer_->SetRenderSize(float4(32.f, 32.f));
 	mainrenderer_->SetCameraEffectOff();
 
+	// 마우스 충돌체 생성
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::MOUSE), CollisionCheckType::POINT);
-
 	rendersize_ = mainrenderer_->GetImageSize();
 
+	// 마우스 커서 off
 	//ShowCursor(false);
 }
 
@@ -119,9 +131,26 @@ void MouseObject::Update()
 	// 위치 갱신(단, 이동범위를 벗어나면 갱신안함)
 	float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
 
-	// 무기창이 활성화되면 지정된범위 밖으로 커서 이동불가
-	// 무기창이 비활성화면 자유롭게 이동
-	if (true == WeaponSheet::isweaponsheet())
+	// 현재 플레이어의 무기창이 활성화 상태라면 지정된범위 밖으로 커서 이동불가
+	// 현재 플레이어의 무기창이 비활성화 상태라면 자유롭게 이동
+	if (nullptr != gamecontroller_)
+	{
+		// 현재 플레이어 Get
+		Worm* CurPlayer = gamecontroller_->GetCurWorm();
+		if (nullptr != CurPlayer)
+		{
+			if (true == CurPlayer->GetCurUIController()->GetCurWeaponSheet()->IsActive())
+			{
+				weaponsheeton_ = true;
+			}
+			else
+			{
+				weaponsheeton_ = false;
+			}
+		}
+	}
+
+	if (true == weaponsheeton_)
 	{
 		// 범위지정이 되있다면
 		if (MousePos.x >= startrange_.x && MousePos.x <= endrange_.x &&

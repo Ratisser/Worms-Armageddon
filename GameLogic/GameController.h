@@ -37,6 +37,16 @@ public:
 		return wormList_;
 	}
 
+	Worm* GetCurWorm() const
+	{
+		if (wormIndex_ == MAX_WORM_COUNT)
+		{
+			return nullptr;
+		}
+
+		return wormList_[wormIndex_];
+	}
+
 private:
 	const int MAX_WORM_COUNT = 8;
 
