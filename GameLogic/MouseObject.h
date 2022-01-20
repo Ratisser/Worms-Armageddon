@@ -6,11 +6,16 @@
 // 설명 : 
 class GameEngineRenderer;
 class GameEngineCollision;
+class GameController;
 class MouseObject : public GameEngineActor
 {
 private:	// member Var
 	GameEngineRenderer* mainrenderer_;
 	GameEngineCollision* maincollision_;
+	GameController* gamecontroller_;
+
+private:
+	bool weaponsheeton_;
 
 private:
 	float4 finalpos_;	// 마우스의 마지막위치
@@ -37,6 +42,9 @@ public:
 	void SetMoveRange(const float4& _Start, const float4& _End);
 	void SetFinalPos(const float4& _FinalPos);
 	void MoveMousePos(bool _Flag = true);
+
+public:
+	void SetGameController(GameController* _MainController);
 
 public:
 	virtual void Start() override;
