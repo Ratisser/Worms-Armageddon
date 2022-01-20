@@ -132,7 +132,7 @@ void MouseObject::UpdateBefore()
 void MouseObject::Update()
 {
 	//// 위치 갱신(단, 이동범위를 벗어나면 갱신안함)
-	//float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
+	float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
 
 	//// 현재 플레이어의 무기창이 활성화 상태라면 지정된범위 밖으로 커서 이동불가
 	//// 현재 플레이어의 무기창이 비활성화 상태라면 자유롭게 이동
