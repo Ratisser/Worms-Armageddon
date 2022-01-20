@@ -10,6 +10,7 @@
 
 MapTrain::MapTrain() // default constructer 디폴트 생성자
 	:firstupdate_(false),
+	gradationSpriteRender_(nullptr),
 	mainSpriteRender_(nullptr),
 	colSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr)
@@ -24,6 +25,7 @@ MapTrain::~MapTrain() // default destructer 디폴트 소멸자
 
 MapTrain::MapTrain(MapTrain&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
 	:firstupdate_(_other.firstupdate_),
+	gradationSpriteRender_(nullptr),
 	mainSpriteRender_(nullptr),
 	colSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr)
@@ -33,6 +35,15 @@ MapTrain::MapTrain(MapTrain&& _other) noexcept  // default RValue Copy construct
 
 void MapTrain::Start()
 {
+	float4 WindowSize = GameEngineWindow::GetInst().GetSize();
+
+	gradationSpriteRender_ = CreateRenderer("Gradient");
+	float4 ImageSize = gradationSpriteRender_->GetImageSize();
+	gradationSpriteRender_->SetPivotPos(ImageSize.halffloat4());
+	gradationSpriteRender_->SetCameraEffectOff();
+
+	gradationSpriteRender_->SetRenderSize(WindowSize);
+
 	boomSpriteRender_ = CreateRenderer("Boom");
 }
 
@@ -71,6 +82,9 @@ void MapTrain::UpdateAfter()
 
 void MapTrain::Render()
 {
+	// 그라데이션 
+	gradationSpriteRender_->Render();
+
 	// 충돌맵
 	colSpriteRender_->Render();
 

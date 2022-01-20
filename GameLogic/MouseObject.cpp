@@ -90,29 +90,24 @@ void MouseObject::UpdateBefore()
 		WeaponIcon* CollisionWeapon = dynamic_cast<WeaponIcon*>(ColUI->GetActor());
 		if (nullptr != CollisionWeapon)
 		{
-			// 해당 아이템이 활성화 상태이고, 남은갯수가 0이 아니면 
-			if (true == CollisionWeapon->IsMainrendererOn() /*&& aaa*/)
+			// 마우스왼쪽버튼클릭이라면
+			if (true == GameEngineInput::GetInst().IsDown("Boom"))
 			{
-				// 마우스왼쪽버튼클릭이라면
-				if (true == GameEngineInput::GetInst().IsDown("Boom"))
+				if (true == CollisionWeapon->GetParentSheet()->IsActive())
 				{
-					// 현재 충돌한 무기아이콘이 어떠한 시트에 속하며, 어떠한 UI 제어기에 속한지 찾아내어
-					// UI Controller를 생성한 플레이어에게 현재 선택된 무기 타입전달
-					eItemList CurWeapon = CollisionWeapon->GetWeaponType();
 					Worm* CurPlayer = CollisionWeapon->GetParentSheet()->GetParentController()->GetCurPlayer();
 					if (nullptr != CurPlayer)
 					{
-						// 현재플레이어가 있다면 해당 타입 전달
-						//CurPlayer
+						// 현재 충돌한 아이콘이 활성화 상태일때만 선택가능
+						if (true == CollisionWeapon->IsMainrendererOn())
+						{
+							// 현재 플레이어 현재무기 변경
+							CurPlayer->SetCurWeapon(CollisionWeapon->GetWeaponType());
 
-
-
-						int a = 0;
+							// 현재 플레이어의 무기창 비활성화
+							CurPlayer->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+						}
 					}
-
-					// 선택완료되었다고 판단하여 무기창을 비활성화한다.
-					// 단, 해당 무기창 비활성화는 무기아이콘이 활성화되어있는 상태일때만 가능
-					CollisionWeapon->GetParentSheet()->WeaponSheetActive();
 				}
 			}
 		}

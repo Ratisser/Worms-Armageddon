@@ -6,6 +6,7 @@
 #include "eItemList.h"
 
 class GameEngineRenderer;
+class UIController;
 class Worm : public GameEngineActor
 {
 public:
@@ -25,6 +26,10 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+public:
+	void ChangeState(std::string _stateName);
+	void SetFocus(bool _bFocus);
+
 private:
 	void initRenderer();
 	void initInput();
@@ -34,7 +39,13 @@ private:
 	void addGravity();
 
 	void normalMove();
+
 	int getAimingFrame();
+	
+	std::string getWeaponAimState();
+	void setAnimationWeaponOn();
+	void setAnimationWeaponOff();
+
 	void setAimingForward();
 
 private:
@@ -50,22 +61,26 @@ private:
 	StateInfo startJump(StateInfo _state);
 	StateInfo updateJump(StateInfo _state);
 
-	StateInfo startWeaponAim(StateInfo _state);
-	StateInfo updateWeaponAim(StateInfo _state);
-
 	StateInfo startWeaponOn(StateInfo _state);
 	StateInfo updateWeaponOn(StateInfo _state);
 	
 	StateInfo startWeaponOff(StateInfo _state);
 	StateInfo updateWeaponOff(StateInfo _state);
 
+	StateInfo startBazookaAim(StateInfo _state);
+	StateInfo updateBazookaAim(StateInfo _state);
+	StateInfo startBazookaFire(StateInfo _state);
+	StateInfo updateBazookaFire(StateInfo _state);
+	StateInfo startBazookaWait(StateInfo _state);
+	StateInfo updateBazookaWait(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
-	const float BOTTOM_PIVOT = 14.f;
+	const float PLAYER_BOTTOM_PIVOT = 14.f;
 	const float JUMP_POWER = 150.f;
 	const float WEAPON_EQUIP_DELAY = 0.5f;
-	const float AIM_STEP_RADIAN = 0.0986111f; // 180 / 32 * RADIAN
+	const float AIM_STEP_RADIAN = 0.0986111f; // 180 / 32 * RADIAN -> 조준 스프라이트가 32단계일 때
 
 private:
 	GameEngineRenderer* mainRender_;
@@ -88,15 +103,18 @@ private:
 	float deltaTime_;
 	float weaponEquipDelay_;
 	float aimRotation_;
+	float currentRotation_;
+	float firePower_;
 
 	eItemList currentWeapon_;
 
 	std::string nextState_;
 
+	UIController* uicontroller_;
+
 public:
-	void SetFocus(bool _bFocus)
-	{
-		bFocus_ = _bFocus;
-	}
+	void SetCurWeapon(eItemList _WeaponType);
+	void SetUIController(UIController* _uicontroller);
+	UIController* GetCurUIController() const;
 };
 

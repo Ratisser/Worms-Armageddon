@@ -12,13 +12,9 @@ class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
 	class MapTrain* Train_;
-	class MapGround* Ground_;
 	class Bazooka* Bazooka_;
-	class Worm* Worm_[8];
-	int FocusWormNumber_;
-	bool IsCameraMove_;
+	class GameController* Controller_;
 	bool isDebugOn_;
-	float4 CameraPos_;
 
 private:
 	GameEngineMath::Random randomGenerator_;
@@ -42,7 +38,6 @@ private:		//delete operator
 public:
 	void Loading() override;
 	void LevelUpdate() override;
-	void LevelUpdateBefore() override;
 
 
 public:
@@ -52,7 +47,7 @@ public:
 public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
-	void AJYGround(float4 _pos);
+	void GroundExplosion(float4 _pos);
 
 	void CreateExplosion100(float4 Pos); //test
 	void CreateExplosion75(float4 Pos); //test
@@ -60,6 +55,7 @@ public:
 	void CreateExplosion25(float4 Pos); //test
 private:
 	void AJYLoading();
+	void wormLoading();
 	void AJYLevelUpdate();
 	void PJWLevelUpdate();
 private:

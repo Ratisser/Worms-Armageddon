@@ -4,7 +4,7 @@ Midground::Midground() // default constructer 디폴트 생성자
 	: mainRender_(nullptr)
 {
 	SetPos({1350, 900 });
-	SetRenderOrder((int)RenderOrder:: Map);
+	SetRenderOrder(3);
 }
 
 Midground::~Midground() // default destructer 디폴트 소멸자

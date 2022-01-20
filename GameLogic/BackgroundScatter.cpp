@@ -5,10 +5,10 @@
 #include <GameEngineMath.h>
 
 BackgroundScatter::BackgroundScatter() // default constructer 디폴트 생성자
-: mainRender_(nullptr), spawnPos_(float4::ZERO)
+: mainRender_(nullptr), spawnPos_({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -1000.0f })
 {
 	SetRenderOrder(11);
-	SetPos({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -1000.0f });
+	SetPos({ randomGenerator_.RandomFloat(600.0f, 3000.0f), -1000.0f });
 }
 
 BackgroundScatter::~BackgroundScatter() // default destructer 디폴트 소멸자
@@ -17,7 +17,7 @@ BackgroundScatter::~BackgroundScatter() // default destructer 디폴트 소멸자
 }
 
 BackgroundScatter::BackgroundScatter(BackgroundScatter&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-	: mainRender_(nullptr), spawnPos_(float4::ZERO)
+	: mainRender_(nullptr), spawnPos_({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -1000.0f })
 {
 
 }
@@ -43,10 +43,27 @@ void BackgroundScatter::Update()
 
 void BackgroundScatter::UpdateAfter()
 {
-	if (this->GetPos().y > 1000.0f) // 수면보다 pos 가 낮아질 경우
+	if (this->GetPos().y > 1000.0f || this->GetPos().x < -1260.0f || this->GetPos().x > 3940.0f) // 수면보다 pos 가 낮아질 경우
 	{
-		SetPos({ randomGenerator_.RandomFloat(0.0f, 3000.0f) , spawnPos_.y}); // 위치리셋
-		fallSpeed_ = randomGenerator_.RandomFloat(100.0f, 400.0f);
+		switch (parent_->windDir_)
+		{
+		case WindDir::TOLEFT:
+			SetPos({ randomGenerator_.RandomFloat(700.0f, 3000.0f) , spawnPos_.y }); // 위치리셋
+			fallSpeed_ = randomGenerator_.RandomFloat(100.0f, 400.0f);
+			break;
+		case WindDir::TORIGHT:
+			SetPos({ randomGenerator_.RandomFloat(-800.0f, 1500.0f) , spawnPos_.y }); // 위치리셋
+			fallSpeed_ = randomGenerator_.RandomFloat(100.0f, 400.0f);
+			break;
+		case WindDir::NONE:
+			SetPos({ randomGenerator_.RandomFloat(600.0f, 3000.0f) , spawnPos_.y }); // 위치리셋
+			fallSpeed_ = randomGenerator_.RandomFloat(100.0f, 400.0f);
+			break;
+		default:
+			break;
+		}
+
+
 	}
 }
 

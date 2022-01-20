@@ -28,9 +28,6 @@
     <Filter Include="Actor\PlayLevel\Background">
       <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\PlayLevel\Weapon">
-      <UniqueIdentifier>{c4c4a74e-3188-4024-a912-183e94d51c21}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\WaterLevel">
       <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
     </Filter>
@@ -79,8 +76,14 @@
     <Filter Include="Level\Global">
       <UniqueIdentifier>{4ed8676a-7913-4c12-8eb3-f56a804afb49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\PlayLevel\UI\Player">
+    <Filter Include="Actor\PlayLevel\Player">
       <UniqueIdentifier>{6121f2d6-25c9-4831-96c5-2d2bf394ff4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\Weapon">
+      <UniqueIdentifier>{c4c4a74e-3188-4024-a912-183e94d51c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\Player\Weapon">
+      <UniqueIdentifier>{47596216-ec55-49cf-b61f-f569b05fa724}</UniqueIdentifier>
     </Filter>
     <Filter Include="Actor\PlayLevel\GimmickObject">
       <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
@@ -130,7 +133,7 @@
       <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Actor\PlayLevel\Weapon</Filter>
+      <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="eItemList.h">
       <Filter>Enum</Filter>
@@ -175,19 +178,16 @@
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
     <ClInclude Include="WeaponIcon.h">
-      <Filter>Actor\PlayLevel\Weapon</Filter>
+      <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="WeaponSheet.h">
-      <Filter>Actor\PlayLevel\Weapon</Filter>
+      <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="MouseObject.h">
       <Filter>Actor\Mouse</Filter>
     </ClInclude>
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
-    </ClInclude>
-    <ClInclude Include="Bazooka.h">
-      <Filter>Actor</Filter>
     </ClInclude>
     <ClInclude Include="WindBarBlank.h">
       <Filter>Actor\PlayLevel\UI</Filter>
@@ -202,7 +202,7 @@
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClInclude>
     <ClInclude Include="Worm.h">
-      <Filter>Actor\PlayLevel\UI\Player</Filter>
+      <Filter>Actor\PlayLevel\Player</Filter>
     </ClInclude>
     <ClInclude Include="TestActor.h">
       <Filter>Actor\_Backup</Filter>
@@ -224,6 +224,15 @@
     </ClInclude>
     <ClInclude Include="Petroleum.h">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="Bazooka.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponBase.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -267,7 +276,7 @@
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Actor\PlayLevel\Weapon</Filter>
+      <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="UnderWater.cpp">
       <Filter>Actor\WaterLevel</Filter>
@@ -306,19 +315,16 @@
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
     <ClCompile Include="WeaponIcon.cpp">
-      <Filter>Actor\PlayLevel\Weapon</Filter>
+      <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="WeaponSheet.cpp">
-      <Filter>Actor\PlayLevel\Weapon</Filter>
+      <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="MouseObject.cpp">
       <Filter>Actor\Mouse</Filter>
     </ClCompile>
     <ClCompile Include="UIController.cpp">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="Bazooka.cpp">
-      <Filter>Actor</Filter>
     </ClCompile>
     <ClCompile Include="WindBarBlank.cpp">
       <Filter>Actor\PlayLevel\UI</Filter>
@@ -333,7 +339,7 @@
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClCompile>
     <ClCompile Include="Worm.cpp">
-      <Filter>Actor\PlayLevel\UI\Player</Filter>
+      <Filter>Actor\PlayLevel\Player</Filter>
     </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <Filter>Actor\_Backup</Filter>
@@ -349,6 +355,15 @@
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>Level\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Actor\PlayLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Bazooka.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponBase.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="DrumActor.cpp">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
