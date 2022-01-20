@@ -61,6 +61,10 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
+
+		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
+		loadingImage->Cut({ 60,60 });
 		
 		ResourceInitPJW();
 		CharactorImageInit();

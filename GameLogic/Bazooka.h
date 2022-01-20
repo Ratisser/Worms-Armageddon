@@ -38,22 +38,20 @@ private:
 	float4 accelation_;
 	float4 direction_;
 	float4 speed_;
+	float4 prevPos_;
 
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
 
+	float degree_;
 	float deltaTime_;
-	float distance_; // 이동 거리 : 0이 되면 바로 폭발
-	float power_; // 앞으로 가하는 힘
 
 public:
-	void SetBazooka(float4 _direction, float4 _speed, float _distance, float _power)
+	void SetBazooka(float4 _direction, float _firePower)
 	{
 		direction_ = _direction;
-		speed_ = _speed;
-		distance_ = _distance;
-		power_ = _power;
+		speed_ = _direction * _firePower;
 	}
 };
 

@@ -53,11 +53,11 @@ public:
 	void CreateExplosion75(float4 Pos); //test
 	void CreateExplosion50(float4 Pos); //test
 	void CreateExplosion25(float4 Pos); //test
+
 private:
-	void AJYLoading();
 	void wormLoading();
-	void AJYLevelUpdate();
 	void PJWLevelUpdate();
+
 private:
 	void RandomWormArrange(float _minX, float _maxX);
 };

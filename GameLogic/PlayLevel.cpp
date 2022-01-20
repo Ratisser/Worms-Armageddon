@@ -75,8 +75,6 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 
 void PlayLevel::Loading()
 {
-	AJYLoading();
-
 	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
 	{
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
@@ -119,9 +117,7 @@ void PlayLevel::Loading()
 
 void PlayLevel::LevelUpdate()
 {
-	AJYLevelUpdate();
 	PJWLevelUpdate();
-
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
@@ -148,14 +144,6 @@ void PlayLevel::LevelUpdate()
 	}
 }
 
-void PlayLevel::AJYLoading()
-{
-	if (false == GameEngineInput::GetInst().IsKey("Boom"))
-	{
-		GameEngineInput::GetInst().CreateKey("Boom", VK_LBUTTON);
-	}
-}
-
 void PlayLevel::wormLoading()
 {
 	Controller_ = CreateActor<GameController>("GameController");
@@ -174,20 +162,6 @@ void PlayLevel::wormLoading()
 
 	// 플레이어별 UIController 생성
 	Controller_->CreateWormUI();
-}
-
-void PlayLevel::AJYLevelUpdate()
-{
-	if (true == GameEngineInput::GetInst().IsDown("Boom"))
-	{
-		Bazooka_ = CreateActor<Bazooka>();
-		float4 mousepos = GameEngineWindow::GetInst().GetMousePos();
-		Bazooka_->SetPos(mousepos);
-
-		//Train_->GroundUpdate();
-		//테스트 삽입 이현
-		//CreateExplosion();
-	}
 }
 
 void PlayLevel::GroundExplosion(float4 _pos)

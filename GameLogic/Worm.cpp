@@ -1022,7 +1022,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 	{
 		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
 		newBaz->SetPos(pos_ + float4(forward_ * 20.f));
-		newBaz->SetBazooka(forward_, forward_ * firePower_, 500.f, firePower_);
+		newBaz->SetBazooka(forward_, firePower_);
 		//bFocus_ = false;
 		return "BazookaWait";
 	}
@@ -1035,7 +1035,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		{
 			Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
-			newBaz->SetBazooka(forward_, forward_ * firePower_, 1000.f, firePower_);
+			newBaz->SetBazooka(forward_, firePower_);
 			//bFocus_ = false;
 			return "BazookaWait";
 		}
