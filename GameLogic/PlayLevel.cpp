@@ -162,6 +162,7 @@ void PlayLevel::wormLoading()
 
 	// 플레이어별 UIController 생성
 	Controller_->CreateWormUI();
+	GameEngineTime::GetInst().TimeCheck();
 }
 
 void PlayLevel::GroundExplosion(float4 _pos)
