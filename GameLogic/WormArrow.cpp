@@ -44,7 +44,7 @@ void WormArrow::Update()
 
 void WormArrow::UpdateAfter()
 {
-	if (-1000.0f >= GetPos().y)
+	if (-500.0f >= GetPos().y)
 	{
 		SetRenderOrder(0);
 		Death();
@@ -54,9 +54,4 @@ void WormArrow::UpdateAfter()
 void WormArrow::Render()
 {
 	mainRender_->AnimationUpdate();
-}
-
-void WormArrow::SetArrow()
-{
-	//SetPos({ parent_->GetPos().x, (parent_->GetPos().y - 50.0f) });
 }

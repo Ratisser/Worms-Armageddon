@@ -33,14 +33,6 @@ public:
 	}
 
 public:
-	void SetGoingUp()
-	{
-		isGoingUp_ = true;
-	}
-
-	void SetArrow();
-
-public:
 	virtual void Start() override;
 	virtual void UpdateBefore() override;
 	virtual void Update() override;

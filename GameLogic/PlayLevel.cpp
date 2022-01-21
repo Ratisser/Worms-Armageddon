@@ -101,7 +101,7 @@ void PlayLevel::Loading()
 		newScatter->SetParent(windController_);
 	}
 
-	for (int i = 0; i < 0; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		Cloud* newCloud = CreateActor<Cloud>();
 		newCloud->SetParent(windController_);
@@ -135,7 +135,6 @@ void PlayLevel::LevelUpdate()
 	{
 		// 디버깅 출력 내용입니다.
 		GameEngineDebugExtension::PrintDebugWindowText("Resolution : ", GameEngineWindow::GetInst().GetSize().x, " X ", GameEngineWindow::GetInst().GetSize().y);
-
 		GameEngineDebugExtension::PrintDebugWindowText("FPS : ", GameEngineTime::GetInst().GetFPS());
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
