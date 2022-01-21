@@ -14,9 +14,10 @@ GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
 	, cameraMoveSpeed_(10.f)
-	, wormIndex_(MAX_WORM_COUNT)
+	, wormIndex_(0)
 	, prevwormIndex_(MAX_WORM_COUNT)
-	, IsCameraMove_(true)
+	, IsCameraMove_(false)
+	, cameraPos_(0.f, 0.f)
 {
 
 }
@@ -125,7 +126,12 @@ void GameController::Update()
 	}
 	else
 	{
-		GetLevel()->SetCamPos(wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+		cameraPos_ = GetLevel()->GetCamPos();
+
+		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
+		float4 MoveVector = cameraMovePos - cameraPos_;
+
+		GetLevel()->SetCamMove(MoveVector * 0.1f);
 	}
 
 	// UI
@@ -197,6 +203,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	newWorm->SetFocus(false);
 	wormList_.push_back(newWorm);
 	xPosList_.push_back(randomFloatContainer_);
+	wormList_[0]->SetFocus(true);
 }
 
 void GameController::CreateWormUI()

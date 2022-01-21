@@ -59,5 +59,6 @@ private:
 	int wormIndex_;
 	int prevwormIndex_;
 	bool IsCameraMove_;
+	float4 cameraPos_;
 };
 

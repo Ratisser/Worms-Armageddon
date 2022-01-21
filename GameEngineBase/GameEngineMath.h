@@ -233,7 +233,7 @@ public:
 	}
 
 	// 대입연산자
-	float4& operator=(const float4& _other) 
+	float4& operator=(const float4& _other)
 	{
 		x = _other.x;
 		y = _other.y;
@@ -241,6 +241,11 @@ public:
 		w = _other.w;
 
 		return *this;
+	}
+
+	bool operator!=(const float4& _other) const
+	{
+		return x != _other.x || y != _other.y || z != _other.z || w != _other.w;
 	}
 
 public:
