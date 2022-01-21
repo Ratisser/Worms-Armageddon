@@ -107,8 +107,7 @@ void GameController::Update()
 				if (i == wormIndex_)
 				{
 					wormList_[wormIndex_]->SetFocus(true);
-					WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
-					newArrow->SetParent(wormList_[wormIndex_]);
+
 				}
 				else
 				{
@@ -204,6 +203,9 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 			randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
 		}
 	}
+
+	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
+	newArrow->SetParent(newWorm);
 	
 	newWorm->SetPos({ randomFloatContainer_ , -500.0f });
 	newWorm->SetFocus(false);

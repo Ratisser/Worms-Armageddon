@@ -47,7 +47,6 @@ void WormArrow::UpdateAfter()
 	if (-500.0f >= GetPos().y)
 	{
 		SetRenderOrder(0);
-		Death();
 	}
 }
 
