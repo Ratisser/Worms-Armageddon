@@ -32,6 +32,7 @@
 #include "Midground.h"
 #include "WindController.h"
 #include "FadeObject.h"
+#include "Cloud.h"
 
 #include "GlobalValue.h"
 
@@ -94,10 +95,16 @@ void PlayLevel::Loading()
 		windController_ = CreateActor<WindController>();
 	}
 
-	for (int i = 0; i < 69; i++)
+	for (int i = 0; i < 70; i++)
 	{
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
 		newScatter->SetParent(windController_);
+	}
+
+	for (int i = 0; i < 60; i++)
+	{
+		Cloud* newCloud = CreateActor<Cloud>();
+		newCloud->SetParent(windController_);
 	}
 
 	// µÞ¹è°æ »ý¼º

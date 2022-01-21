@@ -126,6 +126,13 @@ void ResourceInitPJW()
 		return;
 	}
 
+	GameEngineImageFile* cloudL = GameEngineImage::GetInst().LoadGameImage("cloudl", Dir.PathToPlusFileName("cloudl.bmp"));
+	cloudL->Cut({160,160});
+	GameEngineImageFile* cloudM = GameEngineImage::GetInst().LoadGameImage("cloudm", Dir.PathToPlusFileName("cloudm.bmp"));
+	cloudM->Cut({ 128,128 });
+	GameEngineImageFile* cloudS = GameEngineImage::GetInst().LoadGameImage("clouds", Dir.PathToPlusFileName("clouds.bmp"));
+	cloudS->Cut({ 60,60 });
+
 	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("ScatterSnow", Dir.PathToPlusFileName("ScatterSnow.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("windGauge", Dir.PathToPlusFileName("windGauge.bmp"));

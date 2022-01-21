@@ -234,6 +234,9 @@
     <ClInclude Include="FirePunch.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Cloud.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -370,6 +373,9 @@
     </ClCompile>
     <ClCompile Include="FirePunch.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Cloud.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
