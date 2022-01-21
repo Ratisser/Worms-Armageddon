@@ -13,6 +13,7 @@ private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
 	GameEngineRenderer* colSpriteRender_;
 	GameEngineRenderer* boomSpriteRender_;
+	GameEngineRenderer* boomEdgeSpriteRender_;
 	GameEngineCollision* bodyCollision_;
 
 public:
