@@ -67,6 +67,7 @@ void AppResourcesInit()
 			LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
 		loadingImage->Cut({ 60,60 });
 		
+		TitleLevelInit();
 		ResourceInitPJW();
 		CharactorImageInit();
 		UIImageInit();
@@ -658,4 +659,20 @@ void LoadSoundInit()
 		//	return;
 		//}
 	}
+}
+
+void TitleLevelInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Fade_Image", Dir.PathToPlusFileName("Fade_Image.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Introl_Logo", Dir.PathToPlusFileName("Introl_Logo.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Title_Logo", Dir.PathToPlusFileName("Title_Logo.bmp"));
 }

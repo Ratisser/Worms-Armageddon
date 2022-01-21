@@ -28,3 +28,4 @@ void GimmickObjectImageInit();
 void EffectImageInit();
 
 void LoadSoundInit();
+void TitleLevelInit();

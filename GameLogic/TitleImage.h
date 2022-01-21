@@ -5,7 +5,16 @@
 // Ό³Έν : 
 class TitleImage : public GameEngineActor
 {
+private:
+	bool fadeStart_;
+	bool fadeEnd_;
+	bool introEnd_;
+	int introCnt_;
+
 private:	// member Var
+	GameEngineRenderer* fadeInOutSpriteRender_;
+	GameEngineRenderer* intrologoSpriteRender_;
+	GameEngineRenderer* titlelogoSpriteRender_;
 	GameEngineRenderer* mainSpriteRender_;
 
 public:

@@ -19,20 +19,15 @@ TitleLevel::TitleLevel(TitleLevel&& _other) noexcept  // default RValue Copy con
 
 void TitleLevel::Loading()
 {
-	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
-	{
-		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
-		GameEngineInput::GetInst().CreateKey("Debug_Toggle", VK_TAB);
-	}
-
+	// 타이틀씬 액터 생성
 	CreateActor<TitleImage>();
 
+	if (false == GameEngineInput::GetInst().IsKey("Debug_Toggle"))
+	{
+		GameEngineInput::GetInst().CreateKey("Debug_Toggle", VK_TAB);
+	}
 }
 
 void TitleLevel::LevelUpdate()
 {
-	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
-	{
-		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
-	}
 }
