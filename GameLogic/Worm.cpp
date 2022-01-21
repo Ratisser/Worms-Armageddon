@@ -465,11 +465,11 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_FIREPUNCH:
 		if (bLeft_)
 		{
-			mainRender_->ChangeAnimation("FirepunchStartLeft", std::string("firePunchStartLeft.bmp"));
+			mainRender_->ChangeAnimation("FirepunchReadyLeft", std::string("firePunchReadyLeft.bmp"));
 		}
 		else
 		{
-			mainRender_->ChangeAnimation("FirepunchStartRight", std::string("firePunchStartRight.bmp"));
+			mainRender_->ChangeAnimation("FirepunchReadyRight", std::string("firePunchReadyRight.bmp"));
 		}
 		break;
 	case eItemList::WEAPON_DRAGONBALL:
