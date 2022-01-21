@@ -121,7 +121,8 @@ void PlayLevel::LevelUpdate()
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
-		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
+
+		//GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
 	}
 
 	{

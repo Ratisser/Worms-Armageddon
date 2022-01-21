@@ -231,6 +231,9 @@
     <ClInclude Include="WeaponBase.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="FirePunch.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -364,6 +367,9 @@
     </ClCompile>
     <ClCompile Include="Petroleum.cpp">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClCompile>
+    <ClCompile Include="FirePunch.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

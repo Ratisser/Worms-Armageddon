@@ -16,6 +16,7 @@
 #include "eCollisionCheckColor.h"
 
 #include "Bazooka.h"
+#include "FirePunch.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -104,6 +105,19 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("GrnOffLeft", "grnOffLeft.bmp", 0, 9, false, 0.033f);
 	mainRender_->CreateAnimation("GrnOffRight", "grnOffRight.bmp", 0, 9, false, 0.033f);
 
+	mainRender_->CreateAnimation("FirepunchReadyLeft", "firePunchReadyLeft.bmp", 0, 25, false, 0.033f); // 승룡권 애니메이션입니다.
+	mainRender_->CreateAnimation("FirepunchReadyRight", "firePunchReadyRight.bmp", 0, 25, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchStartLeft", "firePunchStartLeft.bmp", 0, 8, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchStartRight", "firePunchStartRight.bmp", 0, 8, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchFlyLeft", "firePunchFlyLeft.bmp", 0, 2, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchFlyRight", "firePunchFlyRight.bmp", 0, 2, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchEndLeft", "firePunchEndLeft.bmp", 0, 12, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchEndRight", "firePunchEndRight.bmp", 0, 12, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchLandLeft", "firePunchLandLeft.bmp", 0, 7, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchLandRight", "firePunchLandRight.bmp", 0, 7, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchOffLeft", "firePunchOffLeft.bmp", 0, 25, false, 0.033f);
+	mainRender_->CreateAnimation("FirepunchOffRight", "firePunchOffRight.bmp", 0, 25, false, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -176,6 +190,12 @@ void Worm::initState()
 	state_.CreateState("BazookaFire", &Worm::startBazookaFire, &Worm::updateBazookaFire);
 	state_.CreateState("BazookaWait", &Worm::startBazookaWait, &Worm::updateBazookaWait);
 
+	state_.CreateState("FirepunchReady", &Worm::startFirepunchReady, &Worm::updateFirepunchReady);
+	state_.CreateState("FirepunchStart", &Worm::startFirepunchStart, &Worm::updateFirepunchStart);
+	state_.CreateState("FirepunchFly", &Worm::startFirepunchFly, &Worm::updateFirepunchFly);
+	state_.CreateState("FirepunchEnd", &Worm::startFirepunchEnd, &Worm::updateFirepunchEnd);
+	state_.CreateState("FirepunchLand", &Worm::startFirepunchLand, &Worm::updateFirepunchLand);
+	state_.CreateState("FirepunchOff", &Worm::startFirepunchOff, &Worm::updateFirepunchOff);
 	state_.ChangeState("Idle");
 }
 
@@ -290,6 +310,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_LONGBOW:
 		break;
 	case eItemList::WEAPON_FIREPUNCH:
+		return "FirepunchReady";
 		break;
 	case eItemList::WEAPON_DRAGONBALL:
 		break;
@@ -442,6 +463,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_LONGBOW:
 		break;
 	case eItemList::WEAPON_FIREPUNCH:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FirepunchStartLeft", std::string("firePunchStartLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FirepunchStartRight", std::string("firePunchStartRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_DRAGONBALL:
 		break;
@@ -591,6 +620,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_LONGBOW:
 		break;
 	case eItemList::WEAPON_FIREPUNCH:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FirepunchOffLeft", std::string("firePunchOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FirepunchOffRight", std::string("firePunchOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_DRAGONBALL:
 		break;
@@ -1103,6 +1140,211 @@ StateInfo Worm::updateBazookaWait(StateInfo _state)
 	nextState_ = "Idle";
 	return "WeaponOff";
 }
+
+
+StateInfo Worm::startFirepunchReady(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("FirepunchReadyLeft", std::string("firePunchReadyLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("FirepunchReadyRight", std::string("firePunchReadyRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateFirepunchReady(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Fire"))
+	{
+		return "FirepunchStart";
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startFirepunchStart(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("FirepunchStartLeft", std::string("firePunchStartLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("FirepunchStartRight", std::string("firePunchStartRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateFirepunchStart(StateInfo _state)
+{
+	// 점프 하는거부터...
+	if (bLeft_)
+	{
+		//FirePunch* firePunch = parentLevel_->CreateActor<FirePunch>();
+		//firePunch->SetPos(GetPos());
+		if (true == mainRender_->IsCurAnimationEnd())
+		{
+			mainRender_->ChangeAnimation("FirepunchFlyLeft", std::string("firePunchFlyLeft.bmp"));
+			return "FirepunchFly";
+		}
+
+	}
+	else
+	{
+	//	FirePunch* firePunch = parentLevel_->CreateActor<FirePunch>();
+	//	firePunch->SetPos(GetPos());
+		if (true == mainRender_->IsCurAnimationEnd())
+		{
+			mainRender_->ChangeAnimation("FirepunchFlyRight", std::string("firePunchFlyRight.bmp"));
+			return "FirepunchFly";
+		}
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::startFirepunchFly(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		speed_.x = -JUMP_POWER/2;
+		speed_.y = -JUMP_POWER*2.0f;
+		SetMove({ 0.0f, -6.f });
+	}
+	else
+	{
+		speed_.x = JUMP_POWER/2;
+		speed_.y = -JUMP_POWER*2.0f;
+		SetMove({ 0.0f, -6.f });
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateFirepunchFly(StateInfo _state)
+{
+	addGravity();
+
+	if (speed_.y > 0.0f)
+	{
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FirepunchEndLeft", std::string("firePunchEndLeft.bmp"));
+			return "FirepunchEnd";
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FirepunchEndRight", std::string("firePunchEndRight.bmp"));
+			return "FirepunchEnd";
+		}
+	}
+
+
+
+	//SetMove(speed_ * deltaTime_);
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startFirepunchEnd(StateInfo _state)
+{
+	addGravity();
+	return StateInfo();
+}
+
+StateInfo Worm::updateFirepunchEnd(StateInfo _state)
+{
+	addGravity();
+	// 떨어지는 중
+	if (nullptr != groundCheckCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		speed_.x = 0.0f;
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("FirepunchLandLeft", std::string("firePunchLandLeft.bmp"));
+			return "FirepunchLand";
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("FirepunchLandRight", std::string("firePunchLandRight.bmp"));
+			return "FirepunchLand";
+		}
+	}
+	else
+	{
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startFirepunchLand(StateInfo _state)
+{
+	return StateInfo();
+}
+StateInfo Worm::updateFirepunchLand(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("FirepunchOffLeft", std::string("firePunchOffLeft.bmp"));
+		return "FirepunchOff";
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("FirepunchOffRight", std::string("firePunchOffRight.bmp"));
+		return "FirepunchOff";
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::startFirepunchOff(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateFirepunchOff(StateInfo _state)
+{
+	if (mainRender_->IsCurAnimationEnd() == true)
+	{
+		nextState_ = "Idle";
+		return "WeaponOff";
+	}
+
+	return StateInfo();
+}
+
 
 void Worm::SetCurWeapon(eItemList _WeaponType)
 {

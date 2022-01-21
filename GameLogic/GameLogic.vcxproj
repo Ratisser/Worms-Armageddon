@@ -28,6 +28,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="FirePunch.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameController.h">
       <SubType>
       </SubType>
@@ -185,6 +189,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="FirePunch.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameController.cpp">
       <SubType>
       </SubType>

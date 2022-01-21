@@ -331,7 +331,19 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "grnOnRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "grnOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "grnOffRight.bmp", cutSize);
-
+	// ½Â·æ±Ç ¾Ö´Ï¸ÞÀÌ¼Ç
+	RS::LoadImageFromFileAndCut(dir / "firePunchOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchEndLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchEndRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchFlyLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchFlyRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchLandLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchLandRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchReadyLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchReadyRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchStartLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "firePunchStartRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

@@ -78,6 +78,20 @@ private:
 	StateInfo startBazookaWait(StateInfo _state);
 	StateInfo updateBazookaWait(StateInfo _state);
 
+	StateInfo startFirepunchReady(StateInfo _state);
+	StateInfo updateFirepunchReady(StateInfo _state);
+	StateInfo startFirepunchStart(StateInfo _state);
+	StateInfo updateFirepunchStart(StateInfo _state);
+	StateInfo startFirepunchFly(StateInfo _state);
+	StateInfo updateFirepunchFly(StateInfo _state);
+	StateInfo startFirepunchEnd(StateInfo _state);
+	StateInfo updateFirepunchEnd(StateInfo _state);
+	StateInfo startFirepunchLand(StateInfo _state);
+	StateInfo updateFirepunchLand(StateInfo _state);
+	StateInfo startFirepunchOff(StateInfo _state);
+	StateInfo updateFirepunchOff(StateInfo _state);
+
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
