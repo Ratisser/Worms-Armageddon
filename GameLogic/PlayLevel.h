@@ -44,6 +44,12 @@ public:
 	WindController* windController_;
 
 public:
+	WindController* GetWindController()
+	{
+		return windController_;
+	}
+
+public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
 	void GroundExplosion(float4 _pos);
