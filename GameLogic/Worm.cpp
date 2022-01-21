@@ -54,7 +54,6 @@ Worm::~Worm() // default destructer 디폴트 소멸자
 
 void Worm::Start()
 {
-	SetPos({ 1625.f, -235.f });
 	SetRenderOrder(static_cast<int>(RenderOrder::Worm));
 	initRenderer();
 	initCollision();
@@ -1441,3 +1440,7 @@ void Worm::ChangeState(std::string _stateName)
 	state_.ChangeState(_stateName);
 }
 
+bool Worm::isFocused()
+{
+	return bFocus_;
+}

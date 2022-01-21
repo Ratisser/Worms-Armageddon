@@ -190,6 +190,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="eCollisionCheckColor.h" />
+    <ClInclude Include="WormArrow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bazooka.cpp" />
@@ -346,6 +350,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Worm.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WormArrow.cpp">
       <SubType>
       </SubType>
     </ClCompile>

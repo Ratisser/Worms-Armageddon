@@ -88,6 +88,9 @@
     <Filter Include="Actor\PlayLevel\GimmickObject">
       <UniqueIdentifier>{8903fba7-76ed-4e64-b496-0bebbdadcf07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\UI\HUD">
+      <UniqueIdentifier>{26491221-002c-470a-912c-c80424b3404d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -122,15 +125,6 @@
     </ClInclude>
     <ClInclude Include="BackgroundScatter.h">
       <Filter>Actor\PlayLevel\Background</Filter>
-    </ClInclude>
-    <ClInclude Include="BottomHealthBar.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="BottomFlag.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="BottomNameTag.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Actor\PlayLevel\UI\Weapon</Filter>
@@ -189,12 +183,6 @@
     <ClInclude Include="UIController.h">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="WindBarBlank.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="WindBar.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClInclude>
     <ClInclude Include="MapTrain.h">
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClInclude>
@@ -206,9 +194,6 @@
     </ClInclude>
     <ClInclude Include="FadeObject.h">
       <Filter>Actor\_Backup</Filter>
-    </ClInclude>
-    <ClInclude Include="WindBarHider.h">
-      <Filter>Actor\PlayLevel\UI</Filter>
     </ClInclude>
     <ClInclude Include="LobbySelectMapImage.h">
       <Filter>Actor\LobbyLevel</Filter>
@@ -236,6 +221,27 @@
     </ClInclude>
     <ClInclude Include="Cloud.h">
       <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBarHider.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomFlag.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomHealthBar.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomNameTag.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBar.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBarBlank.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="WormArrow.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -265,15 +271,6 @@
     </ClCompile>
     <ClCompile Include="BackgroundScatter.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
-    </ClCompile>
-    <ClCompile Include="BottomHealthBar.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="BottomFlag.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="BottomNameTag.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
     <ClCompile Include="WindController.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -329,12 +326,6 @@
     <ClCompile Include="UIController.cpp">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="WindBarBlank.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="WindBar.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
-    </ClCompile>
     <ClCompile Include="MapTrain.cpp">
       <Filter>Actor\PlayLevel\Map</Filter>
     </ClCompile>
@@ -346,9 +337,6 @@
     </ClCompile>
     <ClCompile Include="TestActor.cpp">
       <Filter>Actor\_Backup</Filter>
-    </ClCompile>
-    <ClCompile Include="WindBarHider.cpp">
-      <Filter>Actor\PlayLevel\UI</Filter>
     </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp">
       <Filter>Actor\LobbyLevel</Filter>
@@ -376,6 +364,27 @@
     </ClCompile>
     <ClCompile Include="Cloud.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomFlag.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomHealthBar.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomNameTag.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBar.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarBlank.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarHider.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="WormArrow.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

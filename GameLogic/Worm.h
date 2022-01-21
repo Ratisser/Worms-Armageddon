@@ -29,7 +29,7 @@ public:
 public:
 	void ChangeState(std::string _stateName);
 	void SetFocus(bool _bFocus);
-
+	bool isFocused();
 	void SetCurWeapon(eItemList _WeaponType);
 	void SetUIController(UIController* _uicontroller);
 	UIController* GetCurUIController() const;

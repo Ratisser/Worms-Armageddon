@@ -141,6 +141,25 @@ void ResourceInitPJW()
 	windBarSprites->Cut({87,13});
 	GameEngineImageFile* leafSprites = GameEngineImage::GetInst().LoadGameImage("ScatterLeaf", Dir.PathToPlusFileName("ScatterLeaf.bmp"));
 	leafSprites->Cut({32,32});
+
+	if (false == Dir.MoveChild("\\Player_arrow\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+	GameEngineImageFile* arrowdnb = GameEngineImage::GetInst().LoadGameImage("arrowdnb", Dir.PathToPlusFileName("arrowdnb.bmp"));
+	arrowdnb->Cut({ 60,60 });
+	GameEngineImageFile* arrowdnc = GameEngineImage::GetInst().LoadGameImage("arrowdnc", Dir.PathToPlusFileName("arrowdnc.bmp"));
+	arrowdnc->Cut({ 60,60 });
+	GameEngineImageFile* arrowdng = GameEngineImage::GetInst().LoadGameImage("arrowdng", Dir.PathToPlusFileName("arrowdng.bmp"));
+	arrowdng->Cut({ 60,60 });
+	GameEngineImageFile* arrowdnp = GameEngineImage::GetInst().LoadGameImage("arrowdnp", Dir.PathToPlusFileName("arrowdnp.bmp"));
+	arrowdnp->Cut({ 60,60 });
+	GameEngineImageFile* arrowdnr = GameEngineImage::GetInst().LoadGameImage("arrowdnr", Dir.PathToPlusFileName("arrowdnr.bmp"));
+	arrowdnr->Cut({ 60,60 });
+	GameEngineImageFile* arrowdny = GameEngineImage::GetInst().LoadGameImage("arrowdny", Dir.PathToPlusFileName("arrowdny.bmp"));
+	arrowdny->Cut({ 60,60 });
+
 	Dir.MoveParent("Image");
 
 	if (false == Dir.MoveChild("\\UI\\HPbar\\"))

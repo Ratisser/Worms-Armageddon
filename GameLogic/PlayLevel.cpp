@@ -101,7 +101,7 @@ void PlayLevel::Loading()
 		newScatter->SetParent(windController_);
 	}
 
-	for (int i = 0; i < 60; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		Cloud* newCloud = CreateActor<Cloud>();
 		newCloud->SetParent(windController_);

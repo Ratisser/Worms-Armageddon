@@ -9,6 +9,7 @@
 #include "WeaponSheet.h"
 #include "WeaponIcon.h"
 #include "Weapon.h"
+#include "WormArrow.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -106,6 +107,8 @@ void GameController::Update()
 				if (i == wormIndex_)
 				{
 					wormList_[wormIndex_]->SetFocus(true);
+					WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
+					newArrow->SetParent(wormList_[wormIndex_]);
 				}
 				else
 				{
@@ -113,6 +116,9 @@ void GameController::Update()
 				}
 			}
 		}
+
+
+
 	}
 
 	if (wormIndex_ == MAX_WORM_COUNT)
