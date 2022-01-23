@@ -445,7 +445,7 @@ void TitleImage::LevelChange()
 		fadeBlackSpriteRender_->Off();
 
 		// 레벨 전환
-		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel", true);
+		GameEngineLevelManager::GetInst().ChangeLevel("MenuSelectLevel", true);
 	}
 	else
 	{

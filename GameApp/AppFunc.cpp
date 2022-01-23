@@ -67,6 +67,7 @@ void AppResourcesInit()
 		loadingImage->Cut({ 60,60 });
 		
 		TitleLevelInit();
+		MenuSelectInit();
 		ResourceInitPJW();
 		CharactorImageInit();
 		UIImageInit();
@@ -702,4 +703,26 @@ void TitleLevelInit()
 
 	// Title BackDrop
 	GameEngineImage::GetInst().LoadGameImage("Title_Backdrop", Dir.PathToPlusFileName("Title_Backdrop.bmp"));
+}
+
+void MenuSelectInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	// MenuSelect Level Backdrop
+	GameEngineImage::GetInst().LoadGameImage("MenuSel_BackDrop", Dir.PathToPlusFileName("Lobby_Backdrop.bmp"));
+
+	// MenuSelect Level Title
+	GameEngineImage::GetInst().LoadGameImage("MenuSel_Title", Dir.PathToPlusFileName("MenuSel_Title.bmp"));
+
+	// MenuSelect Image(Lobby 진입 메뉴)
+	GameEngineImage::GetInst().LoadGameImage("MenuSelect_Image", Dir.PathToPlusFileName("MenuSelect_Image.bmp"));
+
 }

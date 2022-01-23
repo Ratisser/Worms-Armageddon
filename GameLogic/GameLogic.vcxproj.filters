@@ -91,6 +91,9 @@
     <Filter Include="Actor\PlayLevel\UI\HUD">
       <UniqueIdentifier>{26491221-002c-470a-912c-c80424b3404d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\MenuSelectLevel">
+      <UniqueIdentifier>{77bda3dc-c455-47a2-9fec-66a1ce7021a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -243,6 +246,15 @@
     <ClInclude Include="WormArrow.h">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="MenuSelectLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelBackDrop.h">
+      <Filter>Actor\MenuSelectLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelImage.h">
+      <Filter>Actor\MenuSelectLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -385,6 +397,15 @@
     </ClCompile>
     <ClCompile Include="WormArrow.cpp">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelectLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelBackDrop.cpp">
+      <Filter>Actor\MenuSelectLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelImage.cpp">
+      <Filter>Actor\MenuSelectLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

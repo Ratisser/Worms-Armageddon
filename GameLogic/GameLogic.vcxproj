@@ -45,6 +45,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="LobbySelectMapImage.h" />
+    <ClInclude Include="MenuSelBackDrop.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MenuSelectLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MenuSelImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Midground.h">
       <SubType>
       </SubType>
@@ -214,6 +226,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp" />
+    <ClCompile Include="MenuSelBackDrop.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuSelectLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuSelImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Midground.cpp">
       <SubType>
       </SubType>
