@@ -39,7 +39,6 @@ void AppResourcesInit()
 		}
 
 		// 절대 경로
-		GameEngineImage::GetInst().LoadGameImage("TitleImage", Dir.PathToPlusFileName("TitleImage.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("LobbyImage", Dir.PathToPlusFileName("LobbyImage.bmp"));
 
 		// 맵 종류
@@ -672,7 +671,35 @@ void TitleLevelInit()
 		return;
 	}
 
-	GameEngineImage::GetInst().LoadGameImage("Fade_Image", Dir.PathToPlusFileName("Fade_Image.bmp"));
-	GameEngineImage::GetInst().LoadGameImage("Introl_Logo", Dir.PathToPlusFileName("Introl_Logo.bmp"));
+	// Fade In/Out Image Load
+	GameEngineImage::GetInst().LoadGameImage("Fade_Black", Dir.PathToPlusFileName("Fade_Black.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Fade_White", Dir.PathToPlusFileName("Fade_White.bmp"));
+
+	// Intro Logo1
+	GameEngineImage::GetInst().LoadGameImage("Intro_Logo1", Dir.PathToPlusFileName("Intro_Logo1.bmp"));
+
+	// Intro Logo2
+	GameEngineImage::GetInst().LoadGameImage("Intro_Logo2", Dir.PathToPlusFileName("Intro_Logo2.bmp"));
+
+	// Title Logo
 	GameEngineImage::GetInst().LoadGameImage("Title_Logo", Dir.PathToPlusFileName("Title_Logo.bmp"));
+
+	// Title Logo Animation
+	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("TitleLogo_Actor", Dir.PathToPlusFileName("TitleLogo_Actor.bmp"));
+	loadingImage->Cut({ 140, 140 });
+
+	// Title Logo Armageddon Text
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_1", Dir.PathToPlusFileName("Armageddon_1.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_2", Dir.PathToPlusFileName("Armageddon_2.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_3", Dir.PathToPlusFileName("Armageddon_3.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_4", Dir.PathToPlusFileName("Armageddon_4.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_5", Dir.PathToPlusFileName("Armageddon_5.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_6", Dir.PathToPlusFileName("Armageddon_6.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_7", Dir.PathToPlusFileName("Armageddon_7.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_8", Dir.PathToPlusFileName("Armageddon_8.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_9", Dir.PathToPlusFileName("Armageddon_9.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Armageddon_10", Dir.PathToPlusFileName("Armageddon_10.bmp"));
+
+	// Title BackDrop
+	GameEngineImage::GetInst().LoadGameImage("Title_Backdrop", Dir.PathToPlusFileName("Title_Backdrop.bmp"));
 }

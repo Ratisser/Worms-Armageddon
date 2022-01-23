@@ -284,5 +284,9 @@ public:
 	bool IsCurAnimationEnd();
 
 	int GetCurAnimationFrame();
+
+public:
+	void CurAnimationLoopEnd();
+	void CurAnimationReset();
 };
 
