@@ -149,10 +149,21 @@ void TitleImage::Start()
 	{
 		GameEngineInput::GetInst().CreateKey("Title_Skip", VK_SPACE);
 	}
+
+	if (false == GameEngineInput::GetInst().IsKey("All_Skip"))
+	{
+		GameEngineInput::GetInst().CreateKey("All_Skip", 's');
+	}
 }
 
 void TitleImage::Update()
 {
+	// 올스킵 후 플레이씬으로 바로이동
+	if (true == GameEngineInput::GetInst().IsDown("All_Skip"))
+	{
+		GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel", true);
+	}
+
 	// 타임이벤터 업데이트 호출
 	introTimer_.Update();
 
