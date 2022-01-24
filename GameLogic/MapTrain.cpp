@@ -14,7 +14,18 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	mainSpriteRender_(nullptr),
 	colSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr),
-	boomEdgeSpriteRender_(nullptr)
+	boomEdgeSpriteRender_(nullptr),
+	boomSpriteRender25_(nullptr),
+	boomSpriteRender50_(nullptr),
+	boomSpriteRender75_(nullptr),
+	boomSpriteRender100_(nullptr),
+	boomEdgeSpriteRender25_(nullptr),
+	boomEdgeSpriteRender50_(nullptr),
+	boomEdgeSpriteRender75_(nullptr),
+	boomEdgeSpriteRender100_(nullptr),
+	boomEdgeSpriteRender13_(nullptr),
+	boomSpriteRender13_(nullptr),
+	bodyCollision_(nullptr)
 {
 	SetRenderOrder((int)RenderOrder::Map);
 }
@@ -30,7 +41,18 @@ MapTrain::MapTrain(MapTrain&& _other) noexcept  // default RValue Copy construct
 	mainSpriteRender_(nullptr),
 	colSpriteRender_(nullptr),
 	boomSpriteRender_(nullptr),
-	boomEdgeSpriteRender_(nullptr)
+	boomEdgeSpriteRender_(nullptr),
+	boomSpriteRender25_(nullptr),
+	boomSpriteRender50_(nullptr),
+	boomSpriteRender75_(nullptr),
+	boomSpriteRender100_(nullptr),
+	boomEdgeSpriteRender25_(nullptr),
+	boomEdgeSpriteRender50_(nullptr),
+	boomEdgeSpriteRender75_(nullptr),
+	boomEdgeSpriteRender100_(nullptr),
+	boomEdgeSpriteRender13_(nullptr),
+	boomSpriteRender13_(nullptr),
+	bodyCollision_(nullptr)
 {
 
 }
@@ -48,6 +70,17 @@ void MapTrain::Start()
 
 	boomSpriteRender_ = CreateRenderer("Boom");
 	boomEdgeSpriteRender_ = CreateRenderer("BoomEdge");
+
+	boomSpriteRender13_ = CreateRenderer("Boom_13");
+	boomSpriteRender25_ = CreateRenderer("Boom_25");
+	boomSpriteRender50_ = CreateRenderer("Boom_50");
+	boomSpriteRender75_ = CreateRenderer("Boom_75");
+	boomSpriteRender100_ = CreateRenderer("Boom_100");
+	boomEdgeSpriteRender13_ = CreateRenderer("BoomEdge_13");
+	boomEdgeSpriteRender25_ = CreateRenderer("BoomEdge_25");
+	boomEdgeSpriteRender50_ = CreateRenderer("BoomEdge_50");
+	boomEdgeSpriteRender75_ = CreateRenderer("BoomEdge_75");
+	boomEdgeSpriteRender100_ = CreateRenderer("BoomEdge_100");
 }
 
 void MapTrain::UpdateBefore()
@@ -111,6 +144,136 @@ void MapTrain::GroundUpdate(float4 pos)
 		{ 100.f, 100.f },
 		{ 0.f, 0.f },
 		{ 100.f, 100.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate13(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender13_->GetImage(),
+		pos,
+		{ 19.f, 19.f },
+		{ 0.f, 0.f },
+		{ 19.f, 19.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender13_->GetImage(),
+		pos,
+		{ 19.f, 19.f },
+		{ 0.f, 0.f },
+		{ 19.f, 19.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate25(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender25_->GetImage(),
+		pos,
+		{ 37.f, 37.f },
+		{ 0.f, 0.f },
+		{ 37.f, 37.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender25_->GetImage(),
+		pos,
+		{ 37.f, 37.f },
+		{ 0.f, 0.f },
+		{ 37.f, 37.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate50(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender50_->GetImage(),
+		pos,
+		{ 62.f, 62.f },
+		{ 0.f, 0.f },
+		{ 62.f, 62.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender50_->GetImage(),
+		pos,
+		{ 62.f, 62.f },
+		{ 0.f, 0.f },
+		{ 62.f, 62.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate75(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender75_->GetImage(),
+		pos,
+		{ 87.f, 87.f },
+		{ 0.f, 0.f },
+		{ 87.f, 87.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender75_->GetImage(),
+		pos,
+		{ 87.f, 87.f },
+		{ 0.f, 0.f },
+		{ 87.f, 87.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate100(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender100_->GetImage(),
+		pos,
+		{ 112.f, 112.f },
+		{ 0.f, 0.f },
+		{ 112.f, 112.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender100_->GetImage(),
+		pos,
+		{ 112.f, 112.f },
+		{ 0.f, 0.f },
+		{ 112.f, 112.f },
 		RGB(0, 255, 0));
 
 	mapImage->TransCopy(colSpriteRender_->GetImage(),

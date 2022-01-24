@@ -41,7 +41,7 @@ void Bazooka::Start()
 	mainRender_->CreateAnimation("missile1", "missile", 0, 31, true, FLT_MAX);
 	mainRender_->ChangeAnimation("missile1");
 
-	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
+	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::WEAPON), CollisionCheckType::POINT);
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 
@@ -106,7 +106,7 @@ void Bazooka::Update()
 	else
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->GroundExplosion(float4(pos_.x - 50.f, pos_.y - 50.f));
+		level->CreateExplosion100(float4(pos_.x - 50.f, pos_.y - 50.f));
 		SetPos(float4(-100.f, -100.f));
 		Death();
 	}

@@ -18,7 +18,8 @@ DrumActor::DrumActor():
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
 	DrumCollision_(false),
-	PetroleumSpeed(150.f)
+	PetroleumSpeed(150.f),
+	deltaTime_(0.f)
 	// default constructer 디폴트 생성자
 {
 
@@ -35,7 +36,8 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
 	DrumCollision_(false),
-	PetroleumSpeed(150.f)
+	PetroleumSpeed(150.f),
+	deltaTime_(0.f)
 {
 
 }
@@ -61,12 +63,17 @@ void DrumActor::UpdateBefore()
 
 void DrumActor::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+	{
+		SetMove(0.f,100.f* deltaTime_);
+	}
+
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
 	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM)))
 	{
-		Phase_ +=  deltaTime;
-
+		Phase_ += deltaTime_;
+		
 		if (Phase_ >= 3.f)
 		{
 			DrumExplode();
@@ -97,7 +104,7 @@ void DrumActor::Update()
 		DrumExplode();
 	}
 
-	if (true == DrumCollision_)
+	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PLAYER)))
 	{
 		DrumExplode(); // 위 코드 외에 폭발이 적용될 경우
 	}
@@ -117,11 +124,13 @@ void DrumActor::initCollision()
 {
 	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCollision_->SetPivot({ 0.0f, 30.f });
+	groundCollision_->SetPivot({ 10.f, 30.f });
 
-	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::POINT);
-	BodyCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	BodyCollision_->SetPivot({ 30.f, 30.f });
+	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::RECT);
+	BodyCollision_->SetSize({ 40.f, 40.f });
+	BodyCollision_->SetPivot({ 20.f, 20.f });
+
+
 }
 
 void DrumActor::DrumBoil(float kelvin)
@@ -139,12 +148,13 @@ void DrumActor::DrumExplode()
 	float curwind = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
 	float4 RandomRot = { 1.f,0.f,0.f };
 
-	for (int i = 0; i < 9; ++i)
+	int count = 20;
+	for (int i = 0; i < count; ++i)
 	{
 		RandomRot = { 1.f,0.f,0.f }; //초기화
 
-		RandomFloat = random.RandomFloat(-20.f, 20.f);
-		degree = (i * 72.f) + RandomFloat;
+		RandomFloat = random.RandomFloat(-30.f, 30.f);
+		degree = (i * 360.f/(float)count) + RandomFloat;
 
 		RandomRot = RandomRot.DegreeTofloat2(degree); 
 		RandomRot.x += curwind;
@@ -159,10 +169,10 @@ void DrumActor::DrumExplode()
 
 void DrumActor::DrumCollision(GameEngineCollision* Collider_)
 {
-	if (BodyCollision_->CollisionCheck(Collider_))
-	{
-		DrumCollision_ = true;
-	}
+	//if (BodyCollision_->CollisionCheck(Collider_))
+	//{
+	//	DrumCollision_ = true;
+	//}
 }
 
 

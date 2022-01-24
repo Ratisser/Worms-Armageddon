@@ -79,11 +79,18 @@ void Petroleum::Update()
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 	prevPos_ = pos_;
 
+	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		Dir_.y += GravitySpeed * deltaTime_;
 		GravitySpeed += GravityAcc;
 
-		SetMove(Dir_ * deltaTime_);
+		SetMove(Dir_ * deltaTime_);	
+	}
+	else
+	{
+		Dir_ = {};
+		Burn_ = true;
+		GravitySpeed = 0.f;
 	}
 
 	if (false == Burn_)
@@ -137,31 +144,32 @@ void Petroleum::Update()
 		{
 			mainSpriteRender_->ChangeAnimation("petrol-4", std::string("petrol-4"));
 			Burn_ = true;
+			Cur_LifeTime_ = 0.f;
 		}	
 		mainSpriteRender_->SetAnimationCurrentFrame(frameIndex);
 	}
 
 	else //(true == Burn_)
 	{
-		if (Cur_LifeTime_ < 1.2f)
+		if (Cur_LifeTime_ < 1.f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
 		}
 
-		else if (Cur_LifeTime_ < 1.5f)
+		else if (Cur_LifeTime_ < 2.f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol50", std::string("petrol50"));
 		}
 
-		else if (Cur_LifeTime_ < 2.5f)
+		else if (Cur_LifeTime_ < 3.f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol40", std::string("petrol40"));
 		}
-		else if (Cur_LifeTime_ < 3.f)
+		else if (Cur_LifeTime_ < 4.f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol30", std::string("petrol30"));
 		}
-		else if (Cur_LifeTime_ < 3.5f)
+		else if (Cur_LifeTime_ < 5.f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol20", std::string("petrol20"));
 		}
@@ -176,7 +184,7 @@ void Petroleum::Update()
 
 	if (false == CountSecond_[(int)Cur_LifeTime_])
 	{
-		//GetLevel<PlayLevel>()->GroundExplosion(pos_);
+		GetLevel<PlayLevel>()->GroundUpdate13(float4(pos_.x-6.5f, pos_.y- 6.5f));
 		// ¶¥ ±ðÀÌ±â, 1ÃÊ¸¶´Ù ¶¥À» ±ð°Ô µÉ°Í
 		CountSecond_[(int)Cur_LifeTime_] = true;
 	}
@@ -194,11 +202,9 @@ void Petroleum::Render()
 
 void Petroleum::initCollision()
 {
-	//groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PETROLEUM), CollisionCheckType::POINT);
-	//groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-
-	//BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PETROLEUM), CollisionCheckType::POINT);
-	//BodyCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
+	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
+	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
+	groundCollision_->SetPivot({ 5.f, 2.5f });
 }
 
 

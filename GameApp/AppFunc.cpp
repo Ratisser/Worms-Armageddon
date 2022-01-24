@@ -59,7 +59,17 @@ void AppResourcesInit()
 
 		GameEngineImage::GetInst().LoadGameImage("Ground", Dir.PathToPlusFileName("Ground.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Boom", Dir.PathToPlusFileName("Boom.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Boom_13", Dir.PathToPlusFileName("Boom_13.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Boom_25", Dir.PathToPlusFileName("Boom_25.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Boom_50", Dir.PathToPlusFileName("Boom_50.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Boom_75", Dir.PathToPlusFileName("Boom_75.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Boom_100", Dir.PathToPlusFileName("Boom_100.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge", Dir.PathToPlusFileName("BoomEdge.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("BoomEdge_100", Dir.PathToPlusFileName("BoomEdge_100.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("BoomEdge_75", Dir.PathToPlusFileName("BoomEdge_75.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("BoomEdge_50", Dir.PathToPlusFileName("BoomEdge_50.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("BoomEdge_25", Dir.PathToPlusFileName("BoomEdge_25.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("BoomEdge_13", Dir.PathToPlusFileName("BoomEdge_13.bmp"));
 		//GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
 
 		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().

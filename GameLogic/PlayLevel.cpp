@@ -173,6 +173,7 @@ void PlayLevel::wormLoading()
 	GameEngineTime::GetInst().TimeCheck();
 }
 
+	//CreateExplosion100으로 교체할것
 void PlayLevel::GroundExplosion(float4 _pos)
 {
 	Train_->GroundUpdate(_pos);
@@ -187,6 +188,8 @@ void PlayLevel::CreateExplosion100(float4 Pos)
 	EffectBundle::Explosion::Size100* actor = CreateActor<EffectBundle::Explosion::Size100>
 		(_Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+
+	GroundUpdate100(Pos);
 }
 
 void PlayLevel::CreateExplosion75(float4 Pos)
@@ -196,6 +199,8 @@ void PlayLevel::CreateExplosion75(float4 Pos)
 	EffectBundle::Explosion::Size75* actor = CreateActor<EffectBundle::Explosion::Size75>
 		(_Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+
+	GroundUpdate75(Pos);
 }
 
 void PlayLevel::CreateExplosion50(float4 Pos)
@@ -205,6 +210,8 @@ void PlayLevel::CreateExplosion50(float4 Pos)
 	EffectBundle::Explosion::Size50* actor = CreateActor<EffectBundle::Explosion::Size50>
 		(_Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+
+	GroundUpdate50(Pos);
 }
 
 void PlayLevel::CreateExplosion25(float4 Pos)
@@ -214,6 +221,33 @@ void PlayLevel::CreateExplosion25(float4 Pos)
 	EffectBundle::Explosion::Size25* actor = CreateActor<EffectBundle::Explosion::Size25>
 		(_Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+
+	GroundUpdate25(Pos);
+}
+
+void PlayLevel::GroundUpdate100(float4 _pos)
+{
+	Train_->GroundUpdate100(_pos);
+}
+
+void PlayLevel::GroundUpdate75(float4 _pos)
+{
+	Train_->GroundUpdate75(_pos);
+}
+
+void PlayLevel::GroundUpdate50(float4 _pos)
+{
+	Train_->GroundUpdate50(_pos);
+}
+
+void PlayLevel::GroundUpdate25(float4 _pos)
+{
+	Train_->GroundUpdate25(_pos);
+}
+
+void PlayLevel::GroundUpdate13(float4 _pos)
+{
+	Train_->GroundUpdate13(_pos);
 }
 
 void PlayLevel::MakeWaterLevel(float _WaterLevel) // 맵 바닥의 수면 생성
@@ -293,7 +327,7 @@ void PlayLevel::MakeWaterLevel(float _WaterLevel) // 맵 바닥의 수면 생성
 
 void PlayLevel::CreateGimmickObject()
 {
-	DrumActor* DrumActor1 = CreateActor<DrumActor>(float4(1600.f,250.f));
+	DrumActor* DrumActor1 = CreateActor<DrumActor>(float4(1600.f,150.f));
 	DrumActor1->SetRenderOrder((int)RenderOrder::Max);
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 }

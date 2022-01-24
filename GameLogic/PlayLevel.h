@@ -59,20 +59,19 @@ public:
 	void CreateExplosion50(float4 Pos); //test
 	void CreateExplosion25(float4 Pos); //test
 
+	void GroundUpdate100(float4 _pos);
+	void GroundUpdate75(float4 _pos);
+	void GroundUpdate50(float4 _pos);
+	void GroundUpdate25(float4 _pos);
+	void GroundUpdate13(float4 _pos);
+
+
+
 private:
 	void wormLoading();
 	void PJWLevelUpdate();
 
 private:
 	void RandomWormArrange(float _minX, float _maxX);
-
-public:
-	WindController* GetWindController()
-	{
-		return windController_;
-	}
-
-
-
 };
 

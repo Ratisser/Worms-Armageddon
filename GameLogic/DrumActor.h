@@ -16,6 +16,8 @@ private:	// member Var
 	const float PetroleumSpeed;
 	bool DrumCollision_;
 
+	float deltaTime_;
+
 	// 직접적인 직격, 혹은 화염에 일정시간 노출되었을 경우
 	// Phase_ 수치에 따라서 드럼통의 에니메이션(가열된 정도)이 변경되고,
 	// 일정 이상이 되면 폭발
