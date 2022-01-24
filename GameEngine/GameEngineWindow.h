@@ -59,9 +59,6 @@ private:
 	GameEngineImageFile* windowimage_;
 	GameEngineImageFile* backBufferImage_;
 
-public: // 캐럿 사용 여부 결정
-	static bool caretshow_;
-
 public:
 	GameEngineImageFile* GetWindowImage()
 	{
@@ -83,11 +80,6 @@ public:
 
 	float4 GetMousePos();
 	bool SetMousePos(int _x, int _y);
-
-	void CaretUse(bool _Flag)
-	{
-		caretshow_ = _Flag;
-	}
 
 	HWND GetMainWindowHandle() const
 	{

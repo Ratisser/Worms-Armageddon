@@ -6,6 +6,12 @@
 class GameEngineRenderer;
 class ChattingInput : public GameEngineActor
 {
+private:
+	static bool caretshow_;
+
+public:
+	static void SetCurCaretState(bool _Flag);
+
 private:	// member Var
 	bool ChattingInputOK_;
 	std::string InputText_;

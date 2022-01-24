@@ -328,6 +328,7 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_SelPlayerBox", Dir.PathToPlusFileName("6836.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingHis", Dir.PathToPlusFileName("13268.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingInput", Dir.PathToPlusFileName("24428.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingInputOK", Dir.PathToPlusFileName("24428_2.bmp"));
 
 	// 로비화면 호스트 레디 이미지
 	Dir.MoveParent("Worms-Armageddon");

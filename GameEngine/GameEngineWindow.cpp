@@ -15,8 +15,6 @@
 // Æ÷ÀÎÅÍÇü ½Ì±ÛÅæ
 GameEngineWindow* GameEngineWindow::Inst = new GameEngineWindow();
 
-bool GameEngineWindow::caretshow_ = false;
-
 bool WindowOn = true;
 
 LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lParam)
@@ -113,25 +111,6 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
         unsigned char keycode = static_cast<unsigned char>(_wParam);
         KeyboardClass::GetInst().OnKeyReleased(keycode);
 
-        return 0;
-    }
-    case WM_SETFOCUS:
-    {
-        // Ä³·µ »ý¼º
-        if (true == GameEngineWindow::caretshow_)
-        {
-            CreateCaret(_hWnd, NULL, 2, 14);
-            ShowCaret(_hWnd);
-            SetCaretBlinkTime(10);
-            SetCaretPos(20, 660);
-        }
-
-        return 0;
-    }
-    case WM_KILLFOCUS:
-    {
-        HideCaret(_hWnd);
-        DestroyCaret();
         return 0;
     }
     default:

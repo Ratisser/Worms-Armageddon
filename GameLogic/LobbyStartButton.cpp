@@ -1,4 +1,5 @@
 #include "LobbyStartButton.h"
+#include "ChattingInput.h"
 
 #include <GameEngineInput.h>
 #include <GameEngineWindow.h>
@@ -51,7 +52,7 @@ void LobbyStartButton::Update()
 		GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel", true);
 
 		// Ä³·µ ¹Ý³³ ¹× Flag ÇØÁ¦
-		GameEngineWindow::caretshow_ = false;
+		ChattingInput::SetCurCaretState(false);
 		SetCaretBlinkTime(500);
 		HideCaret(GameEngineWindow::GetInst().GetMainWindowHandle());
 		DestroyCaret();
