@@ -41,6 +41,8 @@ public:
 	void SubtractActionToken(int _numToken);
 	int GetActionTokenCount() const;
 
+	float4 GetForward() const;
+
 private:
 	void initRenderer();
 	void initInput();

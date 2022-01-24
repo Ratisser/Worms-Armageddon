@@ -1401,6 +1401,11 @@ int Worm::GetActionTokenCount() const
 	return actionToken_;
 }
 
+float4 Worm::GetForward() const
+{
+	return forward_;
+}
+
 void Worm::SetFocus(bool _bFocus)
 {
 	bFocus_ = _bFocus;
