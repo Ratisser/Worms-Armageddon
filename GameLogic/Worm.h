@@ -39,6 +39,7 @@ public:
 
 	void AddActionToken(int _numToken);
 	void SubtractActionToken(int _numToken);
+	void ClearActionToken();
 	int GetActionTokenCount() const;
 
 	float4 GetForward() const;

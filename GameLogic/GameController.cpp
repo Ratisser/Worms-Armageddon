@@ -116,6 +116,7 @@ void GameController::Update()
 
 void GameController::UpdateAfter()
 {
+	// Camera Works
 	if (true == GameEngineInput::GetInst().IsDown("CameraFocus"))
 	{
 		IsCameraMove_ = !IsCameraMove_;
@@ -141,11 +142,6 @@ void GameController::UpdateAfter()
 		if (true == GameEngineInput::GetInst().IsPress("Right"))
 		{
 			GetLevel()->SetCamMove(float4::RIGHT * cameraMoveSpeed_);
-		}
-
-		for (int i = 0; i < MAX_WORM_COUNT; ++i)
-		{
-			wormList_[i]->SetFocus(false);
 		}
 	}
 	else
@@ -268,17 +264,19 @@ StateInfo GameController::startNextWorm(StateInfo _state)
 
 	++wormIndex_;
 
-	if (wormIndex_ == MAX_WORM_COUNT)
+	if (wormIndex_ == wormList_.size())
 	{
 		wormIndex_ = 0;
 
 	}
 
-	for (int i = 0; i < MAX_WORM_COUNT; i++)
+	size_t size = wormList_.size();
+	for (int i = 0; i < size; i++)
 	{
 		if (i == wormIndex_)
 		{
 			wormList_[wormIndex_]->SetFocus(true);
+			currentWorm_ = wormList_[wormIndex_];
 
 		}
 		else
@@ -286,12 +284,16 @@ StateInfo GameController::startNextWorm(StateInfo _state)
 			wormList_[i]->SetFocus(false);
 		}
 	}
-
+	IsCameraMove_ = false;
 	return StateInfo();
 }
 
 StateInfo GameController::updateNextWorm(StateInfo _state)
 {
+	if (currentWorm_ == nullptr)
+	{
+		state_.ChangeState("NextWorm");
+	}
 	currentWorm_->AddActionToken(1);
 	currentTurnTime_ = DEFAULT_TURN_TIME;
 	return "Action";
@@ -304,21 +306,32 @@ StateInfo GameController::startAction(StateInfo _state)
 
 StateInfo GameController::updateAction(StateInfo _state)
 {
+	currentTurnTime_ -= GameEngineTime::GetInst().GetDeltaTime();
+
 	if (GameEngineInput::GetInst().IsDown("TestKey1"))
 	{
+		currentWorm_->SubtractActionToken(1);
+		currentTurnTime_ = 0.0f;
+	}
 
+	if (currentTurnTime_ < 0)
+	{
+		return "ActionEnd";
 	}
 	return StateInfo();
 }
 
 StateInfo GameController::startActionEnd(StateInfo _state)
 {
+	currentWorm_->ClearActionToken();
+	currentWorm_->ChangeState("Idle");
 	return StateInfo();
 }
 
 StateInfo GameController::updateActionEnd(StateInfo _state)
 {
-	return StateInfo();
+	
+	return "NextWorm";
 }
 
 StateInfo GameController::startDeath(StateInfo _state)
