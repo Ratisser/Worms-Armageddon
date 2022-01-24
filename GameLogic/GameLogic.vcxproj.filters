@@ -255,6 +255,9 @@
     <ClInclude Include="MenuSelImage.h">
       <Filter>Actor\MenuSelectLevel</Filter>
     </ClInclude>
+    <ClInclude Include="Uzi.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -406,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="MenuSelImage.cpp">
       <Filter>Actor\MenuSelectLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="Uzi.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

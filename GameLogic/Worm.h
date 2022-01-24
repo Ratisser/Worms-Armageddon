@@ -101,6 +101,12 @@ private:
 	StateInfo startFirepunchOff(StateInfo _state);
 	StateInfo updateFirepunchOff(StateInfo _state);
 
+	StateInfo startUziAim(StateInfo _state);
+	StateInfo updateUziAim(StateInfo _state);
+	StateInfo startUziFire(StateInfo _state);
+	StateInfo updateUziFire(StateInfo _state);
+	StateInfo startUziWait(StateInfo _state);
+	StateInfo updateUziWait(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;

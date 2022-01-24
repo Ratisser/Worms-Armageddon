@@ -12,6 +12,7 @@
 #include "GameController.h"
 #include "DrumActor.h"
 #include "Bazooka.h"
+#include "Uzi.h"
 
 #include "BottomHealthBar.h"
 #include "BottomNameTag.h"

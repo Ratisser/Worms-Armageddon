@@ -17,6 +17,7 @@
 
 #include "Bazooka.h"
 #include "FirePunch.h"
+#include "Uzi.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -119,6 +120,15 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("FirepunchOffLeft", "firePunchOffLeft.bmp", 0, 25, false, 0.033f);
 	mainRender_->CreateAnimation("FirepunchOffRight", "firePunchOffRight.bmp", 0, 25, false, 0.033f);
 
+	mainRender_->CreateAnimation("UziOnLeft", "uziOnLeft.bmp", 0, 6, false, 0.033f); // 우지 애니메이션입니다.
+	mainRender_->CreateAnimation("UziOnRight", "uziOnRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("UziOffLeft", "uziOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("UziOffRight", "uziOffRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("UziAimLeft", "uziAimLeft.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("UziAimRight", "uziAimRight.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("UziFireLeft", "uziFireLeft.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("UziFireRight", "uziFireRight.bmp", 0, 31, false, FLT_MAX);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -197,6 +207,11 @@ void Worm::initState()
 	state_.CreateState("FirepunchEnd", &Worm::startFirepunchEnd, &Worm::updateFirepunchEnd);
 	state_.CreateState("FirepunchLand", &Worm::startFirepunchLand, &Worm::updateFirepunchLand);
 	state_.CreateState("FirepunchOff", &Worm::startFirepunchOff, &Worm::updateFirepunchOff);
+
+	state_.CreateState("UziAim", &Worm::startUziAim, &Worm::updateUziAim);
+	state_.CreateState("UziFire", &Worm::startUziFire, &Worm::updateUziFire);
+	state_.CreateState("UziWait", &Worm::startUziWait, &Worm::updateUziWait);
+
 	state_.ChangeState("Idle");
 }
 
@@ -305,6 +320,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_HANDGUN:
 		break;
 	case eItemList::WEAPON_UZI:
+		return "UziAim";
 		break;
 	case eItemList::WEAPON_MINIGUN:
 		break;
@@ -458,6 +474,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_HANDGUN:
 		break;
 	case eItemList::WEAPON_UZI:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("UziOnLeft", std::string("uziOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("UziOnRight", std::string("uziOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MINIGUN:
 		break;
@@ -615,6 +639,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_HANDGUN:
 		break;
 	case eItemList::WEAPON_UZI:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("UziOffLeft", std::string("uziOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("UziOffRight", std::string("uziOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MINIGUN:
 		break;
@@ -793,6 +825,11 @@ StateInfo Worm::updateIdle(StateInfo _state)
 		if (GameEngineInput::GetInst().IsDown("Jump"))
 		{
 			return "JumpReady";
+		}
+
+		if (GameEngineInput::GetInst().IsDown("WindToggle"))
+		{
+			return "UziAim";
 		}
 	}
 
@@ -1005,6 +1042,7 @@ StateInfo Worm::updateJump(StateInfo _state)
 
 StateInfo Worm::startBazookaAim(StateInfo _state)
 {
+	
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
@@ -1159,7 +1197,7 @@ StateInfo Worm::startFirepunchReady(StateInfo _state)
 StateInfo Worm::updateFirepunchReady(StateInfo _state)
 {
 	addGravity();
-
+	crosshairRender_->Off();
 	if (false == bFocus_)
 	{
 		return "WeaponOff";
@@ -1344,6 +1382,130 @@ StateInfo Worm::updateFirepunchOff(StateInfo _state)
 	}
 
 	return StateInfo();
+}
+
+
+StateInfo Worm::startUziAim(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("UziAimLeft", std::string("uziAimLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("UziAimRight", std::string("uziAimRight.bmp"));
+	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+	setAimingForward();
+	crosshairRender_->On();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+	return StateInfo();
+}
+
+
+StateInfo Worm::updateUziAim(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("UpArrow"))
+	{
+		aimRotation_ += deltaTime_;
+		if (aimRotation_ >= 180.f * GameEngineMath::DegreeToRadian)
+		{
+			aimRotation_ = 180.f * GameEngineMath::DegreeToRadian;
+		}
+	}
+
+	if (GameEngineInput::GetInst().IsPress("DownArrow"))
+	{
+		aimRotation_ -= deltaTime_;
+		if (aimRotation_ <= 0.0f)
+		{
+			aimRotation_ = 0.0f;
+		}
+	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+
+	if (bLeft_)
+	{
+		crosshairRender_->SetAnimationCurrentFrame(frame);
+	}
+	else
+	{
+		crosshairRender_->SetAnimationCurrentFrame(31 - frame);
+	}
+
+	setAimingForward();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+
+	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
+	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Fire"))
+	{
+		return "UziFire";
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startUziFire(StateInfo _state)
+{
+	firePower_ = 2.0f; // 25발 사격 (발당 대미지 2)
+	return StateInfo();
+}
+
+StateInfo Worm::updateUziFire(StateInfo _state)
+{
+		Uzi* newUzi = parentLevel_->CreateActor<Uzi>();
+		newUzi->SetPos(pos_ + float4(forward_ * 20.f));
+		newUzi->SetUziShotBox(forward_);
+		
+		return "UziWait";
+
+	return StateInfo();
+}
+
+StateInfo Worm::startUziWait(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateUziWait(StateInfo _state)
+{
+	nextState_ = "Idle";
+	return "WeaponOff";
 }
 
 
