@@ -101,6 +101,10 @@ void ChattingInput::Update()
 			AddText(SetStr);
 		}
 	}
+	else // 현재 입력상태가 아닌와중에도 키보드 입력이 있다면 charbuffer를 클리어한다.
+	{
+		KeyboardClass::GetInst().DeleteCharBuffer();
+	}
 
 	// 입력중인 채팅 문자열을 채팅 이력으로 보내기(채팅입력완료)
 	if (true == GameEngineInput::GetInst().IsDown("Chatting_End"))
