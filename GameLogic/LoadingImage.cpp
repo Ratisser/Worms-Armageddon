@@ -1,6 +1,8 @@
 #include "LoadingImage.h"
 #include <GameEngineWindow.h>
 #include <GameEngineRenderer.h>
+#include <GameEngineLevelManager.h>
+
 LoadingImage::LoadingImage() // default constructer 디폴트 생성자
 	:mainSpriteRender_(nullptr)
 {
@@ -33,6 +35,11 @@ void LoadingImage::UpdateBefore()
 
 void LoadingImage::Update()
 {
+	// 로딩 애니메이션 마지막프레임이라면 씬 자동전환
+	if (24 == mainSpriteRender_->GetCurAnimationFrame())
+	{
+		GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel", true);
+	}
 }
 
 void LoadingImage::UpdateAfter()

@@ -48,11 +48,11 @@ void LobbyStartButton::Update()
 {
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
-		GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel");
+		GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel", true);
 
-		// Ä³·µ ¹Ý³³
+		// Ä³·µ ¹Ý³³ ¹× Flag ÇØÁ¦
 		GameEngineWindow::caretshow_ = false;
-		SetCaretBlinkTime(1000);
+		SetCaretBlinkTime(500);
 		HideCaret(GameEngineWindow::GetInst().GetMainWindowHandle());
 		DestroyCaret();
 	}
