@@ -3,6 +3,7 @@
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
 #include <GameEngineTime.h>
+#include <GameEngineInput.h>
 #include "PlayLevel.h"
 #include "WindController.h"
 
@@ -44,6 +45,11 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 
 void DrumActor::Start()
 {
+	if (false == GameEngineInput::GetInst().IsKey("DrumExplode"))
+	{
+		GameEngineInput::GetInst().CreateKey("DrumExplode", 'X');
+	}
+
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
 	mainSpriteRender_->CreateAnimation("Phase0", "oildrum1", 0, 19, true, 0.1f);
@@ -63,6 +69,11 @@ void DrumActor::UpdateBefore()
 
 void DrumActor::Update()
 {
+	if (true == GameEngineInput::GetInst().IsPress("DrumExplode"))
+	{
+		DrumExplode();
+	}
+
 	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		SetMove(0.f,100.f* deltaTime_);
