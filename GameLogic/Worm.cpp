@@ -43,6 +43,8 @@ Worm::Worm()
 	, nextState_("")
 	, bFocus_(false)
 	, uicontroller_(nullptr)
+	, hp_(100)
+	, actionToken_(0)
 {
 
 }
@@ -1362,6 +1364,31 @@ void Worm::SetUIController(UIController* _uicontroller)
 UIController* Worm::GetCurUIController() const
 {
 	return uicontroller_;
+}
+
+void Worm::Damage(int _numDamage)
+{
+	hp_ -= _numDamage;
+
+	if (hp_ < 0)
+	{
+		hp_ = 0;
+	}
+}
+
+bool Worm::IsDie()
+{
+	return hp_ <= 0;
+}
+
+void Worm::AddActionToken(int _numToken)
+{
+	actionToken_ += _numToken;
+}
+
+int Worm::GetActionTokenCount()
+{
+	return actionToken_;
 }
 
 void Worm::SetFocus(bool _bFocus)

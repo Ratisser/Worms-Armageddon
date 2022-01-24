@@ -34,6 +34,12 @@ public:
 	void SetUIController(UIController* _uicontroller);
 	UIController* GetCurUIController() const;
 
+	void Damage(int _numDamage);
+	bool IsDie();
+
+	void AddActionToken(int _numToken);
+	int GetActionTokenCount();
+
 private:
 	void initRenderer();
 	void initInput();
@@ -127,6 +133,9 @@ private:
 	float currentRotation_;
 	float firePower_;
 
+	int hp_;
+	int actionToken_;
+	
 	eItemList currentWeapon_;
 
 	std::string nextState_;
