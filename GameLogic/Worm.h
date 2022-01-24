@@ -29,6 +29,10 @@ public:
 public:
 	void ChangeState(std::string _stateName);
 	void SetFocus(bool _bFocus);
+	bool isFocused();
+	void SetCurWeapon(eItemList _WeaponType);
+	void SetUIController(UIController* _uicontroller);
+	UIController* GetCurUIController() const;
 
 private:
 	void initRenderer();
@@ -74,6 +78,20 @@ private:
 	StateInfo startBazookaWait(StateInfo _state);
 	StateInfo updateBazookaWait(StateInfo _state);
 
+	StateInfo startFirepunchReady(StateInfo _state);
+	StateInfo updateFirepunchReady(StateInfo _state);
+	StateInfo startFirepunchStart(StateInfo _state);
+	StateInfo updateFirepunchStart(StateInfo _state);
+	StateInfo startFirepunchFly(StateInfo _state);
+	StateInfo updateFirepunchFly(StateInfo _state);
+	StateInfo startFirepunchEnd(StateInfo _state);
+	StateInfo updateFirepunchEnd(StateInfo _state);
+	StateInfo startFirepunchLand(StateInfo _state);
+	StateInfo updateFirepunchLand(StateInfo _state);
+	StateInfo startFirepunchOff(StateInfo _state);
+	StateInfo updateFirepunchOff(StateInfo _state);
+
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
@@ -87,6 +105,9 @@ private:
 	GameEngineRenderer* crosshairRender_;
 	GameEngineCollision* bottomCenterCollision_;
 	GameEngineCollision* groundCheckCollision_;
+	GameEngineCollision* leftSideCollision_;
+	GameEngineCollision* rightSideCollision_;
+	GameEngineCollision* headCollision_;
 
 	GameEngineFSM<Worm> state_;
 
@@ -111,10 +132,5 @@ private:
 	std::string nextState_;
 
 	UIController* uicontroller_;
-
-public:
-	void SetCurWeapon(eItemList _WeaponType);
-	void SetUIController(UIController* _uicontroller);
-	UIController* GetCurUIController() const;
 };
 

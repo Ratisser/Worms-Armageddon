@@ -28,6 +28,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="Cloud.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FirePunch.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameController.h">
       <SubType>
       </SubType>
@@ -37,6 +45,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="LobbySelectMapImage.h" />
+    <ClInclude Include="MenuSelBackDrop.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MenuSelectLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MenuSelImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Midground.h">
       <SubType>
       </SubType>
@@ -101,7 +121,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="MapGround.h" />
     <ClInclude Include="MapTrain.h">
       <SubType>
       </SubType>
@@ -183,9 +202,21 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="eCollisionCheckColor.h" />
+    <ClInclude Include="WormArrow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="Cloud.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="FirePunch.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameController.cpp">
       <SubType>
       </SubType>
@@ -195,6 +226,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp" />
+    <ClCompile Include="MenuSelBackDrop.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuSelectLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MenuSelImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Midground.cpp">
       <SubType>
       </SubType>
@@ -257,7 +300,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="MapGround.cpp" />
     <ClCompile Include="MapTrain.cpp">
       <SubType>
       </SubType>
@@ -332,6 +374,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Worm.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WormArrow.cpp">
       <SubType>
       </SubType>
     </ClCompile>

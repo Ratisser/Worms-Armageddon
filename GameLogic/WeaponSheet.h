@@ -98,5 +98,9 @@ public: // 플레이어가 기믹오브젝트 획득 또는 아이템사용시 설정해야하는 항목
 
 public: // 실질적인 무기목록(관리용)관련
 	Weapon* GetCurWeapon(eItemList _SearchWeapon);
+
+public: // 멤버변수 Get
+	float4 GetSheetActivePos();
+	float4 GetSheetDisablePos();
 };
 

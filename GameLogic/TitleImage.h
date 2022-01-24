@@ -1,16 +1,44 @@
 #pragma once
 #include <GameEngineActor.h>
+#include <GameEngineTimeEventer.h>
 // 분류 : 
 // 용도 : 
 // 설명 : 
 class TitleImage : public GameEngineActor
 {
+private:
+	float alpha_;
+	unsigned char castalpha_;
+	bool fadestop_;
+	bool introstop_;
+	bool titlepenetration_;
+	bool armageddonEnd_;
+	bool fadewhilteEnd_;
+	bool nextlevel_;
+	bool levelChangeStart_;
+
+private:
+	int textonIndex_;
+	float textontime_;
+
 private:	// member Var
+	GameEngineRenderer* fadeBlackSpriteRender_;
+	GameEngineRenderer* fadeWhiteSpriteRender_;
+	GameEngineRenderer* intrologo1SpriteRender_;
+	GameEngineRenderer* intrologo2SpriteRender_;
+	GameEngineRenderer* titlelogoSpriteRender_;
+	GameEngineRenderer* titlelogoActorRender_;
 	GameEngineRenderer* mainSpriteRender_;
 
+private: // 아마겟돈 이미지 리스트
+	std::vector<GameEngineRenderer*> armageddonlist_;
+
+private: // TimeEventer 
+	GameEngineTimeEventer<TitleImage> introTimer_;
+
 public:
-	TitleImage(); // default constructer 디폴트 생성자
-	~TitleImage(); // default destructer 디폴트 소멸자
+	TitleImage();
+	~TitleImage();
 
 protected:		// delete constructer
 	TitleImage(const TitleImage& _other) = delete; // default Copy constructer 디폴트 복사생성자
@@ -26,5 +54,26 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	void IntroLogo1Start();
+	void IntroLogo1Stay();
+	bool IntroLogo1End();
+
+public:
+	void IntroLogo2Start();
+	void IntroLogo2Stay();
+	bool IntroLogo2End();
+
+public:
+	void TitleStart();
+	void TitleStay();
+	bool TitleEnd();
+
+public:
+	bool WhiteFadeStart();
+
+public:
+	void LevelChange();
 };
 

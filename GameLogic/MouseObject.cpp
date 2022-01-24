@@ -83,12 +83,20 @@ void MouseObject::Start()
 	mainrenderer_->SetRenderSize(float4(32.f, 32.f));
 	mainrenderer_->SetCameraEffectOff();
 
+	float4 HarfIamgeSize = mainrenderer_->GetImageSize().halffloat4();
+	mainrenderer_->SetPivotPos(HarfIamgeSize);
+
 	// 마우스 충돌체 생성
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::MOUSE), CollisionCheckType::POINT);
 	rendersize_ = mainrenderer_->GetImageSize();
 
 	// 마우스 커서 off
-	//ShowCursor(false);
+	ShowCursor(false);
+
+	if (false == GameEngineInput::GetInst().IsKey("Select_Weapon"))
+	{
+		GameEngineInput::GetInst().CreateKey("Select_Weapon", VK_LBUTTON);
+	}
 }
 
 void MouseObject::UpdateBefore()
@@ -103,7 +111,7 @@ void MouseObject::UpdateBefore()
 		if (nullptr != CollisionWeapon)
 		{
 			// 마우스왼쪽버튼클릭이라면
-			if (true == GameEngineInput::GetInst().IsDown("Boom"))
+			if (true == GameEngineInput::GetInst().IsDown("Select_Weapon"))
 			{
 				if (true == CollisionWeapon->GetParentSheet()->IsActive())
 				{
@@ -128,105 +136,107 @@ void MouseObject::UpdateBefore()
 
 void MouseObject::Update()
 {
-	// 위치 갱신(단, 이동범위를 벗어나면 갱신안함)
+	//// 위치 갱신(단, 이동범위를 벗어나면 갱신안함)
 	float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
 
-	// 현재 플레이어의 무기창이 활성화 상태라면 지정된범위 밖으로 커서 이동불가
-	// 현재 플레이어의 무기창이 비활성화 상태라면 자유롭게 이동
-	if (nullptr != gamecontroller_)
-	{
-		// 현재 플레이어 Get
-		Worm* CurPlayer = gamecontroller_->GetCurWorm();
-		if (nullptr != CurPlayer)
-		{
-			if (true == CurPlayer->GetCurUIController()->GetCurWeaponSheet()->IsActive())
-			{
-				weaponsheeton_ = true;
-			}
-			else
-			{
-				weaponsheeton_ = false;
-			}
-		}
-	}
+	//// 현재 플레이어의 무기창이 활성화 상태라면 지정된범위 밖으로 커서 이동불가
+	//// 현재 플레이어의 무기창이 비활성화 상태라면 자유롭게 이동
+	//if (nullptr != gamecontroller_)
+	//{
+	//	// 현재 플레이어 Get
+	//	Worm* CurPlayer = gamecontroller_->GetCurWorm();
+	//	if (nullptr != CurPlayer)
+	//	{
+	//		if (true == CurPlayer->GetCurUIController()->GetCurWeaponSheet()->IsActive())
+	//		{
+	//			weaponsheeton_ = true;
+	//		}
+	//		else
+	//		{
+	//			weaponsheeton_ = false;
+	//		}
+	//	}
+	//}
 
-	if (true == weaponsheeton_)
-	{
-		// 범위지정이 되있다면
-		if (MousePos.x >= startrange_.x && MousePos.x <= endrange_.x &&
-			MousePos.y >= startrange_.y && MousePos.y <= endrange_.y)
-		{
-			SetPos(MousePos);
-		}
+	//if (true == weaponsheeton_)
+	//{
+	//	// 범위지정이 되있다면
+	//	if (MousePos.x >= startrange_.x && MousePos.x <= endrange_.x &&
+	//		MousePos.y >= startrange_.y && MousePos.y <= endrange_.y)
+	//	{
+	//		SetPos(MousePos);
+	//	}
 
-		if (MousePos.y <= startrange_.y)
-		{
-			if (MousePos.x <= startrange_.x)
-			{
-				SetPos(float4(startrange_.x, startrange_.y));
-			}
-			else if (MousePos.x >= endrange_.x)
-			{
-				SetPos(float4(endrange_.x, endrange_.y));
-			}
-			else
-			{
-				SetPos(float4(MousePos.x, startrange_.y));
-			}
-		}
+	//	if (MousePos.y <= startrange_.y)
+	//	{
+	//		if (MousePos.x <= startrange_.x)
+	//		{
+	//			SetPos(float4(startrange_.x, startrange_.y));
+	//		}
+	//		else if (MousePos.x >= endrange_.x)
+	//		{
+	//			SetPos(float4(endrange_.x, endrange_.y));
+	//		}
+	//		else
+	//		{
+	//			SetPos(float4(MousePos.x, startrange_.y));
+	//		}
+	//	}
 
-		if (MousePos.y >= endrange_.y)
-		{
-			if (MousePos.x <= startrange_.x)
-			{
-				SetPos(float4(startrange_.x, endrange_.y));
-			}
-			else if (MousePos.x >= endrange_.x)
-			{
-				SetPos(float4(endrange_.x, endrange_.y));
-			}
-			else
-			{
-				SetPos(float4(MousePos.x, endrange_.y));
-			}
-		}
+	//	if (MousePos.y >= endrange_.y)
+	//	{
+	//		if (MousePos.x <= startrange_.x)
+	//		{
+	//			SetPos(float4(startrange_.x, endrange_.y));
+	//		}
+	//		else if (MousePos.x >= endrange_.x)
+	//		{
+	//			SetPos(float4(endrange_.x, endrange_.y));
+	//		}
+	//		else
+	//		{
+	//			SetPos(float4(MousePos.x, endrange_.y));
+	//		}
+	//	}
 
-		if (MousePos.x <= startrange_.x)
-		{
-			if (MousePos.y <= startrange_.y)
-			{
-				SetPos(float4(startrange_.x, startrange_.y));
-			}
-			else if (MousePos.y >= endrange_.y)
-			{
-				SetPos(float4(startrange_.x, endrange_.y));
-			}
-			else
-			{
-				SetPos(float4(startrange_.x, MousePos.y));
-			}
-		}
+	//	if (MousePos.x <= startrange_.x)
+	//	{
+	//		if (MousePos.y <= startrange_.y)
+	//		{
+	//			SetPos(float4(startrange_.x, startrange_.y));
+	//		}
+	//		else if (MousePos.y >= endrange_.y)
+	//		{
+	//			SetPos(float4(startrange_.x, endrange_.y));
+	//		}
+	//		else
+	//		{
+	//			SetPos(float4(startrange_.x, MousePos.y));
+	//		}
+	//	}
 
-		if (MousePos.x >= endrange_.x)
-		{
-			if (MousePos.y <= startrange_.y)
-			{
-				SetPos(float4(endrange_.x, startrange_.y));
-			}
-			else if (MousePos.y >= endrange_.y)
-			{
-				SetPos(float4(endrange_.x, endrange_.y));
-			}
-			else
-			{
-				SetPos(float4(endrange_.x, MousePos.y));
-			}
-		}
-	}
-	else
-	{
-		SetPos(MousePos);
-	}
+	//	if (MousePos.x >= endrange_.x)
+	//	{
+	//		if (MousePos.y <= startrange_.y)
+	//		{
+	//			SetPos(float4(endrange_.x, startrange_.y));
+	//		}
+	//		else if (MousePos.y >= endrange_.y)
+	//		{
+	//			SetPos(float4(endrange_.x, endrange_.y));
+	//		}
+	//		else
+	//		{
+	//			SetPos(float4(endrange_.x, MousePos.y));
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	SetPos(MousePos);
+	//}
+
+	SetPos(MousePos);
 }
 
 void MouseObject::UpdateAfter()

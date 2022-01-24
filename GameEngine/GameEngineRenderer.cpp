@@ -430,3 +430,17 @@ int GameEngineRenderer::GetCurAnimationFrame()
 
 	return curani_->cur_;
 }
+
+void GameEngineRenderer::CurAnimationLoopEnd()
+{
+	curani_->loop_ = false;
+}
+
+void GameEngineRenderer::CurAnimationReset()
+{
+	curani_->cur_ = 0;
+	if (true == curani_->loop_)
+	{
+		CurAnimationLoopEnd();
+	}
+}

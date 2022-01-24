@@ -9,14 +9,16 @@
 #include "WeaponSheet.h"
 #include "WeaponIcon.h"
 #include "Weapon.h"
+#include "WormArrow.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
 	, cameraMoveSpeed_(10.f)
-	, wormIndex_(MAX_WORM_COUNT)
+	, wormIndex_(0)
 	, prevwormIndex_(MAX_WORM_COUNT)
-	, IsCameraMove_(true)
+	, IsCameraMove_(false)
+	, cameraPos_(0.f, 0.f)
 {
 
 }
@@ -105,6 +107,7 @@ void GameController::Update()
 				if (i == wormIndex_)
 				{
 					wormList_[wormIndex_]->SetFocus(true);
+
 				}
 				else
 				{
@@ -112,6 +115,9 @@ void GameController::Update()
 				}
 			}
 		}
+
+
+
 	}
 
 	if (wormIndex_ == MAX_WORM_COUNT)
@@ -125,7 +131,12 @@ void GameController::Update()
 	}
 	else
 	{
-		GetLevel()->SetCamPos(wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+		cameraPos_ = GetLevel()->GetCamPos();
+
+		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
+		float4 MoveVector = cameraMovePos - cameraPos_;
+
+		GetLevel()->SetCamMove(MoveVector * 0.1f);
 	}
 
 	// UI
@@ -142,11 +153,20 @@ void GameController::Update()
 				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
 				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
 
+				// 마우스커서위치 강제셋팅
+				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
+				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
+
+				// 
 				prevwormIndex_ = wormIndex_;
 			}
 			else
 			{
 				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+
+				// 마우스커서위치 강제셋팅
+				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
+				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
 			}
 		}
 	}
@@ -183,11 +203,15 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 			randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
 		}
 	}
+
+	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
+	newArrow->SetParent(newWorm);
 	
 	newWorm->SetPos({ randomFloatContainer_ , -500.0f });
 	newWorm->SetFocus(false);
 	wormList_.push_back(newWorm);
 	xPosList_.push_back(randomFloatContainer_);
+	wormList_[0]->SetFocus(true);
 }
 
 void GameController::CreateWormUI()

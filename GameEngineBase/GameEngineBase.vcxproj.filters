@@ -37,6 +37,9 @@
     <ClInclude Include="GameEngineSoundPlayer.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineTimeEventer.h">
+      <Filter>Value</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineFile.cpp">

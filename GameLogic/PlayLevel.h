@@ -1,7 +1,6 @@
 #pragma once
 #include <GameEngineLevel.h>
-#include "WaterLevel.h"
-#include "MapGround.h"
+#include "WaterLevel.h"	
 // 분류 : 
 // 용도 : 
 // 설명 : 
@@ -45,19 +44,25 @@ public:
 	WindController* windController_;
 
 public:
+	WindController* GetWindController()
+	{
+		return windController_;
+	}
+
+public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
 	void GroundExplosion(float4 _pos);
 
-	void CreateExplosion100(float4 Pos); 
-	void CreateExplosion75(float4 Pos); 
-	void CreateExplosion50(float4 Pos); 
-	void CreateExplosion25(float4 Pos); 
+	void CreateExplosion100(float4 Pos); //test
+	void CreateExplosion75(float4 Pos); //test
+	void CreateExplosion50(float4 Pos); //test
+	void CreateExplosion25(float4 Pos); //test
+
 private:
-	void AJYLoading();
 	void wormLoading();
-	void AJYLevelUpdate();
 	void PJWLevelUpdate();
+
 private:
 	void RandomWormArrange(float _minX, float _maxX);
 

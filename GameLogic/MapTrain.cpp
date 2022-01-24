@@ -13,7 +13,8 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	gradationSpriteRender_(nullptr),
 	mainSpriteRender_(nullptr),
 	colSpriteRender_(nullptr),
-	boomSpriteRender_(nullptr)
+	boomSpriteRender_(nullptr),
+	boomEdgeSpriteRender_(nullptr)
 {
 	SetRenderOrder((int)RenderOrder::Map);
 }
@@ -28,7 +29,8 @@ MapTrain::MapTrain(MapTrain&& _other) noexcept  // default RValue Copy construct
 	gradationSpriteRender_(nullptr),
 	mainSpriteRender_(nullptr),
 	colSpriteRender_(nullptr),
-	boomSpriteRender_(nullptr)
+	boomSpriteRender_(nullptr),
+	boomEdgeSpriteRender_(nullptr)
 {
 
 }
@@ -45,6 +47,7 @@ void MapTrain::Start()
 	gradationSpriteRender_->SetRenderSize(WindowSize);
 
 	boomSpriteRender_ = CreateRenderer("Boom");
+	boomEdgeSpriteRender_ = CreateRenderer("BoomEdge");
 }
 
 void MapTrain::UpdateBefore()
@@ -90,9 +93,6 @@ void MapTrain::Render()
 
 	// 진짜 맵
 	mainSpriteRender_->Render();
-
-	//
-	boomSpriteRender_->Render();
 }
 
 void MapTrain::GroundUpdate(float4 pos)
@@ -105,13 +105,19 @@ void MapTrain::GroundUpdate(float4 pos)
 		{ 100.f, 100.f },
 		RGB(0, 255, 0));
 
-	//float4 mousepos = GameEngineWindow::GetInst().GetMousePos() + pos;
 	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
-	mapImage->TransCopy(boomSpriteRender_->GetImage(),
+	mapImage->TransCopy(boomEdgeSpriteRender_->GetImage(),
 		pos,
 		{ 100.f, 100.f },
 		{ 0.f, 0.f },
 		{ 100.f, 100.f },
 		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
 }
 

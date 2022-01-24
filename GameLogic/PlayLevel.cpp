@@ -32,6 +32,7 @@
 #include "Midground.h"
 #include "WindController.h"
 #include "FadeObject.h"
+#include "Cloud.h"
 
 #include "GlobalValue.h"
 
@@ -75,8 +76,6 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 
 void PlayLevel::Loading()
 {
-	AJYLoading();
-
 	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
 	{
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
@@ -96,10 +95,16 @@ void PlayLevel::Loading()
 		windController_ = CreateActor<WindController>();
 	}
 
-	for (int i = 0; i < 69; i++)
+	for (int i = 0; i < 70; i++)
 	{
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
 		newScatter->SetParent(windController_);
+	}
+
+	for (int i = 0; i < 50; i++)
+	{
+		Cloud* newCloud = CreateActor<Cloud>();
+		newCloud->SetParent(windController_);
 	}
 
 	// 뒷배경 생성
@@ -119,19 +124,17 @@ void PlayLevel::Loading()
 
 void PlayLevel::LevelUpdate()
 {
-	AJYLevelUpdate();
 	PJWLevelUpdate();
-
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
-		GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
+
+		//GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
 	}
 
 	{
 		// 디버깅 출력 내용입니다.
 		GameEngineDebugExtension::PrintDebugWindowText("Resolution : ", GameEngineWindow::GetInst().GetSize().x, " X ", GameEngineWindow::GetInst().GetSize().y);
-
 		GameEngineDebugExtension::PrintDebugWindowText("FPS : ", GameEngineTime::GetInst().GetFPS());
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
@@ -146,14 +149,6 @@ void PlayLevel::LevelUpdate()
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 8 Pos X : ", Controller_->GetWormList()[7]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[7]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
-	}
-}
-
-void PlayLevel::AJYLoading()
-{
-	if (false == GameEngineInput::GetInst().IsKey("Boom"))
-	{
-		GameEngineInput::GetInst().CreateKey("Boom", VK_LBUTTON);
 	}
 }
 
@@ -175,20 +170,7 @@ void PlayLevel::wormLoading()
 
 	// 플레이어별 UIController 생성
 	Controller_->CreateWormUI();
-}
-
-void PlayLevel::AJYLevelUpdate()
-{
-	if (true == GameEngineInput::GetInst().IsDown("Boom"))
-	{
-		Bazooka_ = CreateActor<Bazooka>();
-		float4 mousepos = GameEngineWindow::GetInst().GetMousePos();
-		Bazooka_->SetPos(mousepos);
-
-		//Train_->GroundUpdate();
-		//테스트 삽입 이현
-		//CreateExplosion();
-	}
+	GameEngineTime::GetInst().TimeCheck();
 }
 
 void PlayLevel::GroundExplosion(float4 _pos)
