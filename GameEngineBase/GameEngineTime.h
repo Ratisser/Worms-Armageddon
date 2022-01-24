@@ -58,7 +58,7 @@ public:
 
 public:		// delete constructer
 	GameEngineTime(const GameEngineTime& _Other) = delete; // default Copy constructer 디폴트 복사생성자
-	GameEngineTime(const GameEngineTime&& _Other); // default RValue Copy constructer 디폴트 RValue 복사생성자
+	GameEngineTime(const GameEngineTime&& _Other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
 public:		//delete operator
 	GameEngineTime& operator=(const GameEngineTime& _Other) = delete; // default Copy operator 디폴트 대입 연산자

@@ -381,6 +381,15 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "firePunchReadyRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "firePunchStartLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "firePunchStartRight.bmp", cutSize);
+	// 우지 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "uziOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziOnRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziAimLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziAimRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziFireLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "uziFireRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

@@ -34,6 +34,16 @@ public:
 	void SetUIController(UIController* _uicontroller);
 	UIController* GetCurUIController() const;
 
+	void Damage(int _numDamage);
+	bool IsDie() const;
+
+	void AddActionToken(int _numToken);
+	void SubtractActionToken(int _numToken);
+	void ClearActionToken();
+	int GetActionTokenCount() const;
+
+	float4 GetForward() const;
+
 private:
 	void initRenderer();
 	void initInput();
@@ -91,6 +101,12 @@ private:
 	StateInfo startFirepunchOff(StateInfo _state);
 	StateInfo updateFirepunchOff(StateInfo _state);
 
+	StateInfo startUziAim(StateInfo _state);
+	StateInfo updateUziAim(StateInfo _state);
+	StateInfo startUziFire(StateInfo _state);
+	StateInfo updateUziFire(StateInfo _state);
+	StateInfo startUziWait(StateInfo _state);
+	StateInfo updateUziWait(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;
@@ -127,6 +143,9 @@ private:
 	float currentRotation_;
 	float firePower_;
 
+	int hp_;
+	int actionToken_;
+	
 	eItemList currentWeapon_;
 
 	std::string nextState_;
