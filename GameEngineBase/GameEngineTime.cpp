@@ -5,8 +5,8 @@ GameEngineTime* GameEngineTime::Inst = new GameEngineTime();
 // Static Func
 // constructer destructer
 GameEngineTime::GameEngineTime() :
-	F_(0.f),
-	FPS_(0.f),
+	F_(0),
+	FPS_(0),
 	Second_(0.f),
 	deltaTime_(0.f)
 {
@@ -21,8 +21,8 @@ GameEngineTime::GameEngineTime(const GameEngineTime&& _Other)
 	: timeCount_(_Other.timeCount_),
 	startCheck_(_Other.startCheck_),
 	endCheck_(_Other.endCheck_),
-	F_(0.f),
-	FPS_(0.f),
+	F_(0),
+	FPS_(0),
 	Second_(0.f),
 	deltaTime_(0.f)
 {

@@ -135,6 +135,7 @@ void PlayLevel::LevelUpdate()
 		GameEngineDebugExtension::PrintDebugWindowText("FPS : ", GameEngineTime::GetInst().GetFPS());
 		GameEngineDebugExtension::PrintDebugWindowText("CamPos X : ", GetCamPos().ix(), ", CamPos Y : ", GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Mouse X : ", GameEngineWindow::GetInst().GetMousePos().x, ", Mouse Y : ", GameEngineWindow::GetInst().GetMousePos().y);
+		GameEngineDebugExtension::PrintDebugWindowText("Mouse+CamPos X : ", GameEngineWindow::GetInst().GetMousePos().x + GetCamPos().ix(), ", Mouse+CamPos Y : ", GameEngineWindow::GetInst().GetMousePos().y+ GetCamPos().iy());
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 1 Pos X : ", Controller_->GetWormList()[0]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[0]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 2 Pos X : ", Controller_->GetWormList()[1]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[1]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 3 Pos X : ", Controller_->GetWormList()[2]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[2]->GetPos().y);
@@ -310,8 +311,8 @@ void PlayLevel::MakeWaterLevel(float _WaterLevel) // ¸Ê ¹Ù´ÚÀÇ ¼ö¸é »ý¼º
 
 void PlayLevel::CreateGimmickObject()
 {
-	DrumActor* DrumActor1 = CreateActor<DrumActor>();
-
+	DrumActor* DrumActor1 = CreateActor<DrumActor>(float4(1600.f,250.f));
+	DrumActor1->SetRenderOrder((int)RenderOrder::Max);
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 }
 

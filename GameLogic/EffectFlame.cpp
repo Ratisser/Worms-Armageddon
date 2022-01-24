@@ -85,7 +85,8 @@ Effect::Flame2::Flame2() :
 	Dir_{},
 	GravityAcc(0.f),
 	GravitySpeed(0.f),
-	ExplodeSpeed(0.f)
+	ExplodeSpeed(0.f),
+	gentime(0.f)
 {
 }
 Effect::Flame2::~Flame2()
@@ -95,7 +96,8 @@ Effect::Flame2::Flame2(Flame2&& _other) noexcept :
 	Dir_{},
 	GravityAcc(0.f),
 	GravitySpeed(0.f),
-	ExplodeSpeed(0.f)
+	ExplodeSpeed(0.f),
+	gentime(0.f)
 {
 }
 

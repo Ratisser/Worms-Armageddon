@@ -49,10 +49,10 @@ public:
 	void CreateGimmickObject();
 	void GroundExplosion(float4 _pos);
 
-	void CreateExplosion100(float4 Pos); //test
-	void CreateExplosion75(float4 Pos); //test
-	void CreateExplosion50(float4 Pos); //test
-	void CreateExplosion25(float4 Pos); //test
+	void CreateExplosion100(float4 Pos); 
+	void CreateExplosion75(float4 Pos); 
+	void CreateExplosion50(float4 Pos); 
+	void CreateExplosion25(float4 Pos); 
 private:
 	void AJYLoading();
 	void wormLoading();
@@ -60,5 +60,14 @@ private:
 	void PJWLevelUpdate();
 private:
 	void RandomWormArrange(float _minX, float _maxX);
+
+public:
+	WindController* GetWindController()
+	{
+		return windController_;
+	}
+
+
+
 };
 

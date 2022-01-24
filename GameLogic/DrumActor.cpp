@@ -4,9 +4,12 @@
 #include <GameEngineCollision.h>
 #include <GameEngineTime.h>
 #include "PlayLevel.h"
+#include "WindController.h"
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
+
+#include "Petroleum.h"
 
 
 DrumActor::DrumActor():
@@ -14,7 +17,8 @@ DrumActor::DrumActor():
 	mainSpriteRender_(nullptr),
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false)
+	DrumCollision_(false),
+	PetroleumSpeed(150.f)
 	// default constructer 디폴트 생성자
 {
 
@@ -30,7 +34,8 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	mainSpriteRender_(nullptr) , // default RValue Copy constructer 디폴트 RValue 복사생성자
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false)
+	DrumCollision_(false),
+	PetroleumSpeed(150.f)
 {
 
 }
@@ -57,6 +62,7 @@ void DrumActor::UpdateBefore()
 void DrumActor::Update()
 {
 	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+
 	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM)))
 	{
 		Phase_ +=  deltaTime;
@@ -126,9 +132,29 @@ void DrumActor::DrumBoil(float kelvin)
 void DrumActor::DrumExplode()
 {
 	GetLevel<PlayLevel>()->CreateExplosion75(pos_);
-	// 기름 이펙트 생성 함수
-	Death();
 
+	GameEngineMath::Random random;
+	float RandomFloat;
+	float degree;
+	float curwind = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
+	float4 RandomRot = { 1.f,0.f,0.f };
+
+	for (int i = 0; i < 9; ++i)
+	{
+		RandomRot = { 1.f,0.f,0.f }; //초기화
+
+		RandomFloat = random.RandomFloat(-20.f, 20.f);
+		degree = (i * 72.f) + RandomFloat;
+
+		RandomRot = RandomRot.DegreeTofloat2(degree); 
+		RandomRot.x += curwind;
+
+		Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
+		_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
+		_Petroleum->SetDir(RandomRot* PetroleumSpeed);
+	}
+
+	Death();
 }
 
 void DrumActor::DrumCollision(GameEngineCollision* Collider_)

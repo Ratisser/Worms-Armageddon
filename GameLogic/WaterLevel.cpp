@@ -36,7 +36,7 @@ void WaterLevel::WaterLevelUp(float deltaTime)
 	{
 		(*iterfirst)->SetMove(float4::UP * MOVE_SPEED * deltaTime);
 	}
-	waterLevel_ += (MOVE_SPEED * deltaTime);
+	waterLevel_ -= (MOVE_SPEED * deltaTime);
 }
 
 void WaterLevel::WaterLevelDown(float deltaTime)
@@ -48,7 +48,7 @@ void WaterLevel::WaterLevelDown(float deltaTime)
 	{
 		(*iterfirst)->SetMove(float4::DOWN * MOVE_SPEED * deltaTime);
 	}
-	waterLevel_ -= (MOVE_SPEED * deltaTime);
+	waterLevel_ += (MOVE_SPEED * deltaTime);
 }
 
 void WaterLevel::Start()

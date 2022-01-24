@@ -114,6 +114,25 @@ public:
 		return float4(cosf(_Radian), sinf(_Radian));
 	}
 
+	//Normalize를 리턴함
+	static float4 NormalizeReturn2D(float4 Vector)
+	{
+		float Dist = sqrtf(Vector.x * Vector.x + Vector.y * Vector.y);
+		float4 RetVector = { Vector.x / Dist, Vector.y / Dist };
+
+		return RetVector;
+	}
+
+	static float Dist2D(float4 Vector)
+	{
+		return sqrtf(Vector.x * Vector.x + Vector.y * Vector.y);
+	}
+
+	static float RadianToDegree(float rad)
+	{
+		return 180.0f / GameEngineMath::PI * rad;
+	}
+
 public:
 	// unnamed union을 선언하면 
 	// 내부의 메모리를 구조를 union 방식으로 구성해준다.
@@ -137,6 +156,14 @@ public:
 
 		// 실수는 기본적으로 00000000 00000000 00000000 00000000
 	};
+
+	// 자신이 Normalize됨
+	void Normalize2D()
+	{
+		float Dist = sqrtf(x * x + y * y);
+		x /= Dist;
+		y /= Dist;
+	}
 
 	float4 operator+(const float4 _other) const
 	{

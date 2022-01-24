@@ -12,6 +12,8 @@ private:	// member Var
 	GameEngineCollision* BodyCollision_; // 몸통
 
 	float Phase_; // 드럼통이 가열된 정도, Max = 3.f
+
+	const float PetroleumSpeed;
 	bool DrumCollision_;
 
 	// 직접적인 직격, 혹은 화염에 일정시간 노출되었을 경우

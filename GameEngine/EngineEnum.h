@@ -20,8 +20,8 @@ enum class RenderOrder
 	// 각자 추가, 배치하여 사용하길 바람 - 이현
 	None,
 	BackGround,
-	WaterLevel_Back,
 	MapBack,
+	WaterLevel_Back,
 	Map,
 	Worm,
 	WaterLevel_Front,

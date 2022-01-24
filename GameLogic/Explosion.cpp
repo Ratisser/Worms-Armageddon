@@ -5,6 +5,7 @@
 #include "EffectSmkdrk.h"
 #include "EffectFlame.h"
 #include "GameEngineLevel.h"
+#include "Petroleum.h"
 
 // Size25
 
@@ -128,6 +129,7 @@ void EffectBundle::Explosion::Size25::Start()
 		Flame2Effect->SetPos(pos_);
 		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
 	}
+	Death();
 }
 
 void EffectBundle::Explosion::Size25::UpdateBefore()
@@ -269,6 +271,7 @@ void EffectBundle::Explosion::Size50::Start()
 		Flame2Effect->SetPos(pos_);
 		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
 	}
+	Death();
 }
 
 void EffectBundle::Explosion::Size50::UpdateBefore()
@@ -410,6 +413,7 @@ void EffectBundle::Explosion::Size75::Start()
 		Flame2Effect->SetPos(pos_);
 		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
 	}
+	Death();
 }
 
 void EffectBundle::Explosion::Size75::UpdateBefore()
@@ -563,6 +567,8 @@ void EffectBundle::Explosion::Size100::Start()
 		Flame2Effect->SetPos(pos_);
 		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
 	}
+
+	Death();
 }
 
 void EffectBundle::Explosion::Size100::UpdateBefore()
