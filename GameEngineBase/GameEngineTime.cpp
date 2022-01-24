@@ -6,9 +6,9 @@ GameEngineTime* GameEngineTime::Inst = new GameEngineTime();
 // constructer destructer
 GameEngineTime::GameEngineTime() :
 	F_(0),
-	FPS_(0.f),
-	Second_(0.f),
-	deltaTime_(0.f)
+	FPS_(0),
+	Second_(0),
+	deltaTime_(0.0)
 {
 	TimeCheckReset();
 }
@@ -32,7 +32,7 @@ void GameEngineTime::TimeCheck()
 	deltaTime_ = static_cast<double>((endCheck_.QuadPart - startCheck_.QuadPart)) / static_cast<double>(timeCount_.QuadPart);
 	startCheck_.QuadPart = endCheck_.QuadPart;
 
-	Second_ += deltaTime_;
+	Second_ += static_cast<float>(deltaTime_);
 	F_++;
 
 	if (Second_ >= 1.f)
