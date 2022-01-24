@@ -100,6 +100,9 @@
     <Filter Include="Actor\LobbyLevel\UI\Chatting">
       <UniqueIdentifier>{ebf9e9ec-def2-4de4-bbe9-35e535daf5ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Button">
+      <UniqueIdentifier>{1a511075-59a9-4ec3-8221-4faab3936da8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -273,6 +276,9 @@
     <ClInclude Include="ChattingHistory.h">
       <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyStartButton.h">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -436,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="ChattingHistory.cpp">
       <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyStartButton.cpp">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
