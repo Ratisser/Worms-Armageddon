@@ -8,18 +8,11 @@ class GameEngineMath;
 class Worm;
 class GameController : public GameEngineActor
 {
-private:	// member Var
-	float randomFloatContainer_;
-
 public:
 	GameController(); // default constructer 디폴트 생성자
 	~GameController(); // default destructer 디폴트 소멸자
-
-protected:		// delete constructer
 	GameController(const GameController& _other) = delete; // default Copy constructer 디폴트 복사생성자
 	GameController(GameController&& _other) = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
-
-private:		//delete operator
 	GameController& operator=(const GameController& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	GameController& operator=(const GameController&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
@@ -30,6 +23,7 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+public:
 	void CreateWorm(const float _minX, const float _maxX);
 	void CreateWormUI();
 
@@ -37,9 +31,40 @@ public:
 	Worm* GetCurWorm() const;
 
 private:
+	void initState();
+
+private:
+#pragma region States
+
+	StateInfo startNextWorm(StateInfo _state);
+	StateInfo updateNextWorm(StateInfo _state);
+
+	StateInfo startAction(StateInfo _state);
+	StateInfo updateAction(StateInfo _state);
+
+	StateInfo startActionEnd(StateInfo _state);
+	StateInfo updateActionEnd(StateInfo _state);
+
+	StateInfo startDeath(StateInfo _state);
+	StateInfo updateDeath(StateInfo _state);
+
+	StateInfo startVictory(StateInfo _state);
+	StateInfo updateVictory(StateInfo _state);
+
+	StateInfo startItemDrop(StateInfo _state);
+	StateInfo updateItemDrop(StateInfo _state);
+
+	StateInfo startFreeCam(StateInfo _state);
+	StateInfo updateFreeCam(StateInfo _state);
+
+#pragma endregion
+
+
+private:
 	const int MAX_WORM_COUNT = 8;
 
 private:
+	GameEngineFSM<GameController> state_;
 	std::vector<Worm*> wormList_;
 	std::vector<float> xPosList_;
 	size_t currentIndex_;
@@ -49,9 +74,9 @@ private:
 	int prevwormIndex_;
 	bool IsCameraMove_;
 	float4 cameraPos_;
+	float randomFloatContainer_;
 
 	float currentTurnTime_;
-	
 
 };
 

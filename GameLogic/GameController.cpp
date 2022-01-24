@@ -19,6 +19,9 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, prevwormIndex_(MAX_WORM_COUNT)
 	, IsCameraMove_(false)
 	, cameraPos_(0.f, 0.f)
+	, state_(this)
+	, currentTurnTime_(0.0f)
+	, randomFloatContainer_(0.0f)
 {
 
 }
@@ -30,6 +33,8 @@ GameController::~GameController() // default destructer 디폴트 소멸자
 
 void GameController::Start()
 {
+	initState();
+
 	if (false == GameEngineInput::GetInst().IsKey("Up"))
 	{
 		GameEngineInput::GetInst().CreateKey("Up", VK_UP);
@@ -170,6 +175,8 @@ void GameController::Update()
 			}
 		}
 	}
+
+	state_.Update();
 }
 
 void GameController::UpdateAfter()
@@ -265,4 +272,9 @@ Worm* GameController::GetCurWorm() const
 	}
 
 	return wormList_[wormIndex_];
+}
+
+void GameController::initState()
+{
+	
 }
