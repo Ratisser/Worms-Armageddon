@@ -1,4 +1,5 @@
 #include "LobbyHost.h"
+#include "ChattingHistory.h"
 
 #include <EngineEnum.h>
 #include <GameEngineWindow.h>
@@ -43,6 +44,8 @@ void LobbyHost::Start()
 
 	// 해당 컴퓨터명으로 Host명 설정
 	hostName_ = ComputerName;
+	ChattingHistory::CurHostName(hostName_);
+
 	SetBkMode(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), TRANSPARENT);
 	SetTextColor(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), RGB(255, 255, 255));
 

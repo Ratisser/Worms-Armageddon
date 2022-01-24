@@ -4,6 +4,8 @@
 #include "WindController.h"
 #include "BackgroundScatter.h"
 #include "LobbyHost.h"
+#include "ChattingInput.h"
+#include "ChattingHistory.h"
 #include "MouseObject.h"
 
 #include <GameEngineInput.h>
@@ -87,6 +89,10 @@ void LobbyLevel::Loading_SJH()
 	SelectMapImage->SetPos({ HalfResoultion.x + 100.f, 20.f });
 	SelectMapImage->CreateSelMapImageNameList(ImageNameList);
 	SelectMapImage->SetCurMapIndex(CurMapIndex);
+
+	// 채팅기능
+	CreateActor<ChattingHistory>(); // 채팅이력
+	CreateActor<ChattingInput>(); // 채팅 입력
 
 	// 호스트
 	CreateActor<LobbyHost>();

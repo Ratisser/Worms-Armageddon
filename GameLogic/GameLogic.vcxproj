@@ -28,6 +28,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="ChattingHistory.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Cloud.h">
       <SubType>
       </SubType>
@@ -41,6 +45,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GlobalValue.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ChattingInput.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -214,6 +222,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="ChattingHistory.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Cloud.cpp">
       <SubType>
       </SubType>
@@ -227,6 +239,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ChattingInput.cpp">
       <SubType>
       </SubType>
     </ClCompile>

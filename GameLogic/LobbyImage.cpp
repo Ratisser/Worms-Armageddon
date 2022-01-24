@@ -15,8 +15,6 @@ LobbyImage::LobbyImage() :
 	playerboxSpriteRender_(nullptr),
 	hostreadySpriteRender_(nullptr),
 	playerselboxSpriteRender_(nullptr),
-	chattingHisBoxSpriteRender_(nullptr),
-	chattingInputBoxSpriteRender_(nullptr),
 	hostreadyCollision_(nullptr)
 {
 	SetRenderOrder(static_cast<int>(RenderOrder::BackGround));
@@ -35,8 +33,6 @@ LobbyImage::LobbyImage(LobbyImage&& _other) noexcept :
 	hostreadySpriteRender_(_other.hostreadySpriteRender_),
 	playerselInputSpriteRender_(_other.playerselInputSpriteRender_),
 	playerselboxSpriteRender_(_other.playerselboxSpriteRender_),
-	chattingHisBoxSpriteRender_(_other.chattingHisBoxSpriteRender_),
-	chattingInputBoxSpriteRender_(_other.chattingInputBoxSpriteRender_),
 	hostreadyCollision_(_other.hostreadyCollision_)
 {
 }
@@ -88,19 +84,6 @@ void LobbyImage::Start()
 	playerselboxSpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 220.f, ImageHarfSize.y + 232.f));
 	playerselboxSpriteRender_->SetRenderSize(float4(250.f, 150.f));
 	playerselboxSpriteRender_->SetCameraEffectOff();
-
-	// Chatting Box
-	chattingHisBoxSpriteRender_ = CreateRenderer("Lobby_ChattingHis");
-	ImageHarfSize = chattingHisBoxSpriteRender_->GetImageSize().halffloat4();
-	chattingHisBoxSpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 390.f));
-	chattingHisBoxSpriteRender_->SetRenderSize(float4(1260.f, 250.f));
-	chattingHisBoxSpriteRender_->SetCameraEffectOff();
-
-	chattingInputBoxSpriteRender_ = CreateRenderer("Lobby_ChattingInput");
-	ImageHarfSize = chattingInputBoxSpriteRender_->GetImageSize().halffloat4();
-	chattingInputBoxSpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 650.f));
-	chattingInputBoxSpriteRender_->SetRenderSize(float4(1000.f, 32.f));
-	chattingInputBoxSpriteRender_->SetCameraEffectOff();
 
 	// Å°»ý¼º
 	if (false == GameEngineInput::GetInst().IsKey("Host_Ready"))
@@ -170,8 +153,4 @@ void LobbyImage::Render()
 
 	// Host Ready Button
 	hostreadySpriteRender_->Render();
-
-	// Chatting
-	chattingHisBoxSpriteRender_->Render();
-	chattingInputBoxSpriteRender_->Render();
 }

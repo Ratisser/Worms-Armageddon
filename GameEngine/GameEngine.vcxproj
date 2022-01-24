@@ -198,6 +198,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="KeyboardClass.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KeyboardEvent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineEnum.h" />
@@ -232,6 +240,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="KeyboardClass.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="KeyboardEvent.h">
       <SubType>
       </SubType>
     </ClInclude>

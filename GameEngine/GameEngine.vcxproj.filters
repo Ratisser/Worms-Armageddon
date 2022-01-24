@@ -7,6 +7,9 @@
     <Filter Include="Level0%28OS%29">
       <UniqueIdentifier>{5c8fa7a8-cea9-4acd-b44a-c0ca09d0c237}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Level0%28OS%29\Keyboard">
+      <UniqueIdentifier>{e07be683-4988-4b33-a1bf-9c3a7bfe2e2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineLevel.h">
@@ -42,6 +45,12 @@
     <ClInclude Include="GameEngineImage.h">
       <Filter>Level0%28OS%29</Filter>
     </ClInclude>
+    <ClInclude Include="KeyboardClass.h">
+      <Filter>Level0%28OS%29\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardEvent.h">
+      <Filter>Level0%28OS%29\Keyboard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineLevel.cpp">
@@ -76,6 +85,12 @@
     </ClCompile>
     <ClCompile Include="GameEngineImage.cpp">
       <Filter>Level0%28OS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardClass.cpp">
+      <Filter>Level0%28OS%29\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardEvent.cpp">
+      <Filter>Level0%28OS%29\Keyboard</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

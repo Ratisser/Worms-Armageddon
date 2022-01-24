@@ -94,6 +94,12 @@
     <Filter Include="Actor\MenuSelectLevel">
       <UniqueIdentifier>{77bda3dc-c455-47a2-9fec-66a1ce7021a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\UI">
+      <UniqueIdentifier>{b6305556-e818-4fca-9e1e-d8d77269d367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Chatting">
+      <UniqueIdentifier>{ebf9e9ec-def2-4de4-bbe9-35e535daf5ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -261,6 +267,12 @@
     <ClInclude Include="LobbyHost.h">
       <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
+    <ClInclude Include="ChattingInput.h">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClInclude>
+    <ClInclude Include="ChattingHistory.h">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -418,6 +430,12 @@
     </ClCompile>
     <ClCompile Include="LobbyHost.cpp">
       <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingInput.cpp">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

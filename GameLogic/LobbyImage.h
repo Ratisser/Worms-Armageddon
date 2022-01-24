@@ -19,8 +19,6 @@ private:
 	GameEngineRenderer* hostreadySpriteRender_;	// host ready button
 	GameEngineRenderer* playerselInputSpriteRender_;
 	GameEngineRenderer* playerselboxSpriteRender_;
-	GameEngineRenderer* chattingHisBoxSpriteRender_;
-	GameEngineRenderer* chattingInputBoxSpriteRender_;
 
 private:
 	GameEngineCollision* hostreadyCollision_;
