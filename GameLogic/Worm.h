@@ -38,6 +38,7 @@ public:
 	bool IsDie() const;
 
 	void AddActionToken(int _numToken);
+	void SubtractActionToken(int _numToken);
 	int GetActionTokenCount() const;
 
 private:

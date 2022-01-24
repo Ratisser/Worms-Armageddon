@@ -54,14 +54,12 @@ private:
 	StateInfo startItemDrop(StateInfo _state);
 	StateInfo updateItemDrop(StateInfo _state);
 
-	StateInfo startFreeCam(StateInfo _state);
-	StateInfo updateFreeCam(StateInfo _state);
-
 #pragma endregion
 
 
 private:
 	const int MAX_WORM_COUNT = 8;
+	const float DEFAULT_TURN_TIME = 3.f;
 
 private:
 	GameEngineFSM<GameController> state_;

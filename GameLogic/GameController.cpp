@@ -57,7 +57,13 @@ void GameController::Start()
 
 	if (false == GameEngineInput::GetInst().IsKey("CameraFocus"))
 	{
-		GameEngineInput::GetInst().CreateKey("CameraFocus", 0x31);
+		GameEngineInput::GetInst().CreateKey("CameraFocus", '1');
+	}
+
+	// TODO : 테스트가 끝난 후 삭제
+	if (false == GameEngineInput::GetInst().IsKey("TestKey1"))
+	{
+		GameEngineInput::GetInst().CreateKey("TestKey1", 't');
 	}
 
 	// UI
@@ -73,77 +79,6 @@ void GameController::UpdateBefore()
 
 void GameController::Update()
 {
-	if (true == GameEngineInput::GetInst().IsPress("Up"))
-	{
-		GetLevel()->SetCamMove(float4::UP * cameraMoveSpeed_);
-	}
-
-	if (true == GameEngineInput::GetInst().IsPress("Down"))
-	{
-		GetLevel()->SetCamMove(float4::DOWN * cameraMoveSpeed_);
-	}
-
-	if (true == GameEngineInput::GetInst().IsPress("Left"))
-	{
-		GetLevel()->SetCamMove(float4::LEFT * cameraMoveSpeed_);
-	}
-
-	if (true == GameEngineInput::GetInst().IsPress("Right"))
-	{
-		GetLevel()->SetCamMove(float4::RIGHT * cameraMoveSpeed_);
-	}
-
-	if (true == GameEngineInput::GetInst().IsDown("CameraFocus"))
-	{
-		prevwormIndex_ = wormIndex_;
-
-		++wormIndex_;
-
-		if (true == IsCameraMove_)
-		{
-			wormIndex_ = 0;
-			IsCameraMove_ = false;
-		}	
-
-		if (false == IsCameraMove_)
-		{
-			for (int i = 0; i < MAX_WORM_COUNT; i++)
-			{
-				if (i == wormIndex_)
-				{
-					wormList_[wormIndex_]->SetFocus(true);
-
-				}
-				else
-				{
-					wormList_[i]->SetFocus(false);
-				}
-			}
-		}
-
-
-
-	}
-
-	if (wormIndex_ == MAX_WORM_COUNT)
-	{
-		IsCameraMove_ = true;
-
-		for (int i = 0; i < MAX_WORM_COUNT; ++i)
-		{
-			wormList_[i]->SetFocus(false);
-		}
-	}
-	else
-	{
-		cameraPos_ = GetLevel()->GetCamPos();
-
-		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
-		float4 MoveVector = cameraMovePos - cameraPos_;
-
-		GetLevel()->SetCamMove(MoveVector * 0.1f);
-	}
-
 	// UI
 	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
 	{
@@ -181,6 +116,47 @@ void GameController::Update()
 
 void GameController::UpdateAfter()
 {
+	if (true == GameEngineInput::GetInst().IsDown("CameraFocus"))
+	{
+		IsCameraMove_ = !IsCameraMove_;
+	}
+
+	if (IsCameraMove_)
+	{
+		if (true == GameEngineInput::GetInst().IsPress("Up"))
+		{
+			GetLevel()->SetCamMove(float4::UP * cameraMoveSpeed_);
+		}
+
+		if (true == GameEngineInput::GetInst().IsPress("Down"))
+		{
+			GetLevel()->SetCamMove(float4::DOWN * cameraMoveSpeed_);
+		}
+
+		if (true == GameEngineInput::GetInst().IsPress("Left"))
+		{
+			GetLevel()->SetCamMove(float4::LEFT * cameraMoveSpeed_);
+		}
+
+		if (true == GameEngineInput::GetInst().IsPress("Right"))
+		{
+			GetLevel()->SetCamMove(float4::RIGHT * cameraMoveSpeed_);
+		}
+
+		for (int i = 0; i < MAX_WORM_COUNT; ++i)
+		{
+			wormList_[i]->SetFocus(false);
+		}
+	}
+	else
+	{
+		cameraPos_ = GetLevel()->GetCamPos();
+
+		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
+		float4 MoveVector = cameraMovePos - cameraPos_;
+
+		GetLevel()->SetCamMove(MoveVector * 0.1f);
+	}
 }
 
 void GameController::Render()
@@ -213,7 +189,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 
 	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
 	newArrow->SetParent(newWorm);
-	
+
 	newWorm->SetPos({ randomFloatContainer_ , -500.0f });
 	newWorm->SetFocus(false);
 	wormList_.push_back(newWorm);
@@ -276,5 +252,101 @@ Worm* GameController::GetCurWorm() const
 
 void GameController::initState()
 {
-	
+	state_.CreateState("NextWorm", &GameController::startNextWorm, &GameController::updateNextWorm);
+	state_.CreateState("Action", &GameController::startAction, &GameController::updateAction);
+	state_.CreateState("ActionEnd", &GameController::startActionEnd, &GameController::updateActionEnd);
+	state_.CreateState("Death", &GameController::startDeath, &GameController::updateDeath);
+	state_.CreateState("Victory", &GameController::startVictory, &GameController::updateVictory);
+	state_.CreateState("ItemDrop", &GameController::startItemDrop, &GameController::updateItemDrop);
+
+	state_.ChangeState("NextWorm");
+}
+
+StateInfo GameController::startNextWorm(StateInfo _state)
+{
+	prevwormIndex_ = wormIndex_;
+
+	++wormIndex_;
+
+	if (wormIndex_ == MAX_WORM_COUNT)
+	{
+		wormIndex_ = 0;
+
+	}
+
+	for (int i = 0; i < MAX_WORM_COUNT; i++)
+	{
+		if (i == wormIndex_)
+		{
+			wormList_[wormIndex_]->SetFocus(true);
+
+		}
+		else
+		{
+			wormList_[i]->SetFocus(false);
+		}
+	}
+
+	return StateInfo();
+}
+
+StateInfo GameController::updateNextWorm(StateInfo _state)
+{
+	currentWorm_->AddActionToken(1);
+	currentTurnTime_ = DEFAULT_TURN_TIME;
+	return "Action";
+}
+
+StateInfo GameController::startAction(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::updateAction(StateInfo _state)
+{
+	if (GameEngineInput::GetInst().IsDown("TestKey1"))
+	{
+
+	}
+	return StateInfo();
+}
+
+StateInfo GameController::startActionEnd(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::updateActionEnd(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::startDeath(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::updateDeath(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::startVictory(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::updateVictory(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::startItemDrop(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::updateItemDrop(StateInfo _state)
+{
+	return StateInfo();
 }

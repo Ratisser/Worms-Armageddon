@@ -1386,6 +1386,16 @@ void Worm::AddActionToken(int _numToken)
 	actionToken_ += _numToken;
 }
 
+void Worm::SubtractActionToken(int _numToken)
+{
+	actionToken_ -= _numToken;
+
+	if (actionToken_ < 0)
+	{
+		actionToken_ = 0;
+	}
+}
+
 int Worm::GetActionTokenCount() const
 {
 	return actionToken_;
