@@ -1376,7 +1376,7 @@ void Worm::Damage(int _numDamage)
 	}
 }
 
-bool Worm::IsDie()
+bool Worm::IsDie() const
 {
 	return hp_ <= 0;
 }
@@ -1386,7 +1386,7 @@ void Worm::AddActionToken(int _numToken)
 	actionToken_ += _numToken;
 }
 
-int Worm::GetActionTokenCount()
+int Worm::GetActionTokenCount() const
 {
 	return actionToken_;
 }

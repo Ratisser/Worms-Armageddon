@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <GameEngineActor.h>
+#include <GameEngineFSM.h>
 
 class GameEngineMath;
 class Worm;
@@ -32,20 +33,8 @@ public:
 	void CreateWorm(const float _minX, const float _maxX);
 	void CreateWormUI();
 
-	std::vector<Worm*> GetWormList() const
-	{
-		return wormList_;
-	}
-
-	Worm* GetCurWorm() const
-	{
-		if (wormIndex_ == MAX_WORM_COUNT)
-		{
-			return nullptr;
-		}
-
-		return wormList_[wormIndex_];
-	}
+	std::vector<Worm*> GetWormList() const;
+	Worm* GetCurWorm() const;
 
 private:
 	const int MAX_WORM_COUNT = 8;
@@ -60,5 +49,9 @@ private:
 	int prevwormIndex_;
 	bool IsCameraMove_;
 	float4 cameraPos_;
+
+	float currentTurnTime_;
+	
+
 };
 

@@ -35,10 +35,10 @@ public:
 	UIController* GetCurUIController() const;
 
 	void Damage(int _numDamage);
-	bool IsDie();
+	bool IsDie() const;
 
 	void AddActionToken(int _numToken);
-	int GetActionTokenCount();
+	int GetActionTokenCount() const;
 
 private:
 	void initRenderer();

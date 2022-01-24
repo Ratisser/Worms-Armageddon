@@ -251,3 +251,18 @@ void GameController::CreateWormUI()
 		ItemListTest.clear();
 	}
 }
+
+std::vector<Worm*> GameController::GetWormList() const
+{
+	return wormList_;
+}
+
+Worm* GameController::GetCurWorm() const
+{
+	if (wormIndex_ == MAX_WORM_COUNT)
+	{
+		return nullptr;
+	}
+
+	return wormList_[wormIndex_];
+}
