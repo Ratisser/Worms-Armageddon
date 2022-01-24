@@ -15,6 +15,8 @@
 // 포인터형 싱글톤
 GameEngineWindow* GameEngineWindow::Inst = new GameEngineWindow();
 
+bool GameEngineWindow::caretshow_ = false;
+
 bool WindowOn = true;
 
 LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lParam)
@@ -51,14 +53,10 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
         }
         else if (ch == '\r') // Enter Key Down
         {
-            int a = 0;
-
             break;
         }
         else if (ch == ' ') // Space Key Down
         {
-            int a = 0;
-
             break;
         }
 
@@ -81,6 +79,20 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
     {
         unsigned char keycode = static_cast<unsigned char>(_wParam);
 
+        // 예외처리 : 해당 키들은 input에 등록하여 사용함
+        if (keycode == '\b') // BackSpace Key Down
+        {
+            break;
+        }
+        else if (keycode == '\r') // Enter Key Down
+        {
+            break;
+        }
+        else if (keycode == ' ') // Space Key Down
+        {
+            break;
+        }
+
         if (KeyboardClass::GetInst().IsKeysAutoRepeat())
         {
             KeyboardClass::GetInst().OnKeyPressed(keycode);
@@ -101,6 +113,25 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
         unsigned char keycode = static_cast<unsigned char>(_wParam);
         KeyboardClass::GetInst().OnKeyReleased(keycode);
 
+        return 0;
+    }
+    case WM_SETFOCUS:
+    {
+        // 캐럿 생성
+        if (true == GameEngineWindow::caretshow_)
+        {
+            CreateCaret(_hWnd, NULL, 2, 14);
+            ShowCaret(_hWnd);
+            SetCaretBlinkTime(10);
+            SetCaretPos(20, 660);
+        }
+
+        return 0;
+    }
+    case WM_KILLFOCUS:
+    {
+        HideCaret(_hWnd);
+        DestroyCaret();
         return 0;
     }
     default:

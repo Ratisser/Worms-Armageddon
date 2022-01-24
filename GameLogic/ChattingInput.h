@@ -9,6 +9,8 @@ class ChattingInput : public GameEngineActor
 private:	// member Var
 	bool ChattingInputOK_;
 	std::string InputText_;
+	int curcaretpos_;
+	int prevcaretpos_;
 
 private:
 	GameEngineRenderer* chattingInputBoxSpriteRender_;

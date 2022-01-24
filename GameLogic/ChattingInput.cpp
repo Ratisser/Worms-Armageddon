@@ -13,6 +13,8 @@
 
 ChattingInput::ChattingInput() :
 	ChattingInputOK_(false),
+	curcaretpos_(0),
+	prevcaretpos_(0),
 	chattingInputBoxSpriteRender_(nullptr),
 	chattinInputBoxCollision_(nullptr)
 {
@@ -21,11 +23,12 @@ ChattingInput::ChattingInput() :
 
 ChattingInput::~ChattingInput()
 {
-
 }
 
 ChattingInput::ChattingInput(ChattingInput&& _other) noexcept :
 	ChattingInputOK_(_other.ChattingInputOK_),
+	curcaretpos_(_other.curcaretpos_),
+	prevcaretpos_(_other.prevcaretpos_),
 	chattingInputBoxSpriteRender_(_other.chattingInputBoxSpriteRender_),
 	chattinInputBoxCollision_(_other.chattinInputBoxCollision_)
 {
@@ -79,8 +82,11 @@ void ChattingInput::UpdateBefore()
 				// Input On
 				ChattingInputOK_ = true;
 
-				// 커서 생성
-				
+				// 캐럿 생성
+				if (false == GameEngineWindow::caretshow_)
+				{
+					GameEngineWindow::caretshow_ = true;
+				}
 			}
 		}
 	}
@@ -116,6 +122,9 @@ void ChattingInput::Update()
 		if (!InputText_.empty())
 		{
 			InputText_.clear();
+
+			// 캐럿위치 초기화
+			SetCaretPos(20, 660);
 		}
 	}
 
@@ -125,6 +134,11 @@ void ChattingInput::Update()
 		if (!InputText_.empty())
 		{
 			InputText_.pop_back();
+
+			curcaretpos_ = static_cast<int>(lstrlen(InputText_.c_str()));
+			SIZE CurTextSize;
+			GetTextExtentPoint(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), InputText_.c_str(), lstrlen(InputText_.c_str()), &CurTextSize);
+			SetCaretPos(20 + CurTextSize.cx, 660);
 		}
 	}
 }
@@ -142,6 +156,14 @@ void ChattingInput::Render()
 	if (!InputText_.empty())
 	{
 		TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), 20, 660, InputText_.c_str(), lstrlen(InputText_.c_str()));
+
+		if (true == GameEngineWindow::caretshow_)
+		{
+			curcaretpos_ = static_cast<int>(lstrlen(InputText_.c_str()));
+			SIZE CurTextSize;
+			GetTextExtentPoint(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), InputText_.c_str(), lstrlen(InputText_.c_str()), &CurTextSize);
+			SetCaretPos(20 + CurTextSize.cx, 660);
+		}
 	}
 }
 
