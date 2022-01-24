@@ -163,12 +163,12 @@ void ChattingInput::Update()
 		// 채팅 입력창 활성화 시에만 아래 처리가능
 		if (true == ChattingInputOK_)
 		{
-			// 현재 입력된 문자열을 ChattingHistory로 넘겨준다.
-			ChattingHistory::ChattingHistoryAdd(InputText_);
-
-			// 모든 문자열을 넘겼다면 현재 입력 문자열을 클리어한다.
+			// 문자열이 있을때만 이력에 남길수있다.
 			if (!InputText_.empty())
 			{
+				// 현재 입력된 문자열을 ChattingHistory로 넘겨준다.
+				ChattingHistory::ChattingHistoryAdd(InputText_);
+
 				InputText_.clear();
 
 				// 캐럿위치 초기화
