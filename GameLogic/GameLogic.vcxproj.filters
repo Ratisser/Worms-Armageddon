@@ -258,6 +258,9 @@
     <ClInclude Include="Uzi.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyHost.h">
+      <Filter>Actor\LobbyLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -412,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="Uzi.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyHost.cpp">
+      <Filter>Actor\LobbyLevel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

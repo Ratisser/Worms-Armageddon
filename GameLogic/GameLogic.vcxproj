@@ -44,6 +44,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LobbyHost.h" />
     <ClInclude Include="LobbySelectMapImage.h" />
     <ClInclude Include="MenuSelBackDrop.h">
       <SubType>
@@ -229,6 +230,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LobbyHost.cpp" />
     <ClCompile Include="LobbySelectMapImage.cpp" />
     <ClCompile Include="MenuSelBackDrop.cpp">
       <SubType>

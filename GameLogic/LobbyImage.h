@@ -3,11 +3,27 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
+class GameEngineRenderer;
+class GameEngineCollision;
 class LobbyImage : public GameEngineActor
 {
-private:	// member Var
-	GameEngineRenderer* mainSpriteRender_;
+private:
+	bool hostready_;
 
+private:	// member Var
+	GameEngineRenderer* backdropSpriteRender_;
+
+private:
+	GameEngineRenderer* hostboxSpriteRender_;	// host(컴퓨터명)
+	GameEngineRenderer* playerboxSpriteRender_;	// 생성하고자하는 게임의 플레이어수
+	GameEngineRenderer* hostreadySpriteRender_;	// host ready button
+	GameEngineRenderer* playerselInputSpriteRender_;
+	GameEngineRenderer* playerselboxSpriteRender_;
+	GameEngineRenderer* chattingHisBoxSpriteRender_;
+	GameEngineRenderer* chattingInputBoxSpriteRender_;
+
+private:
+	GameEngineCollision* hostreadyCollision_;
 
 public:
 	LobbyImage(); // default constructer 디폴트 생성자

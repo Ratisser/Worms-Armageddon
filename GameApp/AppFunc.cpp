@@ -314,6 +314,52 @@ void LobbyImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("Lobby_Backdrop", Dir.PathToPlusFileName("Lobby_Backdrop.bmp"));
 
+	// 로비 화면 관련 Display Box
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostBox", Dir.PathToPlusFileName("4459.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_PlayerBox", Dir.PathToPlusFileName("6868.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SelPlayerInput", Dir.PathToPlusFileName("5619.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SelPlayerBox", Dir.PathToPlusFileName("6836.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingHis", Dir.PathToPlusFileName("13268.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingInput", Dir.PathToPlusFileName("24428.bmp"));
+
+	// 로비화면 호스트 레디 이미지
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\BigReadyBulb.seq"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOff", Dir.PathToPlusFileName("OFF_btn.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOn", Dir.PathToPlusFileName("ON_btn.bmp"));
+
+	// 로비화면 호스트 생성 리소스
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\ReadyYN.seq"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostCurReadyOn", Dir.PathToPlusFileName("ON.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostCurReadyOff", Dir.PathToPlusFileName("OFF.bmp"));
+
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\Nation"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("LobbyNation_Kor", Dir.PathToPlusFileName("Nation_Kor.bmp"));
+
 	// 선택가능 맵 이미지 로딩
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\SelectMap"))
@@ -326,7 +372,6 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCars", Dir.PathToPlusFileName("LobbyMap_MapCars.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCity", Dir.PathToPlusFileName("LobbyMap_MapCity.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapBooks", Dir.PathToPlusFileName("LobbyMap_MapBooks.bmp"));
-
 }
 
 void CharactorImageInit()

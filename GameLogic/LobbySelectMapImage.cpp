@@ -44,12 +44,12 @@ void LobbySelectMapImage::Start()
 
 	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 	mainrenderer_ = CreateRenderer("LobbyMap_MapTrain");
-	mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 200.f });
-	mainrenderer_->SetImagePivot({ 0.f, 0.f });
+	mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 180.f });
+	mainrenderer_->SetImagePivot({ 0.f, 10.f });
 	mainrenderer_->SetCameraEffectOff();
 
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
-	maincollision_->SetSize({ 520.f, 220.f});
+	maincollision_->SetSize({ 520.f, 220.f });
 	maincollision_->SetPivot({ 260.f, 110.f });	// 충돌체 크기 * 0.5 한곳이 기준점
 }
 
@@ -72,8 +72,8 @@ void LobbySelectMapImage::UpdateBefore()
 			}
 
 			mainrenderer_->SetImage(mapimagenamelist_[curmapimage_]);
-			mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 200.f });
-			mainrenderer_->SetImagePivot({ 0.f, 0.f });
+			mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 180.f });
+			mainrenderer_->SetImagePivot({ 0.f, 10.f });
 			mainrenderer_->SetCameraEffectOff();
 
 			// 전역변수에 현재선택된 맵이름 저장

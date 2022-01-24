@@ -3,6 +3,7 @@
 #include "LobbySelectMapImage.h"
 #include "WindController.h"
 #include "BackgroundScatter.h"
+#include "LobbyHost.h"
 #include "MouseObject.h"
 
 #include <GameEngineInput.h>
@@ -35,7 +36,6 @@ void LobbyLevel::Loading()
 
 	// 대기실화면 배경 및 맵선택 이미지
 	Loading_SJH();
-
 }
 
 void LobbyLevel::LevelUpdate()
@@ -87,6 +87,9 @@ void LobbyLevel::Loading_SJH()
 	SelectMapImage->SetPos({ HalfResoultion.x + 100.f, 20.f });
 	SelectMapImage->CreateSelMapImageNameList(ImageNameList);
 	SelectMapImage->SetCurMapIndex(CurMapIndex);
+
+	// 호스트
+	CreateActor<LobbyHost>();
 
 	// 마우스
 	CreateActor<MouseObject>();
