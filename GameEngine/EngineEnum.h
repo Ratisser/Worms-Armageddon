@@ -27,6 +27,9 @@ enum class RenderOrder
 	WaterLevel_Front,
 	Weapon,
 	Effect,
+	Effect1,
+	Effect2,
+	Effect3,
 	UI,
 	Mouse = 999,
 	Max

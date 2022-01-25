@@ -53,18 +53,6 @@ void WaterLevel::WaterLevelDown(float deltaTime)
 
 void WaterLevel::Start()
 {
-	
-	// 테스트 코드
-	{
-		if (false == GameEngineInput::GetInst().IsKey("TestWaterLevelUp"))
-		{
-			GameEngineInput::GetInst().CreateKey("TestWaterLevelUp", 'Q');
-		}
-		if (false == GameEngineInput::GetInst().IsKey("TestWaterLevelDown"))
-		{
-			GameEngineInput::GetInst().CreateKey("TestWaterLevelDown", 'E');
-		}
-	}
 }
 
 void WaterLevel::UpdateBefore()

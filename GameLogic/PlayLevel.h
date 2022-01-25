@@ -54,10 +54,10 @@ public:
 	void CreateGimmickObject();
 	void GroundExplosion(float4 _pos);
 
-	void CreateExplosion100(float4 Pos); //test
-	void CreateExplosion75(float4 Pos); //test
-	void CreateExplosion50(float4 Pos); //test
-	void CreateExplosion25(float4 Pos); //test
+	void CreateExplosion100(float4 Pos, int _Damage = 0, bool _DamageAll = false); //test
+	void CreateExplosion75(float4 Pos, int _Damage = 0, bool _DamageAll = false); //test
+	void CreateExplosion50(float4 Pos, int _Damage = 0, bool _DamageAll = false); //test
+	void CreateExplosion25(float4 Pos, int _Damage = 0, bool _DamageAll = false); //test
 
 	void GroundUpdate100(float4 _pos);
 	void GroundUpdate75(float4 _pos);
@@ -65,7 +65,7 @@ public:
 	void GroundUpdate25(float4 _pos);
 	void GroundUpdate13(float4 _pos);
 
-
+	void KeySetting();
 
 private:
 	void wormLoading();

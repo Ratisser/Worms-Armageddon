@@ -13,6 +13,7 @@ private:	// member Var
 	float4 prevPos_;
 
 	float degree_;
+	float WindSpeed_;
 	float deltaTime_;
 
 	float GravityAcc;
@@ -61,6 +62,11 @@ public:
 		Dir_.x = _Dirx;
 		Dir_.y = _Diry;
 		Dir_.z = 0.f;
+	}
+
+	void SetWindSpeed(float _WindSpeed)
+	{
+		WindSpeed_ = _WindSpeed;
 	}
 
 	float tempfuc(float degree)

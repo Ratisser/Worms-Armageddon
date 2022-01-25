@@ -94,6 +94,9 @@
     <Filter Include="Actor\MenuSelectLevel">
       <UniqueIdentifier>{77bda3dc-c455-47a2-9fec-66a1ce7021a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\ex">
+      <UniqueIdentifier>{4863a8ed-7701-4f32-be55-be03c3ef4add}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -162,13 +165,13 @@
     <ClInclude Include="EffectCircle.h">
       <Filter>Actor\Effect\01. EffectActor\Circle</Filter>
     </ClInclude>
-    <ClInclude Include="Explosion.h">
+    <ClInclude Include="ExplosionSize.h">
       <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClInclude>
     <ClInclude Include="EffectActor.h">
       <Filter>Actor\Effect\01. EffectActor</Filter>
     </ClInclude>
-    <ClInclude Include="EffectBundleActor.h">
+    <ClInclude Include="Explosion.h">
       <Filter>Actor\Effect\02. EffectBundleActor</Filter>
     </ClInclude>
     <ClInclude Include="Midground.h">
@@ -258,6 +261,9 @@
     <ClInclude Include="Uzi.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Effectex.h">
+      <Filter>Actor\Effect\01. EffectActor\ex</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -317,13 +323,13 @@
     <ClCompile Include="EffectCircle.cpp">
       <Filter>Actor\Effect\01. EffectActor\Circle</Filter>
     </ClCompile>
-    <ClCompile Include="Explosion.cpp">
+    <ClCompile Include="ExplosionSize.cpp">
       <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClCompile>
     <ClCompile Include="EffectActor.cpp">
       <Filter>Actor\Effect\01. EffectActor</Filter>
     </ClCompile>
-    <ClCompile Include="EffectBundleActor.cpp">
+    <ClCompile Include="Explosion.cpp">
       <Filter>Actor\Effect\02. EffectBundleActor</Filter>
     </ClCompile>
     <ClCompile Include="Midground.cpp">
@@ -413,13 +419,13 @@
     <ClCompile Include="Uzi.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Effectex.cpp">
+      <Filter>Actor\Effect\01. EffectActor\ex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="UIController사용법.txt">
       <Filter>Actor\PlayLevel\UI\Controller</Filter>
-    </Text>
-    <Text Include="이펙트 메모.txt">
-      <Filter>Actor\Effect</Filter>
     </Text>
   </ItemGroup>
 </Project>

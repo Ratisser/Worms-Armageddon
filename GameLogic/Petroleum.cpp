@@ -8,6 +8,10 @@
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 
+
+// 메모 : 간혹 폭발 후 소환이 안돼는 문제가 있음
+// 원인 파악중
+
 Petroleum::Petroleum() :
 	Max_LifeTime_(4.f),
 	Cur_LifeTime_(0.f),
@@ -15,6 +19,7 @@ Petroleum::Petroleum() :
 	GravityAcc(0.f),
 	degree_(0.f),
 	deltaTime_(0.f),
+	WindSpeed_(0.f),
 	mainSpriteRender_(nullptr), 
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
@@ -37,6 +42,7 @@ Petroleum::Petroleum(Petroleum&& _other) noexcept :
 	GravityAcc(0.f),
 	degree_(0.f),
 	deltaTime_(0.f),
+	WindSpeed_(0.f),
 	mainSpriteRender_(nullptr), 
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
@@ -88,9 +94,13 @@ void Petroleum::Update()
 	}
 	else
 	{
-		Dir_ = {};
+		Dir_.y = 0.f;
+		Dir_.x = WindSpeed_;
 		Burn_ = true;
 		GravitySpeed = 0.f;
+		// x값에 풍향이 적용되게
+		// 비탈을 만나면 비탈로 슬금슬금
+		// 
 	}
 
 	if (false == Burn_)
@@ -184,7 +194,7 @@ void Petroleum::Update()
 
 	if (false == CountSecond_[(int)Cur_LifeTime_])
 	{
-		GetLevel<PlayLevel>()->GroundUpdate13(float4(pos_.x-6.5f, pos_.y- 6.5f));
+		GetLevel<PlayLevel>()->GroundUpdate13(pos_);
 		// 땅 깎이기, 1초마다 땅을 깎게 될것
 		CountSecond_[(int)Cur_LifeTime_] = true;
 	}
@@ -195,16 +205,22 @@ void Petroleum::UpdateAfter()
 }
 
 
+
 void Petroleum::Render()
 {
+#ifdef _DEBUG
+	groundCollision_->DebugRender();
+#endif // DEBUG
 	mainSpriteRender_->AnimationUpdate();
+
 }
 
 void Petroleum::initCollision()
 {
-	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
+	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PETROLEUM), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCollision_->SetPivot({ 5.f, 2.5f });
+	groundCollision_->SetPivot({ 0.f, 1.f });
+	//groundCollision_->SetSize({ 5.f, 2.5f });
 }
 
 

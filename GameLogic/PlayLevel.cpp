@@ -25,9 +25,7 @@
 #include "UnderWater.h"
 
 #include "EffectActor.h"
-#include "EffectBundleActor.h"
-
-#include "Explosion.h"
+#include "ExplosionSize.h"
 
 #include "BackgroundScatter.h"
 #include "Midground.h"
@@ -121,6 +119,8 @@ void PlayLevel::Loading()
 	CreateGimmickObject();
 
 	wormLoading();
+
+	KeySetting();
 }
 
 void PlayLevel::LevelUpdate()
@@ -151,6 +151,13 @@ void PlayLevel::LevelUpdate()
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
+	//디버그
+	{
+		if (true == GameEngineInput::GetInst().IsDown("DrumSpawn"))
+		{
+			CreateGimmickObject();
+		}
+	}
 }
 
 void PlayLevel::wormLoading()
@@ -177,78 +184,105 @@ void PlayLevel::wormLoading()
 	//CreateExplosion100으로 교체할것
 void PlayLevel::GroundExplosion(float4 _pos)
 {
+	GameEngineDebug::MsgBoxError("GroundExplosion 함수를 CreateExplosion100 으로 교체하세요");
+
 	Train_->GroundUpdate(_pos);
 
 	CreateExplosion100(_pos);
 }
 
-void PlayLevel::CreateExplosion100(float4 Pos)
+void PlayLevel::CreateExplosion100(float4 Pos, int _Damage, bool _DamageAll)
 {
-	float4 _Pos = float4(Pos.x + 50.f, Pos.y + 50.f);
-
-	EffectBundle::Explosion::Size100* actor = CreateActor<EffectBundle::Explosion::Size100>
-		(_Pos);
+	ExplosionSize100* actor = CreateActor<ExplosionSize100>
+		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+	actor->SetDamage(_Damage, _DamageAll);
 
 	GroundUpdate100(Pos);
 }
 
-void PlayLevel::CreateExplosion75(float4 Pos)
+void PlayLevel::CreateExplosion75(float4 Pos, int _Damage, bool _DamageAll)
 {
-	float4 _Pos = float4(Pos.x + 37.5f, Pos.y + 37.5f);
-
-	EffectBundle::Explosion::Size75* actor = CreateActor<EffectBundle::Explosion::Size75>
-		(_Pos);
+	ExplosionSize75* actor = CreateActor<ExplosionSize75>
+		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+	actor->SetDamage(_Damage, _DamageAll);
 
 	GroundUpdate75(Pos);
 }
 
-void PlayLevel::CreateExplosion50(float4 Pos)
+void PlayLevel::CreateExplosion50(float4 Pos, int _Damage, bool _DamageAll)
 {
-	float4 _Pos = float4(Pos.x + 25.f, Pos.y + 25.f);
-
-	EffectBundle::Explosion::Size50* actor = CreateActor<EffectBundle::Explosion::Size50>
-		(_Pos);
+	ExplosionSize50* actor = CreateActor<ExplosionSize50>
+		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+	actor->SetDamage(_Damage, _DamageAll);
 
 	GroundUpdate50(Pos);
 }
 
-void PlayLevel::CreateExplosion25(float4 Pos)
+void PlayLevel::CreateExplosion25(float4 Pos, int _Damage, bool _DamageAll)
 {
-	float4 _Pos = float4(Pos.x + 12.5f, Pos.y + 12.5f);
-
-	EffectBundle::Explosion::Size25* actor = CreateActor<EffectBundle::Explosion::Size25>
-		(_Pos);
+	ExplosionSize25* actor = CreateActor<ExplosionSize25>
+		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
+	actor->SetDamage(_Damage, _DamageAll);
 
 	GroundUpdate25(Pos);
 }
 
 void PlayLevel::GroundUpdate100(float4 _pos)
 {
-	Train_->GroundUpdate100(_pos);
+	float4 _Pos = float4(_pos.x - 56.f, _pos.y - 56.f);
+	Train_->GroundUpdate100(_Pos);
 }
 
 void PlayLevel::GroundUpdate75(float4 _pos)
 {
-	Train_->GroundUpdate75(_pos);
+	float4 _Pos = float4(_pos.x - 43.5f, _pos.y - 43.5f);
+
+	Train_->GroundUpdate75(_Pos);
 }
 
 void PlayLevel::GroundUpdate50(float4 _pos)
 {
-	Train_->GroundUpdate50(_pos);
+	float4 _Pos = float4(_pos.x - 31.f, _pos.y -31.f);
+	Train_->GroundUpdate50(_Pos);
 }
 
 void PlayLevel::GroundUpdate25(float4 _pos)
 {
-	Train_->GroundUpdate25(_pos);
+	float4 _Pos = float4(_pos.x - 18.5f, _pos.y - 18.5f);
+	Train_->GroundUpdate25(_Pos);
 }
 
 void PlayLevel::GroundUpdate13(float4 _pos)
 {
-	Train_->GroundUpdate13(_pos);
+	float4 _Pos = float4(_pos.x - 9.5f, _pos.y- 6.5f);
+	Train_->GroundUpdate13(_Pos);
+}
+
+void PlayLevel::KeySetting()
+{
+	if (false == GameEngineInput::GetInst().IsKey("DrumExplode"))
+	{
+		GameEngineInput::GetInst().CreateKey("DrumExplode", 'G');
+	}
+
+	if (false == GameEngineInput::GetInst().IsKey("DrumSpawn"))
+	{
+		GameEngineInput::GetInst().CreateKey("DrumSpawn", 'H');
+	}
+
+	if (false == GameEngineInput::GetInst().IsKey("TestWaterLevelUp"))
+	{
+		GameEngineInput::GetInst().CreateKey("TestWaterLevelUp", 'Q');
+	}
+
+	if (false == GameEngineInput::GetInst().IsKey("TestWaterLevelDown"))
+	{
+		GameEngineInput::GetInst().CreateKey("TestWaterLevelDown", 'E');
+	}
 }
 
 void PlayLevel::MakeWaterLevel(float _WaterLevel) // 맵 바닥의 수면 생성

@@ -11,6 +11,8 @@ GameEngineCollision::GameEngineCollision()
 	: colType_(CollisionCheckType::MAX)
 	, groupIndex_(0)
 	, isCamEffect_(true)
+	, actor_(nullptr)
+	, imageptr_(nullptr)
 {
 }
 
@@ -25,6 +27,10 @@ float4 GameEngineCollision::GetCollisionPos()
 
 GameEngineCollision::GameEngineCollision(GameEngineCollision&& _other) noexcept
 	: colType_(CollisionCheckType::MAX)
+	, groupIndex_(0)
+	, isCamEffect_(true)
+	, actor_(nullptr)
+	, imageptr_(nullptr)
 {
 }
 

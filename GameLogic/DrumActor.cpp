@@ -45,10 +45,6 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 
 void DrumActor::Start()
 {
-	if (false == GameEngineInput::GetInst().IsKey("DrumExplode"))
-	{
-		GameEngineInput::GetInst().CreateKey("DrumExplode", 'X');
-	}
 
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
@@ -114,11 +110,6 @@ void DrumActor::Update()
 	{
 		DrumExplode();
 	}
-
-	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PLAYER)))
-	{
-		DrumExplode(); // 위 코드 외에 폭발이 적용될 경우
-	}
 }
 
 void DrumActor::UpdateAfter()
@@ -128,6 +119,10 @@ void DrumActor::UpdateAfter()
 
 void DrumActor::Render()
 {
+#ifdef _DEBUG
+	BodyCollision_->DebugRender();
+#endif // DEBUG
+	groundCollision_->DebugRender();
 	mainSpriteRender_->AnimationUpdate();
 }
 
@@ -135,12 +130,12 @@ void DrumActor::initCollision()
 {
 	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCollision_->SetPivot({ 10.f, 30.f });
+	groundCollision_->SetPivot({ 0.f, 20.f });
 
 	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::RECT);
-	BodyCollision_->SetSize({ 40.f, 40.f });
-	BodyCollision_->SetPivot({ 20.f, 20.f });
-
+	BodyCollision_->SetSize({ 30.f, 40.f });
+	//BodyCollision_->SetPivot({ 0, 0 });
+	
 
 }
 
@@ -173,6 +168,7 @@ void DrumActor::DrumExplode()
 		Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
 		_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
 		_Petroleum->SetDir(RandomRot* PetroleumSpeed);
+		_Petroleum->SetWindSpeed(curwind);
 	}
 
 	Death();
