@@ -6,15 +6,11 @@ class Explosion : public GameEngineActor
 {
 
 protected:	// member Var
-
-#ifdef _DEBUG
-	float LifeTime_;
-#endif // DEBUG
-
+	std::list<GameEngineCollision*> ColList_;
+	GameEngineCollision* ExplosionCollision_;
 	int Damage_;
 	bool DamageAll_;
 
-	GameEngineCollision* ExplosionCollision_;
 
 public:
 	Explosion(); // default constructer 디폴트 생성자

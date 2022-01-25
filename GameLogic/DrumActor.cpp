@@ -4,12 +4,12 @@
 #include <GameEngineCollision.h>
 #include <GameEngineTime.h>
 #include <GameEngineInput.h>
-#include "PlayLevel.h"
-#include "WindController.h"
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 
+#include "PlayLevel.h"
+#include "WindController.h"
 #include "Petroleum.h"
 
 
@@ -18,17 +18,17 @@ DrumActor::DrumActor():
 	mainSpriteRender_(nullptr),
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false),
 	PetroleumSpeed(150.f),
-	deltaTime_(0.f)
+	deltaTime_(0.f),
+	degree_(0.f),
+	curwind_(0.f),
+	random_{}
 	// default constructer 디폴트 생성자
 {
-
 }
 
 DrumActor::~DrumActor() // default destructer 디폴트 소멸자
 {
-
 }
 
 DrumActor::DrumActor(DrumActor&& _other) noexcept :
@@ -36,79 +36,84 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	mainSpriteRender_(nullptr) , // default RValue Copy constructer 디폴트 RValue 복사생성자
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	DrumCollision_(false),
 	PetroleumSpeed(150.f),
-	deltaTime_(0.f)
+	deltaTime_(0.f),
+	degree_(0.f),
+	curwind_(0.f),
+	random_{}
 {
-
 }
 
 void DrumActor::Start()
 {
+	curwind_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
 
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
-	mainSpriteRender_->CreateAnimation("Phase0", "oildrum1", 0, 19, true, 0.1f);
-	mainSpriteRender_->CreateAnimation("Phase1", "oildrum2", 0, 19, true, 0.1f);
-	mainSpriteRender_->CreateAnimation("Phase2", "oildrum3", 0, 19, true, 0.1f);
-	mainSpriteRender_->CreateAnimation("Phase3", "oildrum4", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("oildrum1", "oildrum1", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("oildrum2", "oildrum2", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("oildrum3", "oildrum3", 0, 19, true, 0.1f);
+	mainSpriteRender_->CreateAnimation("oildrum4", "oildrum4", 0, 19, true, 0.1f);
 
-	mainSpriteRender_->ChangeAnimation("Phase0");
+	mainSpriteRender_->ChangeAnimation("oildrum1");
 
 	initCollision();
 }
 
 void DrumActor::UpdateBefore()
 {
-
 }
 
 void DrumActor::Update()
 {
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+
 	if (true == GameEngineInput::GetInst().IsPress("DrumExplode"))
 	{
 		DrumExplode();
+		return;
 	}
 
-	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+	else if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::WEAPON)))
 	{
-		SetMove(0.f,100.f* deltaTime_);
+		DrumExplode();
+		return;
 	}
 
-	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
-
-	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM)))
+	else if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM)))
 	{
 		Phase_ += deltaTime_;
 		
-		if (Phase_ >= 3.f)
+		if (Phase_ >= 2.f)
 		{
 			DrumExplode();
+			return;
 		}
 
-		else if (Phase_ > 2.f)
+		else if (Phase_ > 1.5f)
 		{
 			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
-			mainSpriteRender_->ChangeAnimation("Phase3");
+			mainSpriteRender_->ChangeAnimation("oildrum4", std::string("oildrum4"));
+
 			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
 		}
-		else if (Phase_ > 1.f)
+		else if (Phase_ > 0.5f)
 		{
 			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
-			mainSpriteRender_->ChangeAnimation("Phase2");
+			mainSpriteRender_->ChangeAnimation("oildrum3", std::string("oildrum3"));
 			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
 		}
 		else if (Phase_ > 0.f)
 		{
 			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
-			mainSpriteRender_->ChangeAnimation("Phase1");
+			mainSpriteRender_->ChangeAnimation("oildrum2", std::string("oildrum2"));
 			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
 		}
 	}
 
-	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::WEAPON)))
+	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
-		DrumExplode();
+		SetMove(0.f,100.f* deltaTime_);
 	}
 }
 
@@ -138,7 +143,6 @@ void DrumActor::initCollision()
 	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::RECT);
 	BodyCollision_->SetSize({ 30.f, 40.f });
 	//BodyCollision_->SetPivot({ 0, 0 });
-	
 
 }
 
@@ -151,10 +155,7 @@ void DrumActor::DrumExplode()
 {
 	GetLevel<PlayLevel>()->CreateExplosion75(pos_);
 
-	GameEngineMath::Random random;
 	float RandomFloat;
-	float degree;
-	float curwind = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
 	float4 RandomRot = { 1.f,0.f,0.f };
 
 	int count = 20;
@@ -162,27 +163,22 @@ void DrumActor::DrumExplode()
 	{
 		RandomRot = { 1.f,0.f,0.f }; //초기화
 
-		RandomFloat = random.RandomFloat(-30.f, 30.f);
-		degree = (i * 360.f/(float)count) + RandomFloat;
+		RandomFloat = random_.RandomFloat(-30.f, 30.f);
+		degree_ = (i * 360.f/(float)count) + RandomFloat;
 
-		RandomRot = RandomRot.DegreeTofloat2(degree); 
-		RandomRot.x += curwind;
+		RandomRot = RandomRot.DegreeTofloat2(degree_);
+		
+		RandomRot.x*= PetroleumSpeed;
+		RandomRot.x+= curwind_/2;
+		RandomRot.y*= PetroleumSpeed;
 
 		Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
 		_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
-		_Petroleum->SetDir(RandomRot* PetroleumSpeed);
-		_Petroleum->SetWindSpeed(curwind);
+		_Petroleum->SetDir(RandomRot);
+		//_Petroleum->SetWindSpeed(curwind_);
 	}
 
 	Death();
-}
-
-void DrumActor::DrumCollision(GameEngineCollision* Collider_)
-{
-	//if (BodyCollision_->CollisionCheck(Collider_))
-	//{
-	//	DrumCollision_ = true;
-	//}
 }
 
 

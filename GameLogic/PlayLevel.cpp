@@ -187,16 +187,6 @@ void PlayLevel::wormLoading()
 	GameEngineTime::GetInst().TimeCheck();
 }
 
-	//CreateExplosion100으로 교체할것
-void PlayLevel::GroundExplosion(float4 _pos)
-{
-	GameEngineDebug::MsgBoxError("GroundExplosion 함수를 CreateExplosion100 으로 교체하세요");
-
-	Train_->GroundUpdate(_pos);
-
-	CreateExplosion100(_pos);
-}
-
 void PlayLevel::CreateExplosion100(float4 Pos, int _Damage, bool _DamageAll)
 {
 	ExplosionSize100* actor = CreateActor<ExplosionSize100>

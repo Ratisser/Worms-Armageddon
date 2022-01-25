@@ -11,13 +11,10 @@
 #include "PlayLevel.h"
 
 Explosion::Explosion():
-#ifdef _DEBUG
-	LifeTime_(0.f),
-#endif // DEBUG
 	Damage_(0),
 	DamageAll_(false),
-	ExplosionCollision_(nullptr)
-
+	ExplosionCollision_(nullptr),
+	ColList_{}
 {
 }
 
@@ -26,12 +23,10 @@ Explosion::~Explosion()
 }
 
 Explosion::Explosion(Explosion&& _other) noexcept :
-#ifdef _DEBUG
-	LifeTime_(0.f),
-#endif // DEBUG
 	Damage_(0),
 	DamageAll_(false),
-	ExplosionCollision_(nullptr)
+	ExplosionCollision_(nullptr),
+	ColList_{}
 {
 }
 
@@ -47,31 +42,12 @@ void Explosion::UpdateBefore()
 
 void Explosion::Update()
 {
-#ifdef _DEBUG
-	{//디버그 코드
-	if (false == GetLevel<PlayLevel>()->GetDebug())
+	ColList_ = ExplosionCollision_->CollisionGroupCheck(static_cast<int>(eCollisionGroup::PLAYER));
+
+	if (false == ColList_.empty())
 	{
-		Death();
-	}
-
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-
-	LifeTime_ += deltaTime;
-
-	if (LifeTime_ > 3.f)
-	{
-		Death();
-	}
-	}
-#endif // DEBUG
-
-	std::list<GameEngineCollision*> ColList =
-		ExplosionCollision_->CollisionGroupCheck((int)eCollisionGroup::PLAYER);
-
-	if (false == ColList.empty())
-	{
-		auto iter0 = ColList.begin();
-		auto iter1 = ColList.end();
+		auto iter0 = ColList_.begin();
+		auto iter1 = ColList_.end();
 
 		for (; iter0 != iter1;)
 		{		
@@ -81,19 +57,19 @@ void Explosion::Update()
 
 			if (name != "Worm")
 			{
-				GameEngineDebug::MsgBoxError("Worm이 아닌 충돌체");
+				GameEngineDebug::MsgBoxError("Worm이 아닌 충돌체가 eCollisionGroup::PLAYER로 설정되었습니다.");
 			}
 			else
 			{
 				reinterpret_cast<Worm*>(*iter0)->Damage(Damage_);
-				//Worm* wrom = (Worm*)((*iter0)->GetActor());
-				//wrom->Damage(Damage_);
 			}
 #endif // _DEBUG
+
 #ifndef _DEBUG
 			Worm* wrom = (Worm*)((*iter0)->GetActor());
 			wrom->Damage(Damage_);
 #endif // !_DEBUG
+
 			++iter0;
 		}
 	}

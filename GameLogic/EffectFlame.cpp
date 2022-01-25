@@ -4,12 +4,16 @@
 #include <GameEngineRenderer.h>
 #include <GameEngineTime.h>
 
+
+
 Effect::Flame1::Flame1() :
 	Dir_{},
 	GravityAcc(0.f),
 	GravitySpeed(0.f),
 	ExplodeSpeed(0.f),
-	gentime(0.f)
+	gentime(0.f),
+	deltaTime_(0.f),
+	smkdrk30_(nullptr)
 {
 }
 Effect::Flame1::~Flame1()
@@ -23,14 +27,16 @@ Effect::Flame1::Flame1(Flame1&& _other) noexcept :
 	GravityAcc(0.f),
 	GravitySpeed(0.f),
 	ExplodeSpeed(0.f),
-	gentime(0.f)
+	gentime(0.f),
+	deltaTime_(0.f),
+	smkdrk30_(nullptr)
 {
 }
 
 void Effect::Flame1::Start()
 {
 	GravityAcc = 6.f;
-	ExplodeSpeed = 600.f;
+	ExplodeSpeed = 300.f;
 
 	mainSpriteRender_ = CreateRenderer("flame1");
 	mainSpriteRender_->CreateAnimation("flame1", "flame1", 0, 31, false, 0.05f);
@@ -51,22 +57,21 @@ void Effect::Flame1::UpdateBefore()
 
 void Effect::Flame1::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-	gentime += deltaTime;
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+	gentime += deltaTime_;
 	if (gentime >0.07f)
 	{
-		Smkdrk30* smkdrk30 = GetLevel()->CreateActor<Smkdrk30>();
-		smkdrk30->SetPos(pos_);
-		smkdrk30->SetRenderOrder((int)RenderOrder::Effect);
+		smkdrk30_ = GetLevel()->CreateActor<Smkdrk30>(pos_);
+		smkdrk30_->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 		gentime = 0.f;
 	}
 
-	SetMove(Dir_ * (ExplodeSpeed * deltaTime));
-	ExplodeSpeed -= deltaTime;
+	SetMove(Dir_ * (ExplodeSpeed * deltaTime_));
+	ExplodeSpeed -= deltaTime_;
 	//gravity
 	{
 		GravitySpeed += GravityAcc;
-		SetMove(0.f,(GravitySpeed * deltaTime));
+		SetMove(0.f,(GravitySpeed * deltaTime_));
 	}
 }
 
@@ -80,13 +85,14 @@ void Effect::Flame1::Render()
 }
 
 
-
 Effect::Flame2::Flame2() :
 	Dir_{},
 	GravityAcc(0.f),
 	GravitySpeed(0.f),
 	ExplodeSpeed(0.f),
-	gentime(0.f)
+	gentime(0.f),
+	deltaTime_(0.f),
+	smkdrk30_(nullptr)
 {
 }
 Effect::Flame2::~Flame2()
@@ -97,14 +103,16 @@ Effect::Flame2::Flame2(Flame2&& _other) noexcept :
 	GravityAcc(0.f),
 	GravitySpeed(0.f),
 	ExplodeSpeed(0.f),
-	gentime(0.f)
+	gentime(0.f),
+	deltaTime_(0.f),
+	smkdrk30_(nullptr)
 {
 }
 
 void Effect::Flame2::Start()
 {
 	GravityAcc = 6.f;
-	ExplodeSpeed = 600.f;
+	ExplodeSpeed = 300.f;
 
 	mainSpriteRender_ = CreateRenderer("flame2");
 	mainSpriteRender_->CreateAnimation("flame2", "flame2", 0, 31, false, 0.05f);
@@ -125,23 +133,22 @@ void Effect::Flame2::UpdateBefore()
 
 void Effect::Flame2::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
-	gentime += deltaTime;
+	gentime += deltaTime_;
 	if (gentime > 0.07f)
 	{
-		Smkdrk30* smkdrk30 = GetLevel()->CreateActor<Smkdrk30>();
-		smkdrk30->SetPos(pos_);
-		smkdrk30->SetRenderOrder((int)RenderOrder::Effect);
+		smkdrk30_ = GetLevel()->CreateActor<Smkdrk30>(pos_);
+		smkdrk30_->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 		gentime = 0.f;
 	}
 
-	SetMove(Dir_ * (ExplodeSpeed * deltaTime));
-	ExplodeSpeed -= deltaTime;
+	SetMove(Dir_ * (ExplodeSpeed * deltaTime_));
+	ExplodeSpeed -= deltaTime_;
 	//gravity
 	{
 		GravitySpeed += GravityAcc;
-		SetMove(0.f, (GravitySpeed * deltaTime));
+		SetMove(0.f, (GravitySpeed * deltaTime_));
 	}
 }
 

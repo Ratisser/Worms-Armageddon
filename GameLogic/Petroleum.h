@@ -22,6 +22,7 @@ private:	// member Var
 	bool Burn_;
 	bool Isground_;
 	bool CountSecond_[5]; // 정수의 초를 새기 위한 배열
+
 	float Cur_LifeTime_;
 	float Max_LifeTime_;
 

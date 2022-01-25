@@ -154,8 +154,6 @@ public:
 			return nullptr;
 		}
 
-		this; // <- °¡ Level
-
 		ActorType* NewActor = new ActorType();
 		NewActor->SetName("Actor");
 		NewActor->SetLevel(this);
@@ -170,24 +168,24 @@ public:
 		return NewActor;
 	}
 
-	template<typename ActorType>
-	ActorType* CreateActor(const std::string& _actorName, float4 Pos)
-	{
-		ActorType* NewActor = CreateActor<ActorType>();
+	//template<typename ActorType>
+	//ActorType* CreateActor(const std::string& _actorName, float4 Pos)
+	//{
+	//	ActorType* NewActor = CreateActor<ActorType>();
 
-		if (allActorMap_.end() != allActorMap_.find(_actorName))
-		{
-			GameEngineDebug::AssertFalse();
-			return nullptr;
-		}
+	//	if (allActorMap_.end() != allActorMap_.find(_actorName))
+	//	{
+	//		GameEngineDebug::AssertFalse();
+	//		return nullptr;
+	//	}
 
-		NewActor->SetName(_actorName);
-		NewActor->SetLevel(this);
-		NewActor->SetPos(Pos);
+	//	NewActor->SetName(_actorName);
+	//	NewActor->SetLevel(this);
+	//	NewActor->SetPos(Pos);
 
-		allActorMap_.insert(std::map<std::string, GameEngineActor*>::value_type(_actorName, NewActor));
-		return NewActor;
-	}
+	//	allActorMap_.insert(std::map<std::string, GameEngineActor*>::value_type(_actorName, NewActor));
+	//	return NewActor;
+	//}
 
 	GameEngineActor* FindActor(const std::string& _actorName);
 

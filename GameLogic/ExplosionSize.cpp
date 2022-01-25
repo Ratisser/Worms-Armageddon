@@ -31,40 +31,33 @@ void ExplosionSize25::Start()
 	ExplosionCollision_->SetSize({ 25.f, 25.f });
 
 	EffectActor* Effect;
-	float4 OwnerPos;
 	GameEngineMath::Random random;
 	float RandomFloat;
 	float degree;
 	float4 RandomRot = { 1.f,0.f,0.f };
 
-	Effect = GetLevel()->CreateActor<Effect::Circle25>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Circle25>(pos_);	
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	Effect = GetLevel()->CreateActor<Effect::Elipse25>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Elipse25>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 	for (int i = 0; i < 9; ++i)
 	{
 		// 초기화
-		OwnerPos = pos_; // 매 생성마다 초기화
 		RandomRot = { 1.f,0.f,0.f }; //초기화
 
 		//렌덤값
-		RandomFloat = random.RandomFloat(-2.f, 2.f);// 10~40 사이 임의의 값, 임의 반지름이 될것
+		RandomFloat = random.RandomFloat(0.f, 10.f);
 		degree = i * 36.f;
 
 		//변형
-		RandomRot = RandomRot.DegreeTofloat2(degree); // 길이 1의 방향 벡터 0~360도 임의의 각도	
-		RandomRot.x *= RandomFloat; // 임의 각도에 반지름 길이 곱하기
+		RandomRot = RandomRot.DegreeTofloat2(degree); 
+		RandomRot.x *= RandomFloat; 
 		RandomRot.y *= RandomFloat;
 
-		OwnerPos += RandomRot;
-
-		Effect = GetLevel()->CreateActor<Effect::Smklt25>();
-		Effect->SetPos(OwnerPos);
-		Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Effect = GetLevel()->CreateActor<Effect::Smklt25>(pos_ + RandomRot);
+		Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 		Effect->SetDir(RandomRot);
 	}
 
@@ -77,10 +70,9 @@ void ExplosionSize25::Start()
 		degree = -30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 		RandomFloat = random.RandomFloat(-10.f, 10.f);
@@ -90,10 +82,9 @@ void ExplosionSize25::Start()
 		degree = -15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -104,10 +95,9 @@ void ExplosionSize25::Start()
 		degree = 0.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -118,10 +108,9 @@ void ExplosionSize25::Start()
 		degree = 15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -132,15 +121,12 @@ void ExplosionSize25::Start()
 		degree = 30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 	}
-#ifndef _DEBUG
-		Death();
-#endif // !_DEBUG
+	Death();
 }
 
 void ExplosionSize25::UpdateBefore()
@@ -181,24 +167,20 @@ void ExplosionSize50::Start()
 	ExplosionCollision_->SetSize({ 50.f, 50.f });
 
 	EffectActor* Effect;
-	float4 OwnerPos;
 	GameEngineMath::Random random;
 	float RandomFloat;
 	float degree;
 	float4 RandomRot = { 1.f,0.f,0.f };
 
-	Effect = GetLevel()->CreateActor<Effect::Circle50>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Circle50>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	Effect = GetLevel()->CreateActor<Effect::Elipse50>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Elipse50>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 	for (int i = 0; i < 9; ++i)
 	{
 		// 초기화
-		OwnerPos = pos_; // 매 생성마다 초기화
 		RandomRot = { 1.f,0.f,0.f }; //초기화
 
 		//렌덤값
@@ -210,14 +192,11 @@ void ExplosionSize50::Start()
 		RandomRot.x *= RandomFloat; // 임의 각도에 반지름 길이 곱하기
 		RandomRot.y *= RandomFloat;
 
-		OwnerPos += RandomRot;
-
-		Effect = GetLevel()->CreateActor<Effect::Smklt50>();
-		Effect->SetPos(OwnerPos);
-		Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Effect = GetLevel()->CreateActor<Effect::Smklt50>(pos_ + RandomRot);
+		Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 		Effect->SetDir(RandomRot);
 	}
-
+	
 	// Flame 중심 pos 부터 +- 15도 임의 방향으로 나가게끔 임의 생성
 	{
 		RandomFloat = random.RandomFloat(-10.f, 10.f);
@@ -227,10 +206,9 @@ void ExplosionSize50::Start()
 		degree = -30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 		RandomFloat = random.RandomFloat(-10.f, 10.f);
@@ -240,10 +218,9 @@ void ExplosionSize50::Start()
 		degree = -15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -254,10 +231,9 @@ void ExplosionSize50::Start()
 		degree = 0.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -268,10 +244,9 @@ void ExplosionSize50::Start()
 		degree = 15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -282,14 +257,11 @@ void ExplosionSize50::Start()
 		degree = 30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect); 
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect)); 
 	}
-#ifndef _DEBUG
-			Death();
-#endif // !_DEBUG
+	Death();
 }
 
 void ExplosionSize50::UpdateBefore()
@@ -327,31 +299,26 @@ ExplosionSize75::ExplosionSize75(ExplosionSize75&& _other) noexcept
 void ExplosionSize75::Start()
 {
 	Explosion::Start();
-	ExplosionCollision_->SetSize({ 750.f, 750.f });
+	ExplosionCollision_->SetSize({ 75.f, 75.f });
 
-	EffectActor* Effect;
-	float4 OwnerPos;
 	GameEngineMath::Random random;
+	EffectActor* Effect;
+	float4 RandomRot = { 1.f,0.f,0.f };
 	float RandomFloat;
 	float degree;
-	float4 RandomRot = { 1.f,0.f,0.f };
 
-	Effect = GetLevel()->CreateActor<Effect::Circle75>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Circle75>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	Effect = GetLevel()->CreateActor<Effect::Elipse75>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Elipse75>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	Effect = GetLevel()->CreateActor<Effect::ex>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect1);
+	Effect = GetLevel()->CreateActor<Effect::ex>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 	for (int i = 0; i < 9; ++i)
 	{
 		// 초기화
-		OwnerPos = pos_; // 매 생성마다 초기화
 		RandomRot = { 1.f,0.f,0.f }; //초기화
 
 		//렌덤값
@@ -363,11 +330,8 @@ void ExplosionSize75::Start()
 		RandomRot.x *= RandomFloat; // 임의 각도에 반지름 길이 곱하기
 		RandomRot.y *= RandomFloat;
 
-		OwnerPos += RandomRot;
-
-		Effect = GetLevel()->CreateActor<Effect::Smklt75>();
-		Effect->SetPos(OwnerPos);
-		Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Effect = GetLevel()->CreateActor<Effect::Smklt75>(pos_ + RandomRot);
+		Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 		Effect->SetDir(RandomRot);
 	}
 
@@ -380,10 +344,9 @@ void ExplosionSize75::Start()
 		degree = -30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 		RandomFloat = random.RandomFloat(-10.f, 10.f);
@@ -393,10 +356,9 @@ void ExplosionSize75::Start()
 		degree = -15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -407,10 +369,9 @@ void ExplosionSize75::Start()
 		degree = 0.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -421,10 +382,9 @@ void ExplosionSize75::Start()
 		degree = 15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -435,14 +395,11 @@ void ExplosionSize75::Start()
 		degree = 30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 	}
-#ifndef _DEBUG
-		Death();
-#endif // !_DEBUG
+	Death();
 }
 
 void ExplosionSize75::UpdateBefore()
@@ -480,23 +437,20 @@ ExplosionSize100::ExplosionSize100(ExplosionSize100&& _other) noexcept
 void ExplosionSize100::Start()
 {
 	Explosion::Start();
+
 	ExplosionCollision_->SetSize({ 100.f, 100.f });
 
 	EffectActor* Effect;
 
-	Effect = GetLevel()->CreateActor<Effect::Circle100>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Circle100>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	Effect = GetLevel()->CreateActor<Effect::Elipse100>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect);
+	Effect = GetLevel()->CreateActor<Effect::Elipse100>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	Effect = GetLevel()->CreateActor<Effect::ex>();
-	Effect->SetPos(pos_);
-	Effect->SetRenderOrder((int)RenderOrder::Effect1);
+	Effect = GetLevel()->CreateActor<Effect::ex>(pos_);
+	Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
-	float4 OwnerPos;
 	GameEngineMath::Random random;
 	float RandomFloat;
 	float degree;
@@ -508,7 +462,6 @@ void ExplosionSize100::Start()
 	for (int i = 0; i < 9; ++i)
 	{
 		// 초기화
-		OwnerPos = pos_; // 매 생성마다 초기화
 		RandomRot = { 1.f,0.f,0.f }; //초기화
 
 		//렌덤값
@@ -520,23 +473,13 @@ void ExplosionSize100::Start()
 		RandomRot.x *= RandomFloat; // 임의 각도에 반지름 길이 곱하기
 		RandomRot.y *= RandomFloat;
 
-		OwnerPos += RandomRot;
-
-		Effect = GetLevel()->CreateActor<Effect::Smklt100>();
-		Effect->SetPos(OwnerPos);
-		Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Effect = GetLevel()->CreateActor<Effect::Smklt100>(pos_ + RandomRot);
+		Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 		Effect->SetDir(RandomRot);
 	}
 
 	// Flame 중심 pos 부터 +- 15도 임의 방향으로 나가게끔 임의 생성
 	{
-		/*
-		-22.5
-		-7.5
-		7.5
-		22.5
-		*/
-
 		RandomFloat = random.RandomFloat(-10.f, 10.f);
 
 		RandomRot = { 0.f,1.f,0.f }; //초기화
@@ -544,10 +487,9 @@ void ExplosionSize100::Start()
 		degree = -30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Effect::Flame1* Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 		RandomFloat = random.RandomFloat(-10.f, 10.f);
@@ -557,10 +499,9 @@ void ExplosionSize100::Start()
 		degree = -15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Effect::Flame2* Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -571,10 +512,9 @@ void ExplosionSize100::Start()
 		degree = 0.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>();
+		Flame1Effect = GetLevel()->CreateActor<Effect::Flame1>(pos_);
 		Flame1Effect->SetDir(RandomRot);
-		Flame1Effect->SetPos(pos_);
-		Flame1Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame1Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -585,10 +525,9 @@ void ExplosionSize100::Start()
 		degree = 15.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 
 
@@ -599,14 +538,11 @@ void ExplosionSize100::Start()
 		degree = 30.f + RandomFloat - 90.f;
 		RandomRot = RandomRot.DegreeTofloat2(degree);
 
-		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>();
+		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
-		Flame2Effect->SetPos(pos_);
-		Flame2Effect->SetRenderOrder((int)RenderOrder::Effect);
+		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 	}
-#ifndef _DEBUG
 	Death();
-#endif // !_DEBUG
 }
 
 void ExplosionSize100::UpdateBefore()

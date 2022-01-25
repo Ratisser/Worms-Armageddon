@@ -6,6 +6,8 @@ namespace Effect
 {
 	class Smklt25 : public EffectActor
 	{
+	private:
+		float deltaTime_;
 	public:
 		Smklt25();
 		~Smklt25();
@@ -25,6 +27,8 @@ namespace Effect
 
 	class Smklt50 : public EffectActor
 	{
+	private:
+		float deltaTime_;
 	public:
 		Smklt50();
 		~Smklt50();
@@ -44,6 +48,8 @@ namespace Effect
 
 	class Smklt75 : public EffectActor
 	{
+	private:
+		float deltaTime_;
 	public:
 		Smklt75();
 		~Smklt75();
@@ -63,6 +69,8 @@ namespace Effect
 
 	class Smklt100 : public EffectActor
 	{
+	private:
+		float deltaTime_;
 	public:
 		Smklt100();
 		~Smklt100();

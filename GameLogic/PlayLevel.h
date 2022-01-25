@@ -52,7 +52,6 @@ public:
 public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
-	void GroundExplosion(float4 _pos);
 
 	void CreateExplosion100(float4 Pos, int _Damage = 0, bool _DamageAll = false); //test
 	void CreateExplosion75(float4 Pos, int _Damage = 0, bool _DamageAll = false); //test

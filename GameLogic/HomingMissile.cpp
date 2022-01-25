@@ -178,8 +178,7 @@ void HomingMissile::Update()
 	else
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->GroundExplosion(float4(pos_.x - 50.f, pos_.y - 50.f));
-		SetPos(float4(-100.f, -100.f));
+		level->CreateExplosion100(pos_);
 		Death();
 	}
 

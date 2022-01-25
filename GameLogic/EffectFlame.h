@@ -12,19 +12,20 @@ namespace Effect
 	public:
 		Flame1();
 		~Flame1();
-	public:
-		float4 Dir_;
-
-		float GravityAcc;
-		float GravitySpeed;
-
-		float ExplodeSpeed;
-
-		float gentime;
-
 	protected:		// delete constructer
 		Flame1(const Flame1& _other) = delete;
 		Flame1(Flame1&& _other) noexcept;
+
+	private:
+		float deltaTime_;
+		float GravityAcc;
+		float GravitySpeed;
+		float ExplodeSpeed;
+		float gentime;
+		class Smkdrk30* smkdrk30_;
+	public:
+		float4 Dir_;
+
 	private:		//delete operator
 		Flame1& operator=(const Flame1& _other) = delete;
 		Flame1& operator=(const Flame1&& _other) = delete;
@@ -35,6 +36,7 @@ namespace Effect
 		virtual void UpdateAfter() override;
 		virtual void Render() override;
 
+	public:
 		void SetDir(float4 Dir)
 		{
 			Dir_ = Dir;
@@ -46,20 +48,21 @@ namespace Effect
 	public:
 		Flame2();
 		~Flame2();
+	protected:		// delete constructer
+		Flame2(const Flame2& _other) = delete;
+		Flame2(Flame2&& _other) noexcept;
+
+	private:
+		float deltaTime_;
+		float GravityAcc;
+		float GravitySpeed;
+		float ExplodeSpeed;
+		float gentime;
+		Smkdrk30* smkdrk30_;
 
 	public:
 		float4 Dir_;
 
-		float GravityAcc;
-		float GravitySpeed;
-
-		float ExplodeSpeed;
-
-		float gentime;
-
-	protected:		// delete constructer
-		Flame2(const Flame2& _other) = delete;
-		Flame2(Flame2&& _other) noexcept;
 	private:		//delete operator
 		Flame2& operator=(const Flame2& _other) = delete;
 		Flame2& operator=(const Flame2&& _other) = delete;
@@ -70,6 +73,7 @@ namespace Effect
 		virtual void UpdateAfter() override;
 		virtual void Render() override;
 
+	public:
 		void SetDir(float4 Dir)
 		{
 			Dir_ = Dir;

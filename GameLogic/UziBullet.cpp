@@ -50,7 +50,7 @@ UziBullet::UziBullet(UziBullet&& _other) noexcept  // default RValue Copy constr
 void UziBullet::Start()
 {
 	SetRenderOrder((int)RenderOrder::Weapon);
-	fireCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
+	fireCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::WEAPON), CollisionCheckType::POINT);
 	fireCollision_->SetPivot(float4::ZERO);
 	fireCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 }

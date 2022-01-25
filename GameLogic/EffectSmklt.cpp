@@ -6,14 +6,16 @@
 
 #define MoveSpeed 2.5f
 
-Effect::Smklt25::Smklt25()
+Effect::Smklt25::Smklt25():
+	deltaTime_(0.f)
 {
 }
 Effect::Smklt25::~Smklt25()
 {
 }
 
-Effect::Smklt25::Smklt25(Smklt25&& _other) noexcept
+Effect::Smklt25::Smklt25(Smklt25&& _other) noexcept :
+	deltaTime_(0.f)
 {
 }
 
@@ -39,9 +41,9 @@ void Effect::Smklt25::UpdateBefore()
 
 void Effect::Smklt25::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-	SetMove(Dir_* MoveSpeed * deltaTime);
-	SetMove(float4(0.f, -MoveSpeed * deltaTime * 5.f));
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_* MoveSpeed * deltaTime_);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime_ * 5.f));
 }
 
 void Effect::Smklt25::UpdateAfter()
@@ -53,13 +55,15 @@ void Effect::Smklt25::Render()
 	EffectActor::Render();
 }
 
-Effect::Smklt50::Smklt50()
+Effect::Smklt50::Smklt50() :
+	deltaTime_(0.f)
 {
 }
 Effect::Smklt50::~Smklt50()
 {
 }
-Effect::Smklt50::Smklt50(Smklt50&& _other) noexcept
+Effect::Smklt50::Smklt50(Smklt50&& _other) noexcept :
+	deltaTime_(0.f)
 {
 }
 
@@ -84,9 +88,9 @@ void Effect::Smklt50::UpdateBefore()
 
 void Effect::Smklt50::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-	SetMove(Dir_ * MoveSpeed * deltaTime);
-	SetMove(float4(0.f, -MoveSpeed * deltaTime * 5.f));
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_ * MoveSpeed * deltaTime_);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime_ * 5.f));
 }
 
 void Effect::Smklt50::UpdateAfter()
@@ -98,13 +102,15 @@ void Effect::Smklt50::Render()
 	EffectActor::Render();
 }
 
-Effect::Smklt75::Smklt75()
+Effect::Smklt75::Smklt75() :
+	deltaTime_(0.f)
 {
 }
 Effect::Smklt75::~Smklt75()
 {
 }
-Effect::Smklt75::Smklt75(Smklt75&& _other) noexcept
+Effect::Smklt75::Smklt75(Smklt75&& _other) noexcept :
+	deltaTime_(0.f)
 {
 }
 
@@ -129,9 +135,9 @@ void Effect::Smklt75::UpdateBefore()
 
 void Effect::Smklt75::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-	SetMove(Dir_ * MoveSpeed * deltaTime);
-	SetMove(float4(0.f, -MoveSpeed * deltaTime * 5.f));
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_ * MoveSpeed * deltaTime_);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime_ * 5.f));
 }
 
 void Effect::Smklt75::UpdateAfter()
@@ -143,13 +149,15 @@ void Effect::Smklt75::Render()
 	EffectActor::Render();
 }
 
-Effect::Smklt100::Smklt100()
+Effect::Smklt100::Smklt100() :
+	deltaTime_(0.f)
 {
 }
 Effect::Smklt100::~Smklt100()
 {
 }
-Effect::Smklt100::Smklt100(Smklt100&& _other) noexcept
+Effect::Smklt100::Smklt100(Smklt100&& _other) noexcept :
+	deltaTime_(0.f)
 {
 }
 
@@ -174,9 +182,9 @@ void Effect::Smklt100::UpdateBefore()
 
 void Effect::Smklt100::Update()
 {
-	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
-	SetMove(Dir_ * MoveSpeed * deltaTime);
-	SetMove(float4(0.f, -MoveSpeed * deltaTime*5.f));
+	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+	SetMove(Dir_ * MoveSpeed * deltaTime_);
+	SetMove(float4(0.f, -MoveSpeed * deltaTime_ *5.f));
 }
 
 void Effect::Smklt100::UpdateAfter()

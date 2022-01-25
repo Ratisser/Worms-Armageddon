@@ -30,7 +30,7 @@ void FirePunch::Start()
 	SetRenderOrder((int)RenderOrder::Weapon);
 	mainRender_ = CreateRenderer("Bazooka");
 
-	checkCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::RECT);
+	checkCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::WEAPON), CollisionCheckType::RECT);
 	checkCollision_->SetSize({ 30.0f, 30.0f });
 }
 
