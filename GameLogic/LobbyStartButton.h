@@ -12,6 +12,12 @@ private:	// member Var
 	GameEngineRenderer* mainrenderer_;
 	GameEngineCollision* maincollision_;
 
+private:
+	std::string GameStartText_;
+
+private:
+	bool mouseover_;
+
 public:
 	LobbyStartButton(); // default constructer 디폴트 생성자
 	~LobbyStartButton(); // default destructer 디폴트 소멸자

@@ -30,6 +30,11 @@ ChattingInput::ChattingInput() :
 
 ChattingInput::~ChattingInput()
 {
+	// 소멸시 입력중인 채팅 삭제
+	if (!InputText_.empty())
+	{
+		InputText_.clear();
+	}
 }
 
 ChattingInput::ChattingInput(ChattingInput&& _other) noexcept :
@@ -59,9 +64,9 @@ void ChattingInput::Start()
 	chattinInputBoxCollision_->SetPivot(float4(500.f + 10.f, 16.f + 650.f));
 
 	// 키등록
-	if (false == GameEngineInput::GetInst().IsKey("Chatting_InputOK"))
+	if (false == GameEngineInput::GetInst().IsKey("LobbyLevel_MouseLButton"))
 	{
-		GameEngineInput::GetInst().CreateKey("Chatting_InputOK", VK_LBUTTON);
+		GameEngineInput::GetInst().CreateKey("LobbyLevel_MouseLButton", VK_LBUTTON);
 	}
 
 	if (false == GameEngineInput::GetInst().IsKey("Chatting_End"))
@@ -82,7 +87,7 @@ void ChattingInput::UpdateBefore()
 	GameEngineCollision* ColUI = chattinInputBoxCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
-		if (true == GameEngineInput::GetInst().IsDown("Chatting_InputOK"))
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
 			if (false == ChattingInputOK_)
 			{
@@ -110,7 +115,7 @@ void ChattingInput::UpdateBefore()
 	else
 	{
 		// 채팅 입력창과 충돌이 아닌경우 마우스 왼쪽버튼 클릭시 입력모드 해제
-		if (true == GameEngineInput::GetInst().IsDown("Chatting_InputOK"))
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
 			if (true == ChattingInputOK_)
 			{

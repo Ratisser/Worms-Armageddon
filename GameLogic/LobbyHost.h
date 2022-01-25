@@ -9,6 +9,7 @@ private:
 
 public:
 	static void SetCurHostReady(bool _Flag);
+	static bool SetCurHostReady();
 
 private:	// member Var
 	GameEngineRenderer* hostnationSpriteRender_;

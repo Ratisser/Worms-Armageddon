@@ -14,6 +14,11 @@ void LobbyHost::SetCurHostReady(bool _Flag)
 	curhostready_ = _Flag;
 }
 
+bool LobbyHost::SetCurHostReady()
+{
+	return curhostready_;
+}
+
 LobbyHost::LobbyHost() :
 	hostnationSpriteRender_(nullptr),
 	hostreadystateSpriteRender_(nullptr),
