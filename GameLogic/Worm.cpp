@@ -10,6 +10,7 @@
 
 #include <GameEngineDebugExtension.h>
 
+#include <GameEngineWindow.h>
 #include <limits>
 
 #include "eCollisionGroup.h"
@@ -21,6 +22,7 @@
 #include "MouseObject.h"
 #include "GameController.h"
 #include "Uzi.h"
+#include "Sheep.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -49,6 +51,7 @@ Worm::Worm()
 	, uicontroller_(nullptr)
 	, hp_(100)
 	, actionToken_(0)
+	, bulletFocusActor_(nullptr)
 {
 
 }
@@ -61,6 +64,7 @@ Worm::~Worm() // default destructer 디폴트 소멸자
 void Worm::Start()
 {
 	SetRenderOrder(static_cast<int>(RenderOrder::Worm));
+	SetUpdateOrder(10);
 	initRenderer();
 	initCollision();
 	initInput();
@@ -132,7 +136,12 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("UziFireLeft", "uziFireLeft.bmp", 0, 31, false, FLT_MAX);
 	mainRender_->CreateAnimation("UziFireRight", "uziFireRight.bmp", 0, 31, false, FLT_MAX);
 
-	//mainRender_->CreateAnimation("SheepOnLeft", "sheepOnLeft.bmp");
+	mainRender_->CreateAnimation("SheepOnLeft", "sheepOnLeft.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("SheepOnRight", "sheepOnRight.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("SheepOffLeft", "sheepOffLeft.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("SheepOffRight", "sheepOffRight.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("SheepAimLeft", "sheepOnLeft.bmp", 9, 9, true);
+	mainRender_->CreateAnimation("SheepAimRight", "sheepOnRight.bmp", 9, 9, true);
 
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
@@ -225,6 +234,10 @@ void Worm::initState()
 	state_.CreateState("UziAim", &Worm::startUziAim, &Worm::updateUziAim);
 	state_.CreateState("UziFire", &Worm::startUziFire, &Worm::updateUziFire);
 	state_.CreateState("UziWait", &Worm::startUziWait, &Worm::updateUziWait);
+
+	state_.CreateState("SheepAim", &Worm::startSheepAim, &Worm::updateSheepAim);
+	state_.CreateState("SheepFire", &Worm::startSheepFire, &Worm::updateSheepFire);
+	state_.CreateState("SheepWait", &Worm::startSheepWait, &Worm::updateSheepWait);
 
 	state_.ChangeState("Idle");
 }
@@ -534,6 +547,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_MINE:
 		break;
 	case eItemList::WEAPON_SHEEP:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("SheepOnLeft", std::string("sheepOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("SheepOnRight", std::string("sheepOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
 		break;
@@ -707,6 +728,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_MINE:
 		break;
 	case eItemList::WEAPON_SHEEP:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("SheepOffLeft", std::string("sheepOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("SheepOffRight", std::string("sheepOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
 		break;
@@ -1723,11 +1752,52 @@ StateInfo Worm::updateUziWait(StateInfo _state)
 
 StateInfo Worm::startSheepAim(StateInfo _state)
 {
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("SheepAimLeft", std::string("sheepOnLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("SheepAimRight", std::string("sheepOnRight.bmp"));
+	}
 	return StateInfo();
 }
 
 StateInfo Worm::updateSheepAim(StateInfo _state)
 {
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsUp("Fire"))
+	{
+		return "SheepFire";
+	}
+
+	normalMove();
 	return StateInfo();
 }
 
@@ -1738,11 +1808,23 @@ StateInfo Worm::startSheepFire(StateInfo _state)
 
 StateInfo Worm::updateSheepFire(StateInfo _state)
 {
-	return StateInfo();
+	Sheep* newSheep = parentLevel_->CreateActor<Sheep>();
+	newSheep->Initialize(this, bLeft_);
+	newSheep->SetPos(pos_);
+	BulletFocusOn(newSheep);
+	return "SheepWait";
 }
 
 StateInfo Worm::startSheepWait(StateInfo _state)
 {
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+	}
 	return StateInfo();
 }
 
@@ -1816,6 +1898,16 @@ float4 Worm::GetForward() const
 	return forward_;
 }
 
+void Worm::BulletFocusOn(GameEngineActor* _actor)
+{
+	bulletFocusActor_ = _actor;
+}
+
+void Worm::BulletFocusOff()
+{
+	bulletFocusActor_ = nullptr;
+}
+
 void Worm::SetFocus(bool _bFocus)
 {
 	bFocus_ = _bFocus;
@@ -1868,6 +1960,11 @@ void Worm::Update()
 
 void Worm::UpdateAfter()
 {
+	if (nullptr != bulletFocusActor_)
+	{
+		GetLevel()->SetCamPos(bulletFocusActor_->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4());
+
+	}
 }
 
 void Worm::Render()

@@ -44,6 +44,9 @@ public:
 
 	float4 GetForward() const;
 
+	void BulletFocusOn(GameEngineActor* _actor);
+	void BulletFocusOff();
+
 private:
 	void initRenderer();
 	void initInput();
@@ -55,7 +58,7 @@ private:
 	void normalMove();
 
 	int getAimingFrame();
-	
+
 	std::string getWeaponAimState();
 	void setAnimationWeaponOn();
 	void setAnimationWeaponOff();
@@ -77,7 +80,7 @@ private:
 
 	StateInfo startWeaponOn(StateInfo _state);
 	StateInfo updateWeaponOn(StateInfo _state);
-	
+
 	StateInfo startWeaponOff(StateInfo _state);
 	StateInfo updateWeaponOff(StateInfo _state);
 
@@ -152,7 +155,7 @@ private:
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
-	bool bFocus_; 
+	bool bFocus_;
 
 	float deltaTime_;
 	float weaponEquipDelay_;
@@ -163,11 +166,13 @@ private:
 
 	int hp_;
 	int actionToken_;
-	
+
 	eItemList currentWeapon_;
 
 	std::string nextState_;
 
 	UIController* uicontroller_;
+
+	GameEngineActor* bulletFocusActor_;
 };
 
