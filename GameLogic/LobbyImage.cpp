@@ -22,7 +22,7 @@ LobbyImage::LobbyImage() :
 
 LobbyImage::~LobbyImage() // default destructer 디폴트 소멸자
 {
-
+	LobbyHost::SetCurHostReady(false);
 }
 
 LobbyImage::LobbyImage(LobbyImage&& _other) noexcept :
