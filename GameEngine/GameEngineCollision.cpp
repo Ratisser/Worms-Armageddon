@@ -13,6 +13,9 @@ GameEngineCollision::GameEngineCollision()
 	, isCamEffect_(true)
 	, actor_(nullptr)
 	, imageptr_(nullptr)
+	, CheckColor(RGB(0, 0, 0))
+	, radius_(0.0f)
+	, rect_()
 {
 }
 
@@ -31,6 +34,9 @@ GameEngineCollision::GameEngineCollision(GameEngineCollision&& _other) noexcept
 	, isCamEffect_(true)
 	, actor_(nullptr)
 	, imageptr_(nullptr)
+	, CheckColor(RGB(0, 0, 0))
+	, radius_(0.0f)
+	, rect_()
 {
 }
 

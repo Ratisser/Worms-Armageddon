@@ -48,7 +48,7 @@ void Effect::ex::Start()
 		break;
 	case 3:
 		mainSpriteRender_ = CreateRenderer("exfoom");
-		mainSpriteRender_->CreateAnimation("exfoom", "exfoom", 0, 19, false, 0.025);
+		mainSpriteRender_->CreateAnimation("exfoom", "exfoom", 0, 19, false, 0.025f);
 		mainSpriteRender_->ChangeAnimation("exfoom");
 
 		mainSpriteRender_->SetAnimationEndFunction<EffectActor>
