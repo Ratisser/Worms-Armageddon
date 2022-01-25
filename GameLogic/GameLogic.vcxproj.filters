@@ -264,7 +264,7 @@
     <ClInclude Include="MenuSelImage.h">
       <Filter>Actor\MenuSelectLevel</Filter>
     </ClInclude>
-    <ClInclude Include="Uzi.h">
+    <ClInclude Include="UziBullet.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="LobbyHost.h">
@@ -278,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="LobbyStartButton.h">
       <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Uzi.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -431,7 +434,7 @@
     <ClCompile Include="MenuSelImage.cpp">
       <Filter>Actor\MenuSelectLevel</Filter>
     </ClCompile>
-    <ClCompile Include="Uzi.cpp">
+    <ClCompile Include="UziBullet.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="LobbyHost.cpp">
@@ -445,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="LobbyStartButton.cpp">
       <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Uzi.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -143,6 +143,7 @@ private:
 	float currentRotation_;
 	float firePower_;
 
+
 	int hp_;
 	int actionToken_;
 	
