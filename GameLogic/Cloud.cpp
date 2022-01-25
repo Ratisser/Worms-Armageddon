@@ -8,7 +8,8 @@
 Cloud::Cloud() // default constructer 디폴트 생성자
 	: mainRender_(nullptr), spawnPos_({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -300.0f }), cloudSpeed_(0.0f)
 {
-	SetRenderOrder(11);
+
+	SetRenderOrder((int)RenderOrder::BackGround1);
 	SetPos({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -300.0f });
 
 }

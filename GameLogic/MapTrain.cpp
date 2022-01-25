@@ -27,7 +27,7 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	boomSpriteRender13_(nullptr),
 	bodyCollision_(nullptr)
 {
-	SetRenderOrder((int)RenderOrder::BackGround2);
+	SetRenderOrder((int)RenderOrder::Map);
 }
 
 MapTrain::~MapTrain() // default destructer 디폴트 소멸자
