@@ -34,11 +34,14 @@ private:
 	void normalMove();
 
 private:
-	const float GRAVITY_POWER = 500.f;
-	const float BOTTOM_PIVOT = 14.f;
-	const float JUMP_DELAY = 3.f;
+	const float GRAVITY_POWER = 800.f;
+	const float BOTTOM_PIVOT = 12.f;
+	const float JUMP_DELAY = 1.5f;
 
 private:
+	StateInfo startIdle(StateInfo _state);
+	StateInfo updateIdle(StateInfo _state);
+
 	StateInfo startWalk(StateInfo _state);
 	StateInfo updateWalk(StateInfo _state);
 
@@ -52,12 +55,14 @@ private:
 
 	float4 speed_;
 
+	GameEngineCollision* topCenterCollision_;
 	GameEngineCollision* headCollision_;
 	GameEngineCollision* bottomCenterCollision_;
 	GameEngineCollision* groundCheckCollision_;
 
 	float deltaTime_;
 	float jumpDelay_;
+	float explosionDelay_;
 	bool bLeft_;
 	bool bGround_;
 };

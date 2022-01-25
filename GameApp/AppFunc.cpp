@@ -84,6 +84,7 @@ void AppResourcesInit()
 		MenuSelectInit();
 		ResourceInitPJW();
 		CharactorImageInit();
+		WeaponImageInit();
 		UIImageInit();
 		MapWaterImageInit();
 		GimmickObjectImageInit();
