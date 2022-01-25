@@ -229,3 +229,37 @@ float4 GameEngineCollision::GetDebugRenderPos()
 
 	return actor_->GetCamEffectPos() + Pivot_;
 }
+
+void GameEngineCollision::SetRadius(float _radius)
+{
+	radius_ = _radius;
+}
+
+void GameEngineCollision::SetRect(FRect _rect)
+{
+	rect_ = _rect;
+}
+
+void GameEngineCollision::SetRect(float _left, float _top, float _right, float _bottom)
+{
+	rect_.left = _left;
+	rect_.right = _right;
+	rect_.top = _top;
+	rect_.bottom = _bottom;
+}
+
+float4 GameEngineCollision::GetCollisionPoint() const
+{
+	return actor_->GetPos() + Pivot_;
+}
+
+FRect GameEngineCollision::GetCollisionRect() const
+{
+	FRect rect;
+	float4 location = actor_->GetPos() + Pivot_;
+	rect.left = rect_.left + location.x;
+	rect.right = rect_.right + location.x;
+	rect.top = rect_.top + location.y;
+	rect.bottom = rect_.bottom + location.y;
+	return rect;
+}

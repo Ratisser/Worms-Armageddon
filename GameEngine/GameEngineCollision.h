@@ -29,6 +29,20 @@ public:
 	static bool RectToPoint(GameEngineCollision* _left, GameEngineCollision* _right);
 	static bool PointToRect(GameEngineCollision* _left, GameEngineCollision* _right);
 
+	static bool collisionCheckCircleToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+	static bool collisionCheckRectToRect(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+	static bool collisionCheckPointToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+	static bool collisionCheckCircleToPoint(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+	static bool collisionCheckRectToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+	static bool collisionCheckCircleToRect(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+
+public:
+	float4 GetCollisionPoint() const;
+	FRect GetCollisionRect() const;
+	void SetRadius(float _radius);
+	void SetRect(FRect _rect);
+	void SetRect(float _left, float _top, float _right, float _bottom);
+
 private:
 	friend GameEngineLevelManager;
 	friend GameEngineLevel;
@@ -38,6 +52,9 @@ private:
 	GameEngineActor* actor_;
 	float4 Pivot_;
 	float4 size_;
+
+	float radius_;
+	FRect rect_;
 
 	CollisionCheckType colType_;
 	int groupIndex_; 

@@ -111,3 +111,68 @@ bool GameEngineCollision::PointToRect(GameEngineCollision* _left, GameEngineColl
 {
 	return RectToPoint(_right, _left);
 }
+
+
+bool GameEngineCollision::collisionCheckCircleToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs)
+{
+	float distance = lhs.GetCollisionPoint().DistanceTo(rhs.GetCollisionPoint());
+
+	return 0 >= (distance - lhs.radius_ - rhs.radius_);
+}
+
+bool GameEngineCollision::collisionCheckRectToRect(const GameEngineCollision& lhs, const GameEngineCollision& rhs)
+{
+	return false;
+}
+
+bool GameEngineCollision::collisionCheckPointToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs)
+{
+	float distance = lhs.GetCollisionPoint().DistanceTo(rhs.GetCollisionPoint());
+
+	return 0 >= (distance - lhs.radius_ - rhs.radius_);
+}
+
+bool GameEngineCollision::collisionCheckCircleToPoint(const GameEngineCollision& lhs, const GameEngineCollision& rhs)
+{
+	float distance = lhs.GetCollisionPoint().DistanceTo(rhs.GetCollisionPoint());
+
+	return 0 >= (distance - lhs.radius_ - rhs.radius_);
+}
+
+bool GameEngineCollision::collisionCheckRectToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs)
+{
+	FRect rect = lhs.rect_;
+	rect.left -= rhs.radius_;
+	rect.top -= rhs.radius_;
+	rect.right += rhs.radius_;
+	rect.bottom += rhs.radius_;
+
+	float4 point = rhs.GetCollisionPoint();
+
+	if (point.x < rect.left)
+	{
+		return false;
+	}
+
+	if (point.x > rect.right)
+	{
+		return false;
+	}
+
+	if (point.y < rect.top)
+	{
+		return false;
+	}
+
+	if (point.y > rect.bottom)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool GameEngineCollision::collisionCheckCircleToRect(const GameEngineCollision& lhs, const GameEngineCollision& rhs)
+{
+	return collisionCheckRectToCircle(rhs, lhs);
+}
