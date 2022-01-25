@@ -56,6 +56,11 @@ private:
 
 #pragma endregion
 
+	float4 GetCameraPos() const
+	{
+		return cameraPos_;
+	}
+
 private:
 	const int MAX_WORM_COUNT = 8;
 	const float DEFAULT_TURN_TIME = 10000.f;

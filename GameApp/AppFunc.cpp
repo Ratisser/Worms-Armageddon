@@ -72,9 +72,13 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_13", Dir.PathToPlusFileName("BoomEdge_13.bmp"));
 		//GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
 
-		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
-			LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
+		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
 		loadingImage->Cut({ 60,60 });
+
+		float4 cutSize = float4(60.f, 60.f);
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);
 		
 		TitleLevelInit();
 		MenuSelectInit();

@@ -56,6 +56,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HomingMissile.h" />
     <ClInclude Include="ChattingInput.h">
       <SubType>
       </SubType>
@@ -276,6 +277,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HomingMissile.cpp" />
     <ClCompile Include="ChattingInput.cpp">
       <SubType>
       </SubType>

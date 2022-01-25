@@ -110,6 +110,18 @@ public:
 		pos_.y += _posy;
 		pos_.z += _Posz;
 	}
+	
+	float4 Normalize(float4 _float4)
+	{
+		float4 normalizeVector = _float4;
+
+		float normalize = sqrtf(normalizeVector.x * normalizeVector.x + normalizeVector.y * normalizeVector.y);
+
+		normalizeVector.x /= normalize;
+		normalizeVector.y /= normalize;
+
+		return normalizeVector;
+	}
 
 protected:
 	GameEngineActor(); // default constructer 디폴트 생성자

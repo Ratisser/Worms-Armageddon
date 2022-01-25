@@ -267,6 +267,9 @@
     <ClInclude Include="MenuSelImage.h">
       <Filter>Actor\MenuSelectLevel</Filter>
     </ClInclude>
+    <ClInclude Include="HomingMissile.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
     <ClInclude Include="UziBullet.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
@@ -454,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="MenuSelImage.cpp">
       <Filter>Actor\MenuSelectLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="HomingMissile.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="UziBullet.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>

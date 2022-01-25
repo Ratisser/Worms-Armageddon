@@ -17,6 +17,9 @@
 
 #include "Bazooka.h"
 #include "FirePunch.h"
+#include "HomingMissile.h"
+#include "MouseObject.h"
+#include "GameController.h"
 #include "Uzi.h"
 
 Worm::Worm()
@@ -165,6 +168,10 @@ void Worm::initInput()
 	{
 		GameEngineInput::GetInst().CreateKey("Fire", VK_SPACE);
 	}
+	if (false == GameEngineInput::GetInst().IsKey("Mouse"))
+	{
+		GameEngineInput::GetInst().CreateKey("Mouse", VK_LBUTTON);
+	}
 }
 
 void Worm::initCollision()
@@ -202,6 +209,11 @@ void Worm::initState()
 	state_.CreateState("BazookaAim", &Worm::startBazookaAim, &Worm::updateBazookaAim);
 	state_.CreateState("BazookaFire", &Worm::startBazookaFire, &Worm::updateBazookaFire);
 	state_.CreateState("BazookaWait", &Worm::startBazookaWait, &Worm::updateBazookaWait);
+
+	state_.CreateState("HomingStart", &Worm::startHomingStart, &Worm::updateHomingStart);
+	state_.CreateState("HomingAim", &Worm::startHomingAim, &Worm::updateHomingAim);
+	state_.CreateState("HomingFire", &Worm::startHomingFire, &Worm::updateHomingFire);
+	state_.CreateState("HomingWait", &Worm::startHomingWait, &Worm::updateHomingWait);
 
 	state_.CreateState("FirepunchReady", &Worm::startFirepunchReady, &Worm::updateFirepunchReady);
 	state_.CreateState("FirepunchStart", &Worm::startFirepunchStart, &Worm::updateFirepunchStart);
@@ -300,6 +312,7 @@ std::string Worm::getWeaponAimState()
 		return "BazookaAim";
 		break;
 	case eItemList::WEAPON_HOMINGMISSILE:
+		return "HomingStart";
 		break;
 	case eItemList::WEAPON_MORTAR:
 		break;
@@ -455,6 +468,14 @@ void Worm::setAnimationWeaponOn()
 		}
 		break;
 	case eItemList::WEAPON_HOMINGMISSILE:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MORTAR:
 		break;
@@ -620,6 +641,14 @@ void Worm::setAnimationWeaponOff()
 		}
 		break;
 	case eItemList::WEAPON_HOMINGMISSILE:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MORTAR:
 		break;
@@ -1183,6 +1212,173 @@ StateInfo Worm::updateBazookaWait(StateInfo _state)
 	return "WeaponOff";
 }
 
+StateInfo Worm::startHomingStart(StateInfo _state)
+{
+	// 마우스 커서 생성
+	// ShowCursor(false);
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateHomingStart(StateInfo _state)
+{
+	// 마우스 포지션 클릭
+
+	if (GameEngineInput::GetInst().IsDown("Mouse"))
+	{
+		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+			
+		float4 MousePos = mouse->GetPos() + mouse->GetGameController()->GetCameraPos();
+
+		mouseTargetPos_ = MousePos;
+
+		return "HomingAim";
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::startHomingAim(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BazAimRight", std::string("bazAimRight.bmp"));
+	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+	setAimingForward();
+	crosshairRender_->On();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+	return StateInfo();
+}
+
+StateInfo Worm::updateHomingAim(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("UpArrow"))
+	{
+		aimRotation_ += deltaTime_;
+		if (aimRotation_ >= 180.f * GameEngineMath::DegreeToRadian)
+		{
+			aimRotation_ = 180.f * GameEngineMath::DegreeToRadian;
+		}
+	}
+
+	if (GameEngineInput::GetInst().IsPress("DownArrow"))
+	{
+		aimRotation_ -= deltaTime_;
+		if (aimRotation_ <= 0.0f)
+		{
+			aimRotation_ = 0.0f;
+		}
+	}
+
+	int frame = getAimingFrame();
+	mainRender_->SetAnimationCurrentFrame(frame);
+
+	if (bLeft_)
+	{
+		crosshairRender_->SetAnimationCurrentFrame(frame);
+	}
+	else
+	{
+		crosshairRender_->SetAnimationCurrentFrame(31 - frame);
+	}
+
+	setAimingForward();
+	crosshairRender_->SetPivotPos(forward_ * 50.f);
+
+	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
+	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		return "HomingFire";
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startHomingFire(StateInfo _state)
+{
+	firePower_ = 100.0f;
+	return StateInfo();
+}
+
+StateInfo Worm::updateHomingFire(StateInfo _state)
+{
+	if (GameEngineInput::GetInst().IsUp("Fire"))
+	{
+		HomingMissile* newHom = parentLevel_->CreateActor<HomingMissile>();
+		newHom->SetPos(pos_ + float4(forward_ * 20.f));
+		newHom->SetPower(forward_, firePower_);
+		newHom->SetHomingPoint(mouseTargetPos_);
+		//bFocus_ = false;
+		return "HomingWait";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		firePower_ += deltaTime_ * 500.f;
+
+		if (firePower_ > 1000.f)
+		{
+			HomingMissile* newHom = parentLevel_->CreateActor<HomingMissile>();
+			newHom->SetPos(pos_ + float4(forward_ * 20.f));
+			newHom->SetPower(forward_, firePower_);
+			newHom->SetHomingPoint(mouseTargetPos_);
+			//bFocus_ = false;
+			return "HomingWait";
+		}
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::startHomingWait(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateHomingWait(StateInfo _state)
+{
+	nextState_ = "Idle";
+	return "WeaponOff";
+}
+
 
 StateInfo Worm::startFirepunchReady(StateInfo _state)
 {
@@ -1681,7 +1877,6 @@ void Worm::Render()
 	{
 		crosshairRender_->Render();
 	}
-
 	//bottomCenterCollision_->DebugRender();
 	//groundCheckCollision_->DebugRender();
 	//leftSideCollision_->DebugRender();

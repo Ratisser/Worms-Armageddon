@@ -43,6 +43,16 @@ public:
 	void SetFinalPos(const float4& _FinalPos);
 	void MoveMousePos(bool _Flag = true);
 
+	float4 GetMousePos() const
+	{
+		return pos_;
+	}
+
+	GameController* GetGameController() const
+	{
+		return gamecontroller_;
+	}
+
 public:
 	void SetGameController(GameController* _MainController);
 
