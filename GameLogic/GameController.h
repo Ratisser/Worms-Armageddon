@@ -55,7 +55,7 @@ private:
 	StateInfo updateItemDrop(StateInfo _state);
 
 #pragma endregion
-
+public:
 	float4 GetCameraPos() const
 	{
 		return cameraPos_;

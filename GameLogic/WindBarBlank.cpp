@@ -4,7 +4,7 @@
 
 WindBarBlank::WindBarBlank() // default constructer 디폴트 생성자
 {
-	SetRenderOrder(10000);
+	SetRenderOrder((int)RenderOrder::UI);
 	SetPos({1180,700});
 }
 

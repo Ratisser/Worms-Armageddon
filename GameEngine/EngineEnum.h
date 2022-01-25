@@ -32,6 +32,8 @@ enum class RenderOrder
 	Weapon,
 	Effect,
 	UI,
+	UI1,
+	UI2,
 	Mouse = 999,
 	MAX
 };

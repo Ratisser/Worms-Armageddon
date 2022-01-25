@@ -19,9 +19,6 @@
     <Filter Include="Actor\PlayLevel">
       <UniqueIdentifier>{bfc3f820-fa47-4b86-8929-20c53951cbfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\LoadingLevel">
-      <UniqueIdentifier>{d6236c91-4435-4f64-8223-421c3e519f68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\PlayLevel\UI">
       <UniqueIdentifier>{ccefebcf-b231-4c5d-83e0-40c3da3a58fb}</UniqueIdentifier>
     </Filter>
@@ -106,6 +103,9 @@
     <Filter Include="Actor\LobbyLevel\UI\Image">
       <UniqueIdentifier>{88a180ef-d046-4f00-968c-5317f8588f14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\LoadingLevel">
+      <UniqueIdentifier>{d6236c91-4435-4f64-8223-421c3e519f68}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -133,7 +133,7 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="LoadingImage.h">
-      <Filter>Actor\LoadingLevel</Filter>
+      <Filter>Actor\LobbyLevel\LoadingLevel</Filter>
     </ClInclude>
     <ClInclude Include="eCollisionCheckColor.h">
       <Filter>Enum</Filter>
@@ -330,7 +330,7 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="LoadingImage.cpp">
-      <Filter>Actor\LoadingLevel</Filter>
+      <Filter>Actor\LobbyLevel\LoadingLevel</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundScatter.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>

@@ -3,7 +3,7 @@
 #include "WindController.h"
 WindBarHider::WindBarHider() // default constructer 디폴트 생성자
 {
-	SetRenderOrder(10002);
+	SetRenderOrder((int)RenderOrder::UI2);
 }
 
 WindBarHider::~WindBarHider() // default destructer 디폴트 소멸자

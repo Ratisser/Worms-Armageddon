@@ -93,7 +93,7 @@ void LobbyStartButton::Update()
 			if (true == LobbyHost::SetCurHostReady())
 			{
 				// ¾ÀÀüÈ¯
-				GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel", true);
+				GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel", true);
 
 				// Ä³·µ ¹İ³³ ¹× Flag ÇØÁ¦
 				ChattingInput::SetCurCaretState(false);
