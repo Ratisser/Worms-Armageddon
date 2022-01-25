@@ -246,19 +246,19 @@ public:
 			return;
 		}
 
-		if (0 < nextState_.Time)
-		{
-			nextState_.Time -= GameEngineTime::GetInst().GetDeltaTime();
-			return;
-		}
-		else
-		{
-			if ("" != nextState_._NextState)
-			{
-				ChangeState(nextState_._NextState);
-				nextState_._NextState = "";
-			}
-		}
+		//if (0 < nextState_.Time)
+		//{
+		//	nextState_.Time -= GameEngineTime::GetInst().GetDeltaTime();
+		//	return;
+		//}
+		//else
+		//{
+		//	if ("" != nextState_._NextState)
+		//	{
+		//		ChangeState(nextState_._NextState);
+		//		nextState_._NextState = "";
+		//	}
+		//}
 
 		curState_->CallUpdate();
 	}
