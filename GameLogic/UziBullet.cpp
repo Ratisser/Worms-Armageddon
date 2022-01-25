@@ -1,5 +1,5 @@
 #include "UziBullet.h"
-
+#include "Uzi.h"
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
 #include <GameEngineTime.h>
@@ -23,7 +23,7 @@ UziBullet::UziBullet() // default constructer 디폴트 생성자
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, degree_(0.f)
-	, curShot_(0)
+	, isFlying_(false)
 {
 
 }
@@ -41,7 +41,7 @@ UziBullet::UziBullet(UziBullet&& _other) noexcept  // default RValue Copy constr
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, degree_(0.f)
-	, curShot_(0)
+	, isFlying_(false)
 {
 
 }
@@ -51,8 +51,8 @@ void UziBullet::Start()
 {
 	SetRenderOrder((int)RenderOrder::Weapon);
 	fireCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
+	fireCollision_->SetPivot(float4::ZERO);
 	fireCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-
 }
 
 void UziBullet::UpdateBefore()
@@ -62,32 +62,26 @@ void UziBullet::UpdateBefore()
 
 void UziBullet::Update()
 {
-	deltaTime_ = 0.2f;
-	parentForward_ = parentWorm_->GetForward();
-
-
+	if (true == isFlying_)
+	{
+		deltaTime_ = 0.2f;
 		if (0.2f <= deltaTime_)
 		{
 			if (nullptr == fireCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 			{ // 만약 히트레이가 지형을 만나지 않는다면...
 				PlayLevel* level = (PlayLevel*)GetLevel();
-				bGround_ = false;
-				SetMove(direction_);
+				SetMove(parentForward_ * 1000.0f);
 			}
 
 			if (nullptr != fireCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 			{
 				PlayLevel* level = (PlayLevel*)GetLevel();
-				level->CreateExplosion25({ pos_.x, pos_.y });//GroundExplosion(float4(pos_.x - 50.f, pos_.y - 50.f));
-				curShot_ += 1;
+				level->CreateExplosion25({ pos_.x, pos_.y });
 				deltaTime_ = 0.0f;
 				Death();
 			}
 		}
-	
-
-
-
+	}
 }
 
 void UziBullet::UpdateAfter()

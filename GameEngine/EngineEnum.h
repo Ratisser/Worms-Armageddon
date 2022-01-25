@@ -18,9 +18,13 @@ enum class CollisionCheckType
 enum class RenderOrder
 {
 	// 각자 추가, 배치하여 사용하길 바람 - 이현
-	None,
+	MIN,
 	BackGround,
+	BackGround1,
+	BackGround2,
 	MapBack,
+	MapBack1,
+	MapBack2,
 	WaterLevel_Back,
 	Map,
 	Worm,
@@ -29,5 +33,5 @@ enum class RenderOrder
 	Effect,
 	UI,
 	Mouse = 999,
-	Max
+	MAX
 };

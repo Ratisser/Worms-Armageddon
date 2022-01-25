@@ -27,6 +27,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGroundGradation.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Bazooka.h" />
     <ClInclude Include="ChattingHistory.h">
       <SubType>
@@ -229,6 +233,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BackGroundGradation.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Bazooka.cpp" />
     <ClCompile Include="ChattingHistory.cpp">
       <SubType>

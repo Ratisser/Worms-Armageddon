@@ -1485,28 +1485,28 @@ StateInfo Worm::startUziFire(StateInfo _state)
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("UziFireLeft", std::string("uziFireLeft.bmp"));
+		Uzi* newUzi = parentLevel_->CreateActor<Uzi>();
+		newUzi->SetParentWorm(this);
+		newUzi->SetPos(pos_ + float4(forward_ * 20.f));
+		newUzi->SetUziBulletShotBox(forward_);
+		return StateInfo();
 	}
 	else
 	{
 		mainRender_->ChangeAnimation("UziFireRight", std::string("uziFireRight.bmp"));
+		Uzi* newUzi = parentLevel_->CreateActor<Uzi>();
+		newUzi->SetParentWorm(this);
+		newUzi->SetPos(pos_ + float4(forward_ * 20.f));
+		newUzi->SetUziBulletShotBox(forward_);
+		return StateInfo();
 	}
 
-	return StateInfo();
 }
 
 StateInfo Worm::updateUziFire(StateInfo _state)
 {
-		
-	
-		//Uzi* newUzi = parentLevel_->CreateActor<Uzi>();
-		//newUzi->SetParentWorm(this);
-		//newUzi->SetPos(pos_ + float4(forward_ * 20.f));
-		//newUzi->SetUziShotBox(forward_ * 20.f);
-		//mainRender_->ChangeAnimation("UziAimRight", std::string("uziAimRight.bmp"));
-
-
-
-		return "UziWait";
+	mainRender_->ChangeAnimation("UziAimRight", std::string("uziAimRight.bmp"));
+	return "UziWait";
 
 	return StateInfo();
 }

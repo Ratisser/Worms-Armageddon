@@ -4,9 +4,10 @@
 #include <GameEngineMath.h>
 #include "WeaponBase.h"
 
+class Uzi;
 class GameEngineRenderer;
 class Worm;
-class UziBullet : public WeaponBase
+class UziBullet : public GameEngineActor
 {
 public:
 
@@ -25,8 +26,8 @@ private:		//delete operator
 
 private:
 	const int CAPACITY = 25;
-	int curShot_;
 	GameEngineMath::Random randomGenerator_;
+	bool isFlying_;
 
 public:
 	virtual void Start() override;
@@ -38,7 +39,7 @@ public:
 private:
 	GameEngineRenderer* mainRender_;
 	GameEngineCollision* fireCollision_;
-	Worm* parent_;
+	Uzi* parentUzi_;
 	float4 direction_;
 	float4 scanPos_;
 	float4 parentForward_;
@@ -51,15 +52,19 @@ private:
 	float deltaTime_;
 
 public:
-	void SetUziBulletShotBox(float4 _direction)
+	void SetUziBulletShotBox(float4 _forward)
 	{
-		direction_ = _direction;
+		parentForward_ = _forward;
 	}
 
-	void SetParentWorm(Worm* _worm)
+	void SetParentUzi(Uzi* _uzi)
 	{
-		parentWorm_ = _worm;
+		parentUzi_ = _uzi;
 	}
 
+	void StartFly()
+	{
+		isFlying_ = true;
+	}
 };
 

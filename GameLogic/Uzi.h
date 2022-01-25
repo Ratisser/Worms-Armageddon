@@ -1,15 +1,23 @@
 #pragma once
 #include <GameEngineActor.h>
+#include <GameEngineFSM.h>
+#include <GameEngineMath.h>
+#include "WeaponBase.h"
 // 분류 : 
 // 용도 : 
 // 설명 : 
+class Worm;
 class UziBullet;
-class Uzi : public GameEngineActor
+class Uzi : public WeaponBase
 {
 private:	// member Var
+	std::vector<UziBullet*> bulletList_;
+
 	UziBullet* curBullet_;
 	const int CAPACITY = 25;
 	int curShot_;
+
+	friend UziBullet;
 
 public:
 	Uzi(); // default constructer 디폴트 생성자
@@ -24,6 +32,37 @@ private:		//delete operator
 	Uzi& operator=(const Uzi&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:
+	virtual void Start() override;
+	virtual void UpdateBefore() override;
+	virtual void Update() override;
+	virtual void UpdateAfter() override;
+	virtual void Render() override;
+
+private:
+	GameEngineRenderer* mainRender_;
+	GameEngineCollision* fireCollision_;
+	Worm* parent_;
+	float4 direction_;
+	float4 scanPos_;
+	float4 parentForward_;
+
+	bool bLeft_;
+	bool bGround_;
+	bool bBackJump_;
+
+	float degree_;
+	float deltaTime_;
+
+public:
+	void SetUziBulletShotBox(float4 _forward)
+	{
+		parentForward_ = _forward;
+	}
+
+	void SetParentWorm(Worm* _worm)
+	{
+		parentWorm_ = _worm;
+	}
 
 };
 
