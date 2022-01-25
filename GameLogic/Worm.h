@@ -108,6 +108,13 @@ private:
 	StateInfo startUziWait(StateInfo _state);
 	StateInfo updateUziWait(StateInfo _state);
 
+	StateInfo startSheepAim(StateInfo _state);
+	StateInfo updateSheepAim(StateInfo _state);
+	StateInfo startSheepFire(StateInfo _state);
+	StateInfo updateSheepFire(StateInfo _state);
+	StateInfo startSheepWait(StateInfo _state);
+	StateInfo updateSheepWait(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;

@@ -129,6 +129,8 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("UziFireLeft", "uziFireLeft.bmp", 0, 31, false, FLT_MAX);
 	mainRender_->CreateAnimation("UziFireRight", "uziFireRight.bmp", 0, 31, false, FLT_MAX);
 
+	//mainRender_->CreateAnimation("SheepOnLeft", "sheepOnLeft.bmp");
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -343,6 +345,7 @@ std::string Worm::getWeaponAimState()
 		//11
 		break;
 	case eItemList::WEAPON_SHEEP:
+		return "SheepAim";
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
 		break;
@@ -1520,6 +1523,36 @@ StateInfo Worm::updateUziWait(StateInfo _state)
 {
 	nextState_ = "Idle";
 	return "WeaponOff";
+}
+
+StateInfo Worm::startSheepAim(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateSheepAim(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::startSheepFire(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateSheepFire(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::startSheepWait(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateSheepWait(StateInfo _state)
+{
+	return StateInfo();
 }
 
 
