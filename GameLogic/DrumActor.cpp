@@ -120,9 +120,12 @@ void DrumActor::UpdateAfter()
 void DrumActor::Render()
 {
 #ifdef _DEBUG
-	BodyCollision_->DebugRender();
+	if (GetLevel<PlayLevel>()->GetDebug())
+	{
+		BodyCollision_->DebugRender();
+		groundCollision_->DebugRender();
+	}
 #endif // DEBUG
-	groundCollision_->DebugRender();
 	mainSpriteRender_->AnimationUpdate();
 }
 

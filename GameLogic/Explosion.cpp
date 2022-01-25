@@ -8,6 +8,7 @@
 #include <typeinfo>
 
 #include "Worm.h"
+#include "PlayLevel.h"
 
 Explosion::Explosion():
 #ifdef _DEBUG
@@ -48,14 +49,19 @@ void Explosion::Update()
 {
 #ifdef _DEBUG
 	{//디버그 코드
-		float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
+	if (false == GetLevel<PlayLevel>()->GetDebug())
+	{
+		Death();
+	}
 
-		LifeTime_ += deltaTime;
+	float deltaTime = GameEngineTime::GetInst().GetDeltaTime();
 
-		if (LifeTime_ > 3.f)
-		{
-			Death();
-		}
+	LifeTime_ += deltaTime;
+
+	if (LifeTime_ > 3.f)
+	{
+		Death();
+	}
 	}
 #endif // DEBUG
 
@@ -100,7 +106,10 @@ void Explosion::UpdateAfter()
 void Explosion::Render()
 {
 #ifdef _DEBUG
-	ExplosionCollision_->DebugRender();
+	if (GetLevel<PlayLevel>()->GetDebug())
+	{
+		ExplosionCollision_->DebugRender();
+	}
 #endif // DEBUG
 }
 

@@ -67,6 +67,11 @@ public:
 
 	void KeySetting();
 
+	bool GetDebug()
+	{
+		return isDebugOn_;
+	}
+
 private:
 	void wormLoading();
 	void PJWLevelUpdate();

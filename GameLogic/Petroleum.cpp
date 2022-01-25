@@ -208,8 +208,11 @@ void Petroleum::UpdateAfter()
 
 void Petroleum::Render()
 {
-#ifdef _DEBUG
-	groundCollision_->DebugRender();
+#ifdef _DEBUG	
+	if (GetLevel<PlayLevel>()->GetDebug())
+	{
+		groundCollision_->DebugRender();
+	}
 #endif // DEBUG
 	mainSpriteRender_->AnimationUpdate();
 
