@@ -8,6 +8,8 @@
 #include "ChattingHistory.h"
 #include "LobbyStartButton.h"
 #include "LobbyExitButton.h"
+#include "GameOptionSet.h"
+#include "WeaponOptionSet.h"
 #include "MouseObject.h"
 
 #include <GameEngineInput.h>
@@ -86,6 +88,10 @@ void LobbyLevel::Loading_SJH()
 	// 채팅기능
 	CreateActor<ChattingHistory>(); // 채팅이력
 	CreateActor<ChattingInput>(); // 채팅 입력
+
+	// 옵션셋팅(게임옵션, 무기옵션)
+	CreateActor<GameOptionSet>();
+	CreateActor<WeaponOptionSet>();
 
 	// 게임시작 및 종료 버튼
 	CreateActor<LobbyStartButton>();

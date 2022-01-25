@@ -103,6 +103,9 @@
     <Filter Include="Actor\LobbyLevel\UI\Button">
       <UniqueIdentifier>{1a511075-59a9-4ec3-8221-4faab3936da8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Image">
+      <UniqueIdentifier>{88a180ef-d046-4f00-968c-5317f8588f14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -285,6 +288,12 @@
     <ClInclude Include="LobbyExitButton.h">
       <Filter>Actor\LobbyLevel\UI\Button</Filter>
     </ClInclude>
+    <ClInclude Include="GameOptionSet.h">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponOptionSet.h">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClInclude>
     <ClInclude Include="BackGroundGradation.h">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
@@ -463,6 +472,12 @@
     </ClCompile>
     <ClCompile Include="LobbyExitButton.cpp">
       <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOptionSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponOptionSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

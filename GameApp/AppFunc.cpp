@@ -384,6 +384,17 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCars", Dir.PathToPlusFileName("LobbyMap_MapCars.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCity", Dir.PathToPlusFileName("LobbyMap_MapCity.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapBooks", Dir.PathToPlusFileName("LobbyMap_MapBooks.bmp"));
+
+	// 로비 게임옵션 및 무기옵션 설정화면 진입 이미지
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Menu\\optionsmenu"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SetGameOption", Dir.PathToPlusFileName("gameoptions.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SetWeaponOption", Dir.PathToPlusFileName("weaponoptions.bmp"));
 }
 
 void CharactorImageInit()
