@@ -59,14 +59,14 @@ MapTrain::MapTrain(MapTrain&& _other) noexcept  // default RValue Copy construct
 
 void MapTrain::Start()
 {
-	float4 WindowSize = GameEngineWindow::GetInst().GetSize();
-
-	gradationSpriteRender_ = CreateRenderer("Gradient");
-	float4 ImageSize = gradationSpriteRender_->GetImageSize();
-	gradationSpriteRender_->SetPivotPos(ImageSize.halffloat4());
-	gradationSpriteRender_->SetCameraEffectOff();
-
-	gradationSpriteRender_->SetRenderSize(WindowSize);
+	//float4 WindowSize = GameEngineWindow::GetInst().GetSize();
+	//
+	//gradationSpriteRender_ = CreateRenderer("Gradient");
+	//float4 ImageSize = gradationSpriteRender_->GetImageSize();
+	//gradationSpriteRender_->SetPivotPos(ImageSize.halffloat4());
+	//gradationSpriteRender_->SetCameraEffectOff();
+	//
+	//gradationSpriteRender_->SetRenderSize(WindowSize);
 
 	boomSpriteRender_ = CreateRenderer("Boom");
 	boomEdgeSpriteRender_ = CreateRenderer("BoomEdge");
@@ -119,7 +119,7 @@ void MapTrain::UpdateAfter()
 void MapTrain::Render()
 {
 	// 그라데이션 
-	gradationSpriteRender_->Render();
+	//gradationSpriteRender_->Render();
 
 	// 충돌맵
 	colSpriteRender_->Render();

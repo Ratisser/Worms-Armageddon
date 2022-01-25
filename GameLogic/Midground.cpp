@@ -3,8 +3,8 @@
 Midground::Midground() // default constructer 디폴트 생성자
 	: mainRender_(nullptr)
 {
-	SetPos({1350, 900 });
-	SetRenderOrder(3);
+	SetPos({1350, 1400 });
+	SetRenderOrder((int)RenderOrder::BackGround);
 }
 
 Midground::~Midground() // default destructer 디폴트 소멸자

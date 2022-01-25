@@ -3,11 +3,22 @@
 #include <GameEngineFSM.h>
 #include <GameEngineMath.h>
 #include "WeaponBase.h"
-
-class GameEngineRenderer;
+// 분류 : 
+// 용도 : 
+// 설명 : 
 class Worm;
+class UziBullet;
 class Uzi : public WeaponBase
 {
+private:	// member Var
+	std::vector<UziBullet*> bulletList_;
+
+	UziBullet* curBullet_;
+	const int CAPACITY = 25;
+	int curShot_;
+
+	friend UziBullet;
+
 public:
 	Uzi(); // default constructer 디폴트 생성자
 	~Uzi(); // default destructer 디폴트 소멸자
@@ -19,10 +30,6 @@ protected:		// delete constructer
 private:		//delete operator
 	Uzi& operator=(const Uzi& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	Uzi& operator=(const Uzi&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
-
-private:
-	const int CAPACITY = 25;
-	GameEngineMath::Random randomGenerator_;
 
 public:
 	virtual void Start() override;
@@ -42,14 +49,14 @@ private:
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
-	
+
 	float degree_;
 	float deltaTime_;
 
 public:
-	void SetUziShotBox(float4 _direction)
+	void SetUziBulletShotBox(float4 _forward)
 	{
-		direction_ = _direction;
+		parentForward_ = _forward;
 	}
 
 	void SetParentWorm(Worm* _worm)

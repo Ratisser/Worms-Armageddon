@@ -5,7 +5,7 @@
 WindBar::WindBar() // default constructer 디폴트 생성자
 	: originalSizeX_(87.0f)
 {
-	SetRenderOrder(10001);
+	SetRenderOrder((int)RenderOrder::UI1);
 }
 
 WindBar::~WindBar() // default destructer 디폴트 소멸자

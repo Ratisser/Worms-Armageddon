@@ -4,7 +4,7 @@
 BottomFlag::BottomFlag() // default constructer 디폴트 생성자
 	: mainRender_(nullptr), parentWorm_(nullptr)
 {
-	SetRenderOrder(10000);
+	SetRenderOrder((int)RenderOrder::UI);
 }
 
 BottomFlag::~BottomFlag() // default destructer 디폴트 소멸자

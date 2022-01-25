@@ -3,6 +3,13 @@
 #include "LobbySelectMapImage.h"
 #include "WindController.h"
 #include "BackgroundScatter.h"
+#include "LobbyHost.h"
+#include "ChattingInput.h"
+#include "ChattingHistory.h"
+#include "LobbyStartButton.h"
+#include "LobbyExitButton.h"
+#include "GameOptionSet.h"
+#include "WeaponOptionSet.h"
 #include "MouseObject.h"
 
 #include <GameEngineInput.h>
@@ -17,7 +24,6 @@ LobbyLevel::LobbyLevel() // default constructer 디폴트 생성자
 
 LobbyLevel::~LobbyLevel() // default destructer 디폴트 소멸자
 {
-
 }
 
 LobbyLevel::LobbyLevel(LobbyLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
@@ -28,22 +34,13 @@ LobbyLevel::LobbyLevel(LobbyLevel&& _other) noexcept  // default RValue Copy con
 
 void LobbyLevel::Loading()
 {
-	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
-	{
-		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
-	}
-
 	// 대기실화면 배경 및 맵선택 이미지
 	Loading_SJH();
-
 }
 
 void LobbyLevel::LevelUpdate()
 {
-	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
-	{
-		GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel");
-	}
+
 }
 
 void LobbyLevel::Loading_SJH()
@@ -87,6 +84,21 @@ void LobbyLevel::Loading_SJH()
 	SelectMapImage->SetPos({ HalfResoultion.x + 100.f, 20.f });
 	SelectMapImage->CreateSelMapImageNameList(ImageNameList);
 	SelectMapImage->SetCurMapIndex(CurMapIndex);
+
+	// 채팅기능
+	CreateActor<ChattingHistory>(); // 채팅이력
+	CreateActor<ChattingInput>(); // 채팅 입력
+
+	// 옵션셋팅(게임옵션, 무기옵션)
+	CreateActor<GameOptionSet>();
+	CreateActor<WeaponOptionSet>();
+
+	// 게임시작 및 종료 버튼
+	CreateActor<LobbyStartButton>();
+	CreateActor<LobbyExitButton>();
+
+	// 호스트
+	CreateActor<LobbyHost>();
 
 	// 마우스
 	CreateActor<MouseObject>();

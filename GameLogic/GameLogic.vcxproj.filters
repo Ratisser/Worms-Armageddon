@@ -19,9 +19,6 @@
     <Filter Include="Actor\PlayLevel">
       <UniqueIdentifier>{bfc3f820-fa47-4b86-8929-20c53951cbfa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\LoadingLevel">
-      <UniqueIdentifier>{d6236c91-4435-4f64-8223-421c3e519f68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\PlayLevel\UI">
       <UniqueIdentifier>{ccefebcf-b231-4c5d-83e0-40c3da3a58fb}</UniqueIdentifier>
     </Filter>
@@ -94,6 +91,21 @@
     <Filter Include="Actor\MenuSelectLevel">
       <UniqueIdentifier>{77bda3dc-c455-47a2-9fec-66a1ce7021a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\UI">
+      <UniqueIdentifier>{b6305556-e818-4fca-9e1e-d8d77269d367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Chatting">
+      <UniqueIdentifier>{ebf9e9ec-def2-4de4-bbe9-35e535daf5ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Button">
+      <UniqueIdentifier>{1a511075-59a9-4ec3-8221-4faab3936da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Image">
+      <UniqueIdentifier>{88a180ef-d046-4f00-968c-5317f8588f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\LoadingLevel">
+      <UniqueIdentifier>{d6236c91-4435-4f64-8223-421c3e519f68}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Actor\Effect\01. EffectActor\ex">
       <UniqueIdentifier>{4863a8ed-7701-4f32-be55-be03c3ef4add}</UniqueIdentifier>
     </Filter>
@@ -124,7 +136,7 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="LoadingImage.h">
-      <Filter>Actor\LoadingLevel</Filter>
+      <Filter>Actor\LobbyLevel\LoadingLevel</Filter>
     </ClInclude>
     <ClInclude Include="eCollisionCheckColor.h">
       <Filter>Enum</Filter>
@@ -258,7 +270,43 @@
     <ClInclude Include="MenuSelImage.h">
       <Filter>Actor\MenuSelectLevel</Filter>
     </ClInclude>
+    <ClInclude Include="HomingMissile.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="UziBullet.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyHost.h">
+      <Filter>Actor\LobbyLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ChattingInput.h">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClInclude>
+    <ClInclude Include="ChattingHistory.h">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyStartButton.h">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClInclude>
     <ClInclude Include="Uzi.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyExitButton.h">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOptionSet.h">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponOptionSet.h">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundGradation.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Sheep.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperSheep.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Effectex.h">
@@ -288,7 +336,7 @@
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="LoadingImage.cpp">
-      <Filter>Actor\LoadingLevel</Filter>
+      <Filter>Actor\LobbyLevel\LoadingLevel</Filter>
     </ClCompile>
     <ClCompile Include="BackgroundScatter.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -416,7 +464,43 @@
     <ClCompile Include="MenuSelImage.cpp">
       <Filter>Actor\MenuSelectLevel</Filter>
     </ClCompile>
+    <ClCompile Include="HomingMissile.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="UziBullet.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyHost.cpp">
+      <Filter>Actor\LobbyLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingInput.cpp">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClCompile>
+    <ClCompile Include="ChattingHistory.cpp">
+      <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyStartButton.cpp">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClCompile>
     <ClCompile Include="Uzi.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundGradation.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyExitButton.cpp">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOptionSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponOptionSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheep.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperSheep.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Effectex.cpp">

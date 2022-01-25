@@ -5,6 +5,8 @@
 #include <GameEngineDebugExtension.h>
 #include <GameEngineTime.h>
 
+#include "LoadingImage.h"
+#include "BackGroundGradation.h"
 #include "MouseObject.h"
 #include "MapTrain.h"
 #include "PlayLevel.h"
@@ -13,6 +15,7 @@
 #include "DrumActor.h"
 #include "Bazooka.h"
 #include "Uzi.h"
+#include "UziBullet.h"
 
 #include "BottomHealthBar.h"
 #include "BottomNameTag.h"
@@ -79,7 +82,10 @@ void PlayLevel::Loading()
 	{
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
 	}
+	
+	CreateActor<LoadingImage>();
 
+	CreateActor<BackGroundGradation>();
 	Train_ = CreateActor<MapTrain>();
 	Train_->UpdateBefore();
 
@@ -363,7 +369,7 @@ void PlayLevel::MakeWaterLevel(float _WaterLevel) // ¸Ê ¹Ù´ÚÀÇ ¼ö¸é »ý¼º
 void PlayLevel::CreateGimmickObject()
 {
 	DrumActor* DrumActor1 = CreateActor<DrumActor>(float4(1600.f,150.f));
-	DrumActor1->SetRenderOrder((int)RenderOrder::Max);
+	DrumActor1->SetRenderOrder((int)RenderOrder::Worm);
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 }
 

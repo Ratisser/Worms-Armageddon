@@ -176,6 +176,17 @@ public:
 		return ReturnValue;
 	}
 
+	float4 operator+(float _other) const
+	{
+		float4 ReturnValue;
+
+		ReturnValue.x = this->x + _other;
+		ReturnValue.y = this->y + _other;
+		ReturnValue.z = this->z + _other;
+		ReturnValue.w = this->w + _other;
+		return ReturnValue;
+	}
+
 	float4 operator-(const float4 _other) const
 	{
 		float4 ReturnValue;

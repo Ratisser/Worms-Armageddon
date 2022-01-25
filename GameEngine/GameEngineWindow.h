@@ -81,6 +81,11 @@ public:
 	float4 GetMousePos();
 	bool SetMousePos(int _x, int _y);
 
+	HWND GetMainWindowHandle() const
+	{
+		return windowhandle_;
+	}
+
 public:
 	// 삭제에 대한건 받아간쪽이 알아서 해라.
 	static GameEngineWindow* CreateSubWindow(const std::string& _titlename, const float4& _size, const float4& _pos);

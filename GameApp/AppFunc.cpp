@@ -72,9 +72,13 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_13", Dir.PathToPlusFileName("BoomEdge_13.bmp"));
 		//GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
 
-		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
-			LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
+		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
 		loadingImage->Cut({ 60,60 });
+
+		float4 cutSize = float4(60.f, 60.f);
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);
 		
 		TitleLevelInit();
 		MenuSelectInit();
@@ -130,6 +134,7 @@ void ResourceInitPJW()
 	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("LoadingSprites", Dir.PathToPlusFileName("LoadingSprites.bmp"));
 	loadingImage->Cut({ 160,160 });
 	GameEngineImage::GetInst().LoadGameImage("Midground", Dir.PathToPlusFileName("Midground.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Background", Dir.PathToPlusFileName("backGround.bmp"));
 
 	if (false == Dir.MoveChild("\\Misc\\"))
 	{
@@ -314,6 +319,64 @@ void LobbyImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("Lobby_Backdrop", Dir.PathToPlusFileName("Lobby_Backdrop.bmp"));
 
+	// 로비 버튼관련
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ButtonNormal", Dir.PathToPlusFileName("Normal_Btn.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ButtonMouseOn", Dir.PathToPlusFileName("MouseOver_Btn.bmp"));
+
+	// 로비 화면 관련 Display Box
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostBox", Dir.PathToPlusFileName("4459.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_PlayerBox", Dir.PathToPlusFileName("6868.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SelPlayerInput", Dir.PathToPlusFileName("5619.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SelPlayerBox", Dir.PathToPlusFileName("6836.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingHis", Dir.PathToPlusFileName("13268.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingInput", Dir.PathToPlusFileName("24428.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ChattingInputOK", Dir.PathToPlusFileName("24428_2.bmp"));
+
+	// 로비화면 호스트 레디 이미지
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\BigReadyBulb.seq"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOff", Dir.PathToPlusFileName("OFF_btn.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOn", Dir.PathToPlusFileName("ON_btn.bmp"));
+
+	// 로비화면 호스트 생성 리소스
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\ReadyYN.seq"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostCurReadyOn", Dir.PathToPlusFileName("ON.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostCurReadyOff", Dir.PathToPlusFileName("OFF.bmp"));
+
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\Nation"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("LobbyNation_Kor", Dir.PathToPlusFileName("Nation_Kor.bmp"));
+
 	// 선택가능 맵 이미지 로딩
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\SelectMap"))
@@ -327,6 +390,16 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapCity", Dir.PathToPlusFileName("LobbyMap_MapCity.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("LobbyMap_MapBooks", Dir.PathToPlusFileName("LobbyMap_MapBooks.bmp"));
 
+	// 로비 게임옵션 및 무기옵션 설정화면 진입 이미지
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Menu\\optionsmenu"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SetGameOption", Dir.PathToPlusFileName("gameoptions.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_SetWeaponOption", Dir.PathToPlusFileName("weaponoptions.bmp"));
 }
 
 void CharactorImageInit()
@@ -390,6 +463,11 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "uziAimRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "uziFireLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "uziFireRight.bmp", cutSize);
+	// 양 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "sheepOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepOnRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepOffRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();
@@ -397,6 +475,20 @@ void CharactorImageInit()
 		dir.MoveChild("\\Resources\\Image\\Misc\\Aim_Taget");
 		RS::LoadImageFromFileAndCut(dir / "crshairr.bmp", cutSize);
 	}
+}
+
+void WeaponImageInit()
+{
+	GameEngineDirectroy dir = GameEngineDirectroy();
+	dir.MoveParent("Worms-Armageddon");
+	dir.MoveChild("\\Resources\\Image");
+
+	float4 cutSize = float4(60.f, 60.f);
+
+	// 양, 슈퍼양
+	RS::LoadImageFromFileAndCut(dir / "superSheep.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepWalkLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepWalkRight.bmp", cutSize);
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)

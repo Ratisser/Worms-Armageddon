@@ -88,6 +88,15 @@ private:
 	StateInfo startBazookaWait(StateInfo _state);
 	StateInfo updateBazookaWait(StateInfo _state);
 
+	StateInfo startHomingStart(StateInfo _state);
+	StateInfo updateHomingStart(StateInfo _state);
+	StateInfo startHomingAim(StateInfo _state);
+	StateInfo updateHomingAim(StateInfo _state);
+	StateInfo startHomingFire(StateInfo _state);
+	StateInfo updateHomingFire(StateInfo _state);
+	StateInfo startHomingWait(StateInfo _state);
+	StateInfo updateHomingWait(StateInfo _state);
+
 	StateInfo startFirepunchReady(StateInfo _state);
 	StateInfo updateFirepunchReady(StateInfo _state);
 	StateInfo startFirepunchStart(StateInfo _state);
@@ -107,6 +116,13 @@ private:
 	StateInfo updateUziFire(StateInfo _state);
 	StateInfo startUziWait(StateInfo _state);
 	StateInfo updateUziWait(StateInfo _state);
+
+	StateInfo startSheepAim(StateInfo _state);
+	StateInfo updateSheepAim(StateInfo _state);
+	StateInfo startSheepFire(StateInfo _state);
+	StateInfo updateSheepFire(StateInfo _state);
+	StateInfo startSheepWait(StateInfo _state);
+	StateInfo updateSheepWait(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;
@@ -131,6 +147,7 @@ private:
 	float4 speed_;
 	float4 direction_;
 	float4 forward_;
+	float4 mouseTargetPos_; // 마우스로 위치 클릭해서 발사하는 무기들 마우스 위치 저장용
 
 	bool bLeft_;
 	bool bGround_;
@@ -142,6 +159,7 @@ private:
 	float aimRotation_;
 	float currentRotation_;
 	float firePower_;
+
 
 	int hp_;
 	int actionToken_;

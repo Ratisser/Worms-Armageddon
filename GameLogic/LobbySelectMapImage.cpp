@@ -13,12 +13,11 @@ LobbySelectMapImage::LobbySelectMapImage() :
 	mainrenderer_(nullptr),
 	maincollision_(nullptr)
 {
-
+	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 }
 
 LobbySelectMapImage::~LobbySelectMapImage() // default destructer 디폴트 소멸자
 {
-
 }
 
 LobbySelectMapImage::LobbySelectMapImage(LobbySelectMapImage&& _other) noexcept :
@@ -42,15 +41,15 @@ void LobbySelectMapImage::Start()
 {
 	float4 HarfResolution = GameEngineWindow::GetInst().GetSize().halffloat4();
 
-	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 	mainrenderer_ = CreateRenderer("LobbyMap_MapTrain");
-	mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 200.f });
-	mainrenderer_->SetImagePivot({ 0.f, 0.f });
+	float4 ImageHarfSize = mainrenderer_->GetImageSize().halffloat4();
+	mainrenderer_->SetPivotPos(float4(ImageHarfSize.x, ImageHarfSize.y));
+	mainrenderer_->SetRenderSize(float4(520.f, 160.f));
 	mainrenderer_->SetCameraEffectOff();
 
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
-	maincollision_->SetSize({ 520.f, 220.f});
-	maincollision_->SetPivot({ 260.f, 110.f });	// 충돌체 크기 * 0.5 한곳이 기준점
+	maincollision_->SetSize({ 520.f, 160.f });
+	maincollision_->SetPivot({ 260.f, 80.f });
 }
 
 void LobbySelectMapImage::UpdateBefore()
@@ -72,9 +71,9 @@ void LobbySelectMapImage::UpdateBefore()
 			}
 
 			mainrenderer_->SetImage(mapimagenamelist_[curmapimage_]);
-			mainrenderer_->SetRenderSize({ HarfResolution.x - 120.f, 200.f });
-			mainrenderer_->SetImagePivot({ 0.f, 0.f });
-			mainrenderer_->SetCameraEffectOff();
+			float4 ImageHarfSize = mainrenderer_->GetImageSize().halffloat4();
+			mainrenderer_->SetPivotPos(float4(ImageHarfSize.x, ImageHarfSize.y));
+			mainrenderer_->SetRenderSize(float4(520.f, 160.f));
 
 			// 전역변수에 현재선택된 맵이름 저장
 			// 단, 맵이름을 넘겨줄때 LobbyMap_ 문자열을 제외한 문자열을 넘긴다.

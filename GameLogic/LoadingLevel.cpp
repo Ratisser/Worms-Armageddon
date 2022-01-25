@@ -19,19 +19,10 @@ LoadingLevel::LoadingLevel(LoadingLevel&& _other) noexcept  // default RValue Co
 
 void LoadingLevel::Loading()
 {
-	if (false == GameEngineInput::GetInst().IsKey("Debug_Next"))
-	{
-		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
-	}
-
 	CreateActor<LoadingImage>();
 
 }
 
 void LoadingLevel::LevelUpdate()
 {
-	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
-	{
-		GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel", true);
-	}
 }

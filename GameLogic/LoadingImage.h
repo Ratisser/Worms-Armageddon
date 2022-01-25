@@ -6,6 +6,7 @@
 class LoadingImage : public GameEngineActor
 {
 private:	// member Var
+	GameEngineRenderer* backRender_;
 	GameEngineRenderer* mainSpriteRender_;
 public:
 	LoadingImage(); // default constructer 디폴트 생성자

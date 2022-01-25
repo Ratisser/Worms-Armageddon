@@ -7,6 +7,8 @@
 #include "GameEngineImage.h"
 #include <iostream>
 
+#include "KeyboardClass.h"
+
 // 값형 싱글톤
 // GameEngineWindow GameEngineWindow::Inst;
 
@@ -34,6 +36,83 @@ LRESULT CALLBACK WndProc(HWND _hWnd, UINT _message, WPARAM _wParam, LPARAM _lPar
         WindowOn = false;
         break;
     }
+
+    // 키보드 등록(채팅기능용)
+    case WM_CHAR:
+    {
+        unsigned char ch = static_cast<unsigned char>(_wParam);
+
+        // 예외처리 : 해당 키들은 input에 등록하여 사용함
+        if (ch == '\b') // BackSpace Key Down
+        {
+            int a = 0;
+
+            break;
+        }
+        else if (ch == '\r') // Enter Key Down
+        {
+            break;
+        }
+        else if (ch == ' ') // Space Key Down
+        {
+            break;
+        }
+
+        // 문자 입력에 의한 큐 등록
+        if (KeyboardClass::GetInst().IsCharsAutoRepeat())
+        {
+            KeyboardClass::GetInst().OnChar(ch);
+        }
+        else
+        {
+            const bool wasPressed = _lParam & 0x40000000;
+            if (!wasPressed)
+            {
+                KeyboardClass::GetInst().OnChar(ch);
+            }
+        }
+        return 0;
+    }
+    case WM_KEYDOWN:
+    {
+        unsigned char keycode = static_cast<unsigned char>(_wParam);
+
+        // 예외처리 : 해당 키들은 input에 등록하여 사용함
+        if (keycode == '\b') // BackSpace Key Down
+        {
+            break;
+        }
+        else if (keycode == '\r') // Enter Key Down
+        {
+            break;
+        }
+        else if (keycode == ' ') // Space Key Down
+        {
+            break;
+        }
+
+        if (KeyboardClass::GetInst().IsKeysAutoRepeat())
+        {
+            KeyboardClass::GetInst().OnKeyPressed(keycode);
+        }
+        else
+        {
+            const bool wasPressed = _lParam & 0x40000000;
+            if (!wasPressed)
+            {
+                KeyboardClass::GetInst().OnKeyPressed(keycode);
+            }
+        }
+
+        return 0;
+    }
+    case WM_KEYUP:
+    {
+        unsigned char keycode = static_cast<unsigned char>(_wParam);
+        KeyboardClass::GetInst().OnKeyReleased(keycode);
+
+        return 0;
+    }
     default:
         return DefWindowProc(_hWnd, _message, _wParam, _lParam);
     }
@@ -54,6 +133,9 @@ GameEngineWindow::GameEngineWindow()
 
 GameEngineWindow::~GameEngineWindow() 
 {
+    // Keyboard Class Destory
+    KeyboardClass::Destroy();
+
     if (nullptr != windowimage_)
     {
         delete windowimage_;
