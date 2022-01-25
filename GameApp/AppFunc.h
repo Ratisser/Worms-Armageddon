@@ -22,6 +22,7 @@ namespace RS
 	void LoadImageFromFileAndCut(const std::string& _path, const float4& _cutSize);
 }
 void CharactorImageInit();
+void WeaponImageInit();
 
 void MapWaterImageInit();
 void GimmickObjectImageInit();

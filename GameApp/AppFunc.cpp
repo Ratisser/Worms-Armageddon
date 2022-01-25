@@ -458,6 +458,11 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "uziAimRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "uziFireLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "uziFireRight.bmp", cutSize);
+	// 양 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "sheepOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepOnRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepOffRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();
@@ -465,6 +470,20 @@ void CharactorImageInit()
 		dir.MoveChild("\\Resources\\Image\\Misc\\Aim_Taget");
 		RS::LoadImageFromFileAndCut(dir / "crshairr.bmp", cutSize);
 	}
+}
+
+void WeaponImageInit()
+{
+	GameEngineDirectroy dir = GameEngineDirectroy();
+	dir.MoveParent("Worms-Armageddon");
+	dir.MoveChild("\\Resources\\Image");
+
+	float4 cutSize = float4(60.f, 60.f);
+
+	// 양, 슈퍼양
+	RS::LoadImageFromFileAndCut(dir / "superSheep.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepWalkLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "sheepWalkRight.bmp", cutSize);
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
