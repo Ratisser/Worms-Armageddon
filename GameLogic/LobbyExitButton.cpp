@@ -1,6 +1,5 @@
-#include "LobbyStartButton.h"
+#include "LobbyExitButton.h"
 #include "ChattingInput.h"
-#include "LobbyHost.h"
 
 #include <EngineEnum.h>
 #include "eCollisionGroup.h"
@@ -12,7 +11,7 @@
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
 
-LobbyStartButton::LobbyStartButton() :
+LobbyExitButton::LobbyExitButton():
 	mainrenderer_(nullptr),
 	maincollision_(nullptr),
 	mouseover_(false)
@@ -20,40 +19,39 @@ LobbyStartButton::LobbyStartButton() :
 	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 }
 
-LobbyStartButton::~LobbyStartButton()
+LobbyExitButton::~LobbyExitButton()
 {
 
 }
 
-LobbyStartButton::LobbyStartButton(LobbyStartButton&& _other) noexcept :
+LobbyExitButton::LobbyExitButton(LobbyExitButton&& _other) noexcept :
 	mainrenderer_(_other.mainrenderer_),
 	maincollision_(_other.maincollision_),
 	mouseover_(_other.mouseover_)
 {
-
 }
 
-void LobbyStartButton::Start()
+void LobbyExitButton::Start()
 {
 	float4 ImageHarfSize = float4::ZERO;
 
 	// 버튼 렌더러 생성
 	mainrenderer_ = CreateRenderer("Lobby_ButtonNormal");
 	ImageHarfSize = mainrenderer_->GetImageSize().halffloat4();
-	mainrenderer_->SetPivotPos(float4(ImageHarfSize.x + 1020.f, ImageHarfSize.y + 650.f));
-	mainrenderer_->SetRenderSize(float4(250.f, 34.f));
+	mainrenderer_->SetPivotPos(float4(ImageHarfSize.x + 1020.f, ImageHarfSize.y + 688.f));
+	mainrenderer_->SetRenderSize(float4(250.f, 32.f));
 	mainrenderer_->SetCameraEffectOff();
 
 	// 버튼 충돌체 생성
 	maincollision_ = CreateCollision(static_cast<int>(eCollisionGroup::UI), CollisionCheckType::RECT);
-	maincollision_->SetSize(float4(250.f, 34.f));
-	maincollision_->SetPivot(float4(125.f + 1020.f, 17.f + 650.f));
+	maincollision_->SetSize(float4(250.f, 32.f));
+	maincollision_->SetPivot(float4(125.f + 1020.f, 16.f + 688.f));
 
 	// 버튼 Text 생성(임시)
-	GameStartText_ = "Start the Game";
+	ExitText_ = "Exit";
 }
 
-void LobbyStartButton::UpdateBefore()
+void LobbyExitButton::UpdateBefore()
 {
 	// 마우스와 충돌체크
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
@@ -68,8 +66,8 @@ void LobbyStartButton::UpdateBefore()
 			// Button Box Image Change
 			mainrenderer_->SetImage("Lobby_ButtonMouseOn");
 			float4 ImageHarfSize = mainrenderer_->GetImageSize().halffloat4();
-			mainrenderer_->SetPivotPos(float4(ImageHarfSize.x + 1020.f, ImageHarfSize.y + 650.f));
-			mainrenderer_->SetRenderSize(float4(250.f, 34.f));
+			mainrenderer_->SetPivotPos(float4(ImageHarfSize.x + 1020.f, ImageHarfSize.y + 688.f));
+			mainrenderer_->SetRenderSize(float4(250.f, 32.f));
 
 			// Button Text Image Change
 
@@ -81,7 +79,7 @@ void LobbyStartButton::UpdateBefore()
 	}
 }
 
-void LobbyStartButton::Update()
+void LobbyExitButton::Update()
 {
 	// 마우스와 버튼이 충돌중이라면
 	if (true == mouseover_)
@@ -89,34 +87,24 @@ void LobbyStartButton::Update()
 		// 마우스와 충돌중에 클릭되었을때
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
-			// Host가 Ready 상태이여만 게임시작 가능
-			if (true == LobbyHost::SetCurHostReady())
-			{
-				// 씬전환
-				GameEngineLevelManager::GetInst().ChangeLevel("LoadingLevel", true);
-
-				// 캐럿 반납 및 Flag 해제
-				ChattingInput::SetCurCaretState(false);
-				SetCaretBlinkTime(500);
-				HideCaret(GameEngineWindow::GetInst().GetMainWindowHandle());
-				DestroyCaret();
-			}
+			// 메뉴선택화면 이동
+			GameEngineLevelManager::GetInst().ChangeLevel("MenuSelectLevel", true);
 		}
 	}
 	else
 	{
 		mainrenderer_->SetImage("Lobby_ButtonNormal");
 		float4 ImageHarfSize = mainrenderer_->GetImageSize().halffloat4();
-		mainrenderer_->SetPivotPos(float4(ImageHarfSize.x + 1020.f, ImageHarfSize.y + 650.f));
-		mainrenderer_->SetRenderSize(float4(250.f, 34.f));
+		mainrenderer_->SetPivotPos(float4(ImageHarfSize.x + 1020.f, ImageHarfSize.y + 688.f));
+		mainrenderer_->SetRenderSize(float4(250.f, 32.f));
 	}
 }
 
-void LobbyStartButton::UpdateAfter()
+void LobbyExitButton::UpdateAfter()
 {
 }
 
-void LobbyStartButton::Render()
+void LobbyExitButton::Render()
 {
 	if (true == mainrenderer_->IsOn())
 	{
@@ -124,9 +112,9 @@ void LobbyStartButton::Render()
 	}
 
 	// 임시 추후 이미지로 변경
-	if (!GameStartText_.empty())
+	if (!ExitText_.empty())
 	{
-		TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), 1100, 658, GameStartText_.c_str(), lstrlen(GameStartText_.c_str()));
+		TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), 1130, 696, ExitText_.c_str(), lstrlen(ExitText_.c_str()));
 	}
 }
 

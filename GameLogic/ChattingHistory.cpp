@@ -39,7 +39,11 @@ ChattingHistory::ChattingHistory() :
 
 ChattingHistory::~ChattingHistory()
 {
-
+	// 소멸시 이력을 모두 삭제
+	if (!historychatt_.empty())
+	{
+		historychatt_.clear();
+	}
 }
 
 ChattingHistory::ChattingHistory(ChattingHistory&& _other) noexcept :

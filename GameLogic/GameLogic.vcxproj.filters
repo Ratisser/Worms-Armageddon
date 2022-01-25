@@ -282,6 +282,9 @@
     <ClInclude Include="Uzi.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyExitButton.h">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
+    </ClInclude>
     <ClInclude Include="BackGroundGradation.h">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
@@ -457,6 +460,9 @@
     </ClCompile>
     <ClCompile Include="BackGroundGradation.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyExitButton.cpp">
+      <Filter>Actor\LobbyLevel\UI\Button</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

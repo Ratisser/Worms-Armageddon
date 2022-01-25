@@ -314,6 +314,17 @@ void LobbyImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("Lobby_Backdrop", Dir.PathToPlusFileName("Lobby_Backdrop.bmp"));
 
+	// 로비 버튼관련
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ButtonNormal", Dir.PathToPlusFileName("Normal_Btn.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_ButtonMouseOn", Dir.PathToPlusFileName("MouseOver_Btn.bmp"));
+
 	// 로비 화면 관련 Display Box
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\ButtonBorders"))

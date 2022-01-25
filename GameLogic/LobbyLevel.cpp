@@ -7,6 +7,7 @@
 #include "ChattingInput.h"
 #include "ChattingHistory.h"
 #include "LobbyStartButton.h"
+#include "LobbyExitButton.h"
 #include "MouseObject.h"
 
 #include <GameEngineInput.h>
@@ -88,6 +89,7 @@ void LobbyLevel::Loading_SJH()
 
 	// 게임시작 및 종료 버튼
 	CreateActor<LobbyStartButton>();
+	CreateActor<LobbyExitButton>();
 
 	// 호스트
 	CreateActor<LobbyHost>();
