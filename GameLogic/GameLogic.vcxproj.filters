@@ -297,6 +297,12 @@
     <ClInclude Include="BackGroundGradation.h">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
+    <ClInclude Include="Sheep.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperSheep.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -478,6 +484,12 @@
     </ClCompile>
     <ClCompile Include="WeaponOptionSet.cpp">
       <Filter>Actor\LobbyLevel\UI\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Sheep.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperSheep.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -167,6 +167,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Sheep.h" />
+    <ClInclude Include="SuperSheep.h" />
     <ClInclude Include="TestActor.h">
       <SubType>
       </SubType>
@@ -380,6 +382,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Sheep.cpp" />
+    <ClCompile Include="SuperSheep.cpp" />
     <ClCompile Include="TestActor.cpp">
       <SubType>
       </SubType>
