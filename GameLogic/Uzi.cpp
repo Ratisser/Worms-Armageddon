@@ -1,4 +1,3 @@
-#include "PreCompile.h"
 #include "Uzi.h"
 
 Uzi::Uzi() // default constructer 디폴트 생성자
