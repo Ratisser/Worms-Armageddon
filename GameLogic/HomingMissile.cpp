@@ -52,7 +52,7 @@ void HomingMissile::Start()
 	mainRender_->CreateAnimation("blueMissle", "hmissil1.bmp", 0, 31, true, FLT_MAX);
 	mainRender_->ChangeAnimation("redMissle");
 
-	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
+	groundCheckCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::WEAPON), CollisionCheckType::POINT);
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 
