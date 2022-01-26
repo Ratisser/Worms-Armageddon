@@ -29,12 +29,12 @@ public:
 	static bool RectToPoint(GameEngineCollision* _left, GameEngineCollision* _right);
 	static bool PointToRect(GameEngineCollision* _left, GameEngineCollision* _right);
 
-	static bool collisionCheckCircleToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
-	static bool collisionCheckRectToRect(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
-	static bool collisionCheckPointToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
-	static bool collisionCheckCircleToPoint(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
-	static bool collisionCheckRectToCircle(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
-	static bool collisionCheckCircleToRect(const GameEngineCollision& lhs, const GameEngineCollision& rhs);
+	static bool collisionCheckCircleToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool collisionCheckRectToRect(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool collisionCheckPointToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool collisionCheckCircleToPoint(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool collisionCheckRectToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool collisionCheckCircleToRect(GameEngineCollision* lhs, GameEngineCollision* rhs);
 
 public:
 	float4 GetCollisionPoint() const;
@@ -57,7 +57,7 @@ private:
 	FRect rect_;
 
 	CollisionCheckType colType_;
-	int groupIndex_; 
+	int groupIndex_;
 
 	GameEngineImageFile* imageptr_;
 	DWORD CheckColor;
@@ -66,7 +66,7 @@ private:
 	float4 GetCollisionPos();
 
 public:
-	GameEngineActor* GetActor() 
+	GameEngineActor* GetActor()
 	{
 		return actor_;
 	}
@@ -99,7 +99,7 @@ public:
 	void SetImage(std::string _ImageName);
 
 public:
-	void SetColorCheck(DWORD _Color) 
+	void SetColorCheck(DWORD _Color)
 	{
 		CheckColor = _Color;
 	}
@@ -109,7 +109,7 @@ public:
 		groupIndex_ = _Index;
 	}
 
-	void SetColType(CollisionCheckType _colType) 
+	void SetColType(CollisionCheckType _colType)
 	{
 		colType_ = _colType;
 	}
@@ -125,7 +125,7 @@ public:
 	}
 
 public:
-	int GetTypeToIndex() 
+	int GetTypeToIndex()
 	{
 		return static_cast<int>(colType_);
 	}
@@ -135,7 +135,7 @@ public:
 		return groupIndex_;
 	}
 
-	DWORD GetColorCheck() 
+	DWORD GetColorCheck()
 	{
 		return CheckColor;
 	}
@@ -150,7 +150,7 @@ private:
 		actor_ = _parent;
 	}
 
-private:		
+private:
 	GameEngineCollision(); // default constructer 디폴트 생성자
 	~GameEngineCollision(); // default destructer 디폴트 소멸자
 
@@ -170,7 +170,7 @@ public:		//member Func
 	bool CollisionCheck(GameEngineCollision* _other);
 
 	template<typename COLGROUP>
-	GameEngineCollision* CollisionGroupCheckOne(COLGROUP _otherGroup) 
+	GameEngineCollision* CollisionGroupCheckOne(COLGROUP _otherGroup)
 	{
 		return CollisionGroupCheckOne(static_cast<int>(_otherGroup));
 	}

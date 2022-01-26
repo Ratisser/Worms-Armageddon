@@ -140,6 +140,11 @@ public:
 		return sqrtf((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y) + (z - other.z) * (z - other.z));
 	}
 
+	// Clock wise dgree from -y axis
+	__forceinline float GetDegreeFromNegativeYAxisClockWise() {
+		return (float)(((x < 0) ? 360.0f * GameEngineMath::DegreeToRadian : 0.0f) + (acos(-y) * ((x < 0) ? -1 : 1))) * GameEngineMath::RadianToDegree;
+	}
+
 public:
 	// unnamed union을 선언하면 
 	// 내부의 메모리를 구조를 union 방식으로 구성해준다.
