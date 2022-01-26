@@ -48,7 +48,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GameEngineLevelManager::GetInst().CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<MenuSelectLevel>("MenuSelectLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<LobbyLevel>("LobbyLevel");
-	GameEngineLevelManager::GetInst().CreateLevel<LoadingLevel>("LoadingLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<PlayLevel>("PlayLevel");
 
 

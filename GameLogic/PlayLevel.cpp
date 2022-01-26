@@ -83,7 +83,8 @@ void PlayLevel::Loading()
 		GameEngineInput::GetInst().CreateKey("Debug_Next", 'P');
 	}
 	
-	CreateActor<LoadingImage>();
+	fadeObject_ = CreateActor<FadeObject>();
+	loadingImage_ = CreateActor<LoadingImage>();
 
 	CreateActor<BackGroundGradation>();
 	Train_ = CreateActor<MapTrain>();
@@ -377,5 +378,12 @@ void PlayLevel::PJWLevelUpdate()
 		GameEngineDebugExtension::DebugWindowOpen({ 500, 500 }, { 0, 0 });
 		isDebugOn_ = true;
 		return;
+	}
+
+	if (false == loadingImage_->IsOn() && false == isFadeIn_)
+	{
+		fadeObject_->SetFadeOutSpeed(200.0f);
+		fadeObject_->FadeOut();
+		isFadeIn_ = true;
 	}
 }
