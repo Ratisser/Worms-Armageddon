@@ -7,9 +7,10 @@
 #include "ChattingHistory.h"
 #include "LobbyStartButton.h"
 #include "LobbyExitButton.h"
-#include "GameOptionSet.h"
-#include "WeaponOptionSet.h"
 #include "MouseObject.h"
+
+// 评积己 包访
+#include "LobbyCreateTeam.h"
 
 // 霸烙可记包访
 // 扁夯
@@ -21,9 +22,10 @@
 #include "LobbyTeleportinSet.h"
 
 // 惑技
+#include "GameOptionSet.h"
 
 // 公扁
-
+#include "WeaponOptionSet.h"
 
 #include <GameEngineInput.h>
 #include <GameEngineLevelManager.h>
@@ -117,6 +119,9 @@ void LobbyLevel::Loading_SJH()
 	CreateActor<LobbyWormSelectSet>();
 	CreateActor<LobbyWormEnergySet>();
 	CreateActor<LobbyTeleportinSet>();
+
+	// 评 积己
+	CreateActor<LobbyCreateTeam>();
 
 	// 付快胶
 	CreateActor<MouseObject>();

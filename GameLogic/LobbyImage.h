@@ -15,10 +15,7 @@ private:	// member Var
 
 private:
 	GameEngineRenderer* hostboxSpriteRender_;	// host(컴퓨터명)
-	GameEngineRenderer* playerboxSpriteRender_;	// 생성하고자하는 게임의 플레이어수
 	GameEngineRenderer* hostreadySpriteRender_;	// host ready button
-	GameEngineRenderer* playerselInputSpriteRender_;
-	GameEngineRenderer* playerselboxSpriteRender_;
 
 private:
 	GameEngineCollision* hostreadyCollision_;
