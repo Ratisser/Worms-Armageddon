@@ -13,9 +13,10 @@ private:	// member Var
 	float4 prevPos_;
 
 	float degree_;
-	float WindSpeed_;
 	float deltaTime_;
 
+	float WindAcc_;
+	float WindSpeed_;
 	float GravityAcc;
 	float GravitySpeed;
 
@@ -24,6 +25,7 @@ private:	// member Var
 	bool CountSecond_[5]; // 정수의 초를 새기 위한 배열
 
 	float Cur_LifeTime_;
+	float Time_;
 	float Max_LifeTime_;
 
 	// 직접적인 직격, 혹은 화염에 일정시간 노출되었을 경우
@@ -67,7 +69,7 @@ public:
 
 	void SetWindSpeed(float _WindSpeed)
 	{
-		WindSpeed_ = _WindSpeed;
+		WindAcc_ = _WindSpeed / 150.f;
 	}
 
 	float tempfuc(float degree)

@@ -469,4 +469,17 @@ void GameEngineLevel::Clear()
 	allActorCollisionList_.insert(std::map<int, std::list<GameEngineCollision*>>::value_type(0, std::list<GameEngineCollision*>()));
 
 	camPos_ = float4::ZERO;
+
+	////테스트중
+	//auto iter0 = CloneActorMap_.begin();
+	//auto iter1 = CloneActorMap_.end();
+	//for(; iter0!= iter1;)
+	//{
+	//	delete iter0->second;
+	//	(iter0->second) = nullptr;
+
+	//	iter0++;
+	//}
+
+	//CloneActorMap_.clear();
 }

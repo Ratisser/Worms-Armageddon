@@ -16,7 +16,7 @@ private:	// member Var
 
 	float Phase_; // 드럼통이 가열된 정도, Max = 3.f
 	float deltaTime_;
-	float curwind_;
+	float WindSpeed_;
 	float degree_;
 	GameEngineMath::Random random_;
 
@@ -47,7 +47,6 @@ private:
 	void initCollision();
 
 public:
-	void DrumBoil(float kelvin);
 	void DrumExplode();
 };
 

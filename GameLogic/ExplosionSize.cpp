@@ -126,7 +126,6 @@ void ExplosionSize25::Start()
 		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 
 	}
-	Death();
 }
 
 void ExplosionSize25::UpdateBefore()
@@ -260,8 +259,7 @@ void ExplosionSize50::Start()
 		Flame2Effect = GetLevel()->CreateActor<Effect::Flame2>(pos_);
 		Flame2Effect->SetDir(RandomRot);
 		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect)); 
-	}
-	Death();
+	};
 }
 
 void ExplosionSize50::UpdateBefore()
@@ -399,7 +397,6 @@ void ExplosionSize75::Start()
 		Flame2Effect->SetDir(RandomRot);
 		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 	}
-	Death();
 }
 
 void ExplosionSize75::UpdateBefore()
@@ -542,7 +539,6 @@ void ExplosionSize100::Start()
 		Flame2Effect->SetDir(RandomRot);
 		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 	}
-	Death();
 }
 
 void ExplosionSize100::UpdateBefore()

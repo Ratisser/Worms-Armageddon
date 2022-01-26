@@ -29,7 +29,7 @@ void Effect::ex::Start()
 
 		mainSpriteRender_->SetAnimationEndFunction<EffectActor>
 			("exbiff", this, &EffectActor::Death);
-		break;
+		return;
 	case 1:
 		mainSpriteRender_ = CreateRenderer("expoot");
 		mainSpriteRender_->CreateAnimation("expoot", "expoot", 0, 17, false, 0.027f);
@@ -37,7 +37,7 @@ void Effect::ex::Start()
 
 		mainSpriteRender_->SetAnimationEndFunction<EffectActor>
 			("expoot", this, &EffectActor::Death);
-		break;
+		return;
 	case 2:
 		mainSpriteRender_ = CreateRenderer("expow");
 		mainSpriteRender_->CreateAnimation("expow", "expow", 0, 11, false, 0.041f);
@@ -45,7 +45,7 @@ void Effect::ex::Start()
 
 		mainSpriteRender_->SetAnimationEndFunction<EffectActor>
 			("expow", this, &EffectActor::Death);
-		break;
+		return;
 	case 3:
 		mainSpriteRender_ = CreateRenderer("exfoom");
 		mainSpriteRender_->CreateAnimation("exfoom", "exfoom", 0, 19, false, 0.025);
@@ -53,7 +53,7 @@ void Effect::ex::Start()
 
 		mainSpriteRender_->SetAnimationEndFunction<EffectActor>
 			("exfoom", this, &EffectActor::Death);
-		break;
+		return;
 	default:
 		GameEngineDebug::MsgBoxError("무작위 난수 오류");
 		return;
