@@ -1,8 +1,7 @@
 #include "LobbyLevel.h"
 #include "LobbyImage.h"
 #include "LobbySelectMapImage.h"
-#include "WindController.h"
-#include "BackgroundScatter.h"
+#include "LobbyScatter.h"
 #include "LobbyHost.h"
 #include "ChattingInput.h"
 #include "ChattingHistory.h"
@@ -85,12 +84,9 @@ void LobbyLevel::Loading_SJH()
 	CreateActor<LobbyImage>();
 
 	// 대기실오브젝트(바람액터)
-	WindController* windController_ = CreateActor<WindController>();
 	for (int i = 0; i < 39; i++)
 	{
-		// 배경 바람에 흩날리는 엑터 생성(추후 자료구조로 관리 예정)
-		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
-		newScatter->SetParent(windController_);
+		LobbyScatter* newScatter = CreateActor<LobbyScatter>();
 	}
 
 	// 맵선택이미지

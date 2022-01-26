@@ -345,6 +345,9 @@
     <ClInclude Include="BattleAxe.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyScatter.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -562,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="BattleAxe.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyScatter.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

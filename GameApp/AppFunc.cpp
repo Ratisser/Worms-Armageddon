@@ -150,6 +150,9 @@ void ResourceInitPJW()
 	cloudS->Cut({ 60,60 });
 
 	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("ScatterStar1", Dir.PathToPlusFileName("ScatterStar1.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("ScatterStar2", Dir.PathToPlusFileName("ScatterStar2.bmp"));
+
 	GameEngineImage::GetInst().LoadGameImage("ScatterSnow", Dir.PathToPlusFileName("ScatterSnow.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("windGauge", Dir.PathToPlusFileName("windGauge.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("windBarHider", Dir.PathToPlusFileName("windBarHider.bmp"));
