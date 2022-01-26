@@ -487,7 +487,6 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "homingOnLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "homingOnRight.bmp", cutSize);
 
-
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();
 		dir.MoveParent("Worms-Armageddon");
