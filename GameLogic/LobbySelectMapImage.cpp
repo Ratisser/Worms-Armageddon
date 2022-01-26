@@ -54,8 +54,6 @@ void LobbySelectMapImage::Start()
 
 void LobbySelectMapImage::UpdateBefore()
 {
-	float4 HarfResolution = GameEngineWindow::GetInst().GetSize().halffloat4();
-
 	// 충돌체크
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)

@@ -12,6 +12,20 @@
 #include "WeaponOptionSet.h"
 #include "MouseObject.h"
 
+// 게임옵션관련
+// 기본
+#include "LobbyTernTimeSet.h"
+#include "LobbyRoundTimeSet.h"
+#include "LobbyWinsreQuiredSet.h"
+#include "LobbyWormSelectSet.h"
+#include "LobbyWormEnergySet.h"
+#include "LobbyTeleportinSet.h"
+
+// 상세
+
+// 무기
+
+
 #include <GameEngineInput.h>
 #include <GameEngineLevelManager.h>
 #include <GameEngineWindow.h>
@@ -99,6 +113,14 @@ void LobbyLevel::Loading_SJH()
 
 	// 호스트
 	CreateActor<LobbyHost>();
+
+	// 기본게임옵션
+	CreateActor<LobbyTernTimeSet>();
+	CreateActor<LobbyRoundTimeSet>();
+	CreateActor<LobbyWinsreQuiredSet>();
+	CreateActor<LobbyWormSelectSet>();
+	CreateActor<LobbyWormEnergySet>();
+	CreateActor<LobbyTeleportinSet>();
 
 	// 마우스
 	CreateActor<MouseObject>();

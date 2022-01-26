@@ -56,6 +56,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameOptionInfo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameOptionSet.h">
       <SubType>
       </SubType>
@@ -74,8 +78,32 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="LobbyHost.h" />
+    <ClInclude Include="LobbyRoundTimeSet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LobbySelectMapImage.h" />
     <ClInclude Include="LobbyStartButton.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbyTeleportinSet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbyTernTimeSet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbyWinsreQuiredSet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbyWormEnergySet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbyWormSelectSet.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -285,6 +313,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameOptionInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameOptionSet.cpp">
       <SubType>
       </SubType>
@@ -303,8 +335,32 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="LobbyHost.cpp" />
+    <ClCompile Include="LobbyRoundTimeSet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LobbySelectMapImage.cpp" />
     <ClCompile Include="LobbyStartButton.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbyTeleportinSet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbyTernTimeSet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbyWinsreQuiredSet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbyWormEnergySet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbyWormSelectSet.cpp">
       <SubType>
       </SubType>
     </ClCompile>

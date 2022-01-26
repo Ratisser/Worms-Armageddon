@@ -400,6 +400,85 @@ void LobbyImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("Lobby_SetGameOption", Dir.PathToPlusFileName("gameoptions.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_SetWeaponOption", Dir.PathToPlusFileName("weaponoptions.bmp"));
+
+	// 로비 게임 기본옵션 설정
+
+	// 턴타임
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\TurnTime"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime0", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime3", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime4", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime5", Dir.PathToPlusFileName("000005.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime6", Dir.PathToPlusFileName("000006.bmp"));
+
+	// 라운드타임
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\RoundTime"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime0", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime1", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime2", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime3", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime4", Dir.PathToPlusFileName("000005.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime5", Dir.PathToPlusFileName("000006.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime6", Dir.PathToPlusFileName("000007.bmp"));
+
+	// 승리 조건
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\winsrequired"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired0", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired3", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired4", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired5", Dir.PathToPlusFileName("000005.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired6", Dir.PathToPlusFileName("000006.bmp"));
+
+	// Worm 체력
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\WormEnergy"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy0", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy3", Dir.PathToPlusFileName("000003.bmp"));
+
+	// 턴교체 On/Off
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect0", Dir.PathToPlusFileName("WormSelectOFF.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect1", Dir.PathToPlusFileName("WormSelectON.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect2", Dir.PathToPlusFileName("WormSelectRANDOM.bmp"));
+
+	// 텔레포트 On/Off
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin0", Dir.PathToPlusFileName("TeleportinOFF.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin1", Dir.PathToPlusFileName("TeleportinON.bmp"));
 }
 
 void CharactorImageInit()
