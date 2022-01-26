@@ -12,6 +12,9 @@
 #include "WeaponIcon.h"
 #include "Weapon.h"
 #include "WormArrow.h"
+#include "BottomHealthBar.h"
+#include "BottomFlag.h"
+#include "BottomNameTag.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -244,6 +247,9 @@ void GameController::CreateWormUI()
 		std::string SheetName = wormList_[i]->GetName();
 		SheetName += "_WeaponSheet";
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
+
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(i);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;

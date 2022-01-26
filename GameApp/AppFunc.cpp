@@ -186,11 +186,15 @@ void ResourceInitPJW()
 		GameEngineDebug::AssertFalse();
 		return;
 	}
-	GameEngineImage::GetInst().LoadGameImage("HPbar", Dir.PathToPlusFileName("HPbar.bmp"));
+	//GameEngineImage::GetInst().LoadGameImage("HPbar", Dir.PathToPlusFileName("HPbar.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomNameTag", Dir.PathToPlusFileName("BottomNameTag.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomFlagRUS", Dir.PathToPlusFileName("BottomFlagRUS.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarR", Dir.PathToPlusFileName("BottomHPbarR.bmp"));
-
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarG", Dir.PathToPlusFileName("BottomHPbarG.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarB", Dir.PathToPlusFileName("BottomHPbarB.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarY", Dir.PathToPlusFileName("BottomHPbarY.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarP", Dir.PathToPlusFileName("BottomHPbarP.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarS", Dir.PathToPlusFileName("BottomHPbarS.bmp"));
 }
 
 void UIImageInit()

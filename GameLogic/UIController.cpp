@@ -2,6 +2,10 @@
 #include "WeaponSheet.h"
 #include "Weapon.h"
 
+#include "BottomNameTag.h"
+#include "BottomFlag.h"
+#include "BottomHealthBar.h"
+
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
 #include <GameEngineLevel.h>
@@ -9,7 +13,10 @@
 
 UIController::UIController() :
 	curplayer_(nullptr),
-	weaponsheet_(nullptr)
+	weaponsheet_(nullptr),
+	bottomNameTag_(nullptr),
+	bottomFlag_(nullptr),
+	bottomHealthBar_(nullptr)
 {
 
 }
@@ -20,7 +27,11 @@ UIController::~UIController()
 
 UIController::UIController(UIController&& _other) noexcept :
 	curplayer_(_other.curplayer_),
-	weaponsheet_(_other.weaponsheet_)
+	weaponsheet_(_other.weaponsheet_),
+	bottomNameTag_(_other.bottomNameTag_),
+	bottomFlag_(_other.bottomFlag_),
+	bottomHealthBar_(_other.bottomHealthBar_)
+
 {
 
 }
@@ -56,6 +67,11 @@ WeaponSheet* UIController::GetCurWeaponSheet() const
 	return weaponsheet_;
 }
 
+BottomHealthBar* UIController::GetCurBottomHealthBar()
+{
+	return bottomHealthBar_;
+}
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -67,7 +83,9 @@ void UIController::Start()
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
 	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정														// 해당 WeaponSheet를 생성한 UIController 저장
 
-	// ...
+	//bottomNameTag_ = GetLevel()->CreateActor<BottomNameTag>();
+	//bottomFlag_ = GetLevel()->CreateActor<BottomFlag>();
+	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
 }
 
 void UIController::UpdateBefore()
