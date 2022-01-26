@@ -1902,6 +1902,8 @@ StateInfo Worm::startSheepWait(StateInfo _state)
 
 StateInfo Worm::updateSheepWait(StateInfo _state)
 {
+	addGravity();
+	normalMove();
 	return StateInfo();
 }
 

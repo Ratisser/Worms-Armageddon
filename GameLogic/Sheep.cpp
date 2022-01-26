@@ -224,7 +224,7 @@ StateInfo Sheep::updateWalk(StateInfo _state)
 StateInfo Sheep::startExplosion(StateInfo _state)
 {
 	PlayLevel* level = (PlayLevel*)GetLevel();
-	level->CreateExplosion100(pos_ - float4(50.f, 50.f));
+	level->CreateExplosion100(pos_);
 	explosionDelay_ = 2.0f;
 	mainRender_->Off();
 	return StateInfo();
