@@ -18,10 +18,10 @@ DrumActor::DrumActor():
 	mainSpriteRender_(nullptr),
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	PetroleumSpeed(150.f),
+	PetroleumSpeed(100.f),
 	deltaTime_(0.f),
 	degree_(0.f),
-	curwind_(0.f),
+	WindSpeed_(0.f),
 	random_{}
 	// default constructer 디폴트 생성자
 {
@@ -36,17 +36,17 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	mainSpriteRender_(nullptr) , // default RValue Copy constructer 디폴트 RValue 복사생성자
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	PetroleumSpeed(150.f),
+	PetroleumSpeed(100.f),
 	deltaTime_(0.f),
 	degree_(0.f),
-	curwind_(0.f),
+	WindSpeed_(0.f),
 	random_{}
 {
 }
 
 void DrumActor::Start()
 {
-	curwind_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
+	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
 
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
@@ -92,22 +92,19 @@ void DrumActor::Update()
 
 		else if (Phase_ > 1.5f)
 		{
-			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
 			mainSpriteRender_->ChangeAnimation("oildrum4", std::string("oildrum4"));
 
-			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
+			mainSpriteRender_->SetAnimationCurrentFrame(mainSpriteRender_->GetCurAnimationFrame());
 		}
 		else if (Phase_ > 0.5f)
 		{
-			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
 			mainSpriteRender_->ChangeAnimation("oildrum3", std::string("oildrum3"));
-			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
+			mainSpriteRender_->SetAnimationCurrentFrame(mainSpriteRender_->GetCurAnimationFrame());
 		}
 		else if (Phase_ > 0.f)
 		{
-			int cur_frame = mainSpriteRender_->GetCurAnimationFrame();
 			mainSpriteRender_->ChangeAnimation("oildrum2", std::string("oildrum2"));
-			mainSpriteRender_->SetAnimationCurrentFrame(cur_frame);
+			mainSpriteRender_->SetAnimationCurrentFrame(mainSpriteRender_->GetCurAnimationFrame());
 		}
 	}
 
@@ -146,37 +143,64 @@ void DrumActor::initCollision()
 
 }
 
-void DrumActor::DrumBoil(float kelvin)
-{
-	Phase_ += kelvin;
-}
-
 void DrumActor::DrumExplode()
 {
+	// 촘촘히 약 5방향으로 나누어, 군집되도록 생성하기
 	GetLevel<PlayLevel>()->CreateExplosion75(pos_);
 
 	float RandomFloat;
 	float4 RandomRot = { 1.f,0.f,0.f };
 
-	int count = 20;
-	for (int i = 0; i < count; ++i)
+	int count = 40;
+
+	//360도를 5등분하고, count를 5군데에 무작위하게 군집하여 배치
+
+	//72도, 5번 실행하면서 count/5를 하여 for문 돌리기,
+
+	//72도 간격으로 +- 20도씩, 8개 생성, 72도 간격도 -12~12 오차 주기
+
+	for (int i = 0; i < 5; ++i)
 	{
-		RandomRot = { 1.f,0.f,0.f }; //초기화
+		RandomFloat = random_.RandomFloat(-20.f, 20.f);
+		degree_ = (360.f * 0.2f * i) + RandomFloat;
 
-		RandomFloat = random_.RandomFloat(-30.f, 30.f);
-		degree_ = (i * 360.f/(float)count) + RandomFloat;
+		for (int j = 0; j < (count / 5); ++j)
+		{
+			RandomRot = { 1.f,0.f,0.f }; //초기화
+			RandomFloat = random_.RandomFloat(-20.f, 20.f);
+			float degree__ = degree_ + RandomFloat;
 
-		RandomRot = RandomRot.DegreeTofloat2(degree_);
-		
-		RandomRot.x*= PetroleumSpeed;
-		RandomRot.x+= curwind_/2;
-		RandomRot.y*= PetroleumSpeed;
+			RandomRot = RandomRot.DegreeTofloat2(degree__);
 
-		Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
-		_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
-		_Petroleum->SetDir(RandomRot);
-		//_Petroleum->SetWindSpeed(curwind_);
+			RandomRot.x *= PetroleumSpeed;
+			RandomRot.y *= PetroleumSpeed;
+
+			Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
+			_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
+			_Petroleum->SetDir(RandomRot);
+			_Petroleum->SetWindSpeed(WindSpeed_);
+		}
+
 	}
+
+
+	//for (int i = 0; i < count; ++i)
+	//{
+	//	RandomRot = { 1.f,0.f,0.f }; //초기화
+
+	//	RandomFloat = random_.RandomFloat(-30.f, 30.f);
+	//	degree_ = (i * 360.f/(float)count) + RandomFloat;
+
+	//	RandomRot = RandomRot.DegreeTofloat2(degree_);
+	//	
+	//	RandomRot.x*= PetroleumSpeed;
+	//	RandomRot.y*= PetroleumSpeed;
+
+	//	Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
+	//	_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
+	//	_Petroleum->SetDir(RandomRot);
+	//	_Petroleum->SetWindSpeed(WindSpeed_);
+	//}
 
 	Death();
 }

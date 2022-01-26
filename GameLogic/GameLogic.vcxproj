@@ -74,12 +74,20 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LobbyCreateTeam.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="LobbyExitButton.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="LobbyHost.h" />
     <ClInclude Include="LobbyRoundTimeSet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LobbySelectablePlayer.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -336,6 +344,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LobbyCreateTeam.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="LobbyExitButton.cpp">
       <SubType>
       </SubType>
@@ -346,6 +358,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="LobbyScatter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LobbySelectablePlayer.cpp">
       <SubType>
       </SubType>
     </ClCompile>

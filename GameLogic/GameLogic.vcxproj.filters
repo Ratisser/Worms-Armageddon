@@ -118,6 +118,15 @@
     <Filter Include="Actor\LobbyLevel\UI\OptionSet\BasicOption">
       <UniqueIdentifier>{5484d705-3412-4b85-a2fd-2abf3697824d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Host">
+      <UniqueIdentifier>{5c642819-93df-45cb-9810-780723c3d54d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\SelectMap">
+      <UniqueIdentifier>{564f797d-cb67-4d84-8c3d-3b303ce40a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\Team">
+      <UniqueIdentifier>{de6d81b7-2236-40e1-92b4-cef27ff88aaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -222,9 +231,6 @@
     <ClInclude Include="FadeObject.h">
       <Filter>Actor\_Backup</Filter>
     </ClInclude>
-    <ClInclude Include="LobbySelectMapImage.h">
-      <Filter>Actor\LobbyLevel</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalValue.h">
       <Filter>Level\Global</Filter>
     </ClInclude>
@@ -284,9 +290,6 @@
     </ClInclude>
     <ClInclude Include="UziBullet.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="LobbyHost.h">
-      <Filter>Actor\LobbyLevel</Filter>
     </ClInclude>
     <ClInclude Include="ChattingInput.h">
       <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
@@ -350,6 +353,18 @@
     </ClInclude>
     <ClInclude Include="LobbyScatter.h">
       <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyHost.h">
+      <Filter>Actor\LobbyLevel\UI\Host</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbySelectMapImage.h">
+      <Filter>Actor\LobbyLevel\UI\SelectMap</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyCreateTeam.h">
+      <Filter>Actor\LobbyLevel\UI\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbySelectablePlayer.h">
+      <Filter>Actor\LobbyLevel\UI\Team</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -446,9 +461,6 @@
     <ClCompile Include="TestActor.cpp">
       <Filter>Actor\_Backup</Filter>
     </ClCompile>
-    <ClCompile Include="LobbySelectMapImage.cpp">
-      <Filter>Actor\LobbyLevel</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>Level\Global</Filter>
     </ClCompile>
@@ -508,9 +520,6 @@
     </ClCompile>
     <ClCompile Include="UziBullet.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="LobbyHost.cpp">
-      <Filter>Actor\LobbyLevel</Filter>
     </ClCompile>
     <ClCompile Include="ChattingInput.cpp">
       <Filter>Actor\LobbyLevel\UI\Chatting</Filter>
@@ -574,6 +583,18 @@
     </ClCompile>
     <ClCompile Include="LobbyScatter.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyHost.cpp">
+      <Filter>Actor\LobbyLevel\UI\Host</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbySelectMapImage.cpp">
+      <Filter>Actor\LobbyLevel\UI\SelectMap</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyCreateTeam.cpp">
+      <Filter>Actor\LobbyLevel\UI\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbySelectablePlayer.cpp">
+      <Filter>Actor\LobbyLevel\UI\Team</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

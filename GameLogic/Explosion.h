@@ -11,6 +11,7 @@ protected:	// member Var
 	int Damage_;
 	bool DamageAll_;
 
+	float LifeTime_;
 
 public:
 	Explosion(); // default constructer 디폴트 생성자
@@ -29,7 +30,7 @@ public:
 	virtual void Render() override;
 
 	// DamageAll은 범위내 모든 플레이어에게 동일한 대미지를 입힐것인가 혹은 범위에서 멀어짐에 따라 감소할 것인가
-	void SetDamage(int _Damage, bool _DamageAll= false)
+	void SetDamage(int _Damage, bool _DamageAll)
 	{
 		Damage_ = _Damage;
 		DamageAll_ = _DamageAll;

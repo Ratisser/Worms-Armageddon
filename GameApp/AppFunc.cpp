@@ -513,6 +513,21 @@ void LobbyImageInit()
 	// 텔레포트 On/Off
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin0", Dir.PathToPlusFileName("TeleportinOFF.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin1", Dir.PathToPlusFileName("TeleportinON.bmp"));
+
+	// 선택가능한 플레이어 & 선택한 플레이어관련
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\CreateTeam"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_Player", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU3", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU4", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU5", Dir.PathToPlusFileName("000005.bmp"));
 }
 
 void CharactorImageInit()

@@ -18,6 +18,7 @@ Petroleum::Petroleum() :
 	Cur_LifeTime_(0.f),
 	GravitySpeed(0.f),
 	GravityAcc(0.f),
+	WindAcc_(0.f),
 	degree_(0.f),
 	deltaTime_(0.f),
 	WindSpeed_(0.f),
@@ -41,6 +42,7 @@ Petroleum::Petroleum(Petroleum&& _other) noexcept :
 	Cur_LifeTime_(0.f),
 	GravitySpeed(0.f),
 	GravityAcc(0.f),
+	WindAcc_(0.f),
 	degree_(0.f),
 	deltaTime_(0.f),
 	WindSpeed_(0.f),
@@ -86,19 +88,26 @@ void Petroleum::Update()
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
 	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
-	{
-		prevPos_ = pos_;
-
-		Dir_.y += GravitySpeed * deltaTime_;
+	{	
+		WindSpeed_ += WindAcc_;
 		GravitySpeed += GravityAcc;
 
-		SetMove(Dir_ * deltaTime_);
+		if (true == Burn_)
+		{
+			SetMove((Dir_.x+ WindSpeed_) * deltaTime_, (Dir_.y+ GravitySpeed) * deltaTime_);
+		}
+		else
+		{
+			prevPos_ = pos_;
+			SetMove(Dir_ * deltaTime_);
+		}
 	}
 	else
 	{
 		Dir_.y = 0.f;
 		Dir_.x = 0.f;
 		GravitySpeed = 0.f;
+		WindSpeed_ = 0.f;
 		Burn_ = true;
 		Isground_ = true;
 		// x값에 풍향이 적용되게
@@ -141,18 +150,13 @@ void Petroleum::Update()
 
 		int frameIndex = (int)(degree_ / 5.625f);
 
-		if (frameIndex > 63 || frameIndex < 0)
-		{
-			GameEngineDebug::AssertFalse();
-		}
-
-		if (Cur_LifeTime_ < 0.2f)
+		if (Cur_LifeTime_ < 0.3f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol-2", std::string("petrol-2"));
 			mainSpriteRender_->SetAnimationCurrentFrame(frameIndex);
 		}
 
-		else if (Cur_LifeTime_ < 0.4f)
+		else if (Cur_LifeTime_ < 0.45f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol-3", std::string("petrol-3"));
 			mainSpriteRender_->SetAnimationCurrentFrame(frameIndex);
@@ -165,12 +169,6 @@ void Petroleum::Update()
 			Burn_ = true;
 			Cur_LifeTime_ = 0.f;
 		}
-
-		else if (Cur_LifeTime_ < 1.f)
-		{
-			mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
-			// 시간이 되서 발화한 경우,
-		}	
 	}
 
 	else if (false == Isground_)
@@ -200,7 +198,6 @@ void Petroleum::Update()
 		{
 			mainSpriteRender_->ChangeAnimation("petrol20", std::string("petrol20"));
 		}
-		Cur_LifeTime_ += deltaTime_;
 
 		if (false == CountSecond_[static_cast<int>(Cur_LifeTime_)])
 		{
@@ -208,14 +205,14 @@ void Petroleum::Update()
 			CountSecond_[static_cast<int>(Cur_LifeTime_)] = true;
 		}
 
-		if (Cur_LifeTime_ >= Max_LifeTime_)
-		{
-			Death();
-			return;
-		}
+		Cur_LifeTime_ += deltaTime_;
 	}
 
-
+	if (Cur_LifeTime_ >= Max_LifeTime_)
+	{
+		Death();
+		return;
+	}
 }
 
 void Petroleum::UpdateAfter()
@@ -224,12 +221,12 @@ void Petroleum::UpdateAfter()
 
 void Petroleum::Render()
 {
-#ifdef _DEBUG	
-	if (GetLevel<PlayLevel>()->GetDebug())
-	{
-		groundCollision_->DebugRender();
-	}
-#endif // DEBUG
+//#ifdef _DEBUG	
+//	if (GetLevel<PlayLevel>()->GetDebug())
+//	{
+//		groundCollision_->DebugRender();
+//	}
+//#endif // DEBUG
 	mainSpriteRender_->AnimationUpdate();
 
 }
