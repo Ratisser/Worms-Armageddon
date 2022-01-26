@@ -2038,14 +2038,14 @@ StateInfo Worm::updateBattleAxeOff(StateInfo _state)
 }
 StateInfo Worm::startBattleAxeWait(StateInfo _state)
 {
-	if (bLeft_)
-	{
-		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
-	}
-	else
-	{
-		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
-	}
+//	if (bLeft_)
+//	{
+//		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+//	}
+//	else
+//	{
+//		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+//	}
 	return StateInfo();
 }
 StateInfo Worm::updateBattleAxeWait(StateInfo _state)
