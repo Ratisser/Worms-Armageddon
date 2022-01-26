@@ -8,6 +8,23 @@
 #include <GameEngineCollision.h>
 #include <GameEngineLevel.h>
 
+void LobbyCreateTeam::SelectPlayer(const std::string& _PlayerName, int _CurSelPlayerIndex)
+{
+	// 넘겨받은 플레이어명으로 플레이어인지 CPU인지 판단한다.
+	std::string CurSelPlayerName = _PlayerName;
+
+	// CPU(컴퓨터)이라면
+	GameEngineRenderer* NewRender = nullptr;
+	if (0 == CurSelPlayerName.find("CPU"))
+	{
+		
+	}
+	else // 플레이어(사람)이라면
+	{
+
+	}
+}
+
 LobbyCreateTeam::LobbyCreateTeam() :
 	playerselInputSpriteRender_(nullptr),
 	playerboxSpriteRender_(nullptr),
@@ -63,9 +80,6 @@ void LobbyCreateTeam::Start()
 		LobbySelectablePlayer* NewPlayer = GetLevel()->CreateActor<LobbySelectablePlayer>();
 		NewPlayer->CreatePlayer(PlayerName, i, 0);
 
-		// 각 액터 위치 계산 후 플레이어 표시
-
-
 		SelectablePlayerList.push_back(NewPlayer);
 
 		Index = i;
@@ -81,10 +95,15 @@ void LobbyCreateTeam::Start()
 		LobbySelectablePlayer* NewPlayer = GetLevel()->CreateActor<LobbySelectablePlayer>();
 		NewPlayer->CreatePlayer(CPUName, i + Index + 1, i, false);
 
-		// 각 액터 위치 계산 후 CPU 표시
-
-
 		SelectablePlayerList.push_back(NewPlayer);
+	}
+
+	// 현재 관리중인 플레이어 목록중 최대 플레이어 표시 갯수만큼 플레이어 On
+	for (int i = 0; i < 4; ++i)
+	{
+		// 각 액터 위치 계산 후 플레이어 표시
+		SelectablePlayerList[i]->SetPlayerInfo(float4(272.f, (245.f + (i * 36.f))), float4(230.f, (236.f + (i * 34.f))), float4(32.f, 32.f));
+		SelectablePlayerList[i]->SetPlayerOn();
 	}
 }
 

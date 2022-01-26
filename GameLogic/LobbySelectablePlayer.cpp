@@ -1,14 +1,19 @@
 #include "LobbySelectablePlayer.h"
+#include "LobbyCreateTeam.h"
 #include "eCollisionGroup.h"
 
 #include <EngineEnum.h>
 #include <GameEngineWindow.h>
+#include <GameEngineImage.h>
+#include <GameEngineImageFile.h>
+#include <GameEngineInput.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
 
 LobbySelectablePlayer::LobbySelectablePlayer() :
 	ShowPlayer_(false),
 	Index_(-1),
+	NamePos_(float4::ZERO),
 	mainrenderer_(nullptr),
 	maincollision_(nullptr)
 {
@@ -21,7 +26,8 @@ LobbySelectablePlayer::~LobbySelectablePlayer()
 
 LobbySelectablePlayer::LobbySelectablePlayer(LobbySelectablePlayer&& _other) noexcept :
 	ShowPlayer_(_other.ShowPlayer_),
-	Index_(_other.Index_),
+	Index_(_other.Index_), 
+	NamePos_(_other.NamePos_),
 	mainrenderer_(_other.mainrenderer_),
 	maincollision_(_other.maincollision_)
 {
@@ -33,6 +39,18 @@ void LobbySelectablePlayer::Start()
 
 void LobbySelectablePlayer::UpdateBefore()
 {
+	// 마우스와 충돌체크
+	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
+	if (nullptr != ColUI)
+	{
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
+		{
+			// 선택된 플레이어 off 상태가되며 LobbyCreateTeam에 현재 선택된 플레이어 이름을 전달
+			//ShowPlayer_ = false; // 임시주석
+
+			LobbyCreateTeam::SelectPlayer(Name_, Index_);
+		}
+	}
 }
 
 void LobbySelectablePlayer::Update()
@@ -57,7 +75,7 @@ void LobbySelectablePlayer::Render()
 		// 플레이어 명칭 표시
 		if (!Name_.empty())
 		{
-			
+			TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), NamePos_.ix(), NamePos_.iy(), Name_.c_str(), lstrlen(Name_.c_str()));
 		}
 	}
 }
@@ -72,7 +90,7 @@ int LobbySelectablePlayer::GetIndex() const
 	return Index_;
 }
 
-void LobbySelectablePlayer::SetPlayerOn(const float4& _RenderPos, const float4& _RenderSize)
+void LobbySelectablePlayer::SetPlayerInfo(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize)
 {
 	// 렌더러 위치 지정
 	if (nullptr == mainrenderer_)
@@ -106,16 +124,33 @@ void LobbySelectablePlayer::SetPlayerOn(const float4& _RenderPos, const float4& 
 	maincollision_->SetPivot(float4((_RenderSize.x * 0.5f) + _RenderPos.x, (_RenderSize.y * 0.5f) + _RenderPos.y));
 	maincollision_->On();
 
-	// 현재 플레이어 상태 및 Index정보 변경
+	// Index정보 변경
+	NamePos_ = _NamePos;
+}
+
+void LobbySelectablePlayer::SetPlayerOn()
+{
+	// 현재 ShowPlayer_상태 On
 	ShowPlayer_ = true;
+
+	// 충돌체 On
+	if (nullptr == maincollision_)
+	{
+		return;
+	}
+	maincollision_->On();
 }
 
 void LobbySelectablePlayer::SetPlayerOff()
 {
 	// 현재 ShowPlayer_상태 Off
-	ShowPlayer_ = true;
+	ShowPlayer_ = false;
 
 	// 충돌체 Off
+	if (nullptr == maincollision_)
+	{
+		return;
+	}
 	maincollision_->Off();
 }
 

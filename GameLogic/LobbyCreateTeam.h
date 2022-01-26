@@ -5,6 +5,9 @@ class GameEngineRenderer;
 class LobbySelectablePlayer;
 class LobbyCreateTeam : public GameEngineActor
 {
+public:
+	static void SelectPlayer(const std::string& _PlayerName, int _CurSelPlayerIndex);
+
 private:	// member Var
 	GameEngineRenderer* playerselInputSpriteRender_;
 	GameEngineRenderer* playerselboxSpriteRender_;

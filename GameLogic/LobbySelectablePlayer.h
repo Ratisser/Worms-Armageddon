@@ -12,6 +12,7 @@ private:	// member Var
 	bool ShowPlayer_;
 	int Index_;
 	std::string Name_;
+	float4 NamePos_;
 
 private:
 	GameEngineRenderer* mainrenderer_;
@@ -41,7 +42,8 @@ public:
 	int GetIndex() const;
 
 public:
-	void SetPlayerOn(const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
+	void SetPlayerInfo(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
+	void SetPlayerOn();
 	void SetPlayerOff();
 
 public:
