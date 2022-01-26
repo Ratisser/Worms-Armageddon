@@ -23,6 +23,7 @@
 #include "GameController.h"
 #include "Uzi.h"
 #include "Sheep.h"
+#include "SuperSheep.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -264,6 +265,10 @@ void Worm::initState()
 	state_.CreateState("SheepFire", &Worm::startSheepFire, &Worm::updateSheepFire);
 	state_.CreateState("SheepWait", &Worm::startSheepWait, &Worm::updateSheepWait);
 
+	state_.CreateState("SuperSheepAim", &Worm::startSuperSheepAim, &Worm::updateSuperSheepAim);
+	state_.CreateState("SuperSheepFire", &Worm::startSuperSheepFire, &Worm::updateSuperSheepFire);
+	state_.CreateState("SuperSheepWait", &Worm::startSuperSheepWait, &Worm::updateSuperSheepWait);
+
 	state_.ChangeState("Idle");
 }
 
@@ -400,6 +405,7 @@ std::string Worm::getWeaponAimState()
 		return "SheepAim";
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
+		return "SuperSheepAim";
 		break;
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
@@ -591,6 +597,14 @@ void Worm::setAnimationWeaponOn()
 		}
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("SheepOnLeft", std::string("sheepOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("SheepOnRight", std::string("sheepOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
@@ -780,6 +794,14 @@ void Worm::setAnimationWeaponOff()
 		}
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("SheepOffLeft", std::string("sheepOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("SheepOffRight", std::string("sheepOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
@@ -1901,6 +1923,91 @@ StateInfo Worm::startSheepWait(StateInfo _state)
 }
 
 StateInfo Worm::updateSheepWait(StateInfo _state)
+{
+	addGravity();
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startSuperSheepAim(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("SheepAimLeft", std::string("sheepOnLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("SheepAimRight", std::string("sheepOnRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateSuperSheepAim(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsUp("Fire"))
+	{
+		return "SuperSheepFire";
+	}
+
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startSuperSheepFire(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateSuperSheepFire(StateInfo _state)
+{
+	SuperSheep* newSheep = parentLevel_->CreateActor<SuperSheep>();
+	newSheep->Initialize(this, bLeft_);
+	newSheep->SetPos(pos_);
+	BulletFocusOn(newSheep);
+	return "SuperSheepWait";
+}
+
+StateInfo Worm::startSuperSheepWait(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateSuperSheepWait(StateInfo _state)
 {
 	addGravity();
 	normalMove();

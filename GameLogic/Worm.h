@@ -127,6 +127,14 @@ private:
 	StateInfo startSheepWait(StateInfo _state);
 	StateInfo updateSheepWait(StateInfo _state);
 
+	StateInfo startSuperSheepAim(StateInfo _state);
+	StateInfo updateSuperSheepAim(StateInfo _state);
+	StateInfo startSuperSheepFire(StateInfo _state);
+	StateInfo updateSuperSheepFire(StateInfo _state);
+	StateInfo startSuperSheepWait(StateInfo _state);
+	StateInfo updateSuperSheepWait(StateInfo _state);
+
+
 	StateInfo startBattleAxeOn(StateInfo _state);
 	StateInfo updateBattleAxeOn(StateInfo _state);
 	StateInfo startBattleAxeFire1(StateInfo _state);
