@@ -127,6 +127,30 @@ private:
 	StateInfo startSheepWait(StateInfo _state);
 	StateInfo updateSheepWait(StateInfo _state);
 
+	StateInfo startSuperSheepAim(StateInfo _state);
+	StateInfo updateSuperSheepAim(StateInfo _state);
+	StateInfo startSuperSheepFire(StateInfo _state);
+	StateInfo updateSuperSheepFire(StateInfo _state);
+	StateInfo startSuperSheepWait(StateInfo _state);
+	StateInfo updateSuperSheepWait(StateInfo _state);
+
+
+	StateInfo startBattleAxeOn(StateInfo _state);
+	StateInfo updateBattleAxeOn(StateInfo _state);
+	StateInfo startBattleAxeFire1(StateInfo _state);
+	StateInfo updateBattleAxeFire1(StateInfo _state);
+	StateInfo startBattleAxeFire2(StateInfo _state);
+	StateInfo updateBattleAxeFire2(StateInfo _state);
+	StateInfo startBattleAxeFire3(StateInfo _state);
+	StateInfo updateBattleAxeFire3(StateInfo _state);
+	StateInfo startBattleAxeOff(StateInfo _state);
+	StateInfo updateBattleAxeOff(StateInfo _state);
+	StateInfo startBattleAxeWait(StateInfo _state);
+	StateInfo updateBattleAxeWait(StateInfo _state);
+
+	StateInfo startGirderOn(StateInfo _state);
+	StateInfo updateGirderOn(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
@@ -174,5 +198,11 @@ private:
 	UIController* uicontroller_;
 
 	GameEngineActor* bulletFocusActor_;
+
+public:
+	eItemList GetCurrentWeapon() const
+	{
+		return currentWeapon_;
+	}
 };
 

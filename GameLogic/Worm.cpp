@@ -23,6 +23,8 @@
 #include "GameController.h"
 #include "Uzi.h"
 #include "Sheep.h"
+#include "Girder.h"
+#include "SuperSheep.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -143,6 +145,29 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("SheepAimLeft", "sheepOnLeft.bmp", 9, 9, true);
 	mainRender_->CreateAnimation("SheepAimRight", "sheepOnRight.bmp", 9, 9, true);
 
+	mainRender_->CreateAnimation("HomingOnLeft", "homingOnLeft.bmp", 0, 6, false, 0.033f); // 호밍 미사일 애니메이션입니다.
+	mainRender_->CreateAnimation("HomingOnRight", "homingOnRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("HomingOffLeft", "homingOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("HomingOffRight", "homingOffRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("HomingAimLeft", "homingAimLeft.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("HomingAimRight", "homingAimRight.bmp", 0, 31, false, FLT_MAX);
+
+	mainRender_->CreateAnimation("BattleAxeOnLeft", "axeOnLeft.bmp", 0, 14, false, 0.033f); // 배틀액스 애니메이션입니다.
+	mainRender_->CreateAnimation("BattleAxeOnRight", "axeOnRight.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeFire1Left", "axeFire1Left.bmp", 0, 22, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeFire1Right", "axeFire1Right.bmp", 0, 22, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeFire2Left", "axeFire2Left.bmp", 0, 3, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeFire2Right", "axeFire2Right.bmp", 0, 3, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeFire3Left", "axeFire3Left.bmp", 0, 17, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeFire3Right", "axeFire3Right.bmp", 0, 17, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeOffLeft", "axeOffLeft.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("BattleAxeOffRight", "axeOffRight.bmp", 0, 14, false, 0.033f);
+
+	mainRender_->CreateAnimation("GirderOnLeft", "girderOnLeft.bmp", 0, 6, false, 0.033f); // Girder 애니메이션입니다.
+	mainRender_->CreateAnimation("GirderOnRight", "girderOnRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOffLeft", "girderOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOffRight", "girderOffRight.bmp", 0, 6, false, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -231,6 +256,13 @@ void Worm::initState()
 	state_.CreateState("FirepunchLand", &Worm::startFirepunchLand, &Worm::updateFirepunchLand);
 	state_.CreateState("FirepunchOff", &Worm::startFirepunchOff, &Worm::updateFirepunchOff);
 
+	state_.CreateState("BattleAxeOn", &Worm::startBattleAxeOn, &Worm::updateBattleAxeOn);
+	state_.CreateState("BattleAxeFire1", &Worm::startBattleAxeFire1, &Worm::updateBattleAxeFire1);
+	state_.CreateState("BattleAxeFire2", &Worm::startBattleAxeFire2, &Worm::updateBattleAxeFire2);
+	state_.CreateState("BattleAxeFire3", &Worm::startBattleAxeFire3, &Worm::updateBattleAxeFire3);
+	state_.CreateState("BattleAxeOff", &Worm::startBattleAxeOff, &Worm::updateBattleAxeOff);
+	state_.CreateState("BattleAxeWait", &Worm::startBattleAxeWait, &Worm::updateBattleAxeWait);
+
 	state_.CreateState("UziAim", &Worm::startUziAim, &Worm::updateUziAim);
 	state_.CreateState("UziFire", &Worm::startUziFire, &Worm::updateUziFire);
 	state_.CreateState("UziWait", &Worm::startUziWait, &Worm::updateUziWait);
@@ -238,6 +270,12 @@ void Worm::initState()
 	state_.CreateState("SheepAim", &Worm::startSheepAim, &Worm::updateSheepAim);
 	state_.CreateState("SheepFire", &Worm::startSheepFire, &Worm::updateSheepFire);
 	state_.CreateState("SheepWait", &Worm::startSheepWait, &Worm::updateSheepWait);
+
+	state_.CreateState("SuperSheepAim", &Worm::startSuperSheepAim, &Worm::updateSuperSheepAim);
+	state_.CreateState("SuperSheepFire", &Worm::startSuperSheepFire, &Worm::updateSuperSheepFire);
+	state_.CreateState("SuperSheepWait", &Worm::startSuperSheepWait, &Worm::updateSuperSheepWait);
+
+	state_.CreateState("GirderOn", &Worm::startGirderOn, &Worm::updateGirderOn);
 
 	state_.ChangeState("Idle");
 }
@@ -340,6 +378,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_BANNANABOMB:
 		break;
 	case eItemList::WEAPON_BATTLEAXE:
+		return "BattleAxeOn";
 		break;
 	case eItemList::WEAPON_EARTHQUAKE:
 		break;
@@ -374,6 +413,7 @@ std::string Worm::getWeaponAimState()
 		return "SheepAim";
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
+		return "SuperSheepAim";
 		break;
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
@@ -392,6 +432,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
 	case eItemList::WEAPON_GIRDER:
+		return "GirderOn";
 		break;
 	case eItemList::WEAPON_BASEBALLBAT:
 		break;
@@ -483,11 +524,11 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_HOMINGMISSILE:
 		if (bLeft_)
 		{
-			mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
+			mainRender_->ChangeAnimation("HomingOnLeft", std::string("homingOnLeft.bmp"));
 		}
 		else
 		{
-			mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
+			mainRender_->ChangeAnimation("HomingOnRight", std::string("homingOnRight.bmp"));
 		}
 		break;
 	case eItemList::WEAPON_MORTAR:
@@ -503,6 +544,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_BANNANABOMB:
 		break;
 	case eItemList::WEAPON_BATTLEAXE:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BattleAxeOnLeft", std::string("axeOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BattleAxeOnRight", std::string("axeOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_EARTHQUAKE:
 		break;
@@ -557,6 +606,14 @@ void Worm::setAnimationWeaponOn()
 		}
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("SheepOnLeft", std::string("sheepOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("SheepOnRight", std::string("sheepOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
@@ -575,6 +632,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
 	case eItemList::WEAPON_GIRDER:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("GirderOnLeft", std::string("girderOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("GirderOnRight", std::string("girderOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_BASEBALLBAT:
 		break;
@@ -664,11 +729,11 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_HOMINGMISSILE:
 		if (bLeft_)
 		{
-			mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
+			mainRender_->ChangeAnimation("HomingOffLeft", std::string("homingOffLeft.bmp"));
 		}
 		else
 		{
-			mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
+			mainRender_->ChangeAnimation("HomingOffRight", std::string("homingOffRight.bmp"));
 		}
 		break;
 	case eItemList::WEAPON_MORTAR:
@@ -684,6 +749,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_BANNANABOMB:
 		break;
 	case eItemList::WEAPON_BATTLEAXE:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BattleAxeOffLeft", std::string("axeOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BattleAxeOffRight", std::string("axeOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_EARTHQUAKE:
 		break;
@@ -738,6 +811,14 @@ void Worm::setAnimationWeaponOff()
 		}
 		break;
 	case eItemList::WEAPON_SUPERSHEEP:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("SheepOffLeft", std::string("sheepOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("SheepOffRight", std::string("sheepOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
@@ -756,6 +837,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
 	case eItemList::WEAPON_GIRDER:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("GirderOffLeft", std::string("girderOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("GirderOffRight", std::string("girderOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_BASEBALLBAT:
 		break;
@@ -886,11 +975,6 @@ StateInfo Worm::updateIdle(StateInfo _state)
 		if (GameEngineInput::GetInst().IsDown("Jump"))
 		{
 			return "JumpReady";
-		}
-
-		if (GameEngineInput::GetInst().IsDown("WindToggle"))
-		{
-			return "UziAim";
 		}
 	}
 
@@ -1102,8 +1186,7 @@ StateInfo Worm::updateJump(StateInfo _state)
 }
 
 StateInfo Worm::startBazookaAim(StateInfo _state)
-{
-	
+{	
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
@@ -1252,6 +1335,8 @@ StateInfo Worm::startHomingStart(StateInfo _state)
 StateInfo Worm::updateHomingStart(StateInfo _state)
 {
 	// 마우스 포지션 클릭
+	// 마우스 이미지 x로 변경
+	// 마우스 이동 불가
 
 	if (GameEngineInput::GetInst().IsDown("Mouse"))
 	{
@@ -1261,9 +1346,37 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 
 		mouseTargetPos_ = MousePos;
 
+		mouse->MouseBlock(true);
+
 		return "HomingAim";
 	}
 
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		return "BazookaFire";
+	}
+
+	normalMove();
 	return StateInfo();
 }
 
@@ -1271,11 +1384,11 @@ StateInfo Worm::startHomingAim(StateInfo _state)
 {
 	if (bLeft_)
 	{
-		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
+		mainRender_->ChangeAnimation("HomingAimLeft", std::string("homingAimLeft.bmp"));
 	}
 	else
 	{
-		mainRender_->ChangeAnimation("BazAimRight", std::string("bazAimRight.bmp"));
+		mainRender_->ChangeAnimation("HomingAimRight", std::string("homingAimRight.bmp"));
 	}
 
 	int frame = getAimingFrame();
@@ -1331,8 +1444,11 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
 	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
 
+	MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+
 	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
+		mouse->MouseBlock(false);
 		bLeft_ = true;
 		nextState_ = "Walk";
 		return "WeaponOff";
@@ -1340,6 +1456,7 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsPress("RightArrow"))
 	{
+		mouse->MouseBlock(false);
 		bLeft_ = false;
 		nextState_ = "Walk";
 		return "WeaponOff";
@@ -1347,6 +1464,7 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Jump"))
 	{
+		mouse->MouseBlock(false);
 		nextState_ = "JumpReady";
 		return "WeaponOff";
 	}
@@ -1829,6 +1947,254 @@ StateInfo Worm::startSheepWait(StateInfo _state)
 }
 
 StateInfo Worm::updateSheepWait(StateInfo _state)
+{
+	addGravity();
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startSuperSheepAim(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("SheepAimLeft", std::string("sheepOnLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("SheepAimRight", std::string("sheepOnRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateSuperSheepAim(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsUp("Fire"))
+	{
+		return "SuperSheepFire";
+	}
+
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startSuperSheepFire(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateSuperSheepFire(StateInfo _state)
+{
+	SuperSheep* newSheep = parentLevel_->CreateActor<SuperSheep>();
+	newSheep->Initialize(this, bLeft_);
+	newSheep->SetPos(pos_);
+	BulletFocusOn(newSheep);
+	return "SuperSheepWait";
+}
+
+StateInfo Worm::startSuperSheepWait(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateSuperSheepWait(StateInfo _state)
+{
+	addGravity();
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo Worm::startBattleAxeOn(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BattleAxeOnLeft", std::string("axeOnLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BattleAxeOnRight", std::string("axeOnRight.bmp"));
+	}
+	return StateInfo();
+}
+StateInfo Worm::updateBattleAxeOn(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Fire"))
+	{
+		return "BattleAxeFire1";
+	}
+
+	normalMove();
+	return StateInfo();
+}
+StateInfo Worm::startBattleAxeFire1(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		// 배틀액스 피격박스 액터 생성은 여기다 해 주세요.
+		mainRender_->ChangeAnimation("BattleAxeFire1Left", std::string("axeFire1Left.bmp"));
+	}
+	else
+	{
+		// 배틀액스 피격박스 액터 생성은 여기다 해 주세요.
+		mainRender_->ChangeAnimation("BattleAxeFire1Right", std::string("axeFire1Right.bmp"));
+	}
+	return StateInfo();
+}
+StateInfo Worm::updateBattleAxeFire1(StateInfo _state)
+{
+	if (true == mainRender_->IsCurAnimationEnd())
+	{
+		return "BattleAxeFire2";
+	}
+	return StateInfo();
+}
+StateInfo Worm::startBattleAxeFire2(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BattleAxeFire2Left", std::string("axeFire2Left.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BattleAxeFire2Right", std::string("axeFire2Right.bmp"));
+	}
+	return StateInfo();
+}
+StateInfo Worm::updateBattleAxeFire2(StateInfo _state)
+{
+	if (true == mainRender_->IsCurAnimationEnd())
+	{
+		return "BattleAxeFire3";
+	}
+	return StateInfo();
+}
+StateInfo Worm::startBattleAxeFire3(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BattleAxeFire3Left", std::string("axeFire3Left.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BattleAxeFire3Right", std::string("axeFire3Right.bmp"));
+	}
+	return StateInfo();
+}
+StateInfo Worm::updateBattleAxeFire3(StateInfo _state)
+{
+	if (true == mainRender_->IsCurAnimationEnd())
+	{
+		return "BattleAxeOff";
+	}
+	return StateInfo();
+}
+StateInfo Worm::startBattleAxeOff(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BattleAxeOffLeft", std::string("axeOffLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BattleAxeOffRight", std::string("axeOffRight.bmp"));
+	}
+	return StateInfo();
+}
+StateInfo Worm::updateBattleAxeOff(StateInfo _state)
+{
+	if (true == mainRender_->IsCurAnimationEnd())
+	{
+		return "BattleAxeWait";
+	}
+	return StateInfo();
+}
+StateInfo Worm::startBattleAxeWait(StateInfo _state)
+{
+//	if (bLeft_)
+//	{
+//		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+//	}
+//	else
+//	{
+//		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+//	}
+	return StateInfo();
+}
+StateInfo Worm::updateBattleAxeWait(StateInfo _state)
+{
+	nextState_ = "Idle";
+	return "WeaponOff";
+}
+StateInfo Worm::startGirderOn(StateInfo _state)
+{
+	Girder* newGirder = parentLevel_->CreateActor<Girder>();
+	newGirder->Initialize(this, bLeft_);
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateGirderOn(StateInfo _state)
 {
 	return StateInfo();
 }

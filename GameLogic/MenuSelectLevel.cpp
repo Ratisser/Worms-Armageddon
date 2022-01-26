@@ -37,7 +37,7 @@ void MenuSelectLevel::Loading()
 	CreateActor<MouseObject>();
 
 	WindController* windController_ = CreateActor<WindController>();
-	windController_->SetWind(WindDir::TORIGHT, 200.f);
+	windController_->SetWind(WindDir::TORIGHT, 400.f);
 	for (int i = 0; i < 39; i++)
 	{
 		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();

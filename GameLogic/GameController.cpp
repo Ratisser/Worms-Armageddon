@@ -12,6 +12,9 @@
 #include "WeaponIcon.h"
 #include "Weapon.h"
 #include "WormArrow.h"
+#include "BottomHealthBar.h"
+#include "BottomFlag.h"
+#include "BottomNameTag.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -245,9 +248,12 @@ void GameController::CreateWormUI()
 		SheetName += "_WeaponSheet";
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(i);
+
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
-		ItemListTest.resize(7);
+		ItemListTest.resize(11);
 		ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
 		ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
 		ItemListTest[2] = eItemList::WEAPON_FIREPUNCH;
@@ -255,6 +261,10 @@ void GameController::CreateWormUI()
 		ItemListTest[4] = eItemList::WEAPON_GRENADE;
 		ItemListTest[5] = eItemList::WEAPON_CLUSTERBOMB;
 		ItemListTest[6] = eItemList::WEAPON_UZI;
+		ItemListTest[7] = eItemList::WEAPON_BATTLEAXE;
+		ItemListTest[8] = eItemList::WEAPON_GIRDER;
+		ItemListTest[9] = eItemList::WEAPON_SHEEP;
+		ItemListTest[10] = eItemList::WEAPON_SUPERSHEEP;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
 		// 

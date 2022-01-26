@@ -5,6 +5,7 @@
 // 용도 : 
 // 설명 : 
 
+class LoadingImage;
 class FadeObject;
 class WindController;
 class PlayLevel : public GameEngineLevel
@@ -21,6 +22,7 @@ private:
 	bool isFadeIn_;
 	static FadeObject* fadeObject_;
 	float fadeInterTime_;
+	LoadingImage* loadingImage_;
 
 public:
 	PlayLevel(); // default constructer 디폴트 생성자
@@ -69,6 +71,11 @@ public:
 	bool GetDebug()
 	{
 		return isDebugOn_;
+	}
+
+	MapTrain* GetMap() const
+	{
+		return Train_;
 	}
 
 private:

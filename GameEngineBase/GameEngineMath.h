@@ -70,6 +70,9 @@ public:
 
 };
 
+
+class float4;
+typedef class float4 FRect;
 class float4 
 {
 public:
@@ -133,6 +136,10 @@ public:
 		return 180.0f / GameEngineMath::PI * rad;
 	}
 
+	__forceinline float DistanceTo(const float4& other) {
+		return sqrtf((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y) + (z - other.z) * (z - other.z));
+	}
+
 public:
 	// unnamed union을 선언하면 
 	// 내부의 메모리를 구조를 union 방식으로 구성해준다.
@@ -154,6 +161,13 @@ public:
 			float a;
 		};
 
+		struct
+		{
+			float left;
+			float top;
+			float right;
+			float bottom;
+		};
 		// 실수는 기본적으로 00000000 00000000 00000000 00000000
 	};
 

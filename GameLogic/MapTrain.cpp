@@ -25,7 +25,9 @@ MapTrain::MapTrain() // default constructer 디폴트 생성자
 	boomEdgeSpriteRender100_(nullptr),
 	boomEdgeSpriteRender13_(nullptr),
 	boomSpriteRender13_(nullptr),
-	bodyCollision_(nullptr)
+	bodyCollision_(nullptr),
+	girderSpriteRender_(nullptr),
+	girderColSpriteRender_(nullptr)
 {
 	SetRenderOrder((int)RenderOrder::Map);
 }
@@ -52,7 +54,9 @@ MapTrain::MapTrain(MapTrain&& _other) noexcept  // default RValue Copy construct
 	boomEdgeSpriteRender100_(nullptr),
 	boomEdgeSpriteRender13_(nullptr),
 	boomSpriteRender13_(nullptr),
-	bodyCollision_(nullptr)
+	bodyCollision_(nullptr),
+	girderSpriteRender_(nullptr),
+	girderColSpriteRender_(nullptr)
 {
 
 }
@@ -81,6 +85,9 @@ void MapTrain::Start()
 	boomEdgeSpriteRender50_ = CreateRenderer("BoomEdge_50");
 	boomEdgeSpriteRender75_ = CreateRenderer("BoomEdge_75");
 	boomEdgeSpriteRender100_ = CreateRenderer("BoomEdge_100");
+
+	girderSpriteRender_ = CreateRenderer("Grds0");
+	girderColSpriteRender_ = CreateRenderer("Grds0b");;
 }
 
 void MapTrain::UpdateBefore()
@@ -282,5 +289,24 @@ void MapTrain::GroundUpdate100(float4 pos)
 		{ 0.f, 0.f },
 		colSpriteRender_->GetImageSize(),
 		RGB(0, 0, 255));
+}
+
+void MapTrain::BuildGirder(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(girderColSpriteRender_->GetImage(),
+		pos,
+		{ 20.f, 70.f },
+		{ 0.f, 0.f },
+		{ 20.f, 70.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(girderSpriteRender_->GetImage(),
+		pos,
+		{ 100.f, 100.f },
+		{ 0.f, 0.f },
+		{ 100.f, 100.f },
+		RGB(0, 255, 0));
 }
 

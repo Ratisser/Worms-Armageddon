@@ -1,8 +1,7 @@
 #include "LobbyLevel.h"
 #include "LobbyImage.h"
 #include "LobbySelectMapImage.h"
-#include "WindController.h"
-#include "BackgroundScatter.h"
+#include "LobbyScatter.h"
 #include "LobbyHost.h"
 #include "ChattingInput.h"
 #include "ChattingHistory.h"
@@ -11,6 +10,20 @@
 #include "GameOptionSet.h"
 #include "WeaponOptionSet.h"
 #include "MouseObject.h"
+
+// 게임옵션관련
+// 기본
+#include "LobbyTernTimeSet.h"
+#include "LobbyRoundTimeSet.h"
+#include "LobbyWinsreQuiredSet.h"
+#include "LobbyWormSelectSet.h"
+#include "LobbyWormEnergySet.h"
+#include "LobbyTeleportinSet.h"
+
+// 상세
+
+// 무기
+
 
 #include <GameEngineInput.h>
 #include <GameEngineLevelManager.h>
@@ -71,12 +84,9 @@ void LobbyLevel::Loading_SJH()
 	CreateActor<LobbyImage>();
 
 	// 대기실오브젝트(바람액터)
-	WindController* windController_ = CreateActor<WindController>();
 	for (int i = 0; i < 39; i++)
 	{
-		// 배경 바람에 흩날리는 엑터 생성(추후 자료구조로 관리 예정)
-		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
-		newScatter->SetParent(windController_);
+		LobbyScatter* newScatter = CreateActor<LobbyScatter>();
 	}
 
 	// 맵선택이미지
@@ -99,6 +109,14 @@ void LobbyLevel::Loading_SJH()
 
 	// 호스트
 	CreateActor<LobbyHost>();
+
+	// 기본게임옵션
+	CreateActor<LobbyTernTimeSet>();
+	CreateActor<LobbyRoundTimeSet>();
+	CreateActor<LobbyWinsreQuiredSet>();
+	CreateActor<LobbyWormSelectSet>();
+	CreateActor<LobbyWormEnergySet>();
+	CreateActor<LobbyTeleportinSet>();
 
 	// 마우스
 	CreateActor<MouseObject>();

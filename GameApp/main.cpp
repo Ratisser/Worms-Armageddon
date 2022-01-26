@@ -48,12 +48,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GameEngineLevelManager::GetInst().CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<MenuSelectLevel>("MenuSelectLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<LobbyLevel>("LobbyLevel");
-	GameEngineLevelManager::GetInst().CreateLevel<LoadingLevel>("LoadingLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<PlayLevel>("PlayLevel");
 
 
 	// 최초 씬 지정.
-	GameEngineLevelManager::GetInst().ChangeLevel("TitleLevel");
+	GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
 
 	GameEngineWindow::GetInst().Loop(UpdateFunc);
 

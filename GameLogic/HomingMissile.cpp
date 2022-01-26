@@ -12,6 +12,7 @@
 #include "eCollisionCheckColor.h"
 #include "PlayLevel.h"
 #include "Explosion.h"
+#include "MouseObject.h"
 
 HomingMissile::HomingMissile()
 	: mainRender_(nullptr)
@@ -85,28 +86,16 @@ void HomingMissile::Update()
 			float4 MovePos = speed_ * deltaTime_;
 			SetMove(MovePos);
 
-			if (windSpeed <= 200.f)
-			{
-				windSpeed = 200.f;
-			}
-
 			startPos_ = pos_;
-			rotPos_.x = 0.f;
+			rotPos_.x = windSpeed  * 0.1f;
 			rotPos_.y = 0.f;
 		}
 		else if (endTime_ >= 0.f)
 		{
-			// 호밍포지션까지 날아간후 각도 돌아가기
-			// 180도씩 돌아가서 해당위치 따라가기 -> 좌우로 왔다갔다하기
-			// 유도 후 빨간 폭탄 x방향값에 맞게 날아가기
-			// 마우스 커서 찍었을때 위치 표시하기
-
 			endTime_ -= deltaTime_;
 			homingTime -= deltaTime_;
 
 			mainRender_->ChangeAnimation("blueMissle", std::string("hmissil1.bmp"));
-
-			rotAngle_ += 0.f * deltaTime_;
 
 			float Radian = rotAngle_ * GameEngineMath::RadianToDegree;
 
@@ -124,7 +113,8 @@ void HomingMissile::Update()
 			if (homingTime <= 0.f)
 			{
 				targetPos_ = normalizeVector;
-				homingTime = 0.5f;
+				homingTime = 0.25f;
+				rotAngle_ += 90.f;
 			}
 
 			SetMove(targetPos_ * 4.f);
@@ -179,6 +169,9 @@ void HomingMissile::Update()
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->CreateExplosion100(pos_);
+
+		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+		mouse->MouseBlock(false);
 		Death();
 	}
 

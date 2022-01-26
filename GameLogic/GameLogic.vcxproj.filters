@@ -109,6 +109,15 @@
     <Filter Include="Actor\Effect\01. EffectActor\ex">
       <UniqueIdentifier>{4863a8ed-7701-4f32-be55-be03c3ef4add}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\OptionSet">
+      <UniqueIdentifier>{c0f42150-73c3-4ebf-9369-9fcc8ebfbcb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\OptionSet\OptionInfo">
+      <UniqueIdentifier>{bf4e5a30-c6ab-448a-9ffe-6889fa740f9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\LobbyLevel\UI\OptionSet\BasicOption">
+      <UniqueIdentifier>{5484d705-3412-4b85-a2fd-2abf3697824d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -312,6 +321,36 @@
     <ClInclude Include="Effectex.h">
       <Filter>Actor\Effect\01. EffectActor\ex</Filter>
     </ClInclude>
+    <ClInclude Include="LobbyTernTimeSet.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOptionInfo.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\OptionInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyRoundTimeSet.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyWinsreQuiredSet.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyWormSelectSet.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyWormEnergySet.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyTeleportinSet.h">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleAxe.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Girder.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyScatter.h">
+      <Filter>Actor\PlayLevel\Background</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -505,6 +544,36 @@
     </ClCompile>
     <ClCompile Include="Effectex.cpp">
       <Filter>Actor\Effect\01. EffectActor\ex</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyTernTimeSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOptionInfo.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\OptionInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyRoundTimeSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyWinsreQuiredSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyWormSelectSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyWormEnergySet.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyTeleportinSet.cpp">
+      <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleAxe.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Girder.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyScatter.cpp">
+      <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

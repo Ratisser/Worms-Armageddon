@@ -11,6 +11,8 @@ FadeObject::FadeObject()
 	: FadeState(this)
 	, Alpha_(255.0f)
 	, mainRender_(nullptr)
+	, fadeInSpeed_(100.0f)
+	, fadeOutSpeed_(100.0f)
 {
 }
 
@@ -29,14 +31,15 @@ void FadeObject::FadeOut()
 
 void FadeObject::Start() 
 {
-	SetRenderOrder(200000);
-	mainRender_ = CreateRenderer("BackGround.bmp");
+	SetRenderOrder(static_cast<int>(RenderOrder::MAX));
+	mainRender_ = CreateRenderer("Fade_Black");
 	mainRender_->SetPivotPos(GameEngineWindow::GetInst().GetSize().halffloat4());
 	mainRender_->SetCameraEffectOff();
 
 	FadeState.CreateState("FadeIn", &FadeObject::FadeInStart, &FadeObject::FadeInUpdate);
 	FadeState.CreateState("FadeOut", &FadeObject::FadeOutStart, &FadeObject::FadeOutUpdate);
-	FadeState.ChangeState("FadeOut");
+	FadeState.CreateState("Default", &FadeObject::DefaultStart, &FadeObject::DefaultUpdate);
+	FadeState.ChangeState("Default");
 }
 
 
@@ -52,6 +55,18 @@ void FadeObject::Render()
 }
 
 //member Func
+StateInfo FadeObject::DefaultStart(StateInfo _Info)
+{
+	Alpha_ = 0.0f;
+	return "";
+}
+
+StateInfo FadeObject::DefaultUpdate(StateInfo _Info)
+{
+	mainRender_->SetAlpha(static_cast<int>(Alpha_));
+	return "";
+}
+
 
 StateInfo FadeObject::FadeInStart(StateInfo _Info)
 {
@@ -67,14 +82,14 @@ StateInfo FadeObject::FadeOutStart(StateInfo _Info)
 
 StateInfo FadeObject::FadeInUpdate(StateInfo _Info)
 {
-	Alpha_ += 100.0f * GameEngineTime::GetInst().GetDeltaTime();
+	Alpha_ += fadeInSpeed_ * GameEngineTime::GetInst().GetDeltaTime();
 	mainRender_->SetAlpha(static_cast<int>(Alpha_));
 	return "";
 }
 
 StateInfo FadeObject::FadeOutUpdate(StateInfo _Info)
 {
-	Alpha_ -= 100.0f * GameEngineTime::GetInst().GetDeltaTime();
+	Alpha_ -= fadeOutSpeed_ * GameEngineTime::GetInst().GetDeltaTime();
 	mainRender_->SetAlpha(static_cast<int>(Alpha_));
 	return "";
 }
@@ -85,4 +100,14 @@ void FadeObject::UpdateBefore()
 
 void FadeObject::UpdateAfter()
 {
+}
+
+void FadeObject::SetFadeInSpeed(float _fadeSpeed)
+{
+	fadeInSpeed_ = _fadeSpeed;
+}
+
+void FadeObject::SetFadeOutSpeed(float _fadeSpeed)
+{
+	fadeOutSpeed_ = _fadeSpeed;
 }

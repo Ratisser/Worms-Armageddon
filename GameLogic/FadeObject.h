@@ -41,11 +41,21 @@ private:		//member Func
 	StateInfo FadeInUpdate(StateInfo _Info);
 	StateInfo FadeOutUpdate(StateInfo _Info);
 
+	StateInfo DefaultStart(StateInfo _Info);
+	StateInfo DefaultUpdate(StateInfo _Info);
+
 
 	// GameEngineActor을(를) 통해 상속됨
 	virtual void UpdateBefore() override;
 
 	virtual void UpdateAfter() override;
 
+private:
+	float fadeInSpeed_;
+	float fadeOutSpeed_;
+
+public:
+	void SetFadeInSpeed(float _fadeSpeed);
+	void SetFadeOutSpeed(float _fadeSpeed);
 };
 

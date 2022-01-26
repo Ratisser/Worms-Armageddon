@@ -70,15 +70,41 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_50", Dir.PathToPlusFileName("BoomEdge_50.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_25", Dir.PathToPlusFileName("BoomEdge_25.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_13", Dir.PathToPlusFileName("BoomEdge_13.bmp"));
-		//GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
 
-		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp")); // 테스트용 이미지
 		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
 		loadingImage->Cut({ 60,60 });
 
 		float4 cutSize = float4(60.f, 60.f);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);
+
+		if (false == Dir.MoveChild("\\Weapons\\"))
+		{
+			GameEngineDebug::AssertFalse();
+			return;
+		}
+
+		GameEngineImage::GetInst().LoadGameImage("Grds0", Dir.PathToPlusFileName("grds0.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds1", Dir.PathToPlusFileName("grds1.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds2", Dir.PathToPlusFileName("grds2.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds3", Dir.PathToPlusFileName("grds3.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds4", Dir.PathToPlusFileName("grds4.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds5", Dir.PathToPlusFileName("grds5.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds6", Dir.PathToPlusFileName("grds6.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds7", Dir.PathToPlusFileName("grds7.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds8", Dir.PathToPlusFileName("grds8.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl0", Dir.PathToPlusFileName("grdl0.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl1", Dir.PathToPlusFileName("grdl1.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl2", Dir.PathToPlusFileName("grdl2.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl3", Dir.PathToPlusFileName("grdl3.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl4", Dir.PathToPlusFileName("grdl4.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl5", Dir.PathToPlusFileName("grdl5.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl6", Dir.PathToPlusFileName("grdl6.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl7", Dir.PathToPlusFileName("grdl7.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl8", Dir.PathToPlusFileName("grdl8.bmp"));
+
+		GameEngineImage::GetInst().LoadGameImage("Grds0b", Dir.PathToPlusFileName("grds0b.bmp"));
 		
 		TitleLevelInit();
 		MenuSelectInit();
@@ -151,6 +177,9 @@ void ResourceInitPJW()
 	cloudS->Cut({ 60,60 });
 
 	GameEngineImage::GetInst().LoadGameImage("ScatterStar", Dir.PathToPlusFileName("ScatterStar.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("ScatterStar1", Dir.PathToPlusFileName("ScatterStar1.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("ScatterStar2", Dir.PathToPlusFileName("ScatterStar2.bmp"));
+
 	GameEngineImage::GetInst().LoadGameImage("ScatterSnow", Dir.PathToPlusFileName("ScatterSnow.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("windGauge", Dir.PathToPlusFileName("windGauge.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("windBarHider", Dir.PathToPlusFileName("windBarHider.bmp"));
@@ -184,11 +213,15 @@ void ResourceInitPJW()
 		GameEngineDebug::AssertFalse();
 		return;
 	}
-	GameEngineImage::GetInst().LoadGameImage("HPbar", Dir.PathToPlusFileName("HPbar.bmp"));
+	//GameEngineImage::GetInst().LoadGameImage("HPbar", Dir.PathToPlusFileName("HPbar.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomNameTag", Dir.PathToPlusFileName("BottomNameTag.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomFlagRUS", Dir.PathToPlusFileName("BottomFlagRUS.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarR", Dir.PathToPlusFileName("BottomHPbarR.bmp"));
-
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarG", Dir.PathToPlusFileName("BottomHPbarG.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarB", Dir.PathToPlusFileName("BottomHPbarB.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarY", Dir.PathToPlusFileName("BottomHPbarY.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarP", Dir.PathToPlusFileName("BottomHPbarP.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomHPbarS", Dir.PathToPlusFileName("BottomHPbarS.bmp"));
 }
 
 void UIImageInit()
@@ -401,6 +434,85 @@ void LobbyImageInit()
 
 	GameEngineImage::GetInst().LoadGameImage("Lobby_SetGameOption", Dir.PathToPlusFileName("gameoptions.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_SetWeaponOption", Dir.PathToPlusFileName("weaponoptions.bmp"));
+
+	// 로비 게임 기본옵션 설정
+
+	// 턴타임
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\TurnTime"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime0", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime3", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime4", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime5", Dir.PathToPlusFileName("000005.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime6", Dir.PathToPlusFileName("000006.bmp"));
+
+	// 라운드타임
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\RoundTime"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime0", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime1", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime2", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime3", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime4", Dir.PathToPlusFileName("000005.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime5", Dir.PathToPlusFileName("000006.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime6", Dir.PathToPlusFileName("000007.bmp"));
+
+	// 승리 조건
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\winsrequired"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired0", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired3", Dir.PathToPlusFileName("000003.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired4", Dir.PathToPlusFileName("000004.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired5", Dir.PathToPlusFileName("000005.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired6", Dir.PathToPlusFileName("000006.bmp"));
+
+	// Worm 체력
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\WormEnergy"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy0", Dir.PathToPlusFileName("000000.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy1", Dir.PathToPlusFileName("000001.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy2", Dir.PathToPlusFileName("000002.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy3", Dir.PathToPlusFileName("000003.bmp"));
+
+	// 턴교체 On/Off
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect0", Dir.PathToPlusFileName("WormSelectOFF.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect1", Dir.PathToPlusFileName("WormSelectON.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect2", Dir.PathToPlusFileName("WormSelectRANDOM.bmp"));
+
+	// 텔레포트 On/Off
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin0", Dir.PathToPlusFileName("TeleportinOFF.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin1", Dir.PathToPlusFileName("TeleportinON.bmp"));
 }
 
 void CharactorImageInit()
@@ -469,6 +581,29 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "sheepOnRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "sheepOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "sheepOffRight.bmp", cutSize);
+	// 도끼 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "axeOnLeft.bmp", {104,104});
+	RS::LoadImageFromFileAndCut(dir / "axeOnRight.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire1Left.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire1Right.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire2Left.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire2Right.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire3Left.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire3Right.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeOffLeft.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeOffRight.bmp", { 104,104 });
+	// 호밍미사일 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "homingAimLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingAimRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOnRight.bmp", cutSize);
+	// Girder 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "girderOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "girderOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "girderOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "girderOnRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

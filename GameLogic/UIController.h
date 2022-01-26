@@ -7,6 +7,9 @@
 
 class Worm;
 class WeaponSheet;
+class BottomNameTag;
+class BottomFlag;
+class BottomHealthBar;
 class Weapon;
 class UIController : public GameEngineActor
 {
@@ -16,6 +19,11 @@ private:	// member Var
 private:	// 관리하는 모든 UI
 	// Weapon Sheet 관련
 	WeaponSheet* weaponsheet_;
+	// 화면하단 웜 스테이터스 관련
+	BottomNameTag* bottomNameTag_;
+	BottomFlag* bottomFlag_;
+	BottomHealthBar* bottomHealthBar_;
+
 
 public:
 	UIController(); // default constructer 디폴트 생성자
@@ -40,6 +48,10 @@ public: // 플레이어가 기믹오브젝트 획득 또는 아이템사용시 설정해야하는 항목
 public:
 	Worm* GetCurPlayer() const;
 	WeaponSheet* GetCurWeaponSheet() const;
+	//BottomNameTag* GetCurBottomNameTag() const;
+	//BottomFlag* GetCurBottomFlag() const;
+	BottomHealthBar* GetCurBottomHealthBar();
+
 
 public:
 	virtual void Start() override;
