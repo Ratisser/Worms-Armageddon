@@ -6,8 +6,8 @@
 LobbyScatter::LobbyScatter() // default constructer 디폴트 생성자
 	: mainRender_(nullptr), spawnPos_({ randomGenerator_.RandomFloat(-700.0f, 700.0f), -100.0f })
 {
-	SetRenderOrder((int)RenderOrder::BackGround1);
-	SetPos({ randomGenerator_.RandomFloat(0.0f, 3000.0f), -300.0f });
+	SetRenderOrder((int)RenderOrder::BackGround);
+	SetPos({ randomGenerator_.RandomFloat(0.0f, 1280.0f), randomGenerator_.RandomFloat(0.0f, 720.0f) });
 }
 
 LobbyScatter::~LobbyScatter() // default destructer 디폴트 소멸자
