@@ -33,6 +33,7 @@ private:
 	Worm* parentWorm_;
 	class MouseObject* mouse_;
 	GameEngineRenderer* mainRender_[20];
+	GameEngineRenderer* ColRender_[20];
 	bool bLeft_;
 	int index_;
 };

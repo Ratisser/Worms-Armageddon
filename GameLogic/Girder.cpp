@@ -23,6 +23,7 @@ Girder::Girder()
 	for (size_t i = 0; i < 18; i++)
 	{
 		mainRender_[i] = nullptr;
+		ColRender_[i] = nullptr;
 	}
 }
 
@@ -53,6 +54,25 @@ void Girder::Start()
 	mainRender_[15] = CreateRenderer("Grdl6");
 	mainRender_[16] = CreateRenderer("Grdl7");
 	mainRender_[17] = CreateRenderer("Grdl8");
+
+	ColRender_[0] = CreateRenderer("Grds0b");
+	ColRender_[1] = CreateRenderer("Grds1b");
+	ColRender_[2] = CreateRenderer("Grds2b");
+	ColRender_[3] = CreateRenderer("Grds3b");
+	ColRender_[4] = CreateRenderer("Grds4b");
+	ColRender_[5] = CreateRenderer("Grds5b");
+	ColRender_[6] = CreateRenderer("Grds6b");
+	ColRender_[7] = CreateRenderer("Grds7b");
+	ColRender_[8] = CreateRenderer("Grds8b");
+	ColRender_[9] = CreateRenderer("Grdl0b");
+	ColRender_[10] = CreateRenderer("Grdl1b");
+	ColRender_[11] = CreateRenderer("Grdl2b");
+	ColRender_[12] = CreateRenderer("Grdl3b");
+	ColRender_[13] = CreateRenderer("Grdl4b");
+	ColRender_[14] = CreateRenderer("Grdl5b");
+	ColRender_[15] = CreateRenderer("Grdl6b");
+	ColRender_[16] = CreateRenderer("Grdl7b");
+	ColRender_[17] = CreateRenderer("Grdl8b");
 
 	if (false == GameEngineInput::GetInst().IsKey("IndexMinus"))
 	{
@@ -103,7 +123,7 @@ void Girder::Update()
 	if (true == GameEngineInput::GetInst().IsDown("BuildGirder"))
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->GetMap()->BuildGirder(float4(pos_.x - 10.f, pos_.y - 35.f));
+		level->GetMap()->BuildGirder(pos_ - mainRender_[index_]->GetImageSize() * 0.5f, mainRender_[index_], ColRender_[index_]);
 		parentWorm_->SetCurWeapon(eItemList::WEAPON_BAZOOKA);
 		Death();
 	}

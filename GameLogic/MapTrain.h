@@ -27,9 +27,6 @@ private:	// member Var
 	GameEngineRenderer* boomEdgeSpriteRender75_;
 	GameEngineRenderer* boomEdgeSpriteRender100_;
 
-	GameEngineRenderer* girderSpriteRender_;
-	GameEngineRenderer* girderColSpriteRender_;
-
 public:
 	MapTrain(); // default constructer 디폴트 생성자
 	~MapTrain(); // default destructer 디폴트 소멸자
@@ -56,6 +53,6 @@ public:
 	void GroundUpdate50(float4 pos);
 	void GroundUpdate75(float4 pos);
 	void GroundUpdate100(float4 pos);
-	void BuildGirder(float4 pos);
+	void BuildGirder(float4 pos, GameEngineRenderer* _Image, GameEngineRenderer* _ColImage);
 };
 

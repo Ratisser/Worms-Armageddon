@@ -105,6 +105,23 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("Grdl8", Dir.PathToPlusFileName("grdl8.bmp"));
 
 		GameEngineImage::GetInst().LoadGameImage("Grds0b", Dir.PathToPlusFileName("grds0b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds1b", Dir.PathToPlusFileName("grds1b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds2b", Dir.PathToPlusFileName("grds2b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds3b", Dir.PathToPlusFileName("grds3b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds4b", Dir.PathToPlusFileName("grds4b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds5b", Dir.PathToPlusFileName("grds5b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds6b", Dir.PathToPlusFileName("grds6b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds7b", Dir.PathToPlusFileName("grds7b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds8b", Dir.PathToPlusFileName("grds8b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl0b", Dir.PathToPlusFileName("grdl0b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl1b", Dir.PathToPlusFileName("grdl1b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl2b", Dir.PathToPlusFileName("grdl2b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl3b", Dir.PathToPlusFileName("grdl3b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl4b", Dir.PathToPlusFileName("grdl4b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl5b", Dir.PathToPlusFileName("grdl5b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl6b", Dir.PathToPlusFileName("grdl6b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl7b", Dir.PathToPlusFileName("grdl7b.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl8b", Dir.PathToPlusFileName("grdl8b.bmp"));
 		
 		TitleLevelInit();
 		MenuSelectInit();

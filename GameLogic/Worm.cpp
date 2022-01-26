@@ -163,10 +163,10 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("BattleAxeOffLeft", "axeOffLeft.bmp", 0, 14, false, 0.033f);
 	mainRender_->CreateAnimation("BattleAxeOffRight", "axeOffRight.bmp", 0, 14, false, 0.033f);
 
-	mainRender_->CreateAnimation("GirderOnLeft", "girderOnLeft.bmp", 0, 6, false, 0.033f); // Girder 애니메이션입니다.
-	mainRender_->CreateAnimation("GirderOnRight", "girderOnRight.bmp", 0, 6, false, 0.033f);
-	mainRender_->CreateAnimation("GirderOffLeft", "girderOffLeft.bmp", 0, 6, false, 0.033f);
-	mainRender_->CreateAnimation("GirderOffRight", "girderOffRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOnLeft", "girderOnLeft.bmp", 0, 14, false, 0.033f); // Girder 애니메이션입니다.
+	mainRender_->CreateAnimation("GirderOnRight", "girderOnRight.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOffLeft", "girderOffLeft.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOffRight", "girderOffRight.bmp", 0, 14, false, 0.033f);
 
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
@@ -2190,6 +2190,7 @@ StateInfo Worm::startGirderOn(StateInfo _state)
 {
 	Girder* newGirder = parentLevel_->CreateActor<Girder>();
 	newGirder->Initialize(this, bLeft_);
+	crosshairRender_->Off();
 
 	return StateInfo();
 }
