@@ -469,6 +469,17 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "sheepOnRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "sheepOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "sheepOffRight.bmp", cutSize);
+	// 도끼 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "axeOnLeft.bmp", {104,104});
+	RS::LoadImageFromFileAndCut(dir / "axeOnRight.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire1Left.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire1Right.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire2Left.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire2Right.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire3Left.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeFire3Right.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeOffLeft.bmp", { 104,104 });
+	RS::LoadImageFromFileAndCut(dir / "axeOffRight.bmp", { 104,104 });
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();
