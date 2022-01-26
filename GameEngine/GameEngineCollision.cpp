@@ -203,6 +203,11 @@ void GameEngineCollision::DebugRender()
 	case CollisionCheckType::LINE:
 		break;
 	case CollisionCheckType::CIRCLE:
+		Ellipse(BackBufferImage->GetDC(),
+			RenderPos.ix() - size_.ihx(),
+			RenderPos.iy() - size_.ihy(),
+			RenderPos.ix() + size_.ihx(),
+			RenderPos.iy() + size_.ihy());
 		break;
 	case CollisionCheckType::POLYGON2D:
 		break;

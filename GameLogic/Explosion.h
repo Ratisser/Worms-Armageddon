@@ -6,7 +6,6 @@ class Explosion : public GameEngineActor
 {
 
 protected:	// member Var
-	std::list<GameEngineCollision*> ColList_;
 	GameEngineCollision* ExplosionCollision_;
 	int Damage_;
 	bool DamageAll_;

@@ -297,7 +297,7 @@ ExplosionSize75::ExplosionSize75(ExplosionSize75&& _other) noexcept
 void ExplosionSize75::Start()
 {
 	Explosion::Start();
-	ExplosionCollision_->SetSize({ 75.f, 75.f });
+	ExplosionCollision_->SetSize({ 750.f, 750.f });
 
 	GameEngineMath::Random random;
 	EffectActor* Effect;
