@@ -37,6 +37,8 @@ private:
 	const float GRAVITY_POWER = 800.f;
 	const float BOTTOM_PIVOT = 12.f;
 	const float JUMP_DELAY = 1.5f;
+	const float FLY_SPEED = 600.f;
+	const float ANIM_DELAY = 0.05f;
 
 private:
 	StateInfo startIdle(StateInfo _state);
@@ -44,6 +46,9 @@ private:
 
 	StateInfo startWalk(StateInfo _state);
 	StateInfo updateWalk(StateInfo _state);
+
+	StateInfo startFly(StateInfo _state);
+	StateInfo updateFly(StateInfo _state);
 
 	StateInfo startExplosion(StateInfo _state);
 	StateInfo updateExplosion(StateInfo _state);
@@ -53,7 +58,9 @@ private:
 	GameEngineFSM<SuperSheep> state_;
 	GameEngineRenderer* mainRender_;
 
+	float4 direction_;
 	float4 speed_;
+	float4 headPivot_;
 
 	GameEngineCollision* topCenterCollision_;
 	GameEngineCollision* headCollision_;
@@ -63,6 +70,7 @@ private:
 	float deltaTime_;
 	float jumpDelay_;
 	float explosionDelay_;
+	float animDelay_;
 	bool bLeft_;
 	bool bGround_;
 };

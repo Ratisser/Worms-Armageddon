@@ -3,6 +3,7 @@
 #include <GameEngineCollision.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
+#include <GameEngineDebugExtension.h>
 
 #include "PlayLevel.h"
 #include "Worm.h"
@@ -24,6 +25,9 @@ SuperSheep::SuperSheep()
 	, deltaTime_(0.0f)
 	, parentWorm_(nullptr)
 	, explosionDelay_(0.0f)
+	, headPivot_(float4::UP)
+	, direction_(float4::UP)
+	, animDelay_(ANIM_DELAY)
 {
 
 }
@@ -41,6 +45,7 @@ void SuperSheep::Start()
 	mainRender_ = CreateRenderer("sheepWalkLeft.bmp");
 	mainRender_->CreateAnimation("WalkLeft", "sheepWalkLeft.bmp", 0, 6, true, 0.1f);
 	mainRender_->CreateAnimation("WalkRight", "sheepWalkRight.bmp", 0, 6, true, 0.1f);
+	mainRender_->CreateAnimation("Fly", "superSheep.bmp", 0, 63, false, FLT_MAX);
 
 	mainRender_->ChangeAnimation("WalkRight", std::string("sheepWalkRight.bmp"));
 
@@ -65,10 +70,19 @@ void SuperSheep::Start()
 	{
 		GameEngineInput::GetInst().CreateKey("Explosion", VK_SPACE);
 	}
+	if (false == GameEngineInput::GetInst().IsKey("LeftArrow"))
+	{
+		GameEngineInput::GetInst().CreateKey("LeftArrow", VK_LEFT);
+	}
+	if (false == GameEngineInput::GetInst().IsKey("RightArrow"))
+	{
+		GameEngineInput::GetInst().CreateKey("RightArrow", VK_RIGHT);
+	}
 
 	// ป๓ลย
 	state_.CreateState("Idle", &SuperSheep::startIdle, &SuperSheep::updateIdle);
 	state_.CreateState("Walk", &SuperSheep::startWalk, &SuperSheep::updateWalk);
+	state_.CreateState("Fly", &SuperSheep::startFly, &SuperSheep::updateFly);
 	state_.CreateState("Explosion", &SuperSheep::startExplosion, &SuperSheep::updateExplosion);
 	state_.ChangeState("Walk");
 }
@@ -214,9 +228,69 @@ StateInfo SuperSheep::updateWalk(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Explosion"))
 	{
+		return "Fly";
+	}
+
+	normalMove();
+	return StateInfo();
+}
+
+StateInfo SuperSheep::startFly(StateInfo _state)
+{
+	mainRender_->ChangeAnimation("Fly", std::string("superSheep.bmp"));
+	speed_ = float4::ZERO;
+	direction_ = float4::UP;
+	headPivot_ = direction_ * 15.f;
+	headCollision_->SetPivot(headPivot_);
+	groundCheckCollision_->SetPivot(float4::ZERO);
+	bottomCenterCollision_->SetPivot(float4::ZERO);
+	topCenterCollision_->SetPivot(float4::ZERO);
+	return StateInfo();
+}
+
+StateInfo SuperSheep::updateFly(StateInfo _state)
+{
+	float rotate = direction_.GetDegreeFromNegativeYAxisClockWise();
+	int animIndex = static_cast<int>(rotate / 11.25f) * 2;
+
+	if (animIndex < 0)
+	{
+		animIndex = 0;
+	}
+	else if (animIndex > 62)
+	{
+		animIndex = 62;
+	}
+
+	static bool bTemp = false;
+
+	animDelay_ -= deltaTime_;
+	if (animDelay_ < 0.0f)
+	{
+		bTemp = !bTemp;
+		animDelay_ = ANIM_DELAY;
+	}
+
+	mainRender_->SetAnimationCurrentFrame(animIndex + (int)bTemp);
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		direction_ = float4::RadianToRotatefloat2(direction_, -deltaTime_ * 6.f);
+	}
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		direction_ = float4::RadianToRotatefloat2(direction_, deltaTime_ * 6.f);
+	}
+
+	headPivot_ = direction_ * 15.f;
+	headCollision_->SetPivot(headPivot_);
+
+	if (nullptr != headCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
 		return "Explosion";
 	}
 
+	speed_ = direction_ * FLY_SPEED;
 	normalMove();
 	return StateInfo();
 }
