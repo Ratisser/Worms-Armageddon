@@ -22,7 +22,8 @@ MouseObject::MouseObject() :
 	weaponsheeton_(false),
 	finalpos_(float4::ZERO),
 	startrange_(float4::ZERO),
-	endrange_(float4::ZERO)
+	endrange_(float4::ZERO),
+	mouseMoveBlock(false)
 {
 }
 
@@ -38,7 +39,8 @@ MouseObject::MouseObject(MouseObject&& _other) noexcept :
 	weaponsheeton_(_other.weaponsheeton_),
 	finalpos_(_other.finalpos_),
 	startrange_(_other.startrange_),
-	endrange_(_other.endrange_)
+	endrange_(_other.endrange_),
+	mouseMoveBlock(_other.mouseMoveBlock)
 {
 
 }
@@ -82,6 +84,9 @@ void MouseObject::Start()
 	mainrenderer_ = CreateRenderer("Cursor");
 	mainrenderer_->SetRenderSize(float4(32.f, 32.f));
 	mainrenderer_->SetCameraEffectOff();
+
+	mouseAimRenderer_ = CreateRenderer("Bazooka");
+	mouseAimRenderer_->SetCameraEffectOff();
 
 	float4 HarfIamgeSize = mainrenderer_->GetImageSize().halffloat4();
 	mainrenderer_->SetPivotPos(HarfIamgeSize);
@@ -236,7 +241,10 @@ void MouseObject::Update()
 	//	SetPos(MousePos);
 	//}
 
-	SetPos(MousePos);
+	if (false == mouseMoveBlock)
+	{
+		SetPos(MousePos);
+	}
 }
 
 void MouseObject::UpdateAfter()
@@ -246,5 +254,12 @@ void MouseObject::UpdateAfter()
 
 void MouseObject::Render()
 {
-	mainrenderer_->Render();
+	if (false == mouseMoveBlock)
+	{
+		mainrenderer_->Render();
+	}
+	else
+	{
+		mouseAimRenderer_->Render();
+	}
 }

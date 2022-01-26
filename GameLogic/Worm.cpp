@@ -143,6 +143,13 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("SheepAimLeft", "sheepOnLeft.bmp", 9, 9, true);
 	mainRender_->CreateAnimation("SheepAimRight", "sheepOnRight.bmp", 9, 9, true);
 
+	mainRender_->CreateAnimation("HomingOnLeft", "homingOnLeft.bmp", 0, 6, false, 0.033f); // 호밍 미사일 애니메이션입니다.
+	mainRender_->CreateAnimation("HomingOnRight", "homingOnRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("HomingOffLeft", "homingOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("HomingOffRight", "homingOffRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("HomingAimLeft", "homingAimLeft.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("HomingAimRight", "homingAimRight.bmp", 0, 31, false, FLT_MAX);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -483,11 +490,11 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_HOMINGMISSILE:
 		if (bLeft_)
 		{
-			mainRender_->ChangeAnimation("BazOnLeft", std::string("bazOnLeft.bmp"));
+			mainRender_->ChangeAnimation("HomingOnLeft", std::string("homingOnLeft.bmp"));
 		}
 		else
 		{
-			mainRender_->ChangeAnimation("BazOnRight", std::string("bazOnRight.bmp"));
+			mainRender_->ChangeAnimation("HomingOnRight", std::string("homingOnRight.bmp"));
 		}
 		break;
 	case eItemList::WEAPON_MORTAR:
@@ -664,11 +671,11 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_HOMINGMISSILE:
 		if (bLeft_)
 		{
-			mainRender_->ChangeAnimation("BazOffLeft", std::string("bazOffLeft.bmp"));
+			mainRender_->ChangeAnimation("HomingOffLeft", std::string("homingOffLeft.bmp"));
 		}
 		else
 		{
-			mainRender_->ChangeAnimation("BazOffRight", std::string("bazOffRight.bmp"));
+			mainRender_->ChangeAnimation("HomingOffRight", std::string("homingOffRight.bmp"));
 		}
 		break;
 	case eItemList::WEAPON_MORTAR:
@@ -1252,6 +1259,8 @@ StateInfo Worm::startHomingStart(StateInfo _state)
 StateInfo Worm::updateHomingStart(StateInfo _state)
 {
 	// 마우스 포지션 클릭
+	// 마우스 이미지 x로 변경
+	// 마우스 이동 불가
 
 	if (GameEngineInput::GetInst().IsDown("Mouse"))
 	{
@@ -1261,9 +1270,37 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 
 		mouseTargetPos_ = MousePos;
 
+		mouse->MouseBlock(true);
+
 		return "HomingAim";
 	}
 
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		return "BazookaFire";
+	}
+
+	normalMove();
 	return StateInfo();
 }
 
@@ -1271,11 +1308,11 @@ StateInfo Worm::startHomingAim(StateInfo _state)
 {
 	if (bLeft_)
 	{
-		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
+		mainRender_->ChangeAnimation("HomingAimLeft", std::string("homingAimLeft.bmp"));
 	}
 	else
 	{
-		mainRender_->ChangeAnimation("BazAimRight", std::string("bazAimRight.bmp"));
+		mainRender_->ChangeAnimation("HomingAimRight", std::string("homingAimRight.bmp"));
 	}
 
 	int frame = getAimingFrame();
@@ -1331,8 +1368,11 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 	GameEngineDebugExtension::PrintDebugWindowText("Ratation : ", aimRotation_ * GameEngineMath::RadianToDegree);
 	GameEngineDebugExtension::PrintDebugWindowText("forward : ", forward_.x, ", ", forward_.y);
 
+	MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+
 	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
+		mouse->MouseBlock(false);
 		bLeft_ = true;
 		nextState_ = "Walk";
 		return "WeaponOff";
@@ -1340,6 +1380,7 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsPress("RightArrow"))
 	{
+		mouse->MouseBlock(false);
 		bLeft_ = false;
 		nextState_ = "Walk";
 		return "WeaponOff";
@@ -1347,6 +1388,7 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Jump"))
 	{
+		mouse->MouseBlock(false);
 		nextState_ = "JumpReady";
 		return "WeaponOff";
 	}

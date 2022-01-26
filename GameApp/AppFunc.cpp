@@ -70,9 +70,8 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_50", Dir.PathToPlusFileName("BoomEdge_50.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_25", Dir.PathToPlusFileName("BoomEdge_25.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("BoomEdge_13", Dir.PathToPlusFileName("BoomEdge_13.bmp"));
-		//GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
 
-		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Bazooka", Dir.PathToPlusFileName("Bazooka.bmp")); // 테스트용 이미지
 		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
 		loadingImage->Cut({ 60,60 });
 
@@ -480,6 +479,14 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "axeFire3Right.bmp", { 104,104 });
 	RS::LoadImageFromFileAndCut(dir / "axeOffLeft.bmp", { 104,104 });
 	RS::LoadImageFromFileAndCut(dir / "axeOffRight.bmp", { 104,104 });
+	// 호밍미사일 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "homingAimLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingAimRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "homingOnRight.bmp", cutSize);
+
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

@@ -11,11 +11,13 @@ class MouseObject : public GameEngineActor
 {
 private:	// member Var
 	GameEngineRenderer* mainrenderer_;
+	GameEngineRenderer* mouseAimRenderer_;
 	GameEngineCollision* maincollision_;
 	GameController* gamecontroller_;
 
 private:
 	bool weaponsheeton_;
+	bool mouseMoveBlock;
 
 private:
 	float4 finalpos_;	// 마우스의 마지막위치
@@ -51,6 +53,11 @@ public:
 	GameController* GetGameController() const
 	{
 		return gamecontroller_;
+	}
+
+	void MouseBlock(bool _bool)
+	{
+		mouseMoveBlock = _bool;
 	}
 
 public:
