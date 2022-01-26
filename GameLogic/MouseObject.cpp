@@ -17,6 +17,7 @@
 
 MouseObject::MouseObject() :
 	mainrenderer_(nullptr),
+	mouseAimRenderer_(nullptr),
 	maincollision_(nullptr),
 	gamecontroller_(nullptr),
 	weaponsheeton_(false),
@@ -34,6 +35,7 @@ MouseObject::~MouseObject() // default destructer 디폴트 소멸자
 
 MouseObject::MouseObject(MouseObject&& _other) noexcept :
 	mainrenderer_(_other.mainrenderer_),
+	mouseAimRenderer_(_other.mouseAimRenderer_),
 	maincollision_(_other.maincollision_),
 	gamecontroller_(_other.gamecontroller_),
 	weaponsheeton_(_other.weaponsheeton_),

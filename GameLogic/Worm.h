@@ -148,6 +148,9 @@ private:
 	StateInfo startBattleAxeWait(StateInfo _state);
 	StateInfo updateBattleAxeWait(StateInfo _state);
 
+	StateInfo startGirderOn(StateInfo _state);
+	StateInfo updateGirderOn(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
@@ -195,5 +198,11 @@ private:
 	UIController* uicontroller_;
 
 	GameEngineActor* bulletFocusActor_;
+
+public:
+	eItemList GetCurrentWeapon() const
+	{
+		return currentWeapon_;
+	}
 };
 

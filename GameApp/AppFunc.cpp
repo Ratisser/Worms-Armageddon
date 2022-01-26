@@ -78,6 +78,33 @@ void AppResourcesInit()
 		float4 cutSize = float4(60.f, 60.f);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);
+
+		if (false == Dir.MoveChild("\\Weapons\\"))
+		{
+			GameEngineDebug::AssertFalse();
+			return;
+		}
+
+		GameEngineImage::GetInst().LoadGameImage("Grds0", Dir.PathToPlusFileName("grds0.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds1", Dir.PathToPlusFileName("grds1.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds2", Dir.PathToPlusFileName("grds2.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds3", Dir.PathToPlusFileName("grds3.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds4", Dir.PathToPlusFileName("grds4.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds5", Dir.PathToPlusFileName("grds5.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds6", Dir.PathToPlusFileName("grds6.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds7", Dir.PathToPlusFileName("grds7.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grds8", Dir.PathToPlusFileName("grds8.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl0", Dir.PathToPlusFileName("grdl0.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl1", Dir.PathToPlusFileName("grdl1.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl2", Dir.PathToPlusFileName("grdl2.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl3", Dir.PathToPlusFileName("grdl3.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl4", Dir.PathToPlusFileName("grdl4.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl5", Dir.PathToPlusFileName("grdl5.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl6", Dir.PathToPlusFileName("grdl6.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl7", Dir.PathToPlusFileName("grdl7.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("Grdl8", Dir.PathToPlusFileName("grdl8.bmp"));
+
+		GameEngineImage::GetInst().LoadGameImage("Grds0b", Dir.PathToPlusFileName("grds0b.bmp"));
 		
 		TitleLevelInit();
 		MenuSelectInit();
@@ -572,6 +599,11 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "homingOffRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "homingOnLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "homingOnRight.bmp", cutSize);
+	// Girder 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "girderOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "girderOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "girderOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "girderOnRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

@@ -64,6 +64,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Girder.h" />
     <ClInclude Include="GlobalValue.h">
       <SubType>
       </SubType>
@@ -325,6 +326,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Girder.cpp" />
     <ClCompile Include="GlobalValue.cpp">
       <SubType>
       </SubType>

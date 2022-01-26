@@ -23,6 +23,7 @@
 #include "GameController.h"
 #include "Uzi.h"
 #include "Sheep.h"
+#include "Girder.h"
 #include "SuperSheep.h"
 
 Worm::Worm()
@@ -162,6 +163,11 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("BattleAxeOffLeft", "axeOffLeft.bmp", 0, 14, false, 0.033f);
 	mainRender_->CreateAnimation("BattleAxeOffRight", "axeOffRight.bmp", 0, 14, false, 0.033f);
 
+	mainRender_->CreateAnimation("GirderOnLeft", "girderOnLeft.bmp", 0, 6, false, 0.033f); // Girder 애니메이션입니다.
+	mainRender_->CreateAnimation("GirderOnRight", "girderOnRight.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOffLeft", "girderOffLeft.bmp", 0, 6, false, 0.033f);
+	mainRender_->CreateAnimation("GirderOffRight", "girderOffRight.bmp", 0, 6, false, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -268,6 +274,8 @@ void Worm::initState()
 	state_.CreateState("SuperSheepAim", &Worm::startSuperSheepAim, &Worm::updateSuperSheepAim);
 	state_.CreateState("SuperSheepFire", &Worm::startSuperSheepFire, &Worm::updateSuperSheepFire);
 	state_.CreateState("SuperSheepWait", &Worm::startSuperSheepWait, &Worm::updateSuperSheepWait);
+
+	state_.CreateState("GirderOn", &Worm::startGirderOn, &Worm::updateGirderOn);
 
 	state_.ChangeState("Idle");
 }
@@ -424,6 +432,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
 	case eItemList::WEAPON_GIRDER:
+		return "GirderOn";
 		break;
 	case eItemList::WEAPON_BASEBALLBAT:
 		break;
@@ -623,6 +632,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
 	case eItemList::WEAPON_GIRDER:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("GirderOnLeft", std::string("girderOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("GirderOnRight", std::string("girderOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_BASEBALLBAT:
 		break;
@@ -820,6 +837,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
 	case eItemList::WEAPON_GIRDER:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("GirderOffLeft", std::string("girderOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("GirderOffRight", std::string("girderOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_BASEBALLBAT:
 		break;
@@ -1161,8 +1186,7 @@ StateInfo Worm::updateJump(StateInfo _state)
 }
 
 StateInfo Worm::startBazookaAim(StateInfo _state)
-{
-	
+{	
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
@@ -2162,6 +2186,19 @@ StateInfo Worm::updateBattleAxeWait(StateInfo _state)
 	nextState_ = "Idle";
 	return "WeaponOff";
 }
+StateInfo Worm::startGirderOn(StateInfo _state)
+{
+	Girder* newGirder = parentLevel_->CreateActor<Girder>();
+	newGirder->Initialize(this, bLeft_);
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateGirderOn(StateInfo _state)
+{
+	return StateInfo();
+}
+
 
 void Worm::SetCurWeapon(eItemList _WeaponType)
 {

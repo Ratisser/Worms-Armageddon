@@ -73,6 +73,11 @@ public:
 		return isDebugOn_;
 	}
 
+	MapTrain* GetMap() const
+	{
+		return Train_;
+	}
+
 private:
 	void wormLoading();
 	void PJWLevelUpdate();

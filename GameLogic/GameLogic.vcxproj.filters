@@ -345,6 +345,9 @@
     <ClInclude Include="BattleAxe.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Girder.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
     <ClInclude Include="LobbyScatter.h">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
@@ -564,6 +567,9 @@
       <Filter>Actor\LobbyLevel\UI\OptionSet\BasicOption</Filter>
     </ClCompile>
     <ClCompile Include="BattleAxe.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Girder.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="LobbyScatter.cpp">
