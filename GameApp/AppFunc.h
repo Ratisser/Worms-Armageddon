@@ -20,6 +20,7 @@ namespace RS
 {
 	GameEngineImageFile* LoadImageFromFile(const std::string& _path);
 	void LoadImageFromFileAndCut(const std::string& _path, const float4& _cutSize);
+	void LoadSoundFromFile(const std::string& _path);
 }
 void CharactorImageInit();
 void WeaponImageInit();
@@ -31,3 +32,5 @@ void EffectImageInit();
 void LoadSoundInit();
 void TitleLevelInit();
 void MenuSelectInit();
+
+void SoundLoad();

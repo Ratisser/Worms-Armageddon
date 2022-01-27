@@ -1,10 +1,10 @@
 #include "GameEngineWindow.h"
 #include <GameEngineDebug.h>
 #include <GameEngineTime.h>
-#include <GameEngineSound.h>
 #include "GameEngineInput.h"
 #include "GameEngineImageFile.h"
 #include "GameEngineImage.h"
+#include <GameEngineSoundManager.h>
 #include <iostream>
 
 #include "KeyboardClass.h"
@@ -327,7 +327,7 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
         {
             GameEngineTime::GetInst().TimeCheck();
             GameEngineInput::GetInst().Update();
-            GameEngineSound::GetInst().SoundUpdate();
+            //GameEngineSound::GetInst().SoundUpdate();
 
             if (nullptr == _loopFunc)
             {
@@ -350,7 +350,8 @@ void GameEngineWindow::Loop(void(*_loopFunc)())
         {
             GameEngineTime::GetInst().TimeCheck();
             GameEngineInput::GetInst().Update();
-            GameEngineSound::GetInst().SoundUpdate();
+            //GameEngineSound::GetInst().SoundUpdate();
+            GameEngineSoundManager::GetInstance().Update();
 
             if (nullptr == _loopFunc)
             {

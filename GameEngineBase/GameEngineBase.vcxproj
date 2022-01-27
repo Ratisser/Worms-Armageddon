@@ -48,23 +48,13 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineSound.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GameEngineSoundFile.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="GameEngineSoundPlayer.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="GameEngineTime.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineTimeEventer.h" />
+    <ClInclude Include="GameEngineSoundManager.h" />
+    <ClInclude Include="GameEngineSoundPlayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineDebug.cpp">
@@ -96,22 +86,12 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="GameEngineSound.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GameEngineSoundFile.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GameEngineSoundPlayer.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="GameEngineTime.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineSoundManager.cpp" />
+    <ClCompile Include="GameEngineSoundPlayer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

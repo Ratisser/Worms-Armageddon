@@ -4,7 +4,7 @@
 #include <GameEngineImage.h>
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
-#include <GameEngineSound.h>
+#include <GameEngineSoundManager.h>
 #include <GameEngineDirectroy.h>
 #include <GameEngineFile.h>
 #include <GameEngineImageFile.h>
@@ -16,7 +16,10 @@
 
 #include <GlobalValue.h>
 
-void AppResourcesInit() 
+
+
+
+void AppResourcesInit()
 {
 	// 맵 최소, 최대값 초기화
 	{
@@ -122,7 +125,7 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("Grdl6b", Dir.PathToPlusFileName("grdl6b.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Grdl7b", Dir.PathToPlusFileName("grdl7b.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Grdl8b", Dir.PathToPlusFileName("grdl8b.bmp"));
-		
+
 		TitleLevelInit();
 		MenuSelectInit();
 		ResourceInitPJW();
@@ -137,6 +140,7 @@ void AppResourcesInit()
 
 	// 사운드 로드
 	{
+		SoundLoad();
 		//GameEngineDirectroy Dir = GameEngineDirectroy();
 		//Dir.MoveParent("API38");
 		//
@@ -151,14 +155,14 @@ void AppResourcesInit()
 	}
 }
 
-void AppRelease() 
+void AppRelease()
 {
 	GameEngineDebugExtension::Release();
 	GameEngineLevelManager::Destroy();
 
 
 	GameEngineImage::Destroy();
-	GameEngineSound::Destroy();
+	GameEngineSoundManager::Destroy();
 	GameEngineInput::Destroy();
 	GameEngineWindow::Destroy();
 	GameEngineTime::Destroy();
@@ -187,7 +191,7 @@ void ResourceInitPJW()
 	}
 
 	GameEngineImageFile* cloudL = GameEngineImage::GetInst().LoadGameImage("cloudl", Dir.PathToPlusFileName("cloudl.bmp"));
-	cloudL->Cut({160,160});
+	cloudL->Cut({ 160,160 });
 	GameEngineImageFile* cloudM = GameEngineImage::GetInst().LoadGameImage("cloudm", Dir.PathToPlusFileName("cloudm.bmp"));
 	cloudM->Cut({ 128,128 });
 	GameEngineImageFile* cloudS = GameEngineImage::GetInst().LoadGameImage("clouds", Dir.PathToPlusFileName("clouds.bmp"));
@@ -201,9 +205,9 @@ void ResourceInitPJW()
 	GameEngineImage::GetInst().LoadGameImage("windGauge", Dir.PathToPlusFileName("windGauge.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("windBarHider", Dir.PathToPlusFileName("windBarHider.bmp"));
 	GameEngineImageFile* windBarSprites = GameEngineImage::GetInst().LoadGameImage("windBar", Dir.PathToPlusFileName("windBar.bmp"));
-	windBarSprites->Cut({87,13});
+	windBarSprites->Cut({ 87,13 });
 	GameEngineImageFile* leafSprites = GameEngineImage::GetInst().LoadGameImage("ScatterLeaf", Dir.PathToPlusFileName("ScatterLeaf.bmp"));
-	leafSprites->Cut({32,32});
+	leafSprites->Cut({ 32,32 });
 
 	if (false == Dir.MoveChild("\\Player_arrow\\"))
 	{
@@ -614,7 +618,7 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "sheepOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "sheepOffRight.bmp", cutSize);
 	// 도끼 애니메이션
-	RS::LoadImageFromFileAndCut(dir / "axeOnLeft.bmp", {104,104});
+	RS::LoadImageFromFileAndCut(dir / "axeOnLeft.bmp", { 104,104 });
 	RS::LoadImageFromFileAndCut(dir / "axeOnRight.bmp", { 104,104 });
 	RS::LoadImageFromFileAndCut(dir / "axeFire1Left.bmp", { 104,104 });
 	RS::LoadImageFromFileAndCut(dir / "axeFire1Right.bmp", { 104,104 });
@@ -659,6 +663,15 @@ void WeaponImageInit()
 	RS::LoadImageFromFileAndCut(dir / "sheepWalkRight.bmp", cutSize);
 }
 
+void SoundLoad()
+{
+	GameEngineDirectroy dir = GameEngineDirectroy();
+	dir.MoveParent("Worms-Armageddon");
+	dir.MoveChild("\\Resources\\Sound");
+
+	RS::LoadSoundFromFile(dir / "fire.wav");
+}
+
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
 {
 	size_t fileNameStartIndex = _path.rfind("\\") + 1;
@@ -674,6 +687,14 @@ void RS::LoadImageFromFileAndCut(const std::string& _path, const float4& _cutSiz
 
 	GameEngineImageFile* image = GameEngineImage::GetInst().LoadGameImage(fileName, _path);
 	image->Cut(_cutSize);
+}
+
+void RS::LoadSoundFromFile(const std::string& _path)
+{
+	size_t fileNameStartIndex = _path.rfind("\\") + 1;
+	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
+
+	GameEngineSoundManager::GetInstance().CreateSound(fileName, _path);
 }
 
 void MapWaterImageInit() // 바닥 수면 이미지 로드에 사용
@@ -777,7 +798,7 @@ void EffectImageInit()
 
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("exbiff", Dir.PathToPlusFileName("exbiff.bmp"));
-	loadingImage->Cut({60,60 });
+	loadingImage->Cut({ 60,60 });
 
 	loadingImage = GameEngineImage::GetInst().
 		LoadGameImage("exfoom", Dir.PathToPlusFileName("exfoom.bmp"));
@@ -899,26 +920,26 @@ void LoadSoundInit()
 			return;
 		}
 
-		GameEngineSound::GetInst().LoadSound("01_generic", Dir.PathToPlusFileName("ingame_01_generic.wav"));
-		GameEngineSound::GetInst().LoadSound("02_cavern", Dir.PathToPlusFileName("ingame_02_cavern.wav"));
-		GameEngineSound::GetInst().LoadSound("03_jungle", Dir.PathToPlusFileName("ingame_03_jungle.wav"));
-		GameEngineSound::GetInst().LoadSound("04_battlezone", Dir.PathToPlusFileName("ingame_04_battlezone.wav"));
-		GameEngineSound::GetInst().LoadSound("05_forest", Dir.PathToPlusFileName("ingame_05_forest.wav"));
-		GameEngineSound::GetInst().LoadSound("06_weird_alien_plan", Dir.PathToPlusFileName("ingame_06_weird_alien_plan.wav"));
-		GameEngineSound::GetInst().LoadSound("07_outerspace", Dir.PathToPlusFileName("ingame_07_outerspace.wav"));
-		GameEngineSound::GetInst().LoadSound("08_desert", Dir.PathToPlusFileName("ingame_08_desert.wav"));
-		GameEngineSound::GetInst().LoadSound("09_hellest", Dir.PathToPlusFileName("ingame_09_hellest.wav"));
-		GameEngineSound::GetInst().LoadSound("10_mech_workshop", Dir.PathToPlusFileName("ingame_10_mech_workshop.wav"));
-		GameEngineSound::GetInst().LoadSound("11_rain_surf", Dir.PathToPlusFileName("ingame_11_rain_surf.wav"));
-		GameEngineSound::GetInst().LoadSound("lose", Dir.PathToPlusFileName("new_lose.wav"));
-		GameEngineSound::GetInst().LoadSound("win_bronze", Dir.PathToPlusFileName("new_win_bronze.wav"));
-		GameEngineSound::GetInst().LoadSound("win_gold", Dir.PathToPlusFileName("new_win_gold.wav"));
-		GameEngineSound::GetInst().LoadSound("win_gold_special", Dir.PathToPlusFileName("new_win_gold_special.wav"));
-		GameEngineSound::GetInst().LoadSound("win_silver", Dir.PathToPlusFileName("new_win_silver.wav"));
-		GameEngineSound::GetInst().LoadSound("Stats", Dir.PathToPlusFileName("Stats.wav"));
-		GameEngineSound::GetInst().LoadSound("suddendeath1_loop", Dir.PathToPlusFileName("suddendeath1_loop.wav"));
-		GameEngineSound::GetInst().LoadSound("suddendeath2_loop", Dir.PathToPlusFileName("suddendeath2_loop.wav"));
-		GameEngineSound::GetInst().LoadSound("title", Dir.PathToPlusFileName("title.wav"));
+		//GameEngineSound::GetInst().LoadSound("01_generic", Dir.PathToPlusFileName("ingame_01_generic.wav"));
+		//GameEngineSound::GetInst().LoadSound("02_cavern", Dir.PathToPlusFileName("ingame_02_cavern.wav"));
+		//GameEngineSound::GetInst().LoadSound("03_jungle", Dir.PathToPlusFileName("ingame_03_jungle.wav"));
+		//GameEngineSound::GetInst().LoadSound("04_battlezone", Dir.PathToPlusFileName("ingame_04_battlezone.wav"));
+		//GameEngineSound::GetInst().LoadSound("05_forest", Dir.PathToPlusFileName("ingame_05_forest.wav"));
+		//GameEngineSound::GetInst().LoadSound("06_weird_alien_plan", Dir.PathToPlusFileName("ingame_06_weird_alien_plan.wav"));
+		//GameEngineSound::GetInst().LoadSound("07_outerspace", Dir.PathToPlusFileName("ingame_07_outerspace.wav"));
+		//GameEngineSound::GetInst().LoadSound("08_desert", Dir.PathToPlusFileName("ingame_08_desert.wav"));
+		//GameEngineSound::GetInst().LoadSound("09_hellest", Dir.PathToPlusFileName("ingame_09_hellest.wav"));
+		//GameEngineSound::GetInst().LoadSound("10_mech_workshop", Dir.PathToPlusFileName("ingame_10_mech_workshop.wav"));
+		//GameEngineSound::GetInst().LoadSound("11_rain_surf", Dir.PathToPlusFileName("ingame_11_rain_surf.wav"));
+		//GameEngineSound::GetInst().LoadSound("lose", Dir.PathToPlusFileName("new_lose.wav"));
+		//GameEngineSound::GetInst().LoadSound("win_bronze", Dir.PathToPlusFileName("new_win_bronze.wav"));
+		//GameEngineSound::GetInst().LoadSound("win_gold", Dir.PathToPlusFileName("new_win_gold.wav"));
+		//GameEngineSound::GetInst().LoadSound("win_gold_special", Dir.PathToPlusFileName("new_win_gold_special.wav"));
+		//GameEngineSound::GetInst().LoadSound("win_silver", Dir.PathToPlusFileName("new_win_silver.wav"));
+		//GameEngineSound::GetInst().LoadSound("Stats", Dir.PathToPlusFileName("Stats.wav"));
+		//GameEngineSound::GetInst().LoadSound("suddendeath1_loop", Dir.PathToPlusFileName("suddendeath1_loop.wav"));
+		//GameEngineSound::GetInst().LoadSound("suddendeath2_loop", Dir.PathToPlusFileName("suddendeath2_loop.wav"));
+		//GameEngineSound::GetInst().LoadSound("title", Dir.PathToPlusFileName("title.wav"));
 
 		//if (false == Dir.MoveChild("\\Resources\\Sound\\Effects\\"))
 		//{

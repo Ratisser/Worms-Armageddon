@@ -17,7 +17,7 @@
 
 #include <GameEngineMath.h>
 #include <GameEngineInput.h>
-#include <GameEngineSound.h>
+#include <GameEngineSoundManager.h>
 #include <GameEngineMath.h>
 #include "AppFunc.h"
 
@@ -35,7 +35,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	// 디버깅 기본 기능 실행
 	GameEngineDebugExtension::LeakCheckOn();
 
-	GameEngineSound::GetInst().SoundInit();
+	GameEngineSoundManager::GetInstance().Initialize();
 	// 윈도우 생성 및 기본 윈도우 창에서 게임을 돌릴 준비를 한다.
 	GameEngineWindow::GetInst().CreateMainWindowClass(hInstance, "GameWindow");
 	GameEngineWindow::GetInst().CreateMainWindow("MyWindow", { 1280, 720 }, {0, 0});
@@ -52,7 +52,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 	// 최초 씬 지정.
-	GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
+	GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel");
 
 	GameEngineWindow::GetInst().Loop(UpdateFunc);
 

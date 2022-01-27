@@ -1878,6 +1878,7 @@ StateInfo Worm::startSheepAim(StateInfo _state)
 	{
 		mainRender_->ChangeAnimation("SheepAimRight", std::string("sheepOnRight.bmp"));
 	}
+	crosshairRender_->Off();
 	return StateInfo();
 }
 
@@ -1963,6 +1964,7 @@ StateInfo Worm::startSuperSheepAim(StateInfo _state)
 	{
 		mainRender_->ChangeAnimation("SheepAimRight", std::string("sheepOnRight.bmp"));
 	}
+	crosshairRender_->Off();
 	return StateInfo();
 }
 

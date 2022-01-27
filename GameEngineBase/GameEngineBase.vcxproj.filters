@@ -28,17 +28,14 @@
     <ClInclude Include="GameEngineTime.h">
       <Filter>Value</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineSound.h">
-      <Filter>Sound</Filter>
+    <ClInclude Include="GameEngineTimeEventer.h">
+      <Filter>Value</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineSoundFile.h">
+    <ClInclude Include="GameEngineSoundManager.h">
       <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineSoundPlayer.h">
       <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEngineTimeEventer.h">
-      <Filter>Value</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -69,10 +66,7 @@
     <ClCompile Include="GameEngineTime.cpp">
       <Filter>Value</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineSound.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineSoundFile.cpp">
+    <ClCompile Include="GameEngineSoundManager.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineSoundPlayer.cpp">

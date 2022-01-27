@@ -2,6 +2,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
+#include <GameEngineSoundPlayer.h>
 
 class GameEngineCollision;
 class GameEngineRenderer;
@@ -65,5 +66,7 @@ private:
 	float explosionDelay_;
 	bool bLeft_;
 	bool bGround_;
+
+	GameEngineSoundPlayer player_;
 };
 

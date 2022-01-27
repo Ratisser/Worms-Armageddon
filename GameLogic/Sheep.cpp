@@ -3,6 +3,7 @@
 #include <GameEngineCollision.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
+#include <GameEngineSoundManager.h>
 
 #include "PlayLevel.h"
 #include "Worm.h"
@@ -24,8 +25,8 @@ Sheep::Sheep()
 	, deltaTime_(0.0f)
 	, parentWorm_(nullptr)
 	, explosionDelay_(0.0f)
+	, player_("fire.wav")
 {
-
 }
 
 Sheep::~Sheep()
@@ -70,7 +71,7 @@ void Sheep::Start()
 	state_.CreateState("Idle", &Sheep::startIdle, &Sheep::updateIdle);
 	state_.CreateState("Walk", &Sheep::startWalk, &Sheep::updateWalk);
 	state_.CreateState("Explosion", &Sheep::startExplosion, &Sheep::updateExplosion);
-	state_.ChangeState("Walk");
+	state_.ChangeState("Idle");
 }
 
 void Sheep::UpdateBefore()
@@ -164,6 +165,8 @@ void Sheep::normalMove()
 
 StateInfo Sheep::startIdle(StateInfo _state)
 {
+	//GameEngineSoundManager::GetInstance().PlaySoundByName("fire.wav");
+	player_.Play();
 	return StateInfo();
 }
 
