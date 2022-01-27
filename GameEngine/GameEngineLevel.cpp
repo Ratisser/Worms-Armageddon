@@ -112,7 +112,6 @@ void GameEngineLevel::UpdateOrderCheck()
 
 void GameEngineLevel::UpdateBefore() 
 {
-
 	std::map<int, std::list<GameEngineActor*>>::iterator UpdateStart = allActorUpdateList_.begin();
 	std::map<int, std::list<GameEngineActor*>>::iterator UpdateEnd = allActorUpdateList_.end();
 

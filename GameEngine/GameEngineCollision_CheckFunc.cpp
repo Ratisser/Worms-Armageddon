@@ -19,20 +19,21 @@ void GameEngineCollision::ColCheckFuncInitialize()
 	}
 
 	arrFunc_[static_cast<int>(CollisionCheckType::IMAGE)][static_cast<int>(CollisionCheckType::POINT)] = &GameEngineCollision::ImageToPoint;
+
 	arrFunc_[static_cast<int>(CollisionCheckType::POINT)][static_cast<int>(CollisionCheckType::IMAGE)] = &GameEngineCollision::PointToImage;
 
-	arrFunc_[static_cast<int>(CollisionCheckType::RECT)][static_cast<int>(CollisionCheckType::RECT)] = &GameEngineCollision::RectToRect;
+	arrFunc_[static_cast<int>(CollisionCheckType::POINT)][static_cast<int>(CollisionCheckType::POINT)] = &GameEngineCollision::PointToPoint;
+	arrFunc_[static_cast<int>(CollisionCheckType::POINT)][static_cast<int>(CollisionCheckType::RECT)] = &GameEngineCollision::PointToRect;
+	arrFunc_[static_cast<int>(CollisionCheckType::POINT)][static_cast<int>(CollisionCheckType::CIRCLE)] = &GameEngineCollision::collisionCheckPointToCircle;
+
 
 	arrFunc_[static_cast<int>(CollisionCheckType::RECT)][static_cast<int>(CollisionCheckType::POINT)] = &GameEngineCollision::RectToPoint;
-	arrFunc_[static_cast<int>(CollisionCheckType::POINT)][static_cast<int>(CollisionCheckType::RECT)] = &GameEngineCollision::PointToRect;
-
-	arrFunc_[static_cast<int>(CollisionCheckType::CIRCLE)][static_cast<int>(CollisionCheckType::CIRCLE)] = &GameEngineCollision::collisionCheckCircleToCircle;
-
-	arrFunc_[static_cast<int>(CollisionCheckType::POINT)][static_cast<int>(CollisionCheckType::CIRCLE)] = &GameEngineCollision::collisionCheckPointToCircle;
-	arrFunc_[static_cast<int>(CollisionCheckType::CIRCLE)][static_cast<int>(CollisionCheckType::POINT)] = &GameEngineCollision::collisionCheckCircleToPoint;
-
+	arrFunc_[static_cast<int>(CollisionCheckType::RECT)][static_cast<int>(CollisionCheckType::RECT)] = &GameEngineCollision::RectToRect;
 	arrFunc_[static_cast<int>(CollisionCheckType::RECT)][static_cast<int>(CollisionCheckType::CIRCLE)] = &GameEngineCollision::collisionCheckRectToCircle;
+
+	arrFunc_[static_cast<int>(CollisionCheckType::CIRCLE)][static_cast<int>(CollisionCheckType::POINT)] = &GameEngineCollision::collisionCheckCircleToPoint;
 	arrFunc_[static_cast<int>(CollisionCheckType::CIRCLE)][static_cast<int>(CollisionCheckType::RECT)] = &GameEngineCollision::collisionCheckCircleToRect;
+	arrFunc_[static_cast<int>(CollisionCheckType::CIRCLE)][static_cast<int>(CollisionCheckType::CIRCLE)] = &GameEngineCollision::collisionCheckCircleToCircle;
 }
 
 bool GameEngineCollision::PointToImage(GameEngineCollision* _PointCol, GameEngineCollision* _ImageCol)
@@ -115,6 +116,12 @@ bool GameEngineCollision::RectToPoint(GameEngineCollision* _left, GameEngineColl
 }
 
 
+bool GameEngineCollision::PointToPoint(GameEngineCollision* _left, GameEngineCollision* _right)
+{
+	
+	return _left->GetCollisionPos() == _right->GetCollisionPos();
+}
+
 bool GameEngineCollision::PointToRect(GameEngineCollision* _left, GameEngineCollision* _right)
 {
 	return RectToPoint(_right, _left);
@@ -126,11 +133,6 @@ bool GameEngineCollision::collisionCheckCircleToCircle(GameEngineCollision* lhs,
 	float distance = lhs->GetCollisionPoint().DistanceTo(rhs->GetCollisionPoint());
 
 	return 0 >= (distance - lhs->radius_ - rhs->radius_);
-}
-
-bool GameEngineCollision::collisionCheckRectToRect(GameEngineCollision* lhs, GameEngineCollision* rhs)
-{
-	return false;
 }
 
 bool GameEngineCollision::collisionCheckPointToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs)
@@ -149,30 +151,30 @@ bool GameEngineCollision::collisionCheckCircleToPoint(GameEngineCollision* lhs, 
 
 bool GameEngineCollision::collisionCheckRectToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs)
 {
-	FRect rect = lhs->rect_;
-	rect.left -= rhs->radius_;
-	rect.top -= rhs->radius_;
-	rect.right += rhs->radius_;
-	rect.bottom += rhs->radius_;
+	//float4 RectSize;
+	float4 RectPos = lhs->GetCollisionPos() + lhs->Pivot_;
+	float4 point = rhs->GetCollisionPos()+ rhs->Pivot_;
+	lhs->rect_.left = RectPos.x - rhs->size_.x / 2;
+	lhs->rect_.top = RectPos.y - rhs->size_.x / 2;
+	lhs->rect_.right = RectPos.x + lhs->size_.x + rhs->size_.x / 2;;
+	lhs->rect_.bottom = RectPos.y + lhs->size_.y + rhs->size_.x / 2;;
 
-	float4 point = rhs->GetCollisionPoint();
-
-	if (point.x < rect.left)
+	if (point.x < lhs->rect_.left)
 	{
 		return false;
 	}
 
-	if (point.x > rect.right)
+	if (point.x > lhs->rect_.right)
 	{
 		return false;
 	}
 
-	if (point.y < rect.top)
+	if (point.y < lhs->rect_.top)
 	{
 		return false;
 	}
 
-	if (point.y > rect.bottom)
+	if (point.y > lhs->rect_.bottom)
 	{
 		return false;
 	}

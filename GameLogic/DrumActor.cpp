@@ -4,6 +4,7 @@
 #include <GameEngineCollision.h>
 #include <GameEngineTime.h>
 #include <GameEngineInput.h>
+#include <GameEngineDebugExtension.h>
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
@@ -182,7 +183,6 @@ void DrumActor::DrumExplode()
 		}
 
 	}
-
 
 	//for (int i = 0; i < count; ++i)
 	//{

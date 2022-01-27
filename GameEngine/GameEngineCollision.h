@@ -24,17 +24,17 @@ public:
 	static bool PointToImage(GameEngineCollision* _PointCol, GameEngineCollision* _ImageCol);
 	static bool ImageToPoint(GameEngineCollision* _ImageCol, GameEngineCollision* _PointCol);
 
-	static bool RectToRect(GameEngineCollision* _left, GameEngineCollision* _right);
-
 	static bool RectToPoint(GameEngineCollision* _left, GameEngineCollision* _right);
-	static bool PointToRect(GameEngineCollision* _left, GameEngineCollision* _right);
-
-	static bool collisionCheckCircleToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
-	static bool collisionCheckRectToRect(GameEngineCollision* lhs, GameEngineCollision* rhs);
-	static bool collisionCheckPointToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
-	static bool collisionCheckCircleToPoint(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool RectToRect(GameEngineCollision* _left, GameEngineCollision* _right);
 	static bool collisionCheckRectToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
+
+	static bool PointToPoint(GameEngineCollision* _left, GameEngineCollision* _right);
+	static bool PointToRect(GameEngineCollision* _left, GameEngineCollision* _right);
+	static bool collisionCheckPointToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
+
+	static bool collisionCheckCircleToPoint(GameEngineCollision* lhs, GameEngineCollision* rhs);
 	static bool collisionCheckCircleToRect(GameEngineCollision* lhs, GameEngineCollision* rhs);
+	static bool collisionCheckCircleToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs);
 
 public:
 	float4 GetCollisionPoint() const;
