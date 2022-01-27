@@ -2,7 +2,7 @@
 
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
-#include <GameEngineSound.h>
+//#include <GameEngineSound.h>
 #include <GameEngineSoundPlayer.h>
 
 #include "eCollisionGroup.h"
@@ -30,7 +30,7 @@ void TestActor::Start()
 	bodyCollision_ = CreateCollision(eCollisionGroup::PLAYER, CollisionCheckType::POINT);
 	bodyCollision_->SetColorCheck(RGB(0, 0, 0));
 
-	testSoundPlayer_ = GameEngineSound::GetInst().CreateSoundPlayer();
+	//testSoundPlayer_ = GameEngineSound::GetInst().CreateSoundPlayer();
 
 	state_.CreateState("Idle", &TestActor::startIdle, &TestActor::updateIdle);
 	state_.CreateState("Test", &TestActor::startTest, &TestActor::updateTest);
@@ -75,7 +75,7 @@ StateInfo TestActor::updateIdle(StateInfo _state)
 
 StateInfo TestActor::startTest(StateInfo _state)
 {
-	testSoundPlayer_->PlayAlone("test.mp3");
+	//testSoundPlayer_->PlayAlone("test.mp3");
 	return StateInfo();
 }
 
