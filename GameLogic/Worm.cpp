@@ -25,6 +25,8 @@
 #include "Sheep.h"
 #include "Girder.h"
 #include "SuperSheep.h"
+#include "PlayLevel.h"
+#include "MapTrain.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -54,6 +56,7 @@ Worm::Worm()
 	, hp_(100)
 	, actionToken_(0)
 	, bulletFocusActor_(nullptr)
+	, blowTorchMoveTime_(3.f)
 {
 
 }
@@ -168,6 +171,13 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("GirderOffLeft", "girderOffLeft.bmp", 0, 14, false, 0.033f);
 	mainRender_->CreateAnimation("GirderOffRight", "girderOffRight.bmp", 0, 14, false, 0.033f);
 
+	mainRender_->CreateAnimation("BlowtorchOnLeft", "blowtorchOnLeft.bmp", 0, 14, false, 0.033f); // 토치 애니메이션입니다.
+	mainRender_->CreateAnimation("BlowtorchOnRight", "blowtorchOnRight.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("BlowtorchOffLeft", "blowtorchOffLeft.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("BlowtorchOffRight", "blowtorchOffRight.bmp", 0, 14, false, 0.033f);
+	mainRender_->CreateAnimation("BlowtorchFireLeft", "blowtorchFireLeft.bmp", 0, 14, true, 0.033f);
+	mainRender_->CreateAnimation("BlowtorchFireRight", "blowtorchFireRight.bmp", 0, 14, true, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -276,6 +286,9 @@ void Worm::initState()
 	state_.CreateState("SuperSheepWait", &Worm::startSuperSheepWait, &Worm::updateSuperSheepWait);
 
 	state_.CreateState("GirderOn", &Worm::startGirderOn, &Worm::updateGirderOn);
+
+	state_.CreateState("BlowtorchOn", &Worm::startBlowtorchOn, &Worm::updateBlowtorchOn);
+	state_.CreateState("BlowtorchFire", &Worm::startBlowtorchFire, &Worm::updateBlowtorchFire);
 
 	state_.ChangeState("Idle");
 }
@@ -428,6 +441,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_MOLESQUADRON:
 		break;
 	case eItemList::WEAPON_BLOWTORCH:
+		return "BlowtorchOn";
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
@@ -628,6 +642,14 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_MOLESQUADRON:
 		break;
 	case eItemList::WEAPON_BLOWTORCH:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BlowtorchOnLeft", std::string("blowtorchOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BlowtorchOnRight", std::string("blowtorchOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
@@ -833,6 +855,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_MOLESQUADRON:
 		break;
 	case eItemList::WEAPON_BLOWTORCH:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("BlowtorchOffLeft", std::string("blowtorchOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("BlowtorchOffRight", std::string("blowtorchOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
 		break;
@@ -2199,6 +2229,95 @@ StateInfo Worm::startGirderOn(StateInfo _state)
 
 StateInfo Worm::updateGirderOn(StateInfo _state)
 {
+	return StateInfo();
+}
+
+StateInfo Worm::startBlowtorchOn(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateBlowtorchOn(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Fire"))
+	{
+		return "BlowtorchFire";
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startBlowtorchFire(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("BlowtorchFireLeft", std::string("blowtorchFireLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("BlowtorchFireRight", std::string("blowtorchFireRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateBlowtorchFire(StateInfo _state)
+{
+	addGravity();
+
+	blowTorchMoveTime_ -= deltaTime_;
+
+	PlayLevel* level = (PlayLevel*)GetLevel(); 
+	level->GetMap()->GroundUpdate(float4(pos_.x - 10.f, pos_.y - 13.f), float4(30.f, 30.f));
+
+	if (bLeft_)
+	{
+		level->GetMap()->GroundUpdate(float4(pos_.x - 45.f, pos_.y - 13.f), float4(30.f, 30.f));
+		SetMove(float4::LEFT * 0.5f);
+	}
+	else
+	{
+		level->GetMap()->GroundUpdate(float4(pos_.x + 15.f, pos_.y - 13.f), float4(30.f, 30.f));
+		SetMove(float4::RIGHT * 0.5f);
+	}
+
+	if (blowTorchMoveTime_ <= 0.f)
+	{
+		blowTorchMoveTime_ = 3.0f;
+		setAnimationWeaponOff();
+		return "Idle";
+	}
+
+	normalMove();
+
 	return StateInfo();
 }
 

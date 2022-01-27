@@ -151,6 +151,11 @@ private:
 	StateInfo startGirderOn(StateInfo _state);
 	StateInfo updateGirderOn(StateInfo _state);
 
+	StateInfo startBlowtorchOn(StateInfo _state);
+	StateInfo updateBlowtorchOn(StateInfo _state);
+	StateInfo startBlowtorchFire(StateInfo _state);
+	StateInfo updateBlowtorchFire(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
@@ -186,7 +191,7 @@ private:
 	float aimRotation_;
 	float currentRotation_;
 	float firePower_;
-
+	float blowTorchMoveTime_;
 
 	int hp_;
 	int actionToken_;

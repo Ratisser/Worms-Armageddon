@@ -47,7 +47,7 @@ public:
 	virtual void Render() override;
 
 public:
-	void GroundUpdate(float4 pos);
+	void GroundUpdate(float4 pos, float4 size);
 	void GroundUpdate13(float4 pos);
 	void GroundUpdate25(float4 pos);
 	void GroundUpdate50(float4 pos);

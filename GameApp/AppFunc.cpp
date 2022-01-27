@@ -640,6 +640,13 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "girderOffRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "girderOnLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "girderOnRight.bmp", cutSize);
+	// 토치 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "blowtorchOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "blowtorchOnRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "blowtorchOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "blowtorchOffRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "blowtorchFireLeft.bmp", float4(80.f, 80.f));
+	RS::LoadImageFromFileAndCut(dir / "blowtorchFireRight.bmp", float4(80.f, 80.f));
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

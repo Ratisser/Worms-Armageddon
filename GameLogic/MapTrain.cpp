@@ -128,12 +128,12 @@ void MapTrain::Render()
 	mainSpriteRender_->Render();
 }
 
-void MapTrain::GroundUpdate(float4 pos)
+void MapTrain::GroundUpdate(float4 pos, float4 size)
 {
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender_->GetImage(),
 		pos,
-		{ 100.f, 100.f },
+		size,
 		{ 0.f, 0.f },
 		{ 100.f, 100.f },
 		RGB(0, 255, 0));
@@ -141,7 +141,7 @@ void MapTrain::GroundUpdate(float4 pos)
 	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
 	mapImage->TransCopy(boomEdgeSpriteRender_->GetImage(),
 		pos,
-		{ 100.f, 100.f },
+		size,
 		{ 0.f, 0.f },
 		{ 100.f, 100.f },
 		RGB(0, 255, 0));

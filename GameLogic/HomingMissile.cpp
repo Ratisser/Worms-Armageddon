@@ -117,7 +117,7 @@ void HomingMissile::Update()
 				rotAngle_ += 90.f;
 			}
 
-			SetMove(targetPos_ * 4.f);
+			SetMove(targetPos_ * 6.f);
 
 			float4 moveVector = pos_ - prevPos_;
 			float normalize = sqrtf(moveVector.x * moveVector.x + moveVector.y * moveVector.y);
