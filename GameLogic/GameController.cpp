@@ -238,7 +238,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 void GameController::CreateWormUI()
 {
 	size_t wormcnt = wormList_.size();
-	for (size_t i = 0; i < wormcnt; ++i)
+	for (int i = 0; i < wormcnt; ++i)
 	{
 		std::string Name = wormList_[i]->GetName();
 		Name += "_UI";
