@@ -4,6 +4,7 @@
 // 용도 : 
 // 설명 : 
 class Worm;
+class UIController;
 class BottomFlag : public GameEngineActor
 {
 private:	// member Var
@@ -11,6 +12,7 @@ private:	// member Var
 
 private:
 	Worm* parentWorm_;
+	UIController* parentUI_;
 
 public:
 	BottomFlag(); // default constructer 디폴트 생성자
@@ -30,5 +32,9 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	void NationInit(int _wormNumber);
+	void StartPosInit(int _wormNumber);
 };
 

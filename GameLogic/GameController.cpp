@@ -15,6 +15,7 @@
 #include "BottomHealthBar.h"
 #include "BottomFlag.h"
 #include "BottomNameTag.h"
+#include "WormName.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -215,7 +216,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 		if (wormXPosContainer_ >= *startIter - 25.0f && wormXPosContainer_ <= *startIter + 25.0f) // 
 		{
 			wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
-			startIter--;
+			startIter = xPosList_.begin();
 			continue;
 		}
 	}
@@ -224,8 +225,11 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
 	newArrow->SetParent(newWorm);
 
+
 	newWorm->SetPos({ wormXPosContainer_ , -500.0f });
 	newWorm->SetFocus(false);
+
+
 	wormList_.push_back(newWorm);
 	xPosList_.push_back(wormXPosContainer_);
 	wormList_[0]->SetFocus(true);
@@ -251,8 +255,15 @@ void GameController::CreateWormUI()
 		SheetName += "_WeaponSheet";
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->NameInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->StartPosInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->NationInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->StartPosInit(i);
+		
+		wormList_[i]->GetCurUIController()->GetCurWormName()->NameInit(i);
+		wormList_[i]->GetCurUIController()->GetCurWormName()->SetParentWorm(wormList_[i]);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;

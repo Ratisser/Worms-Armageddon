@@ -11,6 +11,7 @@ class BottomNameTag;
 class BottomFlag;
 class BottomHealthBar;
 class Weapon;
+class WormName;
 class UIController : public GameEngineActor
 {
 private:	// member Var
@@ -23,6 +24,9 @@ private:	// 관리하는 모든 UI
 	BottomNameTag* bottomNameTag_;
 	BottomFlag* bottomFlag_;
 	BottomHealthBar* bottomHealthBar_;
+
+	//
+	WormName* curWormName_;
 
 
 public:
@@ -48,9 +52,11 @@ public: // 플레이어가 기믹오브젝트 획득 또는 아이템사용시 설정해야하는 항목
 public:
 	Worm* GetCurPlayer() const;
 	WeaponSheet* GetCurWeaponSheet() const;
-	//BottomNameTag* GetCurBottomNameTag() const;
-	//BottomFlag* GetCurBottomFlag() const;
+	BottomNameTag* GetCurBottomNameTag() const;
+	BottomFlag* GetCurBottomFlag() const;
 	BottomHealthBar* GetCurBottomHealthBar();
+
+	WormName* GetCurWormName();
 
 
 public:

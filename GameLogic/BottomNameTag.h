@@ -3,6 +3,7 @@
 // 분류 : 
 // 용도 : 
 // 설명 : 
+class UIController;
 class Worm;
 class BottomNameTag : public GameEngineActor
 {
@@ -11,6 +12,7 @@ private:	// member Var
 	
 private:
 	Worm* parentWorm_;
+	UIController* parentUI_;
 
 public:
 	BottomNameTag(); // default constructer 디폴트 생성자
@@ -30,5 +32,9 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	void NameInit(int _wormNumber);
+	void StartPosInit(int _wormNumber);
 };
 

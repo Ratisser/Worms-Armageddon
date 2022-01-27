@@ -25,7 +25,7 @@ Sheep::Sheep()
 	, deltaTime_(0.0f)
 	, parentWorm_(nullptr)
 	, explosionDelay_(0.0f)
-	, player_("fire.wav")
+	, player_("fire.wav") // 객체화된 사운드 변수는 무조건 사운드 파일 하나로 초기화되어야 합니다.
 {
 }
 
@@ -166,7 +166,15 @@ void Sheep::normalMove()
 StateInfo Sheep::startIdle(StateInfo _state)
 {
 	//GameEngineSoundManager::GetInstance().PlaySoundByName("fire.wav");
+	// 위가 사운드 플레이어 객체화 없이 인스턴트로 사운드 재생할 수 있는 코드입니다.
+
+	
 	player_.Play();
+	// 일회성 재생함수
+
+	//player_.ChangeSound("사운드");
+	// 재생할 사운드 리소스 교체
+	
 	return StateInfo();
 }
 

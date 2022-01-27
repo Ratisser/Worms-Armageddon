@@ -32,7 +32,7 @@ void WormArrow::Update()
 {
 	if (true == parent_->isFocused())
 	{
-		SetPos({ parent_->GetPos().x, (parent_->GetPos().y - 50.0f) });
+		SetPos({ parent_->GetPos().x, (parent_->GetPos().y - 100.0f) });
 		SetRenderOrder(static_cast<int>(RenderOrder::Worm));
 	}
 

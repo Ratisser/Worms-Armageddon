@@ -127,6 +127,9 @@
     <Filter Include="Actor\LobbyLevel\UI\Team">
       <UniqueIdentifier>{de6d81b7-2236-40e1-92b4-cef27ff88aaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\UI\HUD\Wind">
+      <UniqueIdentifier>{94607dea-9917-44ef-86f6-e24e98e09751}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -255,9 +258,6 @@
     <ClInclude Include="Cloud.h">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
-    <ClInclude Include="WindBarHider.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="BottomFlag.h">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
@@ -265,12 +265,6 @@
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
     <ClInclude Include="BottomNameTag.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="WindBar.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="WindBarBlank.h">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
     <ClInclude Include="WormArrow.h">
@@ -365,6 +359,18 @@
     </ClInclude>
     <ClInclude Include="LobbySelectablePlayer.h">
       <Filter>Actor\LobbyLevel\UI\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBar.h">
+      <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBarBlank.h">
+      <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBarHider.h">
+      <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="WormName.h">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,15 +500,6 @@
     <ClCompile Include="BottomNameTag.cpp">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="WindBar.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="WindBarBlank.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="WindBarHider.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
     <ClCompile Include="WormArrow.cpp">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClCompile>
@@ -595,6 +592,18 @@
     </ClCompile>
     <ClCompile Include="LobbySelectablePlayer.cpp">
       <Filter>Actor\LobbyLevel\UI\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBar.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarBlank.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBarHider.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
+    </ClCompile>
+    <ClCompile Include="WormName.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

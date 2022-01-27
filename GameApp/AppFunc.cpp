@@ -236,13 +236,32 @@ void ResourceInitPJW()
 	}
 	//GameEngineImage::GetInst().LoadGameImage("HPbar", Dir.PathToPlusFileName("HPbar.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomNameTag", Dir.PathToPlusFileName("BottomNameTag.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomNameTag2", Dir.PathToPlusFileName("BottomNameTag2.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomNameTag3", Dir.PathToPlusFileName("BottomNameTag3.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomNameTag4", Dir.PathToPlusFileName("BottomNameTag4.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomNameTag5", Dir.PathToPlusFileName("BottomNameTag5.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomNameTag6", Dir.PathToPlusFileName("BottomNameTag6.bmp"));
+
 	GameEngineImage::GetInst().LoadGameImage("BottomFlagRUS", Dir.PathToPlusFileName("BottomFlagRUS.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomFlagKOR", Dir.PathToPlusFileName("BottomFlagKOR.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomFlagUSA", Dir.PathToPlusFileName("BottomFlagUSA.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomFlagJPN", Dir.PathToPlusFileName("BottomFlagJPN.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomFlagGER", Dir.PathToPlusFileName("BottomFlagGER.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("BottomFlagBRA", Dir.PathToPlusFileName("BottomFlagBRA.bmp"));
+	
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarR", Dir.PathToPlusFileName("BottomHPbarR.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarG", Dir.PathToPlusFileName("BottomHPbarG.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarB", Dir.PathToPlusFileName("BottomHPbarB.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarY", Dir.PathToPlusFileName("BottomHPbarY.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarP", Dir.PathToPlusFileName("BottomHPbarP.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("BottomHPbarS", Dir.PathToPlusFileName("BottomHPbarS.bmp"));
+
+	GameEngineImage::GetInst().LoadGameImage("WormName1", Dir.PathToPlusFileName("WormName1.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("WormName2", Dir.PathToPlusFileName("WormName2.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("WormName3", Dir.PathToPlusFileName("WormName3.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("WormName4", Dir.PathToPlusFileName("WormName4.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("WormName5", Dir.PathToPlusFileName("WormName5.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("WormName6", Dir.PathToPlusFileName("WormName6.bmp"));
 }
 
 void UIImageInit()
@@ -683,7 +702,7 @@ void SoundLoad()
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Sound");
 
-	RS::LoadSoundFromFile(dir / "fire.wav");
+	RS::LoadSoundFromFile(dir / "fire.wav"); // 사운드 파일 로드
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)

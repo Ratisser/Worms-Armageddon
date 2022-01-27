@@ -2,7 +2,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
-#include <GameEngineSoundPlayer.h>
+#include <GameEngineSoundPlayer.h> 
 
 class GameEngineCollision;
 class GameEngineRenderer;
@@ -68,5 +68,9 @@ private:
 	bool bGround_;
 
 	GameEngineSoundPlayer player_;
+	// 사운드 플레이어 해당 클래스에 멤버 변수로 추가
+	// (추가 없이도 인스턴트로 사용할 수는 있긴 합니다)
+	// 포인터 자료형이 아닌 일반형 자료형을 사용해 주세요(포인터형 사용 시에는 꼭 릭을 제거해 주세요)
+
 };
 

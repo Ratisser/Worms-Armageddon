@@ -44,3 +44,72 @@ void BottomFlag::Render()
 {
 	mainRender_->Render();
 }
+
+
+void BottomFlag::NationInit(int _wormNumber)
+{
+	switch (_wormNumber)
+	{
+	case 0:
+		mainRender_ = CreateRenderer("BottomFlagRUS");
+		break;
+	case 1:
+		mainRender_ = CreateRenderer("BottomFlagBRA");
+		break;
+	case 2:
+		mainRender_ = CreateRenderer("BottomFlagKOR");
+		break;
+	case 3:
+		mainRender_ = CreateRenderer("BottomFlagUSA");
+		break;
+	case 4:
+		mainRender_ = CreateRenderer("BottomFlagGER");
+		break;
+	case 5:
+		mainRender_ = CreateRenderer("BottomFlagJPN");
+		break;
+	case 6:
+		mainRender_ = CreateRenderer("BottomFlagRUS");
+		break;
+	case 7:
+		mainRender_ = CreateRenderer("BottomFlagRUS");
+		break;
+	default:
+		mainRender_ = CreateRenderer("BottomFlagRUS");
+		break;
+	}
+}
+void BottomFlag::StartPosInit(int _wormNumber)
+{
+	switch (_wormNumber)
+	{
+	case 0:
+		SetPos({ 605, 580 });
+		break;
+	case 1:
+		SetPos({ 605, 600 });
+		break;
+	case 2:
+		SetPos({ 605, 620 });
+		break;
+	case 3:
+		SetPos({ 605, 640 });
+		break;
+	case 4:
+		SetPos({ 605, 660 });
+		break;
+	case 5:
+		SetPos({ 605, 680 });
+		break;
+	case 6:
+		SetPos({ 605, 700 });
+		break;
+	case 7:
+		SetPos({ 605, 720 });
+		break;
+	default:
+		SetPos({ 0, 0 });
+		break;
+	}
+	mainRender_->SetCameraEffectOff();
+}

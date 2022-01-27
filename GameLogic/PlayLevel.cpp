@@ -91,13 +91,6 @@ void PlayLevel::Loading()
 	Train_->UpdateBefore();
 
 	{
-		// 플레이화면 하단 체력바
-		//BottomNameTag* p1NameTag = CreateActor<BottomNameTag>();
-		//p1NameTag->SetPos({ 555, 700 });
-		//BottomFlag* p1Flag = CreateActor<BottomFlag>();
-		//p1Flag->SetPos({ 610, 700 });
-		//BottomHealthBar* p1Health = CreateActor<BottomHealthBar>();
-		//p1Health->SetPos({ 672, 700 });
 		windController_ = CreateActor<WindController>();
 	}
 

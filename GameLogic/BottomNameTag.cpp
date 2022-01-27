@@ -42,3 +42,71 @@ void BottomNameTag::Render()
 {
 	mainRender_->Render();
 }
+
+void BottomNameTag::NameInit(int _wormNumber)
+{
+	switch (_wormNumber)
+	{
+	case 0:
+		mainRender_ = CreateRenderer("BottomNameTag");
+		break;
+	case 1:
+		mainRender_ = CreateRenderer("BottomNameTag2");
+		break;
+	case 2:
+		mainRender_ = CreateRenderer("BottomNameTag3");
+		break;
+	case 3:
+		mainRender_ = CreateRenderer("BottomNameTag4");
+		break;
+	case 4:
+		mainRender_ = CreateRenderer("BottomNameTag5");
+		break;
+	case 5:
+		mainRender_ = CreateRenderer("BottomNameTag6");
+		break;
+	case 6:
+		mainRender_ = CreateRenderer("BottomNameTag");
+		break;
+	case 7:
+		mainRender_ = CreateRenderer("BottomNameTag");
+		break;
+	default:
+		mainRender_ = CreateRenderer("BottomNameTag");
+		break;
+	}
+}
+void BottomNameTag::StartPosInit(int _wormNumber)
+{
+	switch (_wormNumber)
+	{
+	case 0:
+		SetPos({ 572, 580 });
+		break;
+	case 1:
+		SetPos({ 572, 600 });
+		break;
+	case 2:
+		SetPos({ 572, 620 });
+		break;
+	case 3:
+		SetPos({ 572, 640 });
+		break;
+	case 4:
+		SetPos({ 572, 660 });
+		break;
+	case 5:
+		SetPos({ 572, 680 });
+		break;
+	case 6:
+		SetPos({ 572, 700 });
+		break;
+	case 7:
+		SetPos({ 572, 720 });
+		break;
+	default:
+		SetPos({ 0, 0 });
+		break;
+	}
+	mainRender_->SetCameraEffectOff();
+}

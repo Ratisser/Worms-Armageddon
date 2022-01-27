@@ -5,6 +5,7 @@
 #include "BottomNameTag.h"
 #include "BottomFlag.h"
 #include "BottomHealthBar.h"
+#include  "WormName.h"
 
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
@@ -72,6 +73,21 @@ BottomHealthBar* UIController::GetCurBottomHealthBar()
 	return bottomHealthBar_;
 }
 
+BottomNameTag* UIController::GetCurBottomNameTag() const
+{
+	return bottomNameTag_;
+}
+
+BottomFlag* UIController::GetCurBottomFlag() const
+{
+	return bottomFlag_;
+}
+
+WormName* UIController::GetCurWormName()
+{
+	return curWormName_;
+}
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -83,9 +99,10 @@ void UIController::Start()
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
 	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정														// 해당 WeaponSheet를 생성한 UIController 저장
 
-	//bottomNameTag_ = GetLevel()->CreateActor<BottomNameTag>();
-	//bottomFlag_ = GetLevel()->CreateActor<BottomFlag>();
+	bottomNameTag_ = GetLevel()->CreateActor<BottomNameTag>();
+	bottomFlag_ = GetLevel()->CreateActor<BottomFlag>();
 	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
+	curWormName_ = GetLevel()->CreateActor<WormName>();
 }
 
 void UIController::UpdateBefore()
