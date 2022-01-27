@@ -26,7 +26,7 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, cameraPos_(0.f, 0.f)
 	, state_(this)
 	, currentTurnTime_(0.0f)
-	, randomFloatContainer_(0.0f)
+	, wormXPosContainer_(0.0f)
 {
 
 }
@@ -206,25 +206,28 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	std::string name = "Worm";
 	name += std::to_string(currentIndex_++);
 	Worm* newWorm = parentLevel_->CreateActor<Worm>(name);
-	randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX); // 전에 생성한 좌표를 저장
+	wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX); // 전에 생성한 좌표를 멤버변수에 저장
 
 	std::vector<float>::iterator startIter = xPosList_.begin();
 	std::vector<float>::iterator endIter = xPosList_.end();
 	for (; startIter != endIter; startIter++)
 	{
-		if (randomFloatContainer_ >= *startIter - 50.0f && randomFloatContainer_ <= *startIter + 50.0f)
+		if (wormXPosContainer_ >= *startIter - 25.0f && wormXPosContainer_ <= *startIter + 25.0f) // 
 		{
-			randomFloatContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
+			wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
+			startIter--;
+			continue;
 		}
 	}
+
 
 	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
 	newArrow->SetParent(newWorm);
 
-	newWorm->SetPos({ randomFloatContainer_ , -500.0f });
+	newWorm->SetPos({ wormXPosContainer_ , -500.0f });
 	newWorm->SetFocus(false);
 	wormList_.push_back(newWorm);
-	xPosList_.push_back(randomFloatContainer_);
+	xPosList_.push_back(wormXPosContainer_);
 	wormList_[0]->SetFocus(true);
 }
 

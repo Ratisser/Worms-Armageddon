@@ -76,7 +76,7 @@ private:
 	int prevwormIndex_;
 	bool IsCameraMove_;
 	float4 cameraPos_;
-	float randomFloatContainer_;
+	float wormXPosContainer_;
 
 	float currentTurnTime_;
 
