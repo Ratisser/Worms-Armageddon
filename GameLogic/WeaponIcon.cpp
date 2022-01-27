@@ -19,7 +19,7 @@ WeaponIcon::WeaponIcon() :
 	activetargetpos_(float4::ZERO),
 	disabletargetpos_(float4::ZERO),
 	moving_(false),
-	movingspeed(0.9f),
+	movingspeed(2.f),
 	movepos_(float4::ZERO),
 	mainrenderer_(nullptr),
 	selectrenderer_(nullptr),
