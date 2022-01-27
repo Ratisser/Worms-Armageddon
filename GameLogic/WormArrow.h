@@ -13,6 +13,7 @@ private:	// member Var
 	GameController* controller_;
 
 	bool isGoingUp_;
+	bool isWormLinked_;
 
 public:
 	WormArrow(); // default constructer 디폴트 생성자
@@ -26,11 +27,6 @@ private:		//delete operator
 	WormArrow& operator=(const WormArrow& _other) = delete; // default Copy operator 디폴트 대입 연산자
 	WormArrow& operator=(const WormArrow&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
-public:
-	void SetParent(Worm* _parent)
-	{
-		parent_ = _parent;
-	}
 
 public:
 	virtual void Start() override;
@@ -38,5 +34,13 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	void ColorInit(int _wormNumber);
+	void SetParentWorm(Worm* _worm)
+	{
+		parent_ = _worm;
+		isWormLinked_ = true;
+	}
 };
 

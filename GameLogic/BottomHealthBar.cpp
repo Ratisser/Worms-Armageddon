@@ -51,10 +51,10 @@ void BottomHealthBar::RenderColorInit(int _wormNumber) // 웜의 번호를 받아 체력�
 		mainRender_ = CreateRenderer("BottomHPbarR");
 		break;
 	case 1:
-		mainRender_ = CreateRenderer("BottomHPbarG");
+		mainRender_ = CreateRenderer("BottomHPbarB");
 		break;
 	case 2:
-		mainRender_ = CreateRenderer("BottomHPbarB");
+		mainRender_ = CreateRenderer("BottomHPbarG");
 		break;
 	case 3:
 		mainRender_ = CreateRenderer("BottomHPbarY");

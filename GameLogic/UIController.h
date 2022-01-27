@@ -12,6 +12,7 @@ class BottomFlag;
 class BottomHealthBar;
 class Weapon;
 class WormName;
+class WormArrow;
 class UIController : public GameEngineActor
 {
 private:	// member Var
@@ -27,7 +28,7 @@ private:	// 관리하는 모든 UI
 
 	//
 	WormName* curWormName_;
-
+	WormArrow* curWormArrow_;
 
 public:
 	UIController(); // default constructer 디폴트 생성자
@@ -57,6 +58,7 @@ public:
 	BottomHealthBar* GetCurBottomHealthBar();
 
 	WormName* GetCurWormName();
+	WormArrow* GetCurWormArrow();
 
 
 public:

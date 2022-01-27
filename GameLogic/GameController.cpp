@@ -255,15 +255,18 @@ void GameController::CreateWormUI()
 		SheetName += "_WeaponSheet";
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(i);
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(i);
-		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->NameInit(i);
-		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->StartPosInit(i);
-		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->NationInit(i);
-		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->StartPosInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->NameInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->StartPosInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->NationInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->StartPosInit(static_cast<int>(i));
 		
-		wormList_[i]->GetCurUIController()->GetCurWormName()->NameInit(i);
+		wormList_[i]->GetCurUIController()->GetCurWormName()->NameInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormName()->SetParentWorm(wormList_[i]);
+
+		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;

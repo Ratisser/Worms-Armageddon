@@ -6,7 +6,7 @@
 #include "BottomFlag.h"
 #include "BottomHealthBar.h"
 #include  "WormName.h"
-
+#include  "WormArrow.h"
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
 #include <GameEngineLevel.h>
@@ -88,6 +88,11 @@ WormName* UIController::GetCurWormName()
 	return curWormName_;
 }
 
+WormArrow* UIController::GetCurWormArrow()
+{
+	return curWormArrow_;
+}
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -103,6 +108,7 @@ void UIController::Start()
 	bottomFlag_ = GetLevel()->CreateActor<BottomFlag>();
 	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
 	curWormName_ = GetLevel()->CreateActor<WormName>();
+	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
 }
 
 void UIController::UpdateBefore()

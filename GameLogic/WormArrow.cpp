@@ -20,9 +20,6 @@ WormArrow::WormArrow(WormArrow&& _other) noexcept  // default RValue Copy constr
 
 void WormArrow::Start()
 {
-	mainRender_ = CreateRenderer("arrowdnp");
-	mainRender_->CreateAnimation("arrowdnp", "arrowdnp", 0, 29, true, 0.022f);
-	mainRender_->ChangeAnimation("arrowdnp");
 }
 void WormArrow::UpdateBefore()
 {
@@ -30,15 +27,18 @@ void WormArrow::UpdateBefore()
 }
 void WormArrow::Update()
 {
-	if (true == parent_->isFocused())
+	if (true == isWormLinked_)
 	{
-		SetPos({ parent_->GetPos().x, (parent_->GetPos().y - 100.0f) });
-		SetRenderOrder(static_cast<int>(RenderOrder::Worm));
-	}
+		if (true == parent_->isFocused())
+		{
+			SetPos({ parent_->GetPos().x, (parent_->GetPos().y - 100.0f) });
+			SetRenderOrder(static_cast<int>(RenderOrder::Worm));
+		}
 
-	if (false == parent_->isFocused())
-	{
-		SetMove(float4::UP * 600.0f * GameEngineTime::GetInst().GetDeltaTime());
+		if (false == parent_->isFocused())
+		{
+			SetMove(float4::UP * 600.0f * GameEngineTime::GetInst().GetDeltaTime());
+		}
 	}
 }
 
@@ -52,5 +52,67 @@ void WormArrow::UpdateAfter()
 
 void WormArrow::Render()
 {
-	mainRender_->AnimationUpdate();
+	if (true == isWormLinked_)
+	{
+		mainRender_->AnimationUpdate();
+	}
+
+
+}
+
+
+void WormArrow::ColorInit(int _wormNumber)
+{
+	switch (_wormNumber)
+	{
+	case 0:
+
+		mainRender_ = CreateRenderer("arrowdnr");
+		mainRender_->CreateAnimation("arrowdnr", "arrowdnr", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnr");
+		break;
+	case 1:
+		mainRender_ = CreateRenderer("arrowdnb");
+		mainRender_->CreateAnimation("arrowdnb", "arrowdnb", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnb");
+		break;
+	case 2:
+		mainRender_ = CreateRenderer("arrowdng");
+		mainRender_->CreateAnimation("arrowdng", "arrowdng", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdng");
+		break;
+	case 3:
+		mainRender_ = CreateRenderer("arrowdny");
+		mainRender_->CreateAnimation("arrowdny", "arrowdny", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdny");
+		break;
+	case 4:
+		mainRender_ = CreateRenderer("arrowdnp");
+		mainRender_->CreateAnimation("arrowdnp", "arrowdnp", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnp");
+		break;
+	case 5:
+		mainRender_ = CreateRenderer("arrowdnc");
+		mainRender_->CreateAnimation("arrowdnc", "arrowdnc", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnc");
+		break;
+	case 6:
+
+		mainRender_ = CreateRenderer("arrowdnr");
+		mainRender_->CreateAnimation("arrowdnr", "arrowdnr", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnr");
+		break;
+	case 7:
+
+		mainRender_ = CreateRenderer("arrowdnr");
+		mainRender_->CreateAnimation("arrowdnr", "arrowdnr", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnr");
+		break;
+	default:
+
+		mainRender_ = CreateRenderer("arrowdnr");
+		mainRender_->CreateAnimation("arrowdnr", "arrowdnr", 0, 29, true, 0.022f);
+		mainRender_->ChangeAnimation("arrowdnr");
+		break;
+	}
 }
