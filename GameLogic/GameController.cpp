@@ -251,8 +251,8 @@ void GameController::CreateWormUI()
 		SheetName += "_WeaponSheet";
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(i);
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(i);
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(static_cast<int>(i));
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
