@@ -57,6 +57,7 @@ Worm::Worm()
 	, actionToken_(0)
 	, bulletFocusActor_(nullptr)
 	, blowTorchMoveTime_(3.f)
+	, drillMoveTime_(0.f)
 {
 
 }
@@ -178,6 +179,13 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("BlowtorchFireLeft", "blowtorchFireLeft.bmp", 0, 14, true, 0.033f);
 	mainRender_->CreateAnimation("BlowtorchFireRight", "blowtorchFireRight.bmp", 0, 14, true, 0.033f);
 
+	mainRender_->CreateAnimation("DrillLeft", "drillLeft.bmp", 0, 3, true, 0.033f); // 드릴 애니메이션입니다.
+	mainRender_->CreateAnimation("DrillRight", "drillRight.bmp", 0, 3, true, 0.033f);
+	mainRender_->CreateAnimation("DrillOnLeft", "drillOnLeft.bmp", 0, 12, false, 0.033f);
+	mainRender_->CreateAnimation("DrillOnRight", "drillOnRight.bmp", 0, 12, false, 0.033f);
+	mainRender_->CreateAnimation("DrillOffLeft", "drillOffLeft.bmp", 0, 12, false, 0.033f);
+	mainRender_->CreateAnimation("DrillOffRight", "drillOffRight.bmp", 0, 12, false, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -289,6 +297,9 @@ void Worm::initState()
 
 	state_.CreateState("BlowtorchOn", &Worm::startBlowtorchOn, &Worm::updateBlowtorchOn);
 	state_.CreateState("BlowtorchFire", &Worm::startBlowtorchFire, &Worm::updateBlowtorchFire);
+
+	state_.CreateState("DrillOn", &Worm::startDrillOn, &Worm::updateDrillOn);
+	state_.CreateState("DrillFire", &Worm::startDrillFire, &Worm::updateDrillFire);
 
 	state_.ChangeState("Idle");
 }
@@ -444,6 +455,7 @@ std::string Worm::getWeaponAimState()
 		return "BlowtorchOn";
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
+		return "DrillOn";
 		break;
 	case eItemList::WEAPON_GIRDER:
 		return "GirderOn";
@@ -652,6 +664,14 @@ void Worm::setAnimationWeaponOn()
 		}
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("DrillOnLeft", std::string("drillOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("DrillOnRight", std::string("drillOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_GIRDER:
 		if (bLeft_)
@@ -865,6 +885,14 @@ void Worm::setAnimationWeaponOff()
 		}
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("DrillOffLeft", std::string("drillOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("DrillOffRight", std::string("drillOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_GIRDER:
 		if (bLeft_)
@@ -2296,7 +2324,7 @@ StateInfo Worm::updateBlowtorchFire(StateInfo _state)
 	blowTorchMoveTime_ -= deltaTime_;
 
 	PlayLevel* level = (PlayLevel*)GetLevel(); 
-	level->GetMap()->GroundUpdate(float4(pos_.x - 10.f, pos_.y - 13.f), float4(30.f, 30.f));
+	level->GetMap()->GroundUpdate(float4(pos_.x - 15.f, pos_.y - 13.f), float4(30.f, 30.f));
 
 	if (bLeft_)
 	{
@@ -2307,6 +2335,91 @@ StateInfo Worm::updateBlowtorchFire(StateInfo _state)
 	{
 		level->GetMap()->GroundUpdate(float4(pos_.x + 15.f, pos_.y - 13.f), float4(30.f, 30.f));
 		SetMove(float4::RIGHT * 0.5f);
+	}
+
+	if (blowTorchMoveTime_ <= 0.f)
+	{
+		blowTorchMoveTime_ = 3.0f;
+		setAnimationWeaponOff();
+		return "Idle";
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startDrillOn(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateDrillOn(StateInfo _state)
+{
+	addGravity();
+
+	if (false == bFocus_)
+	{
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Fire"))
+	{
+		return "DrillFire";
+	}
+
+	normalMove();
+
+	return StateInfo();
+}
+
+StateInfo Worm::startDrillFire(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("DrillLeft", std::string("drillLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("DrillRight", std::string("drillRight.bmp"));
+	}
+	return StateInfo();
+}
+
+StateInfo Worm::updateDrillFire(StateInfo _state)
+{
+	addGravity();
+
+	blowTorchMoveTime_ -= deltaTime_;
+
+	PlayLevel* level = (PlayLevel*)GetLevel();
+
+	drillMoveTime_ -= deltaTime_;
+
+	if (drillMoveTime_ <= 0.f)
+	{
+		level->GetMap()->GroundUpdate(float4(pos_.x - 15.f, pos_.y - 4.f), float4(30.f, 30.f));
+		drillMoveTime_ = 0.3f;
 	}
 
 	if (blowTorchMoveTime_ <= 0.f)

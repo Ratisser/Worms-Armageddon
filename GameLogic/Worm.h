@@ -156,6 +156,11 @@ private:
 	StateInfo startBlowtorchFire(StateInfo _state);
 	StateInfo updateBlowtorchFire(StateInfo _state);
 
+	StateInfo startDrillOn(StateInfo _state);
+	StateInfo updateDrillOn(StateInfo _state);
+	StateInfo startDrillFire(StateInfo _state);
+	StateInfo updateDrillFire(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
@@ -192,6 +197,7 @@ private:
 	float currentRotation_;
 	float firePower_;
 	float blowTorchMoveTime_;
+	float drillMoveTime_;
 
 	int hp_;
 	int actionToken_;
