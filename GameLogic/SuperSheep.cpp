@@ -4,12 +4,14 @@
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
 #include <GameEngineDebugExtension.h>
+#include <GameEngineSoundManager.h>
 
 #include "PlayLevel.h"
 #include "Worm.h"
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
+
 
 SuperSheep::SuperSheep()
 	: state_(this)
@@ -28,6 +30,7 @@ SuperSheep::SuperSheep()
 	, headPivot_(float4::UP)
 	, direction_(float4::UP)
 	, animDelay_(ANIM_DELAY)
+	, soundWhoosh_("SUPERSHEEPWHOOSH.WAV")
 {
 
 }
@@ -183,6 +186,7 @@ StateInfo SuperSheep::startIdle(StateInfo _state)
 
 StateInfo SuperSheep::updateIdle(StateInfo _state)
 {
+	GameEngineSoundManager::GetInstance().PlaySoundByName("SHEEPBAA.WAV");
 	return "Walk";
 }
 
@@ -214,6 +218,7 @@ StateInfo SuperSheep::updateWalk(StateInfo _state)
 
 	if (jumpDelay_ < 0.0f && bGround_)
 	{
+		GameEngineSoundManager::GetInstance().PlaySoundByName("SHEEPBAA.WAV");
 		jumpDelay_ = JUMP_DELAY;
 		SetMove({ 0.0f, -6.f });
 		speed_.y = -300.f;
@@ -228,6 +233,8 @@ StateInfo SuperSheep::updateWalk(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Explosion"))
 	{
+		GameEngineSoundManager::GetInstance().PlaySoundByName("SUPERSHEEPRELEASE.WAV");
+		soundWhoosh_.Play();
 		return "Fly";
 	}
 
@@ -250,6 +257,12 @@ StateInfo SuperSheep::startFly(StateInfo _state)
 
 StateInfo SuperSheep::updateFly(StateInfo _state)
 {
+	if (soundWhoosh_.GetPositionMillisecond() >= soundWhoosh_.GetLengthMillisecond() - 10)
+	{
+		soundWhoosh_.Play();
+		soundWhoosh_.SetPosition(150);
+	}
+
 	float rotate = direction_.GetDegreeFromNegativeYAxisClockWise();
 	int animIndex = static_cast<int>(rotate / 11.25f) * 2;
 
@@ -287,6 +300,7 @@ StateInfo SuperSheep::updateFly(StateInfo _state)
 
 	if (nullptr != headCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
 	{
+		soundWhoosh_.Stop();
 		return "Explosion";
 	}
 

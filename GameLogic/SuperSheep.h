@@ -2,6 +2,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
+#include <GameEngineSoundPlayer.h>
 
 class GameEngineCollision;
 class GameEngineRenderer;
@@ -36,7 +37,7 @@ private:
 private:
 	const float GRAVITY_POWER = 800.f;
 	const float BOTTOM_PIVOT = 12.f;
-	const float JUMP_DELAY = 1.5f;
+	const float JUMP_DELAY = 1.0f;
 	const float FLY_SPEED = 600.f;
 	const float ANIM_DELAY = 0.05f;
 
@@ -73,4 +74,6 @@ private:
 	float animDelay_;
 	bool bLeft_;
 	bool bGround_;
+
+	GameEngineSoundPlayer soundWhoosh_;
 };

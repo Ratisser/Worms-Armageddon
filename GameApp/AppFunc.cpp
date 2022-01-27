@@ -700,9 +700,11 @@ void SoundLoad()
 {
 	GameEngineDirectroy dir = GameEngineDirectroy();
 	dir.MoveParent("Worms-Armageddon");
-	dir.MoveChild("\\Resources\\Sound");
+	dir.MoveChild("\\Resources\\Sound\\Effects");
 
-	RS::LoadSoundFromFile(dir / "fire.wav"); // 사운드 파일 로드
+	RS::LoadSoundFromFile(dir / "SHEEPBAA.WAV");
+	RS::LoadSoundFromFile(dir / "SUPERSHEEPRELEASE.WAV");
+	RS::LoadSoundFromFile(dir / "SUPERSHEEPWHOOSH.WAV");
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
