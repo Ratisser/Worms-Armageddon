@@ -11,6 +11,8 @@
 #include <GameEngineCollision.h>
 
 LobbySelectablePlayer::LobbySelectablePlayer() :
+	parent_(nullptr),
+	ActiveIndex_(-1),
 	ShowPlayer_(false),
 	Index_(-1),
 	NamePos_(float4::ZERO),
@@ -25,6 +27,8 @@ LobbySelectablePlayer::~LobbySelectablePlayer()
 }
 
 LobbySelectablePlayer::LobbySelectablePlayer(LobbySelectablePlayer&& _other) noexcept :
+	parent_(_other.parent_),
+	ActiveIndex_(_other.ActiveIndex_),
 	ShowPlayer_(_other.ShowPlayer_),
 	Index_(_other.Index_), 
 	NamePos_(_other.NamePos_),
@@ -39,18 +43,6 @@ void LobbySelectablePlayer::Start()
 
 void LobbySelectablePlayer::UpdateBefore()
 {
-	// 마우스와 충돌체크
-	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
-	if (nullptr != ColUI)
-	{
-		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
-		{
-			// 선택된 플레이어 off 상태가되며 LobbyCreateTeam에 현재 선택된 플레이어 이름을 전달
-			//ShowPlayer_ = false; // 임시주석
-
-			LobbyCreateTeam::SelectPlayer(Name_, Index_);
-		}
-	}
 }
 
 void LobbySelectablePlayer::Update()
@@ -59,6 +51,21 @@ void LobbySelectablePlayer::Update()
 
 void LobbySelectablePlayer::UpdateAfter()
 {
+	// 마우스와 충돌체크
+	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
+	if (nullptr != ColUI)
+	{
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
+		{
+			if (true == ShowPlayer_)
+			{
+				// 선택한 플레이어 추가 및 선택당한 플레이어를 선택가능한 플레이어목록에서 Off
+				// 후에 선택가능한 플레이어목록 한칸씩땡기기(즉, 위치조정)
+				// 또한 선택된 플레이어는 충돌체와 렌더러를 모두 Off 시킨다.
+				parent_->SetSelectPlayer(Name_, Index_);
+			}
+		}
+	}
 }
 
 void LobbySelectablePlayer::Render()
@@ -78,6 +85,8 @@ void LobbySelectablePlayer::Render()
 			TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), NamePos_.ix(), NamePos_.iy(), Name_.c_str(), lstrlen(Name_.c_str()));
 		}
 	}
+
+	//maincollision_->DebugRender();
 }
 
 std::string LobbySelectablePlayer::GetPlayerName() const
@@ -90,7 +99,60 @@ int LobbySelectablePlayer::GetIndex() const
 	return Index_;
 }
 
-void LobbySelectablePlayer::SetPlayerInfo(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize)
+int LobbySelectablePlayer::GetActiveIndex() const
+{
+	return ActiveIndex_;
+}
+
+bool LobbySelectablePlayer::GetCurPlayerShow() const
+{
+	return ShowPlayer_;
+}
+
+GameEngineCollision* LobbySelectablePlayer::GetMainCollision() const
+{
+	return maincollision_;
+}
+
+void LobbySelectablePlayer::SetPlayerInfo(LobbyCreateTeam* _Parent, const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize)
+{
+	// 렌더러 위치 지정
+	if (nullptr == mainrenderer_)
+	{
+		return;
+	}
+
+	float4 HarfSize = mainrenderer_->GetImageSize().halffloat4();
+	float4 RenderSize = _RenderSize;
+
+	mainrenderer_->SetPivotPos(float4(HarfSize.x + _RenderPos.x, HarfSize.y + _RenderPos.y));
+
+	// 렌더크기가 정해지지않았다면 렌더러의 이미지 크기로 설정된다.
+	if (RenderSize == float4::ZERO)
+	{
+		RenderSize = mainrenderer_->GetImageSize();
+		mainrenderer_->SetRenderSize(RenderSize);
+	}
+	else
+	{
+		mainrenderer_->SetRenderSize(RenderSize);
+	}
+
+	// 충돌체 위치 지정 및 충돌체 On
+	if (nullptr == maincollision_)
+	{
+		return;
+	}
+
+	maincollision_->SetSize(RenderSize);
+	maincollision_->SetPivot(float4((RenderSize.x * 0.5f) + _RenderPos.x, (RenderSize.y * 0.5f) + _RenderPos.y));
+
+	// Index정보 변경
+	NamePos_ = _NamePos;
+	parent_ = _Parent;
+}
+
+void LobbySelectablePlayer::ChangePlayerPos(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize)
 {
 	// 렌더러 위치 지정
 	if (nullptr == mainrenderer_)
@@ -122,13 +184,9 @@ void LobbySelectablePlayer::SetPlayerInfo(const float4& _NamePos, const float4& 
 
 	maincollision_->SetSize(_RenderSize);
 	maincollision_->SetPivot(float4((_RenderSize.x * 0.5f) + _RenderPos.x, (_RenderSize.y * 0.5f) + _RenderPos.y));
-	maincollision_->On();
-
-	// Index정보 변경
-	NamePos_ = _NamePos;
 }
 
-void LobbySelectablePlayer::SetPlayerOn()
+void LobbySelectablePlayer::SetPlayerOn(int _ActiveIndex)
 {
 	// 현재 ShowPlayer_상태 On
 	ShowPlayer_ = true;
@@ -139,6 +197,10 @@ void LobbySelectablePlayer::SetPlayerOn()
 		return;
 	}
 	maincollision_->On();
+	mainrenderer_->On();
+
+	// 활성화 인덱스 저장
+	ActiveIndex_ = _ActiveIndex;
 }
 
 void LobbySelectablePlayer::SetPlayerOff()
@@ -152,6 +214,12 @@ void LobbySelectablePlayer::SetPlayerOff()
 		return;
 	}
 	maincollision_->Off();
+	mainrenderer_->Off();
+}
+
+void LobbySelectablePlayer::DelActiveIndex()
+{
+	ActiveIndex_ = -1;
 }
 
 void LobbySelectablePlayer::CreatePlayer(const std::string& _PlayerName, int _Index, int _CPUIndex, bool _PlayerAndCPU)
@@ -172,6 +240,7 @@ void LobbySelectablePlayer::CreatePlayer(const std::string& _PlayerName, int _In
 		CPUName += std::to_string(_CPUIndex + 1);
 		mainrenderer_ = CreateRenderer(CPUName);
 	}
+	mainrenderer_->Off();
 	mainrenderer_->SetCameraEffectOff();
 
 	// 충돌체 생성 및 OFF
