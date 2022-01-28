@@ -7,6 +7,9 @@
 #include "BottomHealthBar.h"
 #include  "WormName.h"
 #include  "WormArrow.h"
+
+#include "TimerBlankWindow.h"
+
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
 #include <GameEngineLevel.h>
@@ -93,6 +96,12 @@ WormArrow* UIController::GetCurWormArrow()
 	return curWormArrow_;
 }
 
+TimerBlankWindow* UIController::GetCurTimerWindow()
+{
+	return curTimerWindow_;
+}
+
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -109,6 +118,10 @@ void UIController::Start()
 	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
 	curWormName_ = GetLevel()->CreateActor<WormName>();
 	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
+
+	curTimerWindow_ = GetLevel()->CreateActor<TimerBlankWindow>();
+
+
 }
 
 void UIController::UpdateBefore()

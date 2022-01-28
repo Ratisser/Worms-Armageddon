@@ -16,6 +16,7 @@
 #include "BottomFlag.h"
 #include "BottomNameTag.h"
 #include "WormName.h"
+#include "TimerBlankWindow.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -267,6 +268,9 @@ void GameController::CreateWormUI()
 
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
+
+		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->SetParentWorm(wormList_[i]);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;

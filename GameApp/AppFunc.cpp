@@ -262,6 +262,23 @@ void ResourceInitPJW()
 	GameEngineImage::GetInst().LoadGameImage("WormName4", Dir.PathToPlusFileName("WormName4.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("WormName5", Dir.PathToPlusFileName("WormName5.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("WormName6", Dir.PathToPlusFileName("WormName6.bmp"));
+
+	Dir.MoveParent("UI");
+
+	if (false == Dir.MoveChild("\\Timer\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowR", Dir.PathToPlusFileName("TimerWindowR.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowB", Dir.PathToPlusFileName("TimerWindowB.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowG", Dir.PathToPlusFileName("TimerWindowG.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowY", Dir.PathToPlusFileName("TimerWindowY.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowP", Dir.PathToPlusFileName("TimerWindowP.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowC", Dir.PathToPlusFileName("TimerWindowC.bmp"));
+	GameEngineImageFile* digitSprite = GameEngineImage::GetInst().LoadGameImage("TimerNum", Dir.PathToPlusFileName("TimerNum.bmp"));
+	digitSprite->Cut({ 34,34 });
+
 }
 
 void UIImageInit()

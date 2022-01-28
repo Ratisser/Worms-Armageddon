@@ -227,6 +227,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TimerBlankWindow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TimerDigit.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleImage.h">
       <SubType>
       </SubType>
@@ -493,6 +505,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TestLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TimerBlankWindow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TimerDigit.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TimerManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>

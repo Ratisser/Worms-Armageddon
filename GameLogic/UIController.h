@@ -10,6 +10,7 @@ class WeaponSheet;
 class BottomNameTag;
 class BottomFlag;
 class BottomHealthBar;
+class TimerBlankWindow;
 class Weapon;
 class WormName;
 class WormArrow;
@@ -29,6 +30,9 @@ private:	// 관리하는 모든 UI
 	//
 	WormName* curWormName_;
 	WormArrow* curWormArrow_;
+
+	TimerBlankWindow* curTimerWindow_;
+
 
 public:
 	UIController(); // default constructer 디폴트 생성자
@@ -59,6 +63,8 @@ public:
 
 	WormName* GetCurWormName();
 	WormArrow* GetCurWormArrow();
+
+	TimerBlankWindow* GetCurTimerWindow();
 
 
 public:
