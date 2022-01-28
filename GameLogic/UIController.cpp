@@ -9,6 +9,7 @@
 #include  "WormArrow.h"
 
 #include "TimerBlankWindow.h"
+#include "TimerDigit.h"
 
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
@@ -101,6 +102,16 @@ TimerBlankWindow* UIController::GetCurTimerWindow()
 	return curTimerWindow_;
 }
 
+TimerDigit* UIController::GetCurTimerDigitTen()
+{
+	return curTimerDigitTen_;
+}
+
+TimerDigit* UIController::GetCurTimerDigit()
+{
+	return curTimerDigit_;
+}
+
 
 void UIController::Start()
 {
@@ -120,8 +131,10 @@ void UIController::Start()
 	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
 
 	curTimerWindow_ = GetLevel()->CreateActor<TimerBlankWindow>();
-
-
+	curTimerDigitTen_ = GetLevel()->CreateActor<TimerDigit>();
+	curTimerDigitTen_->SetPos({ 28,690 });
+	curTimerDigit_ = GetLevel()->CreateActor<TimerDigit>();
+	curTimerDigit_->SetPos({ 48,690 });
 }
 
 void UIController::UpdateBefore()

@@ -17,6 +17,7 @@
 #include "BottomNameTag.h"
 #include "WormName.h"
 #include "TimerBlankWindow.h"
+#include "TimerDigit.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -272,6 +273,10 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->SetParentWorm(wormList_[i]);
 
+		wormList_[i]->GetCurUIController()->GetCurTimerDigitTen()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurTimerDigit()->SetParentWorm(wormList_[i]);
+
+
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
 		ItemListTest.resize(13);
@@ -374,6 +379,9 @@ StateInfo GameController::startAction(StateInfo _state)
 StateInfo GameController::updateAction(StateInfo _state)
 {
 	currentTurnTime_ -= GameEngineTime::GetInst().GetDeltaTime();
+	// 타이머 갱신을 해 줘야하는 부분
+	currentWorm_->GetCurUIController()->GetCurTimerDigitTen()->SetTenDigitTime(currentTurnTime_);
+	currentWorm_->GetCurUIController()->GetCurTimerDigit()->SetDigitTime(currentTurnTime_);
 
 	if (GameEngineInput::GetInst().IsDown("TestKey"))
 	{

@@ -11,6 +11,7 @@ class BottomNameTag;
 class BottomFlag;
 class BottomHealthBar;
 class TimerBlankWindow;
+class TimerDigit;
 class Weapon;
 class WormName;
 class WormArrow;
@@ -32,7 +33,8 @@ private:	// 관리하는 모든 UI
 	WormArrow* curWormArrow_;
 
 	TimerBlankWindow* curTimerWindow_;
-
+	TimerDigit* curTimerDigitTen_;
+	TimerDigit* curTimerDigit_;
 
 public:
 	UIController(); // default constructer 디폴트 생성자
@@ -65,7 +67,8 @@ public:
 	WormArrow* GetCurWormArrow();
 
 	TimerBlankWindow* GetCurTimerWindow();
-
+	TimerDigit* GetCurTimerDigitTen();
+	TimerDigit* GetCurTimerDigit();
 
 public:
 	virtual void Start() override;

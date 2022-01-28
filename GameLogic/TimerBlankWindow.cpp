@@ -45,9 +45,7 @@ void TimerBlankWindow::Render()
 		if (true == parent_->isFocused())
 		{
 			mainRender_->Render();
-			
 		}
-
 	}
 }
 
