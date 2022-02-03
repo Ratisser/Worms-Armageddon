@@ -2,6 +2,7 @@
 
 #include <GameEngineCollision.h>
 #include <GameEngineRenderer.h>
+#include <GameEngineSoundManager.h>
 #include <GameEngineInput.h>
 
 #include "PlayLevel.h"
@@ -18,6 +19,7 @@ Girder::Girder()
 	, mouse_(nullptr)
 	, parentWorm_(nullptr)
 	, bLeft_(true)
+	, soundWhoosh_("GIRDERIMPACT.WAV")
 
 {
 	for (size_t i = 0; i < 18; i++)
@@ -122,6 +124,7 @@ void Girder::Update()
 
 	if (true == GameEngineInput::GetInst().IsDown("BuildGirder"))
 	{
+		GameEngineSoundManager::GetInstance().PlaySoundByName("GIRDERIMPACT.WAV");
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->GetMap()->BuildGirder(pos_ - mainRender_[index_]->GetImageSize() * 0.5f, mainRender_[index_], ColRender_[index_]);
 		parentWorm_->SetCurWeapon(eItemList::WEAPON_BAZOOKA);

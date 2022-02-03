@@ -13,6 +13,8 @@
 #include <GameEngineWindow.h>
 #include <limits>
 
+#include <GameEngineSoundManager.h>
+
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 
@@ -58,6 +60,7 @@ Worm::Worm()
 	, bulletFocusActor_(nullptr)
 	, blowTorchMoveTime_(3.f)
 	, drillMoveTime_(0.f)
+	, soundWhoosh_("DRILL.WAV")
 {
 
 }
@@ -2296,6 +2299,10 @@ StateInfo Worm::updateBlowtorchOn(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Fire"))
 	{
+		GameEngineSoundManager::GetInstance().PlaySoundByName("BlowTorch.WAV");
+		soundWhoosh_.ChangeSound("BlowTorch.WAV");
+		soundWhoosh_.Play();
+
 		return "BlowtorchFire";
 	}
 
@@ -2337,8 +2344,15 @@ StateInfo Worm::updateBlowtorchFire(StateInfo _state)
 		SetMove(float4::RIGHT * 0.5f);
 	}
 
+	if (soundWhoosh_.GetPositionMillisecond() >= soundWhoosh_.GetLengthMillisecond())
+	{
+		soundWhoosh_.Play();
+		soundWhoosh_.SetPosition(150);
+	}
+
 	if (blowTorchMoveTime_ <= 0.f)
 	{
+		soundWhoosh_.Stop();
 		blowTorchMoveTime_ = 3.0f;
 		setAnimationWeaponOff();
 		return "Idle";
@@ -2385,6 +2399,10 @@ StateInfo Worm::updateDrillOn(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Fire"))
 	{
+		GameEngineSoundManager::GetInstance().PlaySoundByName("DRILL.WAV");
+		soundWhoosh_.ChangeSound("DRILL.WAV");
+		soundWhoosh_.Play();
+
 		return "DrillFire";
 	}
 
@@ -2416,6 +2434,12 @@ StateInfo Worm::updateDrillFire(StateInfo _state)
 
 	drillMoveTime_ -= deltaTime_;
 
+	if (soundWhoosh_.GetPositionMillisecond() >= soundWhoosh_.GetLengthMillisecond())
+	{
+		soundWhoosh_.Play();
+		soundWhoosh_.SetPosition(150);
+	}
+
 	if (drillMoveTime_ <= 0.f)
 	{
 		level->GetMap()->GroundUpdate(float4(pos_.x - 15.f, pos_.y - 4.f), float4(30.f, 30.f));
@@ -2424,6 +2448,7 @@ StateInfo Worm::updateDrillFire(StateInfo _state)
 
 	if (blowTorchMoveTime_ <= 0.f)
 	{
+		soundWhoosh_.Stop();
 		blowTorchMoveTime_ = 3.0f;
 		setAnimationWeaponOff();
 		return "Idle";

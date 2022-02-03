@@ -722,6 +722,9 @@ void SoundLoad()
 	RS::LoadSoundFromFile(dir / "SHEEPBAA.WAV");
 	RS::LoadSoundFromFile(dir / "SUPERSHEEPRELEASE.WAV");
 	RS::LoadSoundFromFile(dir / "SUPERSHEEPWHOOSH.WAV");
+	RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
+	RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
+	RS::LoadSoundFromFile(dir / "DRILL.WAV");
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
