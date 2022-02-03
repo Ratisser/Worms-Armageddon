@@ -13,11 +13,12 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <filesystem>
 
 #include <GlobalValue.h>
 
 
-
+namespace fs = std::filesystem;
 
 void AppResourcesInit()
 {
@@ -723,24 +724,46 @@ void WeaponImageInit()
 
 void SoundLoad()
 {
+	// 2022-02-03 조규현 : Effects 폴더의 모든 파일을 로드합니다.
+	{
+		fs::path path(fs::current_path());
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			path = path.parent_path();
+		}
+
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			GameEngineDebug::MsgBoxError("존재하지 않는 경로 \"Worms-Armageddon\"");
+		}
+
+
+		path = path / "Resources" / "Sound" / "Effects";
+
+		for (const fs::path& p : fs::directory_iterator(path))
+		{
+			RS::LoadSoundFromFile(p.string());
+		}
+	}
+
 	GameEngineDirectroy dir = GameEngineDirectroy();
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Sound\\Effects");
 
-	RS::LoadSoundFromFile(dir / "SHEEPBAA.WAV");
-	RS::LoadSoundFromFile(dir / "SUPERSHEEPRELEASE.WAV");
-	RS::LoadSoundFromFile(dir / "SUPERSHEEPWHOOSH.WAV");
-	RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
-	RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
-	RS::LoadSoundFromFile(dir / "DRILL.WAV");
+	//RS::LoadSoundFromFile(dir / "SHEEPBAA.WAV");
+	//RS::LoadSoundFromFile(dir / "SUPERSHEEPRELEASE.WAV");
+	//RS::LoadSoundFromFile(dir / "SUPERSHEEPWHOOSH.WAV");
+	//RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
+	//RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
+	//RS::LoadSoundFromFile(dir / "DRILL.WAV");
 
-	// Title Screen Sound
-	RS::LoadSoundFromFile(dir / "Worms_TitleScreen.mp3");
-	RS::LoadSoundFromFile(dir / "WormLanding.wav");
+	//// Title Screen Sound
+	//RS::LoadSoundFromFile(dir / "Worms_TitleScreen.mp3");
+	//RS::LoadSoundFromFile(dir / "WormLanding.wav");
 	LoadSoundFromFileLoop(dir / "Worms_TitleScreen_Heartbeat.wav");
 
 	// MenuSelect Screen Sound
-	RS::LoadSoundFromFile(dir / "CursorSelect.wav");
+	//RS::LoadSoundFromFile(dir / "CursorSelect.wav");
 
 	// Lobby Screen Sound
 

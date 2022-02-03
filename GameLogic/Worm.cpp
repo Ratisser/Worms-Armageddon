@@ -2305,8 +2305,8 @@ StateInfo Worm::updateBlowtorchOn(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Fire"))
 	{
-		GameEngineSoundManager::GetInstance().PlaySoundByName("BlowTorch.WAV");
-		soundWhoosh_.ChangeSound("BlowTorch.WAV");
+		GameEngineSoundManager::GetInstance().PlaySoundByName("BlowTorch.wav");
+		soundWhoosh_.ChangeSound("BlowTorch.wav");
 		soundWhoosh_.Play();
 
 		return "BlowtorchFire";
