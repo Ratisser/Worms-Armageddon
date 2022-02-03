@@ -657,6 +657,8 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_MOLESQUADRON:
 		break;
 	case eItemList::WEAPON_BLOWTORCH:
+		crosshairRender_->Off();
+
 		if (bLeft_)
 		{
 			mainRender_->ChangeAnimation("BlowtorchOnLeft", std::string("blowtorchOnLeft.bmp"));
@@ -667,6 +669,8 @@ void Worm::setAnimationWeaponOn()
 		}
 		break;
 	case eItemList::WEAPON_PNEUMATICDRILL:
+		crosshairRender_->Off();
+
 		if (bLeft_)
 		{
 			mainRender_->ChangeAnimation("DrillOnLeft", std::string("drillOnLeft.bmp"));
@@ -677,6 +681,8 @@ void Worm::setAnimationWeaponOn()
 		}
 		break;
 	case eItemList::WEAPON_GIRDER:
+		crosshairRender_->Off();
+
 		if (bLeft_)
 		{
 			mainRender_->ChangeAnimation("GirderOnLeft", std::string("girderOnLeft.bmp"));
@@ -2335,12 +2341,12 @@ StateInfo Worm::updateBlowtorchFire(StateInfo _state)
 
 	if (bLeft_)
 	{
-		level->GetMap()->GroundUpdate(float4(pos_.x - 45.f, pos_.y - 13.f), float4(30.f, 30.f));
+		level->GetMap()->GroundUpdate(float4(pos_.x - 30.f, pos_.y - 13.f), float4(30.f, 30.f));
 		SetMove(float4::LEFT * 0.5f);
 	}
 	else
 	{
-		level->GetMap()->GroundUpdate(float4(pos_.x + 15.f, pos_.y - 13.f), float4(30.f, 30.f));
+		level->GetMap()->GroundUpdate(float4(pos_.x, pos_.y - 13.f), float4(30.f, 30.f));
 		SetMove(float4::RIGHT * 0.5f);
 	}
 

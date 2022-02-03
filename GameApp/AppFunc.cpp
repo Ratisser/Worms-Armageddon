@@ -681,8 +681,8 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "blowtorchOnRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "blowtorchOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "blowtorchOffRight.bmp", cutSize);
-	RS::LoadImageFromFileAndCut(dir / "blowtorchFireLeft.bmp", float4(80.f, 80.f));
-	RS::LoadImageFromFileAndCut(dir / "blowtorchFireRight.bmp", float4(80.f, 80.f));
+	RS::LoadImageFromFileAndCut(dir / "blowtorchFireLeft.bmp", float4(60.f, 80.f));
+	RS::LoadImageFromFileAndCut(dir / "blowtorchFireRight.bmp", float4(60.f, 80.f));
 	// 드릴 애니메이션
 	RS::LoadImageFromFileAndCut(dir / "drillLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "drillRight.bmp", cutSize);
