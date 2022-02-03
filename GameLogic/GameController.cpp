@@ -279,20 +279,17 @@ void GameController::CreateWormUI()
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
-		ItemListTest.resize(13);
+		ItemListTest.resize(10);
 		ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
 		ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
 		ItemListTest[2] = eItemList::WEAPON_FIREPUNCH;
-		ItemListTest[3] = eItemList::WEAPON_MINE;
-		ItemListTest[4] = eItemList::WEAPON_GRENADE;
-		ItemListTest[5] = eItemList::WEAPON_CLUSTERBOMB;
-		ItemListTest[6] = eItemList::WEAPON_UZI;
-		ItemListTest[7] = eItemList::WEAPON_BATTLEAXE;
-		ItemListTest[8] = eItemList::WEAPON_GIRDER;
-		ItemListTest[9] = eItemList::WEAPON_SHEEP;
-		ItemListTest[10] = eItemList::WEAPON_SUPERSHEEP;
-		ItemListTest[11] = eItemList::WEAPON_BLOWTORCH;
-		ItemListTest[12] = eItemList::WEAPON_PNEUMATICDRILL;
+		ItemListTest[3] = eItemList::WEAPON_UZI;
+		ItemListTest[4] = eItemList::WEAPON_BATTLEAXE;
+		ItemListTest[5] = eItemList::WEAPON_GIRDER;
+		ItemListTest[6] = eItemList::WEAPON_SHEEP;
+		ItemListTest[7] = eItemList::WEAPON_SUPERSHEEP;
+		ItemListTest[8] = eItemList::WEAPON_BLOWTORCH;
+		ItemListTest[9] = eItemList::WEAPON_PNEUMATICDRILL;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
 		// 
