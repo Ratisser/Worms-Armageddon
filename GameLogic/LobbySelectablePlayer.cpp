@@ -13,6 +13,7 @@
 LobbySelectablePlayer::LobbySelectablePlayer() :
 	parent_(nullptr),
 	ActiveIndex_(-1),
+	SelectPlayerEnd_(false),
 	ShowPlayer_(false),
 	Index_(-1),
 	NamePos_(float4::ZERO),
@@ -29,6 +30,7 @@ LobbySelectablePlayer::~LobbySelectablePlayer()
 LobbySelectablePlayer::LobbySelectablePlayer(LobbySelectablePlayer&& _other) noexcept :
 	parent_(_other.parent_),
 	ActiveIndex_(_other.ActiveIndex_),
+	SelectPlayerEnd_(_other.SelectPlayerEnd_),
 	ShowPlayer_(_other.ShowPlayer_),
 	Index_(_other.Index_), 
 	NamePos_(_other.NamePos_),
@@ -42,14 +44,6 @@ void LobbySelectablePlayer::Start()
 }
 
 void LobbySelectablePlayer::UpdateBefore()
-{
-}
-
-void LobbySelectablePlayer::Update()
-{
-}
-
-void LobbySelectablePlayer::UpdateAfter()
 {
 	// 마우스와 충돌체크
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
@@ -66,6 +60,14 @@ void LobbySelectablePlayer::UpdateAfter()
 			}
 		}
 	}
+}
+
+void LobbySelectablePlayer::Update()
+{
+}
+
+void LobbySelectablePlayer::UpdateAfter()
+{
 }
 
 void LobbySelectablePlayer::Render()
@@ -87,6 +89,16 @@ void LobbySelectablePlayer::Render()
 	}
 
 	//maincollision_->DebugRender();
+}
+
+void LobbySelectablePlayer::Collision()
+{
+	if (true == SelectPlayerEnd_)
+	{
+		// 여기서 선택가능 플레이어목록을 정리
+		parent_->SetSelectablePlayerSort();
+		SelectPlayerEnd_ = false;
+	}
 }
 
 std::string LobbySelectablePlayer::GetPlayerName() const
@@ -184,6 +196,9 @@ void LobbySelectablePlayer::ChangePlayerPos(const float4& _NamePos, const float4
 
 	maincollision_->SetSize(_RenderSize);
 	maincollision_->SetPivot(float4((_RenderSize.x * 0.5f) + _RenderPos.x, (_RenderSize.y * 0.5f) + _RenderPos.y));
+
+	// 플레이어 명 위치 변경
+	NamePos_ = _NamePos;
 }
 
 void LobbySelectablePlayer::SetPlayerOn(int _ActiveIndex)
@@ -213,8 +228,16 @@ void LobbySelectablePlayer::SetPlayerOff()
 	{
 		return;
 	}
+
+	// 충돌체를 강제로 화면밖으로 내보내며 크기를 1로 바꾼다.
+	maincollision_->SetSize(float4(1.f, 1.f));
+	maincollision_->SetPivot(float4(-1200.f, -1200.f));
+
 	maincollision_->Off();
 	mainrenderer_->Off();
+
+	// 플레이어선택완료 Flag On
+	SelectPlayerEnd_ = true;
 }
 
 void LobbySelectablePlayer::DelActiveIndex()

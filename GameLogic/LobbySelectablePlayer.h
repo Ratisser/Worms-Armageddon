@@ -14,6 +14,9 @@ private:
 
 private: // 활성화되어있다면 활성화 Index를 알고있는다.
 	int ActiveIndex_;
+	
+private:
+	bool SelectPlayerEnd_;
 
 private:	// member Var
 	bool ShowPlayer_;
@@ -43,6 +46,7 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+	virtual void Collision() override;
 
 public:
 	std::string GetPlayerName() const;

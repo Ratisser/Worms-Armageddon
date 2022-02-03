@@ -15,6 +15,9 @@ void UIImageInit();
 // 대기실씬 이미지 로딩 - 신종하
 void LobbyImageInit();
 
+// 사운드 생성시 루프가능 사운드 기능 추가 - 신종하
+void LoadSoundFromFileLoop(const std::string& _path, bool _Loop = true);
+
 // 2022-01-12 조규현 : 
 namespace RS
 {

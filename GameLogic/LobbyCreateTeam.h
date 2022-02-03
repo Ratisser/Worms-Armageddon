@@ -41,5 +41,6 @@ public:
 
 public:
 	void SetSelectPlayer(const std::string& _Name, int _Index);
+	void SetSelectablePlayerSort();
 };
 

@@ -16,7 +16,9 @@ MenuSelImage::MenuSelImage() :
 	castalpha_(255),
 	mainrenderer_(nullptr),
 	maincollider_(nullptr),
-	faderenderer_(nullptr)
+	curcollider_(nullptr),
+	faderenderer_(nullptr),
+	colmousesound_("CursorSelect.wav")
 {
 	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 }
@@ -32,7 +34,9 @@ MenuSelImage::MenuSelImage(MenuSelImage&& _other) noexcept :
 	menusel_(_other.menusel_),
 	mainrenderer_(_other.mainrenderer_),
 	maincollider_(_other.maincollider_),
-	faderenderer_(_other.faderenderer_)
+	curcollider_(_other.curcollider_),
+	faderenderer_(_other.faderenderer_),
+	colmousesound_("CursorSelect.wav")
 {
 
 }
@@ -71,6 +75,19 @@ void MenuSelImage::UpdateBefore()
 	GameEngineCollision* ColUI = maincollider_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		if (curcollider_ != ColUI)
+		{
+			// 첫 충돌시 사운드 재생
+			colmousesound_.Play();
+			curcollider_ = ColUI;
+
+			// 이미지 변경
+			mainrenderer_->SetImage("MenuSelect_Image_col");
+			float4 ImageSizeHarf = mainrenderer_->GetImageSize().halffloat4();
+			mainrenderer_->SetPivotPos(float4(ImageSizeHarf.x + 320.f, ImageSizeHarf.y + 250.f));
+			mainrenderer_->SetRenderSize(float4(600.f, 300.f));
+		}
+
 		if (true == GameEngineInput::GetInst().IsDown("Move_LobbyLevel"))
 		{
 			GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel", true);
@@ -87,6 +104,17 @@ void MenuSelImage::UpdateBefore()
 			//	menusel_ = true;
 			//}
 		}
+	}
+	else
+	{
+		// 충돌이 없을때 현재 충돌한 상대충돌체 제거
+		curcollider_ = nullptr;
+
+		// 이미지 변경
+		mainrenderer_->SetImage("MenuSelect_Image");
+		float4 ImageSizeHarf = mainrenderer_->GetImageSize().halffloat4();
+		mainrenderer_->SetPivotPos(float4(ImageSizeHarf.x + 320.f, ImageSizeHarf.y + 250.f));
+		mainrenderer_->SetRenderSize(float4(600.f, 300.f));
 	}
 
 	if (true == menusel_ && true == faderenderer_->IsOn())

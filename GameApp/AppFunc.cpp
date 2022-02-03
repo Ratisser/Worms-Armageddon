@@ -587,6 +587,14 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU5", Dir.PathToPlusFileName("000005.bmp"));
 }
 
+void LoadSoundFromFileLoop(const std::string& _path, bool _loop)
+{
+	size_t fileNameStartIndex = _path.rfind("\\") + 1;
+	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
+
+	GameEngineSoundManager::GetInstance().CreateSound(fileName, _path, _loop);
+}
+
 void CharactorImageInit()
 {
 	GameEngineDirectroy dir = GameEngineDirectroy();
@@ -725,6 +733,17 @@ void SoundLoad()
 	RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
 	RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
 	RS::LoadSoundFromFile(dir / "DRILL.WAV");
+
+	// Title Screen Sound
+	RS::LoadSoundFromFile(dir / "Worms_TitleScreen.mp3");
+	RS::LoadSoundFromFile(dir / "WormLanding.wav");
+	LoadSoundFromFileLoop(dir / "Worms_TitleScreen_Heartbeat.wav");
+
+	// MenuSelect Screen Sound
+	RS::LoadSoundFromFile(dir / "CursorSelect.wav");
+
+	// Lobby Screen Sound
+
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
@@ -1079,5 +1098,6 @@ void MenuSelectInit()
 
 	// MenuSelect Image(Lobby 진입 메뉴)
 	GameEngineImage::GetInst().LoadGameImage("MenuSelect_Image", Dir.PathToPlusFileName("MenuSelect_Image.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("MenuSelect_Image_col", Dir.PathToPlusFileName("MenuSelect_Image_col.bmp"));
 
 }

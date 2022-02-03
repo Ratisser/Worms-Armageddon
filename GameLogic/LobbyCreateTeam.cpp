@@ -170,7 +170,7 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	// 렌더러 크기 및 위치 지정
 	NewRender->SetRenderSize(float4(32.f, 32.f));
 	float4 ImageHarfSize = NewRender->GetImageSize().halffloat4();
-	NewRender->SetPivotPos(float4(ImageHarfSize.x + 230.f, ImageHarfSize.y + 20.f + (RenderListSize * 34.f)));
+	NewRender->SetPivotPos(float4(ImageHarfSize.x + 230.f, ImageHarfSize.y + 18.f + (RenderListSize * 34.f)));
 
 	SelectPlayerRendererList.push_back(NewRender);
 
@@ -181,34 +181,37 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	// 플레이어이름 표시를 위한 위치목록 추가
 	float4 NamePos = float4::ZERO;
 	NamePos.x = 272.f;
-	NamePos.y = 30.f + (RenderListSize * 36.f);
+	NamePos.y = 28.f + (RenderListSize * 36.f);
 	SelectPlayerNamePosList.push_back(NamePos);
 
-	// 기존 선택가능플레이어목록에서 현재 선택된 플레이어를 Off시키며,
-	// 만약 마지막인덱스에 위치한 플레이어라면 그냥 Off,
-	// 처음 or 중간인덱스에 위치한 플레이어라면 현재표시가능한 플레이어 위치 재조정
-	int CurPlayerListSize = static_cast<int>(SelectablePlayerList.size());
-	if (CurPlayerListSize == _Index) // 마지막 인덱스라면
+	// 기존 선택가능플레이어목록에서 현재 선택된 플레이어를 Off
+	SelectablePlayerList[_Index]->SetPlayerOff();
+	SelectablePlayerList[_Index]->DelActiveIndex();
+
+	// 현재 활성화해야하는 플레이어 인덱스 저장
+	// 단, 현재 선택된 비활성화된 인덱스를 제외한 인덱스부터
+	// 계산해야한다.
+	// 만약 1번 인덱스의 플레이어를 선택했을때 0번인덱스가 남아있다면
+	// 1번인덱스 ~ 최대표시개수까지 표시되어야하며,
+	// 즉, 1번인덱스 ~ 3번인덱스까지 표시되어야한다.
+	ActiveStartIndex_ = _Index + 1;
+	ActiveEndIndex_ = 8 - (4 - ActiveStartIndex_ + _Index);
+	if (8 <= ActiveEndIndex_)
 	{
-		SelectablePlayerList[_Index]->SetPlayerOff();
+		ActiveEndIndex_ = 8;
 	}
-	else // 처음 or 중간 인덱스라면 표시하는 선택가능 플레이어목록 수정
+}
+
+void LobbyCreateTeam::SetSelectablePlayerSort()
+{
+	// ActiveStartIndex_ ~ ActiveEndIndex_ 까지의 선택가능플레이어 목록의 플레이어 활성화
+	int CalcIndex = ActiveStartIndex_ - 1;
+	for (int i = ActiveStartIndex_; i < ActiveEndIndex_; ++i)
 	{
-		// 현재 선택된 인덱스 Off
-		SelectablePlayerList[_Index]->SetPlayerOff();
-		SelectablePlayerList[_Index]->DelActiveIndex();
+		SelectablePlayerList[i]->ChangePlayerPos(float4(272.f, (245.f + (CalcIndex * 36.f))), float4(230.f, (236.f + (CalcIndex * 34.f))), float4(32.f, 32.f));
+		SelectablePlayerList[i]->SetPlayerOn(CalcIndex);
 
-		// 현재 선택된 플레이어가 활성화되어있었으므로 해당 플레이어의 활성화 인덱스를 가져온다.
-		//int CurPlayerActIndex = SelectablePlayerList[_Index]->GetActiveIndex();
-		//int CalcIndex = _Index + 1;
-		//int EndActiveIndex = 4 - CurPlayerActIndex;
-		//for (int i = CurPlayerActIndex; i < EndActiveIndex + 1; ++i)
-		//{
-		//	SelectablePlayerList[CalcIndex]->ChangePlayerPos(float4(272.f, (245.f + (i * 36.f))), float4(230.f, (236.f + (i * 34.f))), float4(32.f, 32.f));
-		//	SelectablePlayerList[CalcIndex]->SetPlayerOn(i);
-
-		//	++CalcIndex;
-		//}
+		++CalcIndex;
 	}
 }
 

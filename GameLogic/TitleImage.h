@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineActor.h>
 #include <GameEngineTimeEventer.h>
+#include <GameEngineSoundPlayer.h>
 // 분류 : 
 // 용도 : 
 // 설명 : 
@@ -20,6 +21,11 @@ private:
 private:
 	int textonIndex_;
 	float textontime_;
+
+private:
+	GameEngineSoundPlayer mainsound_;
+	GameEngineSoundPlayer effectsound1_;
+	GameEngineSoundPlayer effectsound2_;
 
 private:	// member Var
 	GameEngineRenderer* fadeBlackSpriteRender_;
