@@ -13,11 +13,12 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <filesystem>
 
 #include <GlobalValue.h>
 
 
-
+namespace fs = std::filesystem;
 
 void AppResourcesInit()
 {
@@ -262,6 +263,27 @@ void ResourceInitPJW()
 	GameEngineImage::GetInst().LoadGameImage("WormName4", Dir.PathToPlusFileName("WormName4.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("WormName5", Dir.PathToPlusFileName("WormName5.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("WormName6", Dir.PathToPlusFileName("WormName6.bmp"));
+
+	GameEngineImage::GetInst().LoadGameImage("WormHP", Dir.PathToPlusFileName("WormHP.bmp"));
+	GameEngineImageFile* HPNumberSprite = GameEngineImage::GetInst().LoadGameImage("HPnumber", Dir.PathToPlusFileName("HPnumber.bmp"));
+	HPNumberSprite->Cut({ 12,12 });
+
+	Dir.MoveParent("UI");
+
+	if (false == Dir.MoveChild("\\Timer\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowR", Dir.PathToPlusFileName("TimerWindowR.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowB", Dir.PathToPlusFileName("TimerWindowB.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowG", Dir.PathToPlusFileName("TimerWindowG.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowY", Dir.PathToPlusFileName("TimerWindowY.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowP", Dir.PathToPlusFileName("TimerWindowP.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("TimerWindowC", Dir.PathToPlusFileName("TimerWindowC.bmp"));
+	GameEngineImageFile* digitSprite = GameEngineImage::GetInst().LoadGameImage("TimerNum", Dir.PathToPlusFileName("TimerNum.bmp"));
+	digitSprite->Cut({ 34,34 });
+
 }
 
 void UIImageInit()
@@ -570,6 +592,14 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU5", Dir.PathToPlusFileName("000005.bmp"));
 }
 
+void LoadSoundFromFileLoop(const std::string& _path, bool _loop)
+{
+	size_t fileNameStartIndex = _path.rfind("\\") + 1;
+	std::string fileName = _path.substr(fileNameStartIndex, _path.size() - fileNameStartIndex);
+
+	GameEngineSoundManager::GetInstance().CreateSound(fileName, _path, _loop);
+}
+
 void CharactorImageInit()
 {
 	GameEngineDirectroy dir = GameEngineDirectroy();
@@ -664,8 +694,8 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "blowtorchOnRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "blowtorchOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "blowtorchOffRight.bmp", cutSize);
-	RS::LoadImageFromFileAndCut(dir / "blowtorchFireLeft.bmp", float4(80.f, 80.f));
-	RS::LoadImageFromFileAndCut(dir / "blowtorchFireRight.bmp", float4(80.f, 80.f));
+	RS::LoadImageFromFileAndCut(dir / "blowtorchFireLeft.bmp", float4(60.f, 80.f));
+	RS::LoadImageFromFileAndCut(dir / "blowtorchFireRight.bmp", float4(60.f, 80.f));
 	// 드릴 애니메이션
 	RS::LoadImageFromFileAndCut(dir / "drillLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "drillRight.bmp", cutSize);
@@ -698,13 +728,49 @@ void WeaponImageInit()
 
 void SoundLoad()
 {
+	// 2022-02-03 조규현 : Effects 폴더의 모든 파일을 로드합니다.
+	{
+		fs::path path(fs::current_path());
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			path = path.parent_path();
+		}
+
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			GameEngineDebug::MsgBoxError("존재하지 않는 경로 \"Worms-Armageddon\"");
+		}
+
+
+		path = path / "Resources" / "Sound" / "Effects";
+
+		for (const fs::path& p : fs::directory_iterator(path))
+		{
+			RS::LoadSoundFromFile(p.string());
+		}
+	}
+
 	GameEngineDirectroy dir = GameEngineDirectroy();
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Sound\\Effects");
 
-	RS::LoadSoundFromFile(dir / "SHEEPBAA.WAV");
-	RS::LoadSoundFromFile(dir / "SUPERSHEEPRELEASE.WAV");
-	RS::LoadSoundFromFile(dir / "SUPERSHEEPWHOOSH.WAV");
+	//RS::LoadSoundFromFile(dir / "SHEEPBAA.WAV");
+	//RS::LoadSoundFromFile(dir / "SUPERSHEEPRELEASE.WAV");
+	//RS::LoadSoundFromFile(dir / "SUPERSHEEPWHOOSH.WAV");
+	//RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
+	//RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
+	//RS::LoadSoundFromFile(dir / "DRILL.WAV");
+
+	//// Title Screen Sound
+	//RS::LoadSoundFromFile(dir / "Worms_TitleScreen.mp3");
+	//RS::LoadSoundFromFile(dir / "WormLanding.wav");
+	LoadSoundFromFileLoop(dir / "Worms_TitleScreen_Heartbeat.wav");
+
+	// MenuSelect Screen Sound
+	//RS::LoadSoundFromFile(dir / "CursorSelect.wav");
+
+	// Lobby Screen Sound
+
 }
 
 GameEngineImageFile* RS::LoadImageFromFile(const std::string& _path)
@@ -1063,5 +1129,6 @@ void MenuSelectInit()
 
 	// MenuSelect Image(Lobby 진입 메뉴)
 	GameEngineImage::GetInst().LoadGameImage("MenuSelect_Image", Dir.PathToPlusFileName("MenuSelect_Image.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("MenuSelect_Image_col", Dir.PathToPlusFileName("MenuSelect_Image_col.bmp"));
 
 }

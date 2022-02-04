@@ -2,6 +2,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
+#include <GameEngineSoundPlayer.h>
 
 #include "eItemList.h"
 
@@ -179,6 +180,8 @@ private:
 	GameEngineCollision* headCollision_;
 
 	GameEngineFSM<Worm> state_;
+
+	GameEngineSoundPlayer soundWhoosh_;
 
 	float4 accelation_;
 	float4 speed_;

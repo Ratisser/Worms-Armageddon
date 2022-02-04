@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineActor.h>
+#include <GameEngineSoundPlayer.h>
 
 // 분류 : 
 // 용도 : 
@@ -16,9 +17,11 @@ private:
 private:	// member Var
 	GameEngineRenderer* mainrenderer_;
 	GameEngineCollision* maincollider_;
+	GameEngineCollision* curcollider_;
 
 private:
 	GameEngineRenderer* faderenderer_;
+	GameEngineSoundPlayer colmousesound_;
 
 public:
 	MenuSelImage(); // default constructer 디폴트 생성자

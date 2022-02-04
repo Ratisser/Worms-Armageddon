@@ -130,6 +130,12 @@
     <Filter Include="Actor\PlayLevel\UI\HUD\Wind">
       <UniqueIdentifier>{94607dea-9917-44ef-86f6-e24e98e09751}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\UI\HUD\PersonalHUD">
+      <UniqueIdentifier>{af2a7b4f-2079-4ed8-a252-1dce1a300985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\HUD\Timer">
+      <UniqueIdentifier>{38c716ec-563a-4c5e-ada7-f8fc7c5ab565}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Actor\Effect\01. EffectActor\kamismk">
       <UniqueIdentifier>{1d0c178a-5618-4307-8c17-7241f3b74c59}</UniqueIdentifier>
     </Filter>
@@ -258,18 +264,6 @@
     <ClInclude Include="Cloud.h">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
-    <ClInclude Include="BottomFlag.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="BottomHealthBar.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="BottomNameTag.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="WormArrow.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="MenuSelectLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
@@ -369,8 +363,32 @@
     <ClInclude Include="WindBarHider.h">
       <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
     </ClInclude>
+    <ClInclude Include="BottomFlag.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomHealthBar.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="BottomNameTag.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="WormArrow.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
     <ClInclude Include="WormName.h">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerBlankWindow.h">
+      <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerDigit.h">
+      <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
+      <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="WormHPBlankWindow.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClInclude>
     <ClInclude Include="Effectkamismk.h">
       <Filter>Actor\Effect\01. EffectActor\kamismk</Filter>
@@ -494,18 +512,6 @@
     <ClCompile Include="Cloud.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClCompile>
-    <ClCompile Include="BottomFlag.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="BottomHealthBar.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="BottomNameTag.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="WormArrow.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
-    </ClCompile>
     <ClCompile Include="MenuSelectLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -605,8 +611,32 @@
     <ClCompile Include="WindBarHider.cpp">
       <Filter>Actor\PlayLevel\UI\HUD\Wind</Filter>
     </ClCompile>
+    <ClCompile Include="BottomFlag.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomHealthBar.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomNameTag.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="WormArrow.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
     <ClCompile Include="WormName.cpp">
-      <Filter>Actor\PlayLevel\UI\HUD</Filter>
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerBlankWindow.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerDigit.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerManager.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="WormHPBlankWindow.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClCompile>
     <ClCompile Include="Effectkamismk.cpp">
       <Filter>Actor\Effect\01. EffectActor\kamismk</Filter>

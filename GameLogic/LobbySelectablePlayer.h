@@ -6,8 +6,18 @@
 // 설명 : 
 class GameEngineRenderer;
 class GameEngineCollision;
+class LobbyCreateTeam;
 class LobbySelectablePlayer : public GameEngineActor
 {
+private:
+	LobbyCreateTeam* parent_;
+
+private: // 활성화되어있다면 활성화 Index를 알고있는다.
+	int ActiveIndex_;
+	
+private:
+	bool SelectPlayerEnd_;
+
 private:	// member Var
 	bool ShowPlayer_;
 	int Index_;
@@ -36,15 +46,21 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+	virtual void Collision() override;
 
 public:
 	std::string GetPlayerName() const;
 	int GetIndex() const;
+	int GetActiveIndex() const;
+	bool GetCurPlayerShow() const;
+	GameEngineCollision* GetMainCollision() const;
 
 public:
-	void SetPlayerInfo(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
-	void SetPlayerOn();
+	void SetPlayerInfo(LobbyCreateTeam* _Parent, const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
+	void ChangePlayerPos(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
+	void SetPlayerOn(int _ActiveIndex);
 	void SetPlayerOff();
+	void DelActiveIndex();
 
 public:
 	void CreatePlayer(const std::string& _PlayerName, int _Index, int _CPUIndex, bool _PlayerAndCPU = true);

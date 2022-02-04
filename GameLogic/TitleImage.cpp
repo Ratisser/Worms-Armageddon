@@ -19,6 +19,9 @@ TitleImage::TitleImage() :
 	levelChangeStart_(false),
 	textonIndex_(-1),
 	textontime_(0.5f),
+	mainsound_("Worms_TitleScreen.mp3"),
+	effectsound1_("WormLanding.wav"),
+	effectsound2_("Worms_TitleScreen_Heartbeat.wav"),
 	fadeBlackSpriteRender_(nullptr),
 	fadeWhiteSpriteRender_(nullptr),
 	intrologo1SpriteRender_(nullptr),
@@ -48,6 +51,9 @@ TitleImage::TitleImage(TitleImage&& _other) noexcept :
 	armageddonEnd_(_other.armageddonEnd_),
 	textonIndex_(_other.textonIndex_),
 	textontime_(_other.textontime_),
+	mainsound_("Worms_TitleScreen.mp3"),
+	effectsound1_("WormLanding.wav"),
+	effectsound2_("Worms_TitleScreen_Heartbeat.wav"),
 	fadeBlackSpriteRender_(_other.fadeBlackSpriteRender_),
 	fadeWhiteSpriteRender_(_other.fadeWhiteSpriteRender_),
 	intrologo1SpriteRender_(_other.intrologo1SpriteRender_),
@@ -113,7 +119,7 @@ void TitleImage::Start()
 	titlelogoActorRender_ = CreateRenderer("TitleLogo_Actor");
 	ImageHarf = titlelogoActorRender_->GetImageSize().halffloat4();
 	titlelogoActorRender_->SetPivotPos(float4(ImageHarf.x + 230.f, ImageHarf.y + 50.f));
-	titlelogoActorRender_->CreateAnimation("TitleLogo_Actor", "TitleLogo_Actor", 0, 4, true, 0.1f);
+	titlelogoActorRender_->CreateAnimation("TitleLogo_Actor", "TitleLogo_Actor", 0, 4, true, 0.18f);
 	titlelogoActorRender_->ChangeAnimation("TitleLogo_Actor");
 	titlelogoActorRender_->Off();
 
@@ -239,6 +245,9 @@ void TitleImage::Update()
 			armageddonlist_[textonIndex_]->On();
 
 			textontime_ = 0.5f;
+
+			// 아마겟돈 텍스트 드랍 사운드 실행
+			effectsound1_.Play();
 		}
 
 		// 아마겟돈 텍스트 모두 렌더링 완료
@@ -251,6 +260,9 @@ void TitleImage::Update()
 				armageddonEnd_ = true;
 				fadewhilteEnd_ = false;
 				nextlevel_ = true;
+
+				// 아마겟돈 텍스트 드랍 이펙트 사운드 종료
+				effectsound1_.Stop();
 			}
 		}
 	}
@@ -416,6 +428,10 @@ void TitleImage::TitleStay()
 		introstop_ = true;
 		intrologo2SpriteRender_->Off();
 		fadeBlackSpriteRender_->Off();
+
+		// 심장박동 사운드 실행
+		effectsound2_.Play();
+		effectsound2_.SetVolume(1.f);
 	}
 	else
 	{
@@ -444,6 +460,13 @@ bool TitleImage::WhiteFadeStart()
 
 		// 애니메이션 루프종료
 		titlelogoActorRender_->CurAnimationReset();
+
+		// 배경음악 실행
+		mainsound_.Play();
+		mainsound_.SetVolume(0.2f);
+
+		// 심장소리 재생 종료
+		effectsound2_.Stop();
 	}
 	else
 	{
@@ -468,6 +491,9 @@ void TitleImage::LevelChange()
 
 		// 레벨 전환
 		GameEngineLevelManager::GetInst().ChangeLevel("MenuSelectLevel", true);
+
+		// 배경음악 off
+		mainsound_.Stop();
 	}
 	else
 	{

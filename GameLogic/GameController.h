@@ -63,7 +63,7 @@ public:
 
 private:
 	const int MAX_WORM_COUNT = 8;
-	const float DEFAULT_TURN_TIME = 10000.f;
+	const float DEFAULT_TURN_TIME = 46.f;
 
 private:
 	GameEngineFSM<GameController> state_;

@@ -12,10 +12,13 @@
 #include "WeaponIcon.h"
 #include "Weapon.h"
 #include "WormArrow.h"
+#include "WormHPBlankWindow.h"
 #include "BottomHealthBar.h"
 #include "BottomFlag.h"
 #include "BottomNameTag.h"
 #include "WormName.h"
+#include "TimerBlankWindow.h"
+#include "TimerDigit.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -268,22 +271,28 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
 
+		wormList_[i]->GetCurUIController()->GetCurWormHPWindow()->SetParentWorm(wormList_[i]);
+
+		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->SetParentWorm(wormList_[i]);
+
+		wormList_[i]->GetCurUIController()->GetCurTimerDigitTen()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurTimerDigit()->SetParentWorm(wormList_[i]);
+
+
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
-		ItemListTest.resize(13);
+		ItemListTest.resize(10);
 		ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
 		ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
 		ItemListTest[2] = eItemList::WEAPON_FIREPUNCH;
-		ItemListTest[3] = eItemList::WEAPON_MINE;
-		ItemListTest[4] = eItemList::WEAPON_GRENADE;
-		ItemListTest[5] = eItemList::WEAPON_CLUSTERBOMB;
-		ItemListTest[6] = eItemList::WEAPON_UZI;
-		ItemListTest[7] = eItemList::WEAPON_BATTLEAXE;
-		ItemListTest[8] = eItemList::WEAPON_GIRDER;
-		ItemListTest[9] = eItemList::WEAPON_SHEEP;
-		ItemListTest[10] = eItemList::WEAPON_SUPERSHEEP;
-		ItemListTest[11] = eItemList::WEAPON_BLOWTORCH;
-		ItemListTest[12] = eItemList::WEAPON_PNEUMATICDRILL;
+		ItemListTest[3] = eItemList::WEAPON_UZI;
+		ItemListTest[4] = eItemList::WEAPON_BATTLEAXE;
+		ItemListTest[5] = eItemList::WEAPON_GIRDER;
+		ItemListTest[6] = eItemList::WEAPON_SHEEP;
+		ItemListTest[7] = eItemList::WEAPON_SUPERSHEEP;
+		ItemListTest[8] = eItemList::WEAPON_BLOWTORCH;
+		ItemListTest[9] = eItemList::WEAPON_PNEUMATICDRILL;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
 		// 
@@ -370,6 +379,9 @@ StateInfo GameController::startAction(StateInfo _state)
 StateInfo GameController::updateAction(StateInfo _state)
 {
 	currentTurnTime_ -= GameEngineTime::GetInst().GetDeltaTime();
+	// 타이머 갱신을 해 줘야하는 부분
+	currentWorm_->GetCurUIController()->GetCurTimerDigitTen()->SetTenDigitTime(currentTurnTime_);
+	currentWorm_->GetCurUIController()->GetCurTimerDigit()->SetDigitTime(currentTurnTime_);
 
 	if (GameEngineInput::GetInst().IsDown("TestKey"))
 	{

@@ -76,7 +76,7 @@ void GameEngineSoundManager::CreateSound(const std::string& _name, const std::st
 
 	if (findIter != endIter)
 	{
-		GameEngineDebug::AssertFalse();
+		findIter->second->release();
 	}
 
 	FMOD_RESULT result;
@@ -88,16 +88,6 @@ void GameEngineSoundManager::CreateSound(const std::string& _name, const std::st
 		mode = FMOD_LOOP_NORMAL;
 	}
 
-	//char buffer[256]{ 0, };
-	//GetCurrentDirectoryA(256, buffer);
-	//std::string path = buffer;
-	//if (-1 == path.find("Build"))
-	//{
-	//	path += "\\..\\Build";
-	//}
-
-	//path += "\\";
-	//path += _path;
 	result = system_->createSound(_path.c_str(), mode, nullptr, &newSound);
 
 	if (FMOD_OK != result)

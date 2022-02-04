@@ -7,6 +7,11 @@
 #include "BottomHealthBar.h"
 #include  "WormName.h"
 #include  "WormArrow.h"
+#include "WormHPBlankWindow.h"
+
+#include "TimerBlankWindow.h"
+#include "TimerDigit.h"
+
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
 #include <GameEngineLevel.h>
@@ -93,6 +98,26 @@ WormArrow* UIController::GetCurWormArrow()
 	return curWormArrow_;
 }
 
+TimerBlankWindow* UIController::GetCurTimerWindow()
+{
+	return curTimerWindow_;
+}
+
+TimerDigit* UIController::GetCurTimerDigitTen()
+{
+	return curTimerDigitTen_;
+}
+
+TimerDigit* UIController::GetCurTimerDigit()
+{
+	return curTimerDigit_;
+}
+
+WormHPBlankWindow* UIController::GetCurWormHPWindow()
+{
+	return curWormHPWindow_;
+}
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -109,6 +134,13 @@ void UIController::Start()
 	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
 	curWormName_ = GetLevel()->CreateActor<WormName>();
 	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
+	curWormHPWindow_ = GetLevel()->CreateActor<WormHPBlankWindow>();
+
+	curTimerWindow_ = GetLevel()->CreateActor<TimerBlankWindow>();
+	curTimerDigitTen_ = GetLevel()->CreateActor<TimerDigit>();
+	curTimerDigitTen_->SetPos({ 28,690 });
+	curTimerDigit_ = GetLevel()->CreateActor<TimerDigit>();
+	curTimerDigit_->SetPos({ 48,690 });
 }
 
 void UIController::UpdateBefore()

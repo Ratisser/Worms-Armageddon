@@ -3,6 +3,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
+#include <GameEngineSoundPlayer.h>
 
 class GameEngineCollision;
 class GameEngineRenderer;
@@ -36,5 +37,7 @@ private:
 	GameEngineRenderer* ColRender_[20];
 	bool bLeft_;
 	int index_;
+
+	GameEngineSoundPlayer soundWhoosh_;
 };
 

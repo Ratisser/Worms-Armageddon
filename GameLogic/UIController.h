@@ -10,9 +10,12 @@ class WeaponSheet;
 class BottomNameTag;
 class BottomFlag;
 class BottomHealthBar;
+class TimerBlankWindow;
+class TimerDigit;
 class Weapon;
 class WormName;
 class WormArrow;
+class WormHPBlankWindow;
 class UIController : public GameEngineActor
 {
 private:	// member Var
@@ -29,6 +32,11 @@ private:	// 관리하는 모든 UI
 	//
 	WormName* curWormName_;
 	WormArrow* curWormArrow_;
+	WormHPBlankWindow* curWormHPWindow_;
+
+	TimerBlankWindow* curTimerWindow_;
+	TimerDigit* curTimerDigitTen_;
+	TimerDigit* curTimerDigit_;
 
 public:
 	UIController(); // default constructer 디폴트 생성자
@@ -59,7 +67,11 @@ public:
 
 	WormName* GetCurWormName();
 	WormArrow* GetCurWormArrow();
+	WormHPBlankWindow* GetCurWormHPWindow();
 
+	TimerBlankWindow* GetCurTimerWindow();
+	TimerDigit* GetCurTimerDigitTen();
+	TimerDigit* GetCurTimerDigit();
 
 public:
 	virtual void Start() override;

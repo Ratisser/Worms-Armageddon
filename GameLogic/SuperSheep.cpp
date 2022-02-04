@@ -257,6 +257,10 @@ StateInfo SuperSheep::startFly(StateInfo _state)
 
 StateInfo SuperSheep::updateFly(StateInfo _state)
 {
+	groundCheckCollision_->SetPivot(float4::ZERO);
+	bottomCenterCollision_->SetPivot(float4::ZERO);
+	topCenterCollision_->SetPivot(float4::ZERO);
+
 	if (soundWhoosh_.GetPositionMillisecond() >= soundWhoosh_.GetLengthMillisecond() - 10)
 	{
 		soundWhoosh_.Play();
@@ -288,11 +292,11 @@ StateInfo SuperSheep::updateFly(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
 	{
-		direction_ = float4::RadianToRotatefloat2(direction_, -deltaTime_ * 6.f);
+		direction_ = float4::RadianToRotatefloat2(direction_, -deltaTime_ * 8.f);
 	}
 	if (GameEngineInput::GetInst().IsPress("RightArrow"))
 	{
-		direction_ = float4::RadianToRotatefloat2(direction_, deltaTime_ * 6.f);
+		direction_ = float4::RadianToRotatefloat2(direction_, deltaTime_ * 8.f);
 	}
 
 	headPivot_ = direction_ * 15.f;

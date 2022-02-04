@@ -5,9 +5,6 @@ class GameEngineRenderer;
 class LobbySelectablePlayer;
 class LobbyCreateTeam : public GameEngineActor
 {
-public:
-	static void SelectPlayer(const std::string& _PlayerName, int _CurSelPlayerIndex);
-
 private:	// member Var
 	GameEngineRenderer* playerselInputSpriteRender_;
 	GameEngineRenderer* playerselboxSpriteRender_;
@@ -15,9 +12,13 @@ private:	// member Var
 
 private: // 현재 선택가능한 플레이어 목록
 	std::vector<LobbySelectablePlayer*> SelectablePlayerList;
+	int ActiveStartIndex_;
+	int ActiveEndIndex_;
 
 private: // 현재 선택된 플레이어 목록
-	
+	std::vector<GameEngineRenderer*> SelectPlayerRendererList;
+	std::vector<std::string> SelectPlayerNameList;
+	std::vector<float4> SelectPlayerNamePosList;
 
 public:
 	LobbyCreateTeam(); // default constructer 디폴트 생성자
@@ -37,5 +38,9 @@ public:
 	virtual void Update() override;
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
+
+public:
+	void SetSelectPlayer(const std::string& _Name, int _Index);
+	void SetSelectablePlayerSort();
 };
 
