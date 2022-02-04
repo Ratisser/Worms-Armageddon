@@ -7,6 +7,7 @@
 #include "BottomHealthBar.h"
 #include  "WormName.h"
 #include  "WormArrow.h"
+#include "WormHPBlankWindow.h"
 
 #include "TimerBlankWindow.h"
 #include "TimerDigit.h"
@@ -112,6 +113,10 @@ TimerDigit* UIController::GetCurTimerDigit()
 	return curTimerDigit_;
 }
 
+WormHPBlankWindow* UIController::GetCurWormHPWindow()
+{
+	return curWormHPWindow_;
+}
 
 void UIController::Start()
 {
@@ -129,6 +134,7 @@ void UIController::Start()
 	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
 	curWormName_ = GetLevel()->CreateActor<WormName>();
 	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
+	curWormHPWindow_ = GetLevel()->CreateActor<WormHPBlankWindow>();
 
 	curTimerWindow_ = GetLevel()->CreateActor<TimerBlankWindow>();
 	curTimerDigitTen_ = GetLevel()->CreateActor<TimerDigit>();

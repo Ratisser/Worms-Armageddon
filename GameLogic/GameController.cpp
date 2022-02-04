@@ -12,6 +12,7 @@
 #include "WeaponIcon.h"
 #include "Weapon.h"
 #include "WormArrow.h"
+#include "WormHPBlankWindow.h"
 #include "BottomHealthBar.h"
 #include "BottomFlag.h"
 #include "BottomNameTag.h"
@@ -269,6 +270,8 @@ void GameController::CreateWormUI()
 
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
+
+		wormList_[i]->GetCurUIController()->GetCurWormHPWindow()->SetParentWorm(wormList_[i]);
 
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->SetParentWorm(wormList_[i]);

@@ -264,6 +264,10 @@ void ResourceInitPJW()
 	GameEngineImage::GetInst().LoadGameImage("WormName5", Dir.PathToPlusFileName("WormName5.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("WormName6", Dir.PathToPlusFileName("WormName6.bmp"));
 
+	GameEngineImage::GetInst().LoadGameImage("WormHP", Dir.PathToPlusFileName("WormHP.bmp"));
+	GameEngineImageFile* HPNumberSprite = GameEngineImage::GetInst().LoadGameImage("HPnumber", Dir.PathToPlusFileName("HPnumber.bmp"));
+	HPNumberSprite->Cut({ 12,12 });
+
 	Dir.MoveParent("UI");
 
 	if (false == Dir.MoveChild("\\Timer\\"))
