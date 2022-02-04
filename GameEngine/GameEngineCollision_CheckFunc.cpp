@@ -115,10 +115,9 @@ bool GameEngineCollision::RectToPoint(GameEngineCollision* _left, GameEngineColl
 	return true;
 }
 
-
+	//구현은 해놨지만 의미는 없는ㄱ것 같은 함수
 bool GameEngineCollision::PointToPoint(GameEngineCollision* _left, GameEngineCollision* _right)
 {
-	
 	return _left->GetCollisionPos() == _right->GetCollisionPos();
 }
 
@@ -132,21 +131,19 @@ bool GameEngineCollision::collisionCheckCircleToCircle(GameEngineCollision* lhs,
 {
 	float distance = lhs->GetCollisionPoint().DistanceTo(rhs->GetCollisionPoint());
 
-	return 0 >= (distance - lhs->radius_ - rhs->radius_);
+	return 0 >= (distance - lhs->size_.x * 0.5f - rhs->size_.x * 0.5f);
 }
 
 bool GameEngineCollision::collisionCheckPointToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs)
 {
 	float distance = lhs->GetCollisionPoint().DistanceTo(rhs->GetCollisionPoint());
 
-	return 0 >= (distance - lhs->radius_ - rhs->radius_);
+	return 0 >= (distance - rhs->size_.x * 0.5f);
 }
 
 bool GameEngineCollision::collisionCheckCircleToPoint(GameEngineCollision* lhs, GameEngineCollision* rhs)
 {
-	float distance = lhs->GetCollisionPoint().DistanceTo(rhs->GetCollisionPoint());
-
-	return 0 >= (distance - lhs->radius_ - rhs->radius_);
+	return collisionCheckPointToCircle(rhs, lhs);
 }
 
 bool GameEngineCollision::collisionCheckRectToCircle(GameEngineCollision* lhs, GameEngineCollision* rhs)

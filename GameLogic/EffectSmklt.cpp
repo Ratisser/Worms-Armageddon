@@ -80,6 +80,24 @@ void Effect::Smklt50::Start()
 	int randint = random.RandomInt(0, 7);
 
 	mainSpriteRender_->SetAnimationCurrentFrame("smklt50", randint);
+
+	//if (nullptr == EffectResourceManager::GetInst().Find("smklt50"))
+	//{
+	//	//GameEngineRenderer* GameEngineRenderer__ = new GameEngineRenderer(*mainSpriteRender_);
+
+	//	mainSpriteRender_ = CreateRenderer("smklt50");
+	//	mainSpriteRender_->CreateAnimation("smklt50", "smklt50", 0, 27, false, 0.025f);
+	//	mainSpriteRender_->ChangeAnimation("smklt50");
+	//	mainSpriteRender_->SetAnimationEndFunction<EffectActor>("smklt50", this, &EffectActor::Death);
+	//	GameEngineMath::Random random;
+	//	int randint = random.RandomInt(0, 7);
+	//	mainSpriteRender_->SetAnimationCurrentFrame("smklt50", randint);
+	//	EffectResourceManager::GetInst().insert("smklt50", mainSpriteRender_);
+	//}
+	//else
+	//{
+	//	mainSpriteRender_ = EffectResourceManager::GetInst().Find("smklt50");
+	//}
 }
 
 void Effect::Smklt50::UpdateBefore()

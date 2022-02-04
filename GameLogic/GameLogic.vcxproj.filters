@@ -130,6 +130,9 @@
     <Filter Include="Actor\PlayLevel\UI\HUD\Wind">
       <UniqueIdentifier>{94607dea-9917-44ef-86f6-e24e98e09751}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\Effect\01. EffectActor\kamismk">
+      <UniqueIdentifier>{1d0c178a-5618-4307-8c17-7241f3b74c59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -203,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="EffectActor.h">
       <Filter>Actor\Effect\01. EffectActor</Filter>
-    </ClInclude>
-    <ClInclude Include="Explosion.h">
-      <Filter>Actor\Effect\02. EffectBundleActor</Filter>
     </ClInclude>
     <ClInclude Include="Midground.h">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -372,6 +372,12 @@
     <ClInclude Include="WormName.h">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Effectkamismk.h">
+      <Filter>Actor\Effect\01. EffectActor\kamismk</Filter>
+    </ClInclude>
+    <ClInclude Include="Explosion.h">
+      <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -436,9 +442,6 @@
     </ClCompile>
     <ClCompile Include="EffectActor.cpp">
       <Filter>Actor\Effect\01. EffectActor</Filter>
-    </ClCompile>
-    <ClCompile Include="Explosion.cpp">
-      <Filter>Actor\Effect\02. EffectBundleActor</Filter>
     </ClCompile>
     <ClCompile Include="Midground.cpp">
       <Filter>Actor\PlayLevel\Background</Filter>
@@ -604,6 +607,12 @@
     </ClCompile>
     <ClCompile Include="WormName.cpp">
       <Filter>Actor\PlayLevel\UI\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Effectkamismk.cpp">
+      <Filter>Actor\Effect\01. EffectActor\kamismk</Filter>
+    </ClCompile>
+    <ClCompile Include="Explosion.cpp">
+      <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

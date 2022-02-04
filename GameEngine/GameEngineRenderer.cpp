@@ -13,7 +13,8 @@ GameEngineRenderer::FrameAnimation::FrameAnimation()
 	renderer_(nullptr),
 	pivot_(RENDERPIVOT::BOT),
 	loop_(nullptr),
-	image_(nullptr)
+	image_(nullptr),
+	isend_(false)
 {
 
 }
@@ -34,16 +35,7 @@ void GameEngineRenderer::FrameAnimation::Update()
 	curframeTime_ -= GameEngineTime::GetInst().GetDeltaTime();
 	if (0.0f >= curframeTime_)
 	{
-		//                        10 ~ 20
-		//                        0  ~ 10
-
-
 		++cur_;
-		// 프레임이 증가했다.
-		// 애니메이션의 끝을 넘겼어.
-
-
-		//에니메이션 프레임당 할당된 호출 함수가 있나 검사 및 실행;
 		auto iter1 = FrameFunctionList_.begin();
 		auto iter2 = FrameFunctionList_.end();
 		for (; iter1 != iter2; ++iter1)
@@ -53,21 +45,18 @@ void GameEngineRenderer::FrameAnimation::Update()
 				(*iter1)->FrameFunction_();
 			}
 		}
-		//
-
 
 		if (end_ < cur_)
 		{
 			if (nullptr != EndFunction_)
 			{
-				EndFunction_(); // 에니메이션 종료시 호출 함수;
+				EndFunction_(); 
 			}
 
 			isend_ = true;
-			// 루프가 true면
+
 			if (true == loop_)
 			{
-				// 처음으로 돌아간다.
 				cur_ = start_;
 			}
 			else
@@ -75,7 +64,6 @@ void GameEngineRenderer::FrameAnimation::Update()
 				--cur_;
 			}
 		}
-
 		curframeTime_ = frameTime_[cur_ - start_];
 	}
 
@@ -96,7 +84,12 @@ GameEngineRenderer::GameEngineRenderer()
 	imagesize_(float4::ZERO),
 	isCamEffect_(true),
 	rotate_(0.0f),
-	alpha_(255)
+	alpha_(255),
+	curani_(0),
+	actor_(nullptr),
+	image_(nullptr),
+	maskimage_(nullptr)
+
 {
 }
 
@@ -112,22 +105,9 @@ GameEngineRenderer::~GameEngineRenderer()
 			continue;
 		}
 
-		// 에니메이션 프레임 호출 함수 소멸 : 이현
-		//int size = AniStart->second->vecNotify_.size();
-
-		//for (int i = 0; i < size; ++i)
-		//{
-		//	delete AniStart->second->vecNotify_[i];
-		//	AniStart->second->vecNotify_[i] = nullptr;
-
-		//}
-		//
-
 		delete AniStart->second;
 		AniStart->second = nullptr;
 	}
-
-
 
 	allAnimation_.clear();
 }
@@ -226,11 +206,13 @@ void GameEngineRenderer::Render()
 
 void GameEngineRenderer::SetCutIndex(size_t _Index, RENDERPIVOT _Pivot)
 {
+#ifdef _DEBUG	
 	if (false == image_->IsCut())
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // DEBUG
 
 	imagepos_ = image_->GetCutPos(_Index);
 	imagesize_ = image_->GetCutSize(_Index);
@@ -285,11 +267,13 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _Name, bool _forceCh
 	curani_ = FindAnimation(_Name);
 	curani_->Reset();
 
+#ifdef _DEBUG	
 	if (nullptr == curani_)
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // DEBUG
 }
 
 void GameEngineRenderer::ChangeAnimation(const std::string& _Name, const std::string& _name, bool _forceChange)
@@ -308,11 +292,13 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _Name, const std::st
 	curani_ = FindAnimation(_Name);
 	curani_->Reset();
 
+#ifdef _DEBUG	
 	if (nullptr == curani_)
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // DEBUG
 }
 
 void GameEngineRenderer::CreateAnimation(
@@ -325,13 +311,14 @@ void GameEngineRenderer::CreateAnimation(
 	RENDERPIVOT pivot_ /*= RENDERPIVOT::CENTER*/
 )
 {
+	GameEngineImageFile* ImagePtr = GameEngineImage::GetInst().FindGameImage(_ImageName);
+
+#ifdef _DEBUG	
 	if (nullptr != FindAnimation(_Name))
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
-
-	GameEngineImageFile* ImagePtr = GameEngineImage::GetInst().FindGameImage(_ImageName);
 
 	if (nullptr == ImagePtr)
 	{
@@ -344,6 +331,7 @@ void GameEngineRenderer::CreateAnimation(
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // DEBUG
 
 	FrameAnimation* NewAnimation = new FrameAnimation();
 
@@ -356,7 +344,6 @@ void GameEngineRenderer::CreateAnimation(
 	{
 		NewAnimation->frameTime_.push_back(_FrameTime);
 	}
-	// NewAnimation->frameTime_ = _FrameTime;
 	NewAnimation->image_ = ImagePtr;
 	NewAnimation->cur_ = _Start;
 	NewAnimation->curframeTime_ = _FrameTime;
@@ -370,22 +357,26 @@ void GameEngineRenderer::CreateAnimation(
 
 void GameEngineRenderer::AnimationUpdate()
 {
+#ifdef _DEBUG	
 	if (nullptr == curani_)
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // DEBUG
 
 	curani_->Update();
 }
 
 bool GameEngineRenderer::IsCurAnimationName(const std::string& _Name)
 {
+#ifdef _DEBUG	
 	if (nullptr == curani_)
 	{
 		GameEngineDebug::AssertFalse();
 		return false;
 	}
+#endif // DEBUG
 
 	if (curani_->GetName() == _Name)
 	{
@@ -397,11 +388,13 @@ bool GameEngineRenderer::IsCurAnimationName(const std::string& _Name)
 
 bool GameEngineRenderer::IsCurAnimationEnd()
 {
+#ifdef _DEBUG	
 	if (nullptr == curani_)
 	{
 		GameEngineDebug::AssertFalse();
 		return false;
 	}
+#endif // DEBUG
 
 	return curani_->isend_;
 }
@@ -410,11 +403,13 @@ void GameEngineRenderer::SetChangeFrame(const std::string& _Name, int _index, fl
 {
 	FrameAnimation* FindAni = FindAnimation(_Name);
 
+#ifdef _DEBUG	
 	if (nullptr == FindAni)
 	{
 		GameEngineDebug::AssertFalse();
 		return;
 	}
+#endif // DEBUG
 
 	FindAni->frameTime_[static_cast<size_t>(_index - FindAni->start_)] = _Time;
 
@@ -422,11 +417,13 @@ void GameEngineRenderer::SetChangeFrame(const std::string& _Name, int _index, fl
 
 int GameEngineRenderer::GetCurAnimationFrame()
 {
+#ifdef _DEBUG	
 	if (nullptr == curani_)
 	{
 		GameEngineDebug::AssertFalse();
 		return false;
 	}
+#endif // DEBUG
 
 	return curani_->cur_;
 }

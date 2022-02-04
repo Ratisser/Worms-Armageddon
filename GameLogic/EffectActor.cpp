@@ -19,6 +19,7 @@ EffectActor::EffectActor(EffectActor&& _other) noexcept :
 
 void EffectActor::Start()
 {
+
 }
 
 void EffectActor::UpdateBefore()

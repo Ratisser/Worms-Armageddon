@@ -13,7 +13,7 @@
 Explosion::Explosion():
 	Damage_(0),
 	LifeTime_(0.f),
-	DamageAll_(false),
+	DamageToDist_(false),
 	ExplosionCollision_(nullptr)
 {
 }
@@ -25,7 +25,7 @@ Explosion::~Explosion()
 Explosion::Explosion(Explosion&& _other) noexcept :
 	Damage_(0),
 	LifeTime_(0.f),
-	DamageAll_(false),
+	DamageToDist_(false),
 	ExplosionCollision_(nullptr)
 {
 }
@@ -42,6 +42,7 @@ void Explosion::UpdateBefore()
 
 void Explosion::Update()
 {
+#ifdef _DEBUG
 	LifeTime_ += GameEngineTime::GetInst().GetDeltaTime();
 
 	if (LifeTime_ > 1.f)
@@ -49,6 +50,7 @@ void Explosion::Update()
 		Death();
 		return;
 	}
+#endif // _DEBUG
 
 	// eCollisionGroup을 하나만 만들어 얘한테 할당하고, Worm이 충돌 여부를 검사하게 하는것이 훨씬 효율적일 것으로 보임
 
@@ -69,16 +71,24 @@ void Explosion::Update()
 			{
 				GameEngineDebug::MsgBoxError("Worm이 아닌 충돌체가 eCollisionGroup::PLAYER로 설정되었습니다.");
 			}
+#endif // _DEBUG
+			if (true == DamageToDist_)
+			{
+				float4 Wormpos = (*iter0)->GetCollisionPoint();
+				float dist = pos_.DistanceTo(Wormpos);
+				float size = ExplosionCollision_->GetSize().x;
+				dist = size - dist;
+
+				float Damage = (1 / size) * dist * Damage_;
+
+				reinterpret_cast<Worm*>(*iter0)->Damage(static_cast<int>(Damage));
+			}
+
 			else
 			{
 				reinterpret_cast<Worm*>(*iter0)->Damage(Damage_);
 			}
-#endif // _DEBUG
-
-#ifndef _DEBUG
-			Worm* wrom = (Worm*)((*iter0)->GetActor());
-			wrom->Damage(Damage_);
-#endif // !_DEBUG
+			
 			++iter0;
 		}
 	}

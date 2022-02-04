@@ -29,6 +29,7 @@
 
 #include "EffectActor.h"
 #include "ExplosionSize.h"
+#include "Effectkamismk.h"
 
 #include "BackgroundScatter.h"
 #include "Midground.h"
@@ -46,6 +47,7 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	windController_(nullptr),
+	loadingImage_(nullptr),
 	isDebugOn_(true),
 	randomGenerator_(),
 	isWormLanded_(false),// default constructer 디폴트 생성자
@@ -66,6 +68,7 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
 	windController_(nullptr),
+	loadingImage_(nullptr),
 	isDebugOn_(true),
 	randomGenerator_(),
 	isWormLanded_(false),
@@ -181,44 +184,49 @@ void PlayLevel::wormLoading()
 	GameEngineTime::GetInst().TimeCheck();
 }
 
-void PlayLevel::CreateExplosion100(float4 Pos, int _Damage, bool _DamageAll)
+void PlayLevel::CreateExplosion100(float4 Pos, int _Damage, bool _DamageToDist)
 {
 	ExplosionSize100* actor = CreateActor<ExplosionSize100>
 		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
-	actor->SetDamage(_Damage, _DamageAll);
+	actor->SetDamage(_Damage, _DamageToDist);
 
 	GroundUpdate100(Pos);
 }
 
-void PlayLevel::CreateExplosion75(float4 Pos, int _Damage, bool _DamageAll)
+void PlayLevel::CreateExplosion75(float4 Pos, int _Damage, bool _DamageToDist)
 {
 	ExplosionSize75* actor = CreateActor<ExplosionSize75>
 		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
-	actor->SetDamage(_Damage, _DamageAll);
+	actor->SetDamage(_Damage, _DamageToDist);
 
 	GroundUpdate75(Pos);
 }
 
-void PlayLevel::CreateExplosion50(float4 Pos, int _Damage, bool _DamageAll)
+void PlayLevel::CreateExplosion50(float4 Pos, int _Damage, bool _DamageToDist)
 {
 	ExplosionSize50* actor = CreateActor<ExplosionSize50>
 		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
-	actor->SetDamage(_Damage, _DamageAll);
+	actor->SetDamage(_Damage, _DamageToDist);
 
 	GroundUpdate50(Pos);
 }
 
-void PlayLevel::CreateExplosion25(float4 Pos, int _Damage, bool _DamageAll)
+void PlayLevel::CreateExplosion25(float4 Pos, int _Damage, bool _DamageToDist)
 {
 	ExplosionSize25* actor = CreateActor<ExplosionSize25>
 		(Pos);
 	actor->SetRenderOrder((int)RenderOrder::Effect);
-	actor->SetDamage(_Damage, _DamageAll);
+	actor->SetDamage(_Damage, _DamageToDist);
 
 	GroundUpdate25(Pos);
+}
+
+void PlayLevel::CreatePurpleStarEffect(float4 Pos)
+{
+	CreateActor<Effect::kamismk>(Pos);
 }
 
 void PlayLevel::GroundUpdate100(float4 _pos)
@@ -248,7 +256,7 @@ void PlayLevel::GroundUpdate25(float4 _pos)
 
 void PlayLevel::GroundUpdate13(float4 _pos)
 {
-	float4 _Pos = float4(_pos.x - 9.5f, _pos.y- 6.5f);
+	float4 _Pos = float4(_pos.x - 12.5f, _pos.y- 12.5f);
 	Train_->GroundUpdate13(_Pos);
 }
 

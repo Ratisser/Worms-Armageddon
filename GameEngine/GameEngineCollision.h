@@ -143,6 +143,11 @@ public:
 	float4 GetDebugRenderPos();
 
 	bool isCamEffect_;
+	
+	float4 GetSize()
+	{
+		return size_;
+	}
 
 private:
 	void SetActor(GameEngineActor* _parent)

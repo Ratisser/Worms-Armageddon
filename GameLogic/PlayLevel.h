@@ -55,10 +55,12 @@ public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
 
-	void CreateExplosion100(float4 Pos, int _Damage = 100, bool _DamageAll = false); //test
-	void CreateExplosion75(float4 Pos, int _Damage = 75, bool _DamageAll = false); //test
-	void CreateExplosion50(float4 Pos, int _Damage = 50, bool _DamageAll = false); //test
-	void CreateExplosion25(float4 Pos, int _Damage = 25, bool _DamageAll = false); //test
+	void CreateExplosion100(float4 Pos, int _Damage = 100, bool _DamageToDist = false); //test
+	void CreateExplosion75(float4 Pos, int _Damage = 75, bool _DamageToDist = false); //test
+	void CreateExplosion50(float4 Pos, int _Damage = 50, bool _DamageToDist = false); //test
+	void CreateExplosion25(float4 Pos, int _Damage = 25, bool _DamageToDist = false); //test
+
+	void CreatePurpleStarEffect(float4 Pos);
 
 	void GroundUpdate100(float4 _pos);
 	void GroundUpdate75(float4 _pos);

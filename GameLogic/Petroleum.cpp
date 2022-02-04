@@ -99,7 +99,8 @@ void Petroleum::Update()
 		else
 		{
 			prevPos_ = pos_;
-			SetMove(Dir_ * deltaTime_);
+			SetMove((Dir_.x + WindSpeed_/2) * deltaTime_, (Dir_.y + GravitySpeed/2) * deltaTime_);
+			//SetMove(Dir_ * deltaTime_);
 		}
 	}
 	else
@@ -221,12 +222,12 @@ void Petroleum::UpdateAfter()
 
 void Petroleum::Render()
 {
-//#ifdef _DEBUG	
-//	if (GetLevel<PlayLevel>()->GetDebug())
-//	{
-//		groundCollision_->DebugRender();
-//	}
-//#endif // DEBUG
+#ifdef _DEBUG	
+	if (GetLevel<PlayLevel>()->GetDebug())
+	{
+		groundCollision_->DebugRender();
+	}
+#endif // DEBUG
 	mainSpriteRender_->AnimationUpdate();
 
 }
@@ -235,6 +236,7 @@ void Petroleum::initCollision()
 {
 	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PETROLEUM), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
+	//groundCollision_->SetSize({ 10.f, 10.f });
 	groundCollision_->SetPivot({ 0.f, 1.f });
 }
 

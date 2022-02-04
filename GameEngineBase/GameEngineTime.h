@@ -31,7 +31,7 @@ private:
 	LARGE_INTEGER startCheck_;
 	LARGE_INTEGER endCheck_;
 	double deltaTime_;
-	float Second_;
+	double Second_;
 	int F_;
 	int FPS_;
 

@@ -19,7 +19,7 @@ DrumActor::DrumActor():
 	mainSpriteRender_(nullptr),
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	PetroleumSpeed(100.f),
+	PetroleumSpeed(150.f),
 	deltaTime_(0.f),
 	degree_(0.f),
 	WindSpeed_(0.f),
@@ -37,7 +37,7 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 	mainSpriteRender_(nullptr) , // default RValue Copy constructer 디폴트 RValue 복사생성자
 	groundCollision_(nullptr),
 	BodyCollision_(nullptr),
-	PetroleumSpeed(100.f),
+	PetroleumSpeed(150.f),
 	deltaTime_(0.f),
 	degree_(0.f),
 	WindSpeed_(0.f),
@@ -140,7 +140,6 @@ void DrumActor::initCollision()
 
 	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::RECT);
 	BodyCollision_->SetSize({ 30.f, 40.f });
-	//BodyCollision_->SetPivot({ 0, 0 });
 
 }
 
@@ -176,12 +175,11 @@ void DrumActor::DrumExplode()
 			RandomRot.x *= PetroleumSpeed;
 			RandomRot.y *= PetroleumSpeed;
 
-			Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
+			Petroleum* _Petroleum = parentLevel_->CreateActor<Petroleum>(pos_);
 			_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
 			_Petroleum->SetDir(RandomRot);
 			_Petroleum->SetWindSpeed(WindSpeed_);
 		}
-
 	}
 
 	//for (int i = 0; i < count; ++i)

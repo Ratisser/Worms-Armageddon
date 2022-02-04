@@ -8,7 +8,7 @@ class Explosion : public GameEngineActor
 protected:	// member Var
 	GameEngineCollision* ExplosionCollision_;
 	int Damage_;
-	bool DamageAll_;
+	bool DamageToDist_;
 
 	float LifeTime_;
 
@@ -29,10 +29,10 @@ public:
 	virtual void Render() override;
 
 	// DamageAll은 범위내 모든 플레이어에게 동일한 대미지를 입힐것인가 혹은 범위에서 멀어짐에 따라 감소할 것인가
-	void SetDamage(int _Damage, bool _DamageAll)
+	void SetDamage(int _Damage, bool _DamageToDist)
 	{
 		Damage_ = _Damage;
-		DamageAll_ = _DamageAll;
+		DamageToDist_ = _DamageToDist;
 	}
 };
 

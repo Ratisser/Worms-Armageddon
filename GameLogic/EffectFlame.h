@@ -21,7 +21,7 @@ namespace Effect
 		float GravityAcc;
 		float GravitySpeed;
 		float ExplodeSpeed;
-		float gentime;
+		float gentime_;
 		class Smkdrk30* smkdrk30_;
 	public:
 		float4 Dir_;

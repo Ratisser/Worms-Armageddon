@@ -29,6 +29,7 @@ enum class RenderOrder
 	Map,
 	Worm,
 	WaterLevel_Front,
+	Effect0,
 	Weapon,
 	Effect,
 	Effect1,

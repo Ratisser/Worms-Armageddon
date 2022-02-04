@@ -940,6 +940,10 @@ void EffectImageInit()
 		LoadGameImage("petrol-4", Dir.PathToPlusFileName("petrol-4.bmp"));
 	loadingImage->Cut({ 60,60 }); //64
 
+
+	loadingImage = GameEngineImage::GetInst().
+		LoadGameImage("kamismk", Dir.PathToPlusFileName("kamismk.bmp"));
+	loadingImage->Cut({ 60,60 }); //64
 }
 
 void LoadSoundInit()

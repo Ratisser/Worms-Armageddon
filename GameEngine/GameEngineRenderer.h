@@ -6,7 +6,6 @@
 #include <GameEngineMath.h>
 #include <GameEngineNameBase.h>
 #include <GameEngineDebug.h>
-
 // 사용자 정의 자료형
 // 보통 상태(하나의 객체가 몇가지 상태를 가진다고 할때)를 
 // 명시적으로 표현하고 싶을때 많이 사용합니다.
@@ -46,7 +45,7 @@ private:
 
 		// 에니메이션 프레임 호출 함수 : 이현
 		struct AnimationNotify
-		{			
+		{
 			int             Frame_; //함수 호출 프레임
 			std::function<void()>   FrameFunction_; //호출 함수
 		};
@@ -83,164 +82,12 @@ private:	// member Var
 	bool isCamEffect_;
 	float rotate_;
 	int alpha_;
-	
+
 private:
 	void SetActor(GameEngineActor* _parent)
 	{
 		actor_ = _parent;
 	}
-
-public:
-	void SetAlpha(const int _Value)
-	{
-		alpha_ = _Value;
-
-		if (255 <= alpha_)
-		{
-			alpha_ = 255;
-			return;
-		}
-
-		if (0 >= alpha_)
-		{
-			alpha_ = 0;
-			return;
-		}
-	}
-
-	void SetAddAlpha(const int _Value)
-	{
-		alpha_ += _Value;
-
-		if (255 <= alpha_)
-		{
-			alpha_ = 255;
-			return;
-		}
-
-		if (0 >= alpha_)
-		{
-			alpha_ = 0;
-			return;
-		}
-
-	}
-
-	void SetRotate(const float _Value)
-	{
-		rotate_ = _Value;
-	}
-
-	void SetAddRotate(const float _Value)
-	{
-		rotate_ += _Value;
-	}
-
-	void SetImagePivot(const float4& _Value)
-	{
-		imagePivot_ = _Value;
-	}
-
-	void SetPivotPos(const float4& _Value)
-	{
-		pivotpos_ = _Value;
-	}
-	void SetRenderSize(const float4& _Value)
-	{
-		rendersize_ = _Value;
-	}
-	void SetImagePos(const float4& _Value)
-	{
-		imagepos_ = _Value;
-	}
-	void SetImageSize(const float4& _Value)
-	{
-		imagesize_ = _Value;
-	}
-
-	void SetCameraEffectOn() 
-	{
-		isCamEffect_ = true;
-	}
-
-	void SetCameraEffectOff()
-	{
-		isCamEffect_ = false;
-	}
-
-	void SetImage(const std::string& _Name);
-	void SetImageNoSize(const std::string& _name);
-
-	void SetMaskImage(const std::string& _Name);
-
-	void SetImage(GameEngineImageFile* _image)
-	{
-		image_ = _image;
-	}
-
-	GameEngineImageFile* GetImage() {
-		return image_;
-	}
-
-	float4 GetImageSize()
-	{
-		return imagesize_;
-	}
-
-
-
-	void SetAnimationCurrentFrame(const std::string& _Name, const int index) // 에니메이션 cur_ 변경하는 함수 
-	{
-		FindAnimation(_Name)->cur_ = index;
-	}
-
-	void SetAnimationCurrentFrame(const int index) // 에니메이션 cur_ 변경하는 함수 
-	{
-		curani_->cur_ = index;
-	}
-
-	// 에니메이션 프레임 호출함수 : 이현
-	template <typename T>
-	void SetAnimationEndFunction(const std::string& Name, T* pObj,
-		void (T::* pFunc)())
-	{
-		FrameAnimation* fInfo = FindAnimation(Name);
-
-		if (nullptr == fInfo)
-		{
-			GameEngineDebug::MsgBoxError("에니메이션이 존재하지 않아 호출 함수가 지정되지 못했습니다.");
-			return;
-		}
-
-		fInfo->EndFunction_ = std::bind(pFunc, pObj);
-	}
-
-	template <typename T>
-	void SetAnimationFrameFunction(const std::string& Name, int Frame,
-		T* pObj, void (T::* pFunc)())
-	{
-		FrameAnimation* fInfo = FindAnimation(Name);
-
-		if (nullptr == fInfo)
-		{
-			GameEngineDebug::MsgBoxError("에니메이션이 존재하지 않아 호출 함수가 지정되지 못했습니다.");
-			return;
-		}
-
-		if(fInfo->end_ < Frame)
-		{ 
-			GameEngineDebug::MsgBoxError("에니메이션 함수의 호출 시점이 에니메이션의 프레임보다 큽니다.");
-			return;
-		}
-		FrameAnimation::AnimationNotify* fNotify = new FrameAnimation::AnimationNotify;
-
-		fNotify->Frame_ = Frame;
-		fNotify->FrameFunction_ = std::bind(pFunc, pObj);
-
-		fInfo->FrameFunctionList_.push_back(fNotify);
-	}
-	//
-
 
 public:
 	GameEngineRenderer(); // default constructer 디폴트 생성자
@@ -288,5 +135,158 @@ public:
 public:
 	void CurAnimationLoopEnd();
 	void CurAnimationReset();
+
+	public:
+		void SetAlpha(const int _Value)
+		{
+			alpha_ = _Value;
+
+			if (255 <= alpha_)
+			{
+				alpha_ = 255;
+				return;
+			}
+
+			if (0 >= alpha_)
+			{
+				alpha_ = 0;
+				return;
+			}
+		}
+
+		void SetAddAlpha(const int _Value)
+		{
+			alpha_ += _Value;
+
+			if (255 <= alpha_)
+			{
+				alpha_ = 255;
+				return;
+			}
+
+			if (0 >= alpha_)
+			{
+				alpha_ = 0;
+				return;
+			}
+
+		}
+
+		void SetRotate(const float _Value)
+		{
+			rotate_ = _Value;
+		}
+
+		void SetAddRotate(const float _Value)
+		{
+			rotate_ += _Value;
+		}
+
+		void SetImagePivot(const float4& _Value)
+		{
+			imagePivot_ = _Value;
+		}
+
+		void SetPivotPos(const float4& _Value)
+		{
+			pivotpos_ = _Value;
+		}
+		void SetRenderSize(const float4& _Value)
+		{
+			rendersize_ = _Value;
+		}
+		void SetImagePos(const float4& _Value)
+		{
+			imagepos_ = _Value;
+		}
+		void SetImageSize(const float4& _Value)
+		{
+			imagesize_ = _Value;
+		}
+
+		void SetCameraEffectOn()
+		{
+			isCamEffect_ = true;
+		}
+
+		void SetCameraEffectOff()
+		{
+			isCamEffect_ = false;
+		}
+
+		void SetImage(const std::string& _Name);
+		void SetImageNoSize(const std::string& _name);
+
+		void SetMaskImage(const std::string& _Name);
+
+		void SetImage(GameEngineImageFile* _image)
+		{
+			image_ = _image;
+		}
+
+		GameEngineImageFile* GetImage() {
+			return image_;
+		}
+
+		float4 GetImageSize()
+		{
+			return imagesize_;
+		}
+
+
+
+		void SetAnimationCurrentFrame(const std::string& _Name, const int index) // 에니메이션 cur_ 변경하는 함수 
+		{
+			FindAnimation(_Name)->cur_ = index;
+		}
+
+		void SetAnimationCurrentFrame(const int index) // 에니메이션 cur_ 변경하는 함수 
+		{
+			curani_->cur_ = index;
+		}
+
+		// 에니메이션 프레임 호출함수 : 이현
+		template <typename T>
+		void SetAnimationEndFunction(const std::string& Name, T* pObj,
+			void (T::* pFunc)())
+		{
+			FrameAnimation* fInfo = FindAnimation(Name);
+
+			if (nullptr == fInfo)
+			{
+				GameEngineDebug::MsgBoxError("에니메이션이 존재하지 않아 호출 함수가 지정되지 못했습니다.");
+				return;
+			}
+
+			fInfo->EndFunction_ = std::bind(pFunc, pObj);
+		}
+
+		template <typename T>
+		void SetAnimationFrameFunction(const std::string& Name, int Frame,
+			T* pObj, void (T::* pFunc)())
+		{
+			FrameAnimation* fInfo = FindAnimation(Name);
+
+			if (nullptr == fInfo)
+			{
+				GameEngineDebug::MsgBoxError("에니메이션이 존재하지 않아 호출 함수가 지정되지 못했습니다.");
+				return;
+			}
+
+			if (fInfo->end_ < Frame)
+			{
+				GameEngineDebug::MsgBoxError("에니메이션 함수의 호출 시점이 에니메이션의 프레임보다 큽니다.");
+				return;
+			}
+			FrameAnimation::AnimationNotify* fNotify = new FrameAnimation::AnimationNotify;
+
+			fNotify->Frame_ = Frame;
+			fNotify->FrameFunction_ = std::bind(pFunc, pObj);
+
+			fInfo->FrameFunctionList_.push_back(fNotify);
+		}
+		//
+
+
 };
 

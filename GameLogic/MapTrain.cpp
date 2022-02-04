@@ -159,17 +159,17 @@ void MapTrain::GroundUpdate13(float4 pos)
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender13_->GetImage(),
 		pos,
-		{ 19.f, 19.f },
+		{ 25.f, 25.f },
 		{ 0.f, 0.f },
-		{ 19.f, 19.f },
+		{ 25.f, 25.f },
 		RGB(0, 255, 0));
 
 	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
 	mapImage->TransCopy(boomEdgeSpriteRender13_->GetImage(),
 		pos,
-		{ 19.f, 19.f },
+		{ 25.f, 25.f },
 		{ 0.f, 0.f },
-		{ 19.f, 19.f },
+		{ 25.f, 25.f },
 		RGB(0, 255, 0));
 
 	mapImage->TransCopy(colSpriteRender_->GetImage(),

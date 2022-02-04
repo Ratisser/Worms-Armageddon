@@ -53,12 +53,12 @@ GameEngineActor::~GameEngineActor()
 
 }
 
-float4 GameEngineActor::GetCamEffectPos() 
+float4 GameEngineActor::GetCamEffectPos()
 {
 	return GetPos() - (parentLevel_->GetCamPos() * cameraEffectScale_);
 }
 
-void GameEngineActor::Collision() 
+void GameEngineActor::Collision()
 {
 
 }
