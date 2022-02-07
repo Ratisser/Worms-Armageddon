@@ -82,28 +82,28 @@ void BottomHealthBar::StartPosInit(int _wormNumber) // 웜의 번호를 받아 체력바의
 	switch (_wormNumber)
 	{
 	case 0:
-		SetPos({ 672, 580 });
+		SetPos({ 672, 610 });
 		break;
 	case 1:
-		SetPos({ 672, 600 });
+		SetPos({ 672, 630 });
 		break;
 	case 2:
-		SetPos({ 672, 620 });
+		SetPos({ 672, 650 });
 		break;
 	case 3:
-		SetPos({ 672, 640 });
+		SetPos({ 672, 670 });
 		break;
 	case 4:
-		SetPos({ 672, 660 });
+		SetPos({ 672, 690 });
 		break;
 	case 5:
-		SetPos({ 672, 680 });
+		SetPos({ 672, 710 });
 		break;
 	case 6:
-		SetPos({ 672, 700 });
+		SetPos({ 672, 730 });
 		break;
 	case 7:
-		SetPos({ 672, 720 });
+		SetPos({ 672, 750 });
 		break;
 	default:
 		SetPos({ 0, 0 });

@@ -200,7 +200,6 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 		}
 	}
 
-
 	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
 	newArrow->SetParent(newWorm);
 
@@ -210,6 +209,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 
 
 	wormList_.push_back(newWorm);
+
 	xPosList_.push_back(wormXPosContainer_);
 	wormList_[0]->SetFocus(true);
 }

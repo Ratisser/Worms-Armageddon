@@ -1722,9 +1722,31 @@ StateInfo Worm::updateFirepunchFly(StateInfo _state)
 			mainRender_->ChangeAnimation("FirepunchEndRight", std::string("firePunchEndRight.bmp"));
 			return "FirepunchEnd";
 		}
+		if (nullptr != groundCheckCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+		{
+			speed_ = { 0.0f, 0.0f };
+			return "Idle";
+		}
 	}
 
 
+	if (nullptr != leftSideCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		SetMove({ 3.0f, 0.0f });
+		speed_.x *= -1.f;
+	}
+
+	if (nullptr != rightSideCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		SetMove({ -3.0f, 0.0f });
+		speed_.x *= 1.f;
+	}
+
+	if (speed_.y < 0 && nullptr != headCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		SetMove({ 0.0f, 1.0f });
+		speed_.y = 0.0f;
+	}
 
 	//SetMove(speed_ * deltaTime_);
 	normalMove();
