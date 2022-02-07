@@ -67,7 +67,7 @@ WeaponSheet::WeaponSheet(WeaponSheet&& _other) noexcept :
 void WeaponSheet::Start()
 {
 	// 렌더러 생성 및 카메라영향 제거
-	SetRenderOrder(static_cast<int>(RenderOrder::UI));
+	SetRenderOrder(static_cast<int>(RenderOrder::UI2));
 	mainrenderer = CreateRenderer("WeaponSheet");
 	mainrenderer->SetCameraEffectOff();
 
