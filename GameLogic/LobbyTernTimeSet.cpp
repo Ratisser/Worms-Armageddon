@@ -1,6 +1,7 @@
 #include "LobbyTernTimeSet.h"
 #include "eCollisionGroup.h"
 #include "GameOptionInfo.h"
+#include <time.h>
 
 #include <EngineEnum.h>
 #include <GameEngineWindow.h>
@@ -80,8 +81,10 @@ void LobbyTernTimeSet::UpdateBefore()
 			}
 			else
 			{
-				// 0는 무한대(infinity)로 취급
-				TernTime = 0;
+				// 무한대(infinity) 셋팅 시 20~100사이의 랜덤값으로 지정
+				srand((unsigned int)time(0));
+				int InfinityRandom = rand() % 100 + 20;
+				TernTime = InfinityRandom;
 			}
 
 			GameOptionInfo::TernTime = static_cast<float>(TernTime);
