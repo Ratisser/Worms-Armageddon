@@ -24,6 +24,7 @@ WeaponSheet::WeaponSheet() :
 	parentcontroller_(nullptr),
 	active_(false),
 	prevstate_(false),
+	forceternoff_(false),
 	mainrenderer(nullptr),
 	mouseobject_(nullptr),
 	activetargetpos_(float4::ZERO),
@@ -50,6 +51,7 @@ WeaponSheet::~WeaponSheet() // default destructer 디폴트 소멸자
 WeaponSheet::WeaponSheet(WeaponSheet&& _other) noexcept :
 	parentcontroller_(_other.parentcontroller_),
 	active_(_other.active_),
+	forceternoff_(_other.forceternoff_),
 	prevstate_(_other.prevstate_),
 	mainrenderer(_other.mainrenderer),
 	mouseobject_(_other.mouseobject_),
@@ -102,49 +104,13 @@ void WeaponSheet::Update()
 		float4 MousePos = GameEngineWindow::GetInst().GetMousePos();
 		float4 LeftTop = activetargetpos_ - mainrenderer->GetImageSize().halffloat4();
 		float4 RightBot = activetargetpos_ + mainrenderer->GetImageSize().halffloat4();
-
-
-		// GameEngineWindow::GetInst().SetMousePos(LeftTop.ix(), LeftTop.iy());
-		// LeftTop의 x보다 작아질때
-		// LeftTop의 y보다 작아질때
-		// RightBot의 x보다 커질때
-		// RightBot의 y보다 커질때
-
-		//if (MousePos.y <= LeftTop.y)
-		//{
-		//	if (MousePos.x <= LeftTop.x)
-		//	{
-		//		GameEngineWindow::GetInst().SetMousePos(LeftTop.ix(), LeftTop.iy());
-		//	}
-		//	else if (MousePos.x >= RightBot.x)
-		//	{
-		//		GameEngineWindow::GetInst().SetMousePos(RightBot.ix(), RightBot.iy());
-		//	}
-		//	else
-		//	{
-		//		GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), LeftTop.y);
-		//	}
-		//}
-		//else if (MousePos.y >= RightBot.y)
-		//{
-		//	//
-		//	if (MousePos.x <= LeftTop.x)
-		//	{
-
-		//	}
-		//	if (MousePos.x >= RightBot.x)
-		//	{
-
-		//	}
-		//}
-
 	}
-	else // 활성화 -> 비활성화
+	else if(true == prevstate_ && false == active_) // 활성화 -> 비활성화
 	{
 		// 비활성시에는 바로 마우스위치 제자리로돌린다.
 		weaponsheetactive_ = false;
 
-		if (disabletargetpos_.x >= GetPos().x)
+		if (disabletargetpos_.x > GetPos().x)
 		{
 			movepos_ += float4::RIGHT * GameEngineTime::GetInst().GetDeltaTime();
 			SetMove(movepos_ * movingspeed);
@@ -154,6 +120,7 @@ void WeaponSheet::Update()
 		else
 		{
 			moving_ = false;
+			forceternoff_ = false;
 		}
 
 		// 비활성화시에는 바로 Off시킴
@@ -187,6 +154,7 @@ void WeaponSheet::Render()
 void WeaponSheet::WeaponSheetActive()
 {
 	// 객체마다의 활성화/비활성화 여부 설정
+	prevstate_ = active_;
 	if (false == active_)
 	{
 		active_ = true;
@@ -203,6 +171,30 @@ void WeaponSheet::WeaponSheetActive()
 	{
 		IconStart->second->SetActive(active_);
 	}
+}
+
+void WeaponSheet::WeaponSheetTernOff()
+{
+	// 턴시간초과로 인한 턴전환시 강제로 무기창 및 무기아이콘리스트 위치 초기화
+	forceternoff_ = true;
+
+	prevstate_ = active_;
+	active_ = false;
+
+	// 모든 무기아이콘 Active상태 설정
+	std::map<std::string, WeaponIcon*>::iterator IconStart = weaponiconlist_.begin();
+	std::map<std::string, WeaponIcon*>::iterator IconEnd = weaponiconlist_.end();
+	for (; IconStart != IconEnd; ++IconStart)
+	{
+		IconStart->second->SetTernTimeOff();
+	}
+
+	// 위치 강제이동
+	SetPos(disabletargetpos_);
+
+	// Flag 초기화
+	moving_ = false;
+	forceternoff_ = false;
 }
 
 void WeaponSheet::SetRenderPos(const float4& _Active, const float4& _Disable)

@@ -96,42 +96,16 @@ void GameController::Start()
 
 void GameController::UpdateBefore()
 {
+	// UI
+	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
+	{
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+		prevwormIndex_ = wormIndex_;
+	}
 }
 
 void GameController::Update()
 {
-	// UI
-	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
-	{
-		if (wormIndex_ != MAX_WORM_COUNT)
-		{
-			// 이전 플레이어와 현재플레이어가 달라지면
-			// 이전플레이어의 무기창이 비활성화되고
-			// 현재 플레이어의 무기창이 활성화된다.
-			if (prevwormIndex_ != wormIndex_ && prevwormIndex_ != MAX_WORM_COUNT &&
-				true == wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->IsActive())
-			{
-				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-
-				// 마우스커서위치 강제셋팅
-				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
-				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
-
-				// 
-				prevwormIndex_ = wormIndex_;
-			}
-			else
-			{
-				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-
-				// 마우스커서위치 강제셋팅
-				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
-				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
-			}
-		}
-	}
-
 	state_.Update();
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
@@ -254,31 +228,35 @@ void GameController::CreateWormUI()
 		wormList_[i]->SetUIController(CurUIController);
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
-		std::string SheetName = wormList_[i]->GetName();
-		SheetName += "_WeaponSheet";
-		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
-
+		// 플레이어당 하단 UI 상태바 및 국기 지정
 		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->NameInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->StartPosInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->NationInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->StartPosInit(static_cast<int>(i));
-		
+
+		// 플레이어당 이름 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurWormName()->NameInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormName()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 현재플레이중인 플레이어 화살표 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 현재체력 표시 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurWormHPWindow()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 턴 타이머 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->SetParentWorm(wormList_[i]);
-
 		wormList_[i]->GetCurUIController()->GetCurTimerDigitTen()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurTimerDigit()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 무기창 지정 및 활성화 무기 지정
+		std::string SheetName = wormList_[i]->GetName();
+		SheetName += "_WeaponSheet";
+		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
@@ -295,7 +273,7 @@ void GameController::CreateWormUI()
 		ItemListTest[9] = eItemList::WEAPON_PNEUMATICDRILL;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
-		// 
+		// 무기창 기능 참고용
 		//CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
 		//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
 		ItemListTest.clear();
@@ -386,11 +364,19 @@ StateInfo GameController::updateAction(StateInfo _state)
 	if (GameEngineInput::GetInst().IsDown("TestKey"))
 	{
 		currentWorm_->SubtractActionToken(1);
+
+		// 강제전환으로인한 무기창 및 무기아이콘 비활성화
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+
 		currentTurnTime_ = 0.0f;
 	}
 
 	if (currentTurnTime_ < 0)
 	{
+		// 턴시간 초과로 인한 플레이어 전환이 발생하므로 이곳에서
+		// 무기창 비활성이 된다.
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+
 		return "ActionEnd";
 	}
 	return StateInfo();

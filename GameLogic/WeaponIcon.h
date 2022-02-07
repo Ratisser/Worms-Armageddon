@@ -19,6 +19,7 @@ private:
 
 private:
 	bool active_;
+	bool prevstate_;
 
 private:	// member Var
 	std::string weaponname_;
@@ -71,6 +72,9 @@ public:
 	
 public: // 아이템아이콘활성화여부체크
 	bool IsMainrendererOn();
+
+public: // 턴시간 초과 및 강제 턴전환으로 인한 비활성화
+	void SetTernTimeOff();
 
 public:
 	virtual void Start() override;

@@ -7,7 +7,7 @@
 #include <GameEngineImageFile.h>
 #include <GameEngineImage.h>
 
-bool LobbyHost::curhostready_ = false;
+bool LobbyHost::curhostready_ = true;
 
 void LobbyHost::SetCurHostReady(bool _Flag)
 {

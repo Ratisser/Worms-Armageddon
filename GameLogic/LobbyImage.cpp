@@ -8,7 +8,7 @@
 #include <GameEngineCollision.h>
 
 LobbyImage::LobbyImage() :
-	hostready_(false),
+	hostready_(true),
 	backdropSpriteRender_(nullptr),
 	hostboxSpriteRender_(nullptr),
 	hostreadySpriteRender_(nullptr),
@@ -49,7 +49,7 @@ void LobbyImage::Start()
 	hostboxSpriteRender_->SetCameraEffectOff();
 
 	// Host Ready Button Image
-	hostreadySpriteRender_ = CreateRenderer("Lobby_HostReadyOff");
+	hostreadySpriteRender_ = CreateRenderer("Lobby_HostReadyOn");
 	ImageHarfSize = hostreadySpriteRender_->GetImageSize().halffloat4();
 	hostreadySpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 230.f));
 	hostreadySpriteRender_->SetRenderSize(float4(200.f, 150.f));

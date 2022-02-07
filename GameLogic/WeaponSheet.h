@@ -22,8 +22,9 @@ private:
 	UIController* parentcontroller_;
 
 private:
-	bool active_;
-	bool prevstate_;
+	bool active_;							// 현재 활성/비활성
+	bool prevstate_;						// 이전 활성/비활성
+	bool forceternoff_;				// 강제 턴전환 또는 시간초과로인한 턴전환
 
 private:	// member Var
 	GameEngineRenderer* mainrenderer;		// WeaponSheet(Temp) 렌더러
@@ -78,6 +79,7 @@ public:
 	}
 
 	void WeaponSheetActive();
+	void WeaponSheetTernOff();
 	void SetRenderPos(const float4& _Active, const float4& _Disable);
 
 public:
