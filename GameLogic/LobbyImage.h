@@ -9,6 +9,7 @@ class LobbyImage : public GameEngineActor
 {
 private:
 	bool hostready_;
+	bool mouseover_;
 
 private:	// member Var
 	GameEngineRenderer* backdropSpriteRender_;

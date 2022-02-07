@@ -10,6 +10,7 @@ class LobbyRoundTimeSet : public GameEngineActor
 {
 private:	// member Var
 	int ImageIndex_;
+	bool MouseOver_;
 
 private:
 	GameEngineRenderer* mainrenderer_;

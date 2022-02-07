@@ -10,6 +10,7 @@
 
 LobbyWormSelectSet::LobbyWormSelectSet() :
 	ImageIndex_(0),
+	MouseOver_(false),
 	mainrenderer_(nullptr),
 	maincollision_(nullptr)
 {
@@ -23,6 +24,7 @@ LobbyWormSelectSet::~LobbyWormSelectSet() // default destructer 디폴트 소멸자
 
 LobbyWormSelectSet::LobbyWormSelectSet(LobbyWormSelectSet&& _other) noexcept :
 	ImageIndex_(_other.ImageIndex_),
+	MouseOver_(_other.MouseOver_),
 	mainrenderer_(_other.mainrenderer_),
 	maincollision_(_other.maincollision_)
 {
@@ -47,6 +49,18 @@ void LobbyWormSelectSet::UpdateBefore()
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		if (false == MouseOver_)
+		{
+			// MouseOver
+			std::string ImageName = "Lobby_BasicOption_WormSelect";
+			ImageName += std::to_string(ImageIndex_);
+			ImageName += "_MouseOver";
+			mainrenderer_->SetImage(ImageName);
+
+			// 마우스 충돌중 On
+			MouseOver_ = true;
+		}
+
 		// 다음옵션이동
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
@@ -61,6 +75,12 @@ void LobbyWormSelectSet::UpdateBefore()
 			// 이미지 전환
 			std::string ImageName = "Lobby_BasicOption_WormSelect";
 			ImageName += std::to_string(ImageIndex_);
+			if (true == MouseOver_)
+			{
+				ImageName += "_MouseOver";
+				MouseOver_ = false;
+			}
+
 			mainrenderer_->SetImage(ImageName);
 
 			// 옵션설정 클래스에 전달
@@ -88,6 +108,12 @@ void LobbyWormSelectSet::UpdateBefore()
 			// 이미지 전환
 			std::string ImageName = "Lobby_BasicOption_WormSelect";
 			ImageName += std::to_string(ImageIndex_);
+			if (true == MouseOver_)
+			{
+				ImageName += "_MouseOver";
+				MouseOver_ = false;
+			}
+
 			mainrenderer_->SetImage(ImageName);
 
 			// 옵션설정 클래스에 전달
@@ -100,6 +126,15 @@ void LobbyWormSelectSet::UpdateBefore()
 
 			GameOptionInfo::WormSelect = WormSelect;
 		}
+	}
+	else
+	{
+		// MouseOver 해제
+		std::string ImageName = "Lobby_BasicOption_WormSelect";
+		ImageName += std::to_string(ImageIndex_);
+		mainrenderer_->SetImage(ImageName);
+
+		MouseOver_ = false;
 	}
 }
 
