@@ -17,6 +17,7 @@
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
+#include "GameOptionInfo.h"
 
 #include "Bazooka.h"
 #include "FirePunch.h"
@@ -55,7 +56,7 @@ Worm::Worm()
 	, nextState_("")
 	, bFocus_(false)
 	, uicontroller_(nullptr)
-	, hp_(100)
+	, hp_(GameOptionInfo::WormEnergy)
 	, actionToken_(0)
 	, bulletFocusActor_(nullptr)
 	, blowTorchMoveTime_(3.f)
