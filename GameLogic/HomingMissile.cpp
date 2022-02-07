@@ -6,6 +6,7 @@
 #include <GameEngineLevelManager.h>
 #include <GameEngineLevel.h>
 #include <GameEngineCollision.h>
+#include <GameEngineSoundManager.h>
 
 #include "WindController.h"
 #include "eCollisionGroup.h"
@@ -31,7 +32,9 @@ HomingMissile::HomingMissile()
 	, rotAngle_(0.f)
 	, endTime_(3.f)
 	, homingTime(0.f)
-	, targetPos_ (float4::ZERO)
+	, targetPos_(float4::ZERO)
+	, soundWhoosh_("ShotGunFire.wav")
+	, bHomingSound_(true)
 {
 
 }
@@ -58,6 +61,8 @@ void HomingMissile::Start()
 	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 
 	wormPos_ = pos_;
+
+	GameEngineSoundManager::GetInstance().PlaySoundByName("ShotGunFire.wav");
 }
 
 void HomingMissile::UpdateBefore()
@@ -92,6 +97,12 @@ void HomingMissile::Update()
 		}
 		else if (endTime_ >= 0.f)
 		{
+			if (true == bHomingSound_)
+			{				
+				GameEngineSoundManager::GetInstance().PlaySoundByName("WEAPONHOMING.WAV");
+				bHomingSound_ = false;
+			}
+
 			endTime_ -= deltaTime_;
 			homingTime -= deltaTime_;
 
@@ -167,6 +178,8 @@ void HomingMissile::Update()
 	}
 	else
 	{
+		GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->CreateExplosion100(pos_);
 

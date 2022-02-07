@@ -1413,6 +1413,8 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 
 		mouseTargetPos_ = MousePos;
 
+		GameEngineSoundManager::GetInstance().PlaySoundByName("CursorSelect.wav");
+
 		mouse->MouseBlock(true);
 
 		return "HomingAim";
