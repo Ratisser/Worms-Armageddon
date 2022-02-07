@@ -47,6 +47,7 @@ void LobbyWormEnergySet::UpdateBefore()
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		// 다음옵션이동
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
 			// 현재 이미지 인덱스 증가
@@ -66,6 +67,37 @@ void LobbyWormEnergySet::UpdateBefore()
 			int WormEnergy = GameOptionInfo::WormEnergy;
 			WormEnergy += 50;
 			if (0 == ImageIndex_)
+			{
+				WormEnergy = 50;
+			}
+
+			GameOptionInfo::WormEnergy = WormEnergy;
+		}
+
+		// 이전옵션이동
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseRButton"))
+		{
+			// 현재 이미지 인덱스 증가
+			--ImageIndex_;
+
+			if (0 > ImageIndex_)
+			{
+				ImageIndex_ = 3;
+			}
+
+			// 이미지 전환
+			std::string ImageName = "Lobby_BasicOption_WormEnergy";
+			ImageName += std::to_string(ImageIndex_);
+			mainrenderer_->SetImage(ImageName);
+
+			// 옵션설정 클래스에 전달
+			int WormEnergy = GameOptionInfo::WormEnergy;
+			WormEnergy -= 50;
+			if (3 == ImageIndex_)
+			{
+				WormEnergy = 200;
+			}
+			else if (0 == ImageIndex_)
 			{
 				WormEnergy = 50;
 			}

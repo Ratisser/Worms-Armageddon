@@ -64,11 +64,6 @@ void ChattingInput::Start()
 	chattinInputBoxCollision_->SetPivot(float4(500.f + 10.f, 16.f + 650.f));
 
 	// Å°µî·Ï
-	if (false == GameEngineInput::GetInst().IsKey("LobbyLevel_MouseLButton"))
-	{
-		GameEngineInput::GetInst().CreateKey("LobbyLevel_MouseLButton", VK_LBUTTON);
-	}
-
 	if (false == GameEngineInput::GetInst().IsKey("Chatting_End"))
 	{
 		GameEngineInput::GetInst().CreateKey("Chatting_End", VK_RETURN);

@@ -47,9 +47,10 @@ void LobbyRoundTimeSet::UpdateBefore()
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		// 다음옵션이동
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
-			// 현재 이미지 인덱스 증가
+			// 현재 이미지 인덱스 감소
 			++ImageIndex_;
 
 			if (6 < ImageIndex_)
@@ -68,6 +69,33 @@ void LobbyRoundTimeSet::UpdateBefore()
 			if (0 == ImageIndex_)
 			{
 				RoundTime = 0;
+			}
+
+			GameOptionInfo::RoundTime = RoundTime;
+		}
+
+		// 이전옵션이동
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseRButton"))
+		{
+			// 현재 이미지 인덱스 증가
+			--ImageIndex_;
+
+			if (0 > ImageIndex_)
+			{
+				ImageIndex_ = 6;
+			}
+
+			// 이미지 전환
+			std::string ImageName = "Lobby_BasicOption_RoundTime";
+			ImageName += std::to_string(ImageIndex_);
+			mainrenderer_->SetImage(ImageName);
+
+			// 옵션설정 클래스에 전달
+			int RoundTime = GameOptionInfo::RoundTime;
+			RoundTime -= 5;
+			if (6 == ImageIndex_)
+			{
+				RoundTime = 30;
 			}
 
 			GameOptionInfo::RoundTime = RoundTime;

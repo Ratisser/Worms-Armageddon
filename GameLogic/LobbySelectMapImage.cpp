@@ -59,7 +59,7 @@ void LobbySelectMapImage::UpdateBefore()
 	if (nullptr != ColUI)
 	{
 		// 마우스 오른쪽버튼 체크
-		if (true == GameEngineInput::GetInst().IsDown("Lobby_MapSelect"))
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseRButton"))
 		{
 			// 메인렌더러 이미지 변경
 			++curmapimage_;

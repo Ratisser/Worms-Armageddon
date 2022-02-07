@@ -3,7 +3,7 @@
 //======================= Game Basic Option =======================//
 
 // 턴타임
-// TernTime = 0 무한대(턴제한없음)
+// TernTime = 무한대이면 랜덤타임적용
 float GameOptionInfo::TernTime = 45.f;
 
 // 라운드타임

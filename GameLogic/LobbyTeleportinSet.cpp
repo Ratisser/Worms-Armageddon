@@ -47,6 +47,7 @@ void LobbyTeleportinSet::UpdateBefore()
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		// 다음옵션이동
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
 			// 현재 이미지 인덱스 증가
@@ -55,6 +56,36 @@ void LobbyTeleportinSet::UpdateBefore()
 			if (1 < ImageIndex_)
 			{
 				ImageIndex_ = 0;
+			}
+
+			// 이미지 전환
+			std::string ImageName = "Lobby_BasicOption_Teleportin";
+			ImageName += std::to_string(ImageIndex_);
+			mainrenderer_->SetImage(ImageName);
+
+			// 옵션설정 클래스에 전달
+			bool Teleportin = GameOptionInfo::Teleportin;
+			if (false == Teleportin)
+			{
+				Teleportin = true;
+			}
+			else
+			{
+				Teleportin = false;
+			}
+
+			GameOptionInfo::Teleportin = Teleportin;
+		}
+
+		// 이전옵션이동
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseRButton"))
+		{
+			// 현재 이미지 인덱스 감소
+			--ImageIndex_;
+
+			if (0 > ImageIndex_)
+			{
+				ImageIndex_ = 1;
 			}
 
 			// 이미지 전환

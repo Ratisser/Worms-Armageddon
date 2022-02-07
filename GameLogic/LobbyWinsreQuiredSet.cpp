@@ -46,6 +46,7 @@ void LobbyWinsreQuiredSet::UpdateBefore()
 	GameEngineCollision* ColUI = maincollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		// 다음 옵션이동
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
 			// 현재 이미지 인덱스 증가
@@ -77,7 +78,42 @@ void LobbyWinsreQuiredSet::UpdateBefore()
 				WinSreuired += 2;
 			}
 
-			int a = 0;
+			GameOptionInfo::WinSreuired = WinSreuired;
+		}
+
+		// 이전옵션이동
+		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseRButton"))
+		{
+			// 현재 이미지 인덱스 증가
+			--ImageIndex_;
+
+			if (0 > ImageIndex_)
+			{
+				ImageIndex_ = 6;
+			}
+
+			// 이미지 전환
+			std::string ImageName = "Lobby_BasicOption_WinSrequired";
+			ImageName += std::to_string(ImageIndex_);
+			mainrenderer_->SetImage(ImageName);
+
+			// 옵션설정 클래스에 전달
+			int WinSreuired = GameOptionInfo::WinSreuired;
+			if (3 <= ImageIndex_)
+			{
+				if (6 == ImageIndex_)
+				{
+					WinSreuired = 9;
+				}
+				else
+				{
+					WinSreuired -= 2;
+				}
+			}
+			else if (0 <= ImageIndex_)
+			{
+				WinSreuired -= 1;
+			}
 			GameOptionInfo::WinSreuired = WinSreuired;
 		}
 	}
