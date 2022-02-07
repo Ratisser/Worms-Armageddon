@@ -218,5 +218,10 @@ public:
 	{
 		return currentWeapon_;
 	}
+
+	int GetCurHP()
+	{
+		return hp_;
+	}
 };
 

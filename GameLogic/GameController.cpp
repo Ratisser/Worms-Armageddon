@@ -20,6 +20,7 @@
 #include "WormName.h"
 #include "TimerBlankWindow.h"
 #include "TimerDigit.h"
+#include "WormHPNumber.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -258,6 +259,19 @@ void GameController::CreateWormUI()
 		std::string SheetName = wormList_[i]->GetName();
 		SheetName += "_WeaponSheet";
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetDigitToHundred();
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->HPInit();
+
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetDigitToTen();
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->HPInit();
+
+		wormList_[i]->GetCurUIController()->GetCurHPNumber()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurHPNumber()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurHPNumber()->HPInit();
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;

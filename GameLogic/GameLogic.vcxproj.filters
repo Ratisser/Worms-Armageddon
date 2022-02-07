@@ -390,6 +390,9 @@
     <ClInclude Include="WormHPBlankWindow.h">
       <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClInclude>
+    <ClInclude Include="WormHPNumber.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -633,6 +636,9 @@
       <Filter>Actor\PlayLevel\UI\HUD\Timer</Filter>
     </ClCompile>
     <ClCompile Include="WormHPBlankWindow.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="WormHPNumber.cpp">
       <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClCompile>
   </ItemGroup>
