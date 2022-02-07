@@ -4,7 +4,7 @@
 class GameOptionInfo
 {
 public: // 게임기본옵션
-	static int TernTime;
+	static float TernTime;
 	static int RoundTime;
 	static int WinSreuired;
 	static int WormSelect;

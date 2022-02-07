@@ -63,7 +63,7 @@ void LobbyTernTimeSet::UpdateBefore()
 			mainrenderer_->SetImage(ImageName);
 
 			// 옵션설정 클래스에 전달
-			int TernTime = GameOptionInfo::TernTime;
+			int TernTime = static_cast<int>(GameOptionInfo::TernTime);
 			if (3 >= ImageIndex_)
 			{
 				// 이전에 무한대 옵션인것을 감안하여 미리 더한다
@@ -84,7 +84,7 @@ void LobbyTernTimeSet::UpdateBefore()
 				TernTime = 0;
 			}
 
-			GameOptionInfo::TernTime = TernTime;
+			GameOptionInfo::TernTime = static_cast<float>(TernTime);
 		}
 	}
 }

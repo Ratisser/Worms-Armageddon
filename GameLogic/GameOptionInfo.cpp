@@ -4,7 +4,7 @@
 
 // 턴타임
 // TernTime = 0 무한대(턴제한없음)
-int GameOptionInfo::TernTime = 45;
+float GameOptionInfo::TernTime = 45.f;
 
 // 라운드타임
 int GameOptionInfo::RoundTime = 15;

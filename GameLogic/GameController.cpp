@@ -6,6 +6,7 @@
 #include <GameEngineInput.h>
 #include <GameEngineDebugExtension.h>
 
+#include "GameOptionInfo.h"
 #include "Worm.h"
 #include "UIController.h"
 #include "WeaponSheet.h"
@@ -345,7 +346,10 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 	}
 
 	currentWorm_->AddActionToken(1);
-	currentTurnTime_ = DEFAULT_TURN_TIME;
+
+	// 대기실 턴타임셋팅에 따라 턴타임이 달라짐 - 220207 SJH 수정
+	currentTurnTime_ = GameOptionInfo::TernTime;
+	//currentTurnTime_ = DEFAULT_TURN_TIME;
 	return "Action";
 }
 
