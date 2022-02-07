@@ -239,9 +239,13 @@ void WormHPNumber::HPInit()
 	if (true == isDigitTen_)
 	{
 		defaultHP /= 10;
-		if (10 == defaultHP)
+		if (20 <= defaultHP)
 		{
-			defaultHP = 0;
+			defaultHP -= 20;
+		}
+		else if (10 <= defaultHP)
+		{
+			defaultHP -= 10;
 		}
 		mainRender_->ChangeAnimation(std::to_string(defaultHP));
 		return;
@@ -267,9 +271,13 @@ void WormHPNumber::UpdateHP(int _hp)
 	if (true == isDigitTen_)
 	{
 		parentCurHP /= 10;
-		if (10 == parentCurHP)
+		if (20 <= parentCurHP)
 		{
-			parentCurHP = 0;
+			parentCurHP -= 20;
+		}
+		else if (10 <= parentCurHP)
+		{
+			parentCurHP -= 10;
 		}
 		mainRender_->ChangeAnimation(std::to_string(parentCurHP));
 		return;
