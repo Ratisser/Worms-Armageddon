@@ -255,23 +255,23 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurTimerDigitTen()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurTimerDigit()->SetParentWorm(wormList_[i]);
 
-		// 플레이어당 무기창 지정 및 활성화 무기 지정
-		std::string SheetName = wormList_[i]->GetName();
-		SheetName += "_WeaponSheet";
-		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
+		// 플레이어당 체력표시텍스트 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetDigitToHundred();
 		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->HPInit();
-
 		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetDigitToTen();
 		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->HPInit();
-
 		wormList_[i]->GetCurUIController()->GetCurHPNumber()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurHPNumber()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurHPNumber()->HPInit();
+
+		// 플레이어당 무기창 지정 및 활성화 무기 지정
+		std::string SheetName = wormList_[i]->GetName();
+		SheetName += "_WeaponSheet";
+		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
