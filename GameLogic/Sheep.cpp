@@ -180,6 +180,11 @@ StateInfo Sheep::startWalk(StateInfo _state)
 
 StateInfo Sheep::updateWalk(StateInfo _state)
 {
+	if (GameEngineInput::GetInst().IsDown("Explosion"))
+	{
+		return "Explosion";
+	}
+
 	addGravity();
 	if (bLeft_)
 	{
@@ -214,11 +219,6 @@ StateInfo Sheep::updateWalk(StateInfo _state)
 		speed_.y = 0.0f;
 	}
 
-	if (GameEngineInput::GetInst().IsDown("Explosion"))
-	{
-		return "Explosion";
-	}
-
 	normalMove();
 	return StateInfo();
 }
@@ -229,6 +229,7 @@ StateInfo Sheep::startExplosion(StateInfo _state)
 	level->CreateExplosion100(pos_);
 	explosionDelay_ = 2.0f;
 	mainRender_->Off();
+	GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 	return StateInfo();
 }
 

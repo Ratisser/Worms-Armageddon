@@ -324,6 +324,7 @@ void GameController::initState()
 
 StateInfo GameController::startNextWorm(StateInfo _state)
 {
+	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
 	return "";
 }
 

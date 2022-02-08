@@ -25,7 +25,6 @@ Bazooka::Bazooka()
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, degree_(0.f)
-	, soundWhoosh_("ShotGunFire.wav")
 {
 
 }
@@ -47,7 +46,7 @@ void Bazooka::Start()
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 
-	GameEngineSoundManager::GetInstance().PlaySoundByName("ShotGunFire.wav");
+	GameEngineSoundManager::GetInstance().PlaySoundByName("ROCKETRELEASE.WAV");
 }
 
 void Bazooka::UpdateBefore()

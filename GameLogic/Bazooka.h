@@ -48,8 +48,6 @@ private:
 	float degree_;
 	float deltaTime_;
 
-	GameEngineSoundPlayer soundWhoosh_;
-
 public:
 	void SetBazooka(float4 _direction, float _firePower)
 	{

@@ -789,6 +789,27 @@ void SoundLoad()
 		}
 	}
 
+	{
+		fs::path path(fs::current_path());
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			path = path.parent_path();
+		}
+
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			GameEngineDebug::MsgBoxError("존재하지 않는 경로 \"Worms-Armageddon\"");
+		}
+
+
+		path = path / "Resources" / "Sound" / "English";
+
+		for (const fs::path& p : fs::directory_iterator(path))
+		{
+			RS::LoadSoundFromFile(p.string());
+		}
+	}
+
 	GameEngineDirectroy dir = GameEngineDirectroy();
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Sound\\Effects");

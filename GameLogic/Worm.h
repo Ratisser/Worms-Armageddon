@@ -48,6 +48,16 @@ public:
 	void BulletFocusOn(GameEngineActor* _actor);
 	void BulletFocusOff();
 
+	eItemList GetCurrentWeapon() const
+	{
+		return currentWeapon_;
+	}
+
+	int GetCurHP()
+	{
+		return hp_;
+	}
+
 private:
 	void initRenderer();
 	void initInput();
@@ -182,6 +192,7 @@ private:
 	GameEngineFSM<Worm> state_;
 
 	GameEngineSoundPlayer soundWhoosh_;
+	GameEngineSoundPlayer soundPowerUp_;
 
 	float4 accelation_;
 	float4 speed_;
@@ -213,15 +224,6 @@ private:
 
 	GameEngineActor* bulletFocusActor_;
 
-public:
-	eItemList GetCurrentWeapon() const
-	{
-		return currentWeapon_;
-	}
 
-	int GetCurHP()
-	{
-		return hp_;
-	}
 };
 
