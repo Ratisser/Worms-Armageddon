@@ -11,6 +11,8 @@
 #include <GameEngineImage.h>
 #include <GameEngineImageFile.h>
 
+int LobbyCreateTeam::PlayWormCount = 0;
+
 LobbyCreateTeam::LobbyCreateTeam() :
 	playerselInputSpriteRender_(nullptr),
 	playerboxSpriteRender_(nullptr),
@@ -60,23 +62,9 @@ void LobbyCreateTeam::Start()
 	playerselboxSpriteRender_->SetRenderSize(float4(250.f, 150.f));
 	playerselboxSpriteRender_->SetCameraEffectOff();
 
-	// 220127 SJH 임시주석 : CPU 기능 없음
-	// 선택가능한 플레이어 목록에 CPU 추가
-	// 무조건 5개 생성한다.
-	//for (int i = 0; i < 5; ++i)
-	//{
-		//std::string CPUName = "CPU";
-		//CPUName += std::to_string((i + 1));
-
-		//LobbySelectablePlayer* NewPlayer = GetLevel()->CreateActor<LobbySelectablePlayer>();
-		//NewPlayer->CreatePlayer(CPUName, i + Index + 1, i, false);
-
-		//SelectablePlayerList.push_back(NewPlayer);
-	//}
-
 	// 선택가능한 플레이어 목록 생성
 	int Index = 0;
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < 6; ++i)
 	{
 		std::string PlayerName = std::to_string(i + 1);
 		PlayerName += "-UP";
@@ -84,8 +72,6 @@ void LobbyCreateTeam::Start()
 		LobbySelectablePlayer* NewPlayer = GetLevel()->CreateActor<LobbySelectablePlayer>();
 		NewPlayer->CreatePlayer(PlayerName, i, 0);
 		SelectablePlayerList.push_back(NewPlayer);
-
-		//Index = i;
 	}
 
 	for (int i = 0; i < static_cast<int>(SelectablePlayerList.size()); ++i)
@@ -144,6 +130,9 @@ void LobbyCreateTeam::Render()
 
 void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 {
+	// 현재 선택된 플레이어 인덱스 저장
+	CurSelectIndex_.push_back(_Index);
+
 	// 넘겨받은 플레이어명으로 플레이어인지 CPU인지 판단한다.
 	std::string CurSelPlayerName = _Name;
 	
@@ -174,6 +163,9 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 
 	SelectPlayerRendererList.push_back(NewRender);
 
+	// 현재 선택한 플레이어 수 저장
+	PlayWormCount = static_cast<int>(SelectPlayerRendererList.size());
+
 	// 플레이어이름 표시 및 선택한 플레이어이름목록에 추가
 	int NameListSize = static_cast<int>(SelectPlayerNameList.size());
 	SelectPlayerNameList.push_back(CurSelPlayerName);
@@ -184,34 +176,107 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	NamePos.y = 28.f + (RenderListSize * 36.f);
 	SelectPlayerNamePosList.push_back(NamePos);
 
-	// 기존 선택가능플레이어목록에서 현재 선택된 플레이어를 Off
+	// 선택가능 플레이어목록에서 현재 선택된 플레이어 Off
 	SelectablePlayerList[_Index]->SetPlayerOff();
 	SelectablePlayerList[_Index]->DelActiveIndex();
 
 	// 현재 활성화해야하는 플레이어 인덱스 저장
-	// 단, 현재 선택된 비활성화된 인덱스를 제외한 인덱스부터
-	// 계산해야한다.
-	// 만약 1번 인덱스의 플레이어를 선택했을때 0번인덱스가 남아있다면
-	// 1번인덱스 ~ 최대표시개수까지 표시되어야하며,
-	// 즉, 1번인덱스 ~ 3번인덱스까지 표시되어야한다.
-	ActiveStartIndex_ = _Index + 1;
-	ActiveEndIndex_ = 8 - (4 - ActiveStartIndex_ + _Index);
-	if (8 <= ActiveEndIndex_)
+	// 선택가능 플레이어 목록에서 첫번째로 On이 되어있는
+	// 인덱스를 탐색
+	int SelectablePlayerSize = static_cast<int>(SelectablePlayerList.size());
+	int FistOnPlayerIdx = -1;
+	for (int i = 0; i < SelectablePlayerSize; ++i)
 	{
-		ActiveEndIndex_ = 8;
+		if (true == SelectablePlayerList[i]->GetCurPlayerShow())
+		{
+			FistOnPlayerIdx = i;
+			break;
+		}
 	}
+
+	// 기존 선택가능플레이어목록전체 렌더링 Off
+	for (int i = 0; i < SelectablePlayerSize; ++i)
+	{
+		SelectablePlayerList[i]->SetPlayerOff();
+		SelectablePlayerList[i]->DelActiveIndex();
+	}
+
+	// 최대 4명의 선택가능 플레이어가 표시되므로
+	// 전체선택가능 플레이어목록에서 4명인덱스 추출하여
+	// 선택가능플레이어 목록 갱신을 위한 인덱스 추출
+	ActiveStartIndex_ = FistOnPlayerIdx;
+	ActiveEndIndex_ = FistOnPlayerIdx + 4;
 }
 
 void LobbyCreateTeam::SetSelectablePlayerSort()
 {
+	if (ActiveStartIndex_ == static_cast<int>(SelectablePlayerList.size()))
+	{
+		return;
+	}
+	else if (-1 == ActiveStartIndex_)
+	{
+		return;
+	}
+
 	// ActiveStartIndex_ ~ ActiveEndIndex_ 까지의 선택가능플레이어 목록의 플레이어 활성화
-	int CalcIndex = ActiveStartIndex_ - 1;
+	int CalcIndex = 0;
+	int activeidx = -1;
+	int addindex = -1;
+	int continuecnt = 0;
+	bool Flag = false;
+	bool SamePlayer = false;
 	for (int i = ActiveStartIndex_; i < ActiveEndIndex_; ++i)
 	{
+		// 선택가능 플레이어목록의 최대치를 넘어가면 중단
+		if (i >= static_cast<int>(SelectablePlayerList.size()))
+		{
+			break;
+		}
+
+		// 현재 선택된 플레이어는 제외
+		if (false == SamePlayer)
+		{
+			for (int j = 0; j < static_cast<int>(CurSelectIndex_.size()); ++j)
+			{
+				if (i == CurSelectIndex_[j])
+				{
+					Flag = true;
+					SamePlayer = true;
+					++continuecnt;
+				}
+			}
+
+			if (true == SamePlayer)
+			{
+				SamePlayer = false;
+				continue;
+			}
+		}
+
 		SelectablePlayerList[i]->ChangePlayerPos(float4(272.f, (245.f + (CalcIndex * 36.f))), float4(230.f, (236.f + (CalcIndex * 34.f))), float4(32.f, 32.f));
 		SelectablePlayerList[i]->SetPlayerOn(CalcIndex);
 
 		++CalcIndex;
+
+		if (true == Flag)
+		{
+			addindex = i;
+		}
+	}
+
+	// 현재 선택된 플레이어를 제외한 갱신
+	if (true == Flag)
+	{
+		for (int i = addindex; i < addindex + continuecnt; ++i)
+		{
+			SelectablePlayerList[i]->ChangePlayerPos(float4(272.f, (245.f + (CalcIndex * 36.f))), float4(230.f, (236.f + (CalcIndex * 34.f))), float4(32.f, 32.f));
+			SelectablePlayerList[i]->SetPlayerOn(CalcIndex);
+
+			++CalcIndex;
+		}
+
+		Flag = false;
 	}
 }
 

@@ -79,12 +79,12 @@ void LobbySelectablePlayer::Render()
 		if (nullptr != mainrenderer_)
 		{
 			mainrenderer_->Render();
-		}
 
-		// 플레이어 명칭 표시
-		if (!Name_.empty())
-		{
-			TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), NamePos_.ix(), NamePos_.iy(), Name_.c_str(), lstrlen(Name_.c_str()));
+			// 플레이어 명칭 표시
+			if (!Name_.empty())
+			{
+				TextOut(GameEngineImage::GetInst().GetBackBufferImage()->GetDC(), NamePos_.ix(), NamePos_.iy(), Name_.c_str(), lstrlen(Name_.c_str()));
+			}
 		}
 	}
 

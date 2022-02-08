@@ -5,6 +5,9 @@ class GameEngineRenderer;
 class LobbySelectablePlayer;
 class LobbyCreateTeam : public GameEngineActor
 {
+private:
+	static int PlayWormCount;
+
 private:	// member Var
 	GameEngineRenderer* playerselInputSpriteRender_;
 	GameEngineRenderer* playerselboxSpriteRender_;
@@ -14,6 +17,7 @@ private: // 현재 선택가능한 플레이어 목록
 	std::vector<LobbySelectablePlayer*> SelectablePlayerList;
 	int ActiveStartIndex_;
 	int ActiveEndIndex_;
+	std::vector<int> CurSelectIndex_;
 
 private: // 현재 선택된 플레이어 목록
 	std::vector<GameEngineRenderer*> SelectPlayerRendererList;
