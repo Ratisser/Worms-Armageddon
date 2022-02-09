@@ -29,6 +29,7 @@
 #include "SuperSheep.h"
 #include "PlayLevel.h"
 #include "MapTrain.h"
+#include "WindController.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -67,7 +68,6 @@ Worm::Worm()
 
 Worm::~Worm() // default destructer 디폴트 소멸자
 {
-
 }
 
 void Worm::Start()
@@ -83,6 +83,49 @@ void Worm::Start()
 void Worm::initRenderer()
 {
 	mainRender_ = CreateRenderer("walkRight.bmp");
+	//
+	mainRender_->CreateAnimation("Slide_To_IdleRight1_", "SlideR1_.bmp", 0, 21, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleRight1_U", "SlideR1_u.bmp", 0, 21, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleRight1_D", "SlideR1_d.bmp", 0, 21, false, 0.033f);
+
+	mainRender_->CreateAnimation("Slide_To_IdleRight2_", "SlideR2_.bmp", 0, 35, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleRight2_U", "SlideR2_u.bmp", 0, 35, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleRight2_D", "SlideR2_d.bmp", 0, 35, false, 0.033f);
+
+	mainRender_->CreateAnimation("Slide_IdleRight_", "SlideR_.bmp", 0, 2, true, 0.033f);
+	mainRender_->CreateAnimation("Slide_IdleRight_U", "SlideR_u.bmp", 0, 2, true, 0.033f);
+	mainRender_->CreateAnimation("Slide_IdleRight_D", "SlideR_d.bmp", 0, 2, true, 0.033f);
+
+	mainRender_->CreateAnimation("Slide_To_IdleLeft1_", "SlideL1_.bmp", 0, 21, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleLeft1_U", "SlideL1_u.bmp", 0, 21, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleLeft1_D", "SlideL1_d.bmp", 0, 21, false, 0.033f);
+
+	mainRender_->CreateAnimation("Slide_To_IdleLeft2_", "SlideL2_.bmp", 0, 35, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleLeft2_U", "SlideL2_u.bmp", 0, 35, false, 0.033f);
+	mainRender_->CreateAnimation("Slide_To_IdleLeft2_D", "SlideL2_d.bmp", 0, 35, false, 0.033f);
+
+	mainRender_->CreateAnimation("Slide_IdleLeft_", "SlideL_.bmp", 0, 2, true, 0.033f);
+	mainRender_->CreateAnimation("Slide_IdleLeft_U", "SlideL_u.bmp", 0, 2, true, 0.033f);
+	mainRender_->CreateAnimation("Slide_IdleLeft_D", "SlideL_d.bmp", 0, 2, true, 0.033f);
+
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_U", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_D", this, &Worm::HitEnd);
+
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight2_", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight2_U", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight2_D", this, &Worm::HitEnd);
+
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleLeft1_", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleLeft1_U", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleLeft1_D", this, &Worm::HitEnd);
+
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleLeft2_", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleLeft2_U", this, &Worm::HitEnd);
+	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleLeft2_D", this, &Worm::HitEnd);
+
+	mainRender_->CreateAnimation("Backflip", "backflp.bmp", 0, 21, true, 0.033f);
+	//
 
 	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.033f);
 	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.033f);
@@ -256,6 +299,9 @@ void Worm::initState()
 {
 	state_.CreateState("Idle", &Worm::startIdle, &Worm::updateIdle);
 	state_.CreateState("Walk", &Worm::startWalk, &Worm::updateWalk);
+
+	state_.CreateState("Hit", &Worm::StartHit, &Worm::updateHit);
+
 	state_.CreateState("JumpReady", &Worm::startJumpReady, &Worm::updateJumpReady);
 	state_.CreateState("Jump", &Worm::startJump, &Worm::updateJump);
 	state_.CreateState("WeaponOn", &Worm::startWeaponOn, &Worm::updateWeaponOn);
@@ -986,6 +1032,153 @@ void Worm::setAimingForward()
 	}
 }
 
+StateInfo Worm::StartHit(StateInfo _state)
+{
+	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
+
+	DamageAccRessit_ = DamageAcc_ / 10.f;
+	DamageAcc_ = bound_;
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("Slide_IdleLeft_", std::string("SlideL_.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("Slide_IdleRight_", std::string("SlideR_.bmp"));
+	}
+
+	switch (bound_)
+	{
+		//살짝만 밀림
+	case 0:
+		DamageSpeed_ = 200.f;
+		break;
+		// 조금 밀림
+	case 1:
+		DamageSpeed_ = 400.f;
+
+		break;
+		// 많이 밀림
+	case 2:
+		DamageSpeed_ = 600.f;
+		break;
+		// 튕겨저 날라감 (바닥에 꽃힘)
+	case 3:
+		DamageSpeed_ = 800.f;
+		break;
+
+	default:
+		DamageSpeed_ = 1000.f;
+		break;
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateHit(StateInfo _state)
+{
+	if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+	{
+		if (Hit_ == false)
+		{
+			return "Idle";
+		}
+		if (bound_ <= 0)
+		{
+			if (bLeft_)
+			{
+				mainRender_->ChangeAnimation("Slide_To_IdleLeft1_", std::string("SlideL1_.bmp"));
+			}
+			else
+			{
+				mainRender_->ChangeAnimation("Slide_To_IdleRight1_", std::string("SlideR1_.bmp"));
+			}
+			//입사각에 맞게 통통 튀면서 튀는 횟수를 모두 소모하면 Hitend
+			//3. 지상에 착지하면 종료		
+		}
+		else
+		{
+			bound_--;
+		}
+		return StateInfo();
+	}
+
+	// 1. 맞으면 날아감
+
+	// 2. 일정 속도로 감속
+
+	// 3단계로 나누어, 각각 속도와 감속을 조절
+
+	//DamageSpeed_ += DamageAcc_ * deltaTime_;
+
+	//DamageAcc_ -= DamageAccRessit_ * deltaTime_;
+
+
+
+	if (DamageSpeed_ < 0.f)
+	{
+		DamageSpeed_ = 0.f;
+	}
+
+	SetMove(DamageDir_ * (DamageSpeed_ * deltaTime_));
+
+	SetMove(WindSpeed_ * deltaTime_, DamageAcc_ * deltaTime_);
+
+	DamageAcc_ += 10.f;
+
+
+	//Hit end
+	//if(false == Hit_)
+	//{
+	//	return "Idle";
+	//}
+
+
+
+
+	//if(DamageSpeed_ <0)
+	//	return StateInfo();
+
+
+
+	// 중력 적용
+
+
+
+	//if (false == bGround_)
+	//{
+	//	mainRender_->ChangeAnimation("Slide_u", std::string("Slide_u.bmp"));
+	//}
+
+
+	//if (speed_.y > 0.0f)
+	//{
+	//	speed_.x = 0.0f;
+	//	if (bLeft_)
+	//	{
+	//		mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
+	//	}
+	//	else
+	//	{
+	//		mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
+	//	}
+	//}
+	//else
+	//{
+	//	if (bLeft_)
+	//	{
+	//		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+	//	}
+	//	else
+	//	{
+	//		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+	//	}
+	//}
+
+	return StateInfo();
+}
+
+
 StateInfo Worm::startIdle(StateInfo _state)
 {
 	if (bLeft_)
@@ -1227,13 +1420,13 @@ StateInfo Worm::updateJump(StateInfo _state)
 		}
 	}
 
-	
+
 	if (nullptr != leftSideCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
 	{
 		SetMove({ 3.0f, 0.0f });
 		speed_.x *= -1.f;
 	}
-	
+
 	if (nullptr != rightSideCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
 	{
 		SetMove({ -3.0f, 0.0f });
@@ -1253,7 +1446,7 @@ StateInfo Worm::updateJump(StateInfo _state)
 }
 
 StateInfo Worm::startBazookaAim(StateInfo _state)
-{	
+{
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("BazAimLeft", std::string("bazAimLeft.bmp"));
@@ -1408,7 +1601,7 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 	if (GameEngineInput::GetInst().IsDown("Mouse"))
 	{
 		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
-			
+
 		float4 MousePos = mouse->GetPos() + mouse->GetGameController()->GetCameraPos();
 
 		mouseTargetPos_ = MousePos;
@@ -1675,8 +1868,8 @@ StateInfo Worm::updateFirepunchStart(StateInfo _state)
 	}
 	else
 	{
-	//	FirePunch* firePunch = parentLevel_->CreateActor<FirePunch>();
-	//	firePunch->SetPos(GetPos());
+		//	FirePunch* firePunch = parentLevel_->CreateActor<FirePunch>();
+		//	firePunch->SetPos(GetPos());
 		if (true == mainRender_->IsCurAnimationEnd())
 		{
 			mainRender_->ChangeAnimation("FirepunchFlyRight", std::string("firePunchFlyRight.bmp"));
@@ -1690,14 +1883,14 @@ StateInfo Worm::startFirepunchFly(StateInfo _state)
 {
 	if (bLeft_)
 	{
-		speed_.x = -JUMP_POWER/2;
-		speed_.y = -JUMP_POWER*2.0f;
+		speed_.x = -JUMP_POWER / 2;
+		speed_.y = -JUMP_POWER * 2.0f;
 		SetMove({ 0.0f, -6.f });
 	}
 	else
 	{
-		speed_.x = JUMP_POWER/2;
-		speed_.y = -JUMP_POWER*2.0f;
+		speed_.x = JUMP_POWER / 2;
+		speed_.y = -JUMP_POWER * 2.0f;
 		SetMove({ 0.0f, -6.f });
 	}
 
@@ -2240,14 +2433,14 @@ StateInfo Worm::updateBattleAxeOff(StateInfo _state)
 }
 StateInfo Worm::startBattleAxeWait(StateInfo _state)
 {
-//	if (bLeft_)
-//	{
-//		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
-//	}
-//	else
-//	{
-//		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
-//	}
+	//	if (bLeft_)
+	//	{
+	//		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
+	//	}
+	//	else
+	//	{
+	//		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
+	//	}
 	return StateInfo();
 }
 StateInfo Worm::updateBattleAxeWait(StateInfo _state)
@@ -2336,7 +2529,7 @@ StateInfo Worm::updateBlowtorchFire(StateInfo _state)
 
 	blowTorchMoveTime_ -= deltaTime_;
 
-	PlayLevel* level = (PlayLevel*)GetLevel(); 
+	PlayLevel* level = (PlayLevel*)GetLevel();
 	level->GetMap()->GroundUpdate(float4(pos_.x - 15.f, pos_.y - 13.f), float4(30.f, 30.f));
 
 	if (bLeft_)
@@ -2485,14 +2678,22 @@ UIController* Worm::GetCurUIController() const
 	return uicontroller_;
 }
 
-void Worm::Damage(int _numDamage)
+void Worm::Damage(int _numDamage, float4 _MoveDir)
 {
+	//받은 데미지 만큼 밀려나게끔
+
+	DamageDir_ = _MoveDir;
+	bound_ = 100/_numDamage;// 이만큼 튕긴다.
+
 	hp_ -= _numDamage;
+	Hit_ = true;
 
 	if (hp_ < 0)
 	{
 		hp_ = 0;
 	}
+
+	ChangeState("Hit");
 }
 
 bool Worm::IsDie() const

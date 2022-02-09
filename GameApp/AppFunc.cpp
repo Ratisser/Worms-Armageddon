@@ -608,6 +608,27 @@ void CharactorImageInit()
 
 	float4 cutSize = float4(60.f, 60.f);
 
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("backflp.bmp"), cutSize);
+
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR_.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR_u.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR_d.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR1_.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR1_u.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR1_d.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR2_.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR2_u.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR2_d.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL_.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL_u.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL_d.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL1_.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL1_u.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL1_d.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL2_.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL2_u.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL2_d.bmp"), cutSize);
+
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkLeft.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkRight.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("jumpReadyLeft.bmp"), cutSize);

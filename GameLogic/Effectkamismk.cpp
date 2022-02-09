@@ -19,7 +19,7 @@ Effect::kamismk::kamismk(kamismk&& _other) noexcept
 void Effect::kamismk::Start()
 {
 	mainSpriteRender_ = CreateRenderer("kamismk");
-	mainSpriteRender_->CreateAnimation("kamismk", "kamismk", 0, 9, false, 0.5f);
+	mainSpriteRender_->CreateAnimation("kamismk", "kamismk", 0, 9, false, 0.1f);
 	mainSpriteRender_->ChangeAnimation("kamismk");
 
 	mainSpriteRender_->SetAnimationEndFunction<EffectActor>

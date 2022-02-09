@@ -540,6 +540,7 @@ void ExplosionSize100::Start()
 		Flame2Effect->SetDir(RandomRot);
 		Flame2Effect->SetRenderOrder(static_cast<int>(RenderOrder::Effect));
 	}
+
 }
 
 void ExplosionSize100::UpdateBefore()

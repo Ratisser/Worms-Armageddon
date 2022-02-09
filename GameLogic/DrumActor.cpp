@@ -47,8 +47,6 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 
 void DrumActor::Start()
 {
-	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
-
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
 	mainSpriteRender_->CreateAnimation("oildrum1", "oildrum1", 0, 19, true, 0.1f);
@@ -145,6 +143,8 @@ void DrumActor::initCollision()
 
 void DrumActor::DrumExplode()
 {
+	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
+
 	// 촘촘히 약 5방향으로 나누어, 군집되도록 생성하기
 	GetLevel<PlayLevel>()->CreateExplosion75(pos_);
 

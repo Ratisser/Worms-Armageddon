@@ -98,6 +98,7 @@ void SuperSheep::UpdateBefore()
 void SuperSheep::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+
 	state_.Update();
 }
 
@@ -260,6 +261,13 @@ StateInfo SuperSheep::updateFly(StateInfo _state)
 	groundCheckCollision_->SetPivot(float4::ZERO);
 	bottomCenterCollision_->SetPivot(float4::ZERO);
 	topCenterCollision_->SetPivot(float4::ZERO);
+
+	EffectSpawnTime_ += deltaTime_;
+	if (EffectSpawnTime_ > 0.025f)
+	{
+		GetLevel<PlayLevel>()->CreatePurpleStarEffect(pos_);
+		EffectSpawnTime_ = 0.f;
+	}
 
 	if (soundWhoosh_.GetPositionMillisecond() >= soundWhoosh_.GetLengthMillisecond() - 10)
 	{

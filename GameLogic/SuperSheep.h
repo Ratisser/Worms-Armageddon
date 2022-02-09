@@ -69,6 +69,7 @@ private:
 	GameEngineCollision* groundCheckCollision_;
 
 	float deltaTime_;
+	float EffectSpawnTime_;;
 	float jumpDelay_;
 	float explosionDelay_;
 	float animDelay_;

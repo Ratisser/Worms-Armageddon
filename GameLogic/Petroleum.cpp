@@ -80,7 +80,6 @@ void Petroleum::Start()
 
 void Petroleum::UpdateBefore()
 {
-
 }
 
 void Petroleum::Update()
@@ -91,6 +90,7 @@ void Petroleum::Update()
 	{	
 		WindSpeed_ += WindAcc_;
 		GravitySpeed += GravityAcc;
+		Isground_ = false;
 
 		if (true == Burn_)
 		{
@@ -100,10 +100,9 @@ void Petroleum::Update()
 		{
 			prevPos_ = pos_;
 			SetMove((Dir_.x + WindSpeed_/2) * deltaTime_, (Dir_.y + GravitySpeed/2) * deltaTime_);
-			//SetMove(Dir_ * deltaTime_);
 		}
 	}
-	else
+	else if(false == Isground_)
 	{
 		Dir_.y = 0.f;
 		Dir_.x = 0.f;
@@ -167,31 +166,26 @@ void Petroleum::Update()
 		{
 			mainSpriteRender_->ChangeAnimation("petrol-4", std::string("petrol-4")); 
 			mainSpriteRender_->SetAnimationCurrentFrame(frameIndex);
+		}
+		else if (Cur_LifeTime_ < 0.9f)
+		{			
+			mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
 			Burn_ = true;
 			Cur_LifeTime_ = 0.f;
 		}
 	}
 
-	else if (false == Isground_)
-	{
-		mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
-	}
-
 	else if(true == Isground_)
 	{
-		if (Cur_LifeTime_ < 1.f)
-		{
-			mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
-		}
-		else if (Cur_LifeTime_ < 2.f)
+		if (Cur_LifeTime_ < 1.5f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol50", std::string("petrol50"));
 		}
-		else if (Cur_LifeTime_ < 3.f)
+		else if (Cur_LifeTime_ < 2.3f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol40", std::string("petrol40"));
 		}
-		else if (Cur_LifeTime_ < 4.f)
+		else if (Cur_LifeTime_ < 3.5f)
 		{
 			mainSpriteRender_->ChangeAnimation("petrol30", std::string("petrol30"));
 		}
@@ -208,6 +202,7 @@ void Petroleum::Update()
 
 		Cur_LifeTime_ += deltaTime_;
 	}
+
 
 	if (Cur_LifeTime_ >= Max_LifeTime_)
 	{

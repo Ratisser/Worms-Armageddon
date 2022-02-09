@@ -10,7 +10,7 @@ protected:	// member Var
 	int Damage_;
 	bool DamageToDist_;
 
-	float LifeTime_;
+	bool Life_;
 
 public:
 	Explosion(); // default constructer 디폴트 생성자
