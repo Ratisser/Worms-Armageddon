@@ -64,8 +64,14 @@ Worm::Worm()
 	, drillMoveTime_(0.f)
 	, soundWhoosh_("DRILL.WAV")
 	, soundPowerUp_("ROCKETPOWERUP.WAV")
+	, DamageSpeed_(0.0f)
+	, DamageAcc_(0.0f)
+	, DamageAccRessit_(0.0f)
+	, WindSpeed_(0.0f)
+	, Hit_(false)
+	, bound_(0)
+	, DamageDir_{}
 {
-
 }
 
 Worm::~Worm() // default destructer 디폴트 소멸자
@@ -1036,6 +1042,8 @@ void Worm::setAimingForward()
 
 StateInfo Worm::StartHit(StateInfo _state)
 {
+	crosshairRender_->Off();
+
 	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
 
 	DamageAccRessit_ = DamageAcc_ / 10.f;
@@ -1079,7 +1087,9 @@ StateInfo Worm::StartHit(StateInfo _state)
 
 StateInfo Worm::updateHit(StateInfo _state)
 {
-	if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+	if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP))
+		|| nullptr != leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP))
+		|| nullptr != rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		if (Hit_ == false)
 		{
@@ -1090,12 +1100,14 @@ StateInfo Worm::updateHit(StateInfo _state)
 			if (bLeft_)
 			{
 				mainRender_->ChangeAnimation("Slide_To_IdleLeft1_", std::string("SlideL1_.bmp"));
+				// 에니메이션 재생 완료후, 자동으로 Hit_를 false처리함
 			}
 			else
 			{
 				mainRender_->ChangeAnimation("Slide_To_IdleRight1_", std::string("SlideR1_.bmp"));
 			}
 			//입사각에 맞게 통통 튀면서 튀는 횟수를 모두 소모하면 Hitend
+			// // 입사각을 계산하기 난해함으로, 각도 상관없이 튀는것만 우선 구현
 			//3. 지상에 착지하면 종료		
 		}
 		else
@@ -1105,23 +1117,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 		return StateInfo();
 	}
 
-	// 1. 맞으면 날아감
-
-	// 2. 일정 속도로 감속
-
-	// 3단계로 나누어, 각각 속도와 감속을 조절
-
-	//DamageSpeed_ += DamageAcc_ * deltaTime_;
-
-	//DamageAcc_ -= DamageAccRessit_ * deltaTime_;
-
-
-
-	if (DamageSpeed_ < 0.f)
-	{
-		DamageSpeed_ = 0.f;
-	}
-
 	SetMove(DamageDir_ * (DamageSpeed_ * deltaTime_));
 
 	SetMove(WindSpeed_ * deltaTime_, DamageAcc_ * deltaTime_);
@@ -1129,54 +1124,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 	DamageAcc_ += 10.f;
 
 
-	//Hit end
-	//if(false == Hit_)
-	//{
-	//	return "Idle";
-	//}
-
-
-
-
-	//if(DamageSpeed_ <0)
-	//	return StateInfo();
-
-
-
-	// 중력 적용
-
-
-
-	//if (false == bGround_)
-	//{
-	//	mainRender_->ChangeAnimation("Slide_u", std::string("Slide_u.bmp"));
-	//}
-
-
-	//if (speed_.y > 0.0f)
-	//{
-	//	speed_.x = 0.0f;
-	//	if (bLeft_)
-	//	{
-	//		mainRender_->ChangeAnimation("FlyDownLeft", std::string("flyDownLeft.bmp"));
-	//	}
-	//	else
-	//	{
-	//		mainRender_->ChangeAnimation("FlyDownRight", std::string("flyDownRight.bmp"));
-	//	}
-	//}
-	//else
-	//{
-	//	if (bLeft_)
-	//	{
-	//		mainRender_->ChangeAnimation("IdleLeft", std::string("idleLeft.bmp"));
-	//	}
-	//	else
-	//	{
-	//		mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
-	//	}
-	//}
-
+	
 	return StateInfo();
 }
 

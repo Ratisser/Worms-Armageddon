@@ -240,5 +240,6 @@ private:
 	{
 		Hit_ = false;
 	}
+
 };
 
