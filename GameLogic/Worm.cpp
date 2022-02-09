@@ -17,6 +17,7 @@
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
+#include "GameOptionInfo.h"
 
 #include "Bazooka.h"
 #include "FirePunch.h"
@@ -56,12 +57,13 @@ Worm::Worm()
 	, nextState_("")
 	, bFocus_(false)
 	, uicontroller_(nullptr)
-	, hp_(100)
+	, hp_(GameOptionInfo::WormEnergy)
 	, actionToken_(0)
 	, bulletFocusActor_(nullptr)
 	, blowTorchMoveTime_(3.f)
 	, drillMoveTime_(0.f)
 	, soundWhoosh_("DRILL.WAV")
+	, soundPowerUp_("ROCKETPOWERUP.WAV")
 {
 
 }
@@ -127,8 +129,8 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("Backflip", "backflp.bmp", 0, 21, true, 0.033f);
 	//
 
-	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.033f);
-	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.033f);
+	mainRender_->CreateAnimation("WalkRight", "walkRight.bmp", 0, 14, true, 0.0167f);
+	mainRender_->CreateAnimation("WalkLeft", "walkLeft.bmp", 0, 14, true, 0.0167f);
 
 	mainRender_->CreateAnimation("JumpReadyLeft", "jumpReadyLeft.bmp", 0, 9, true, 0.033f);
 	mainRender_->CreateAnimation("JumpReadyRight", "jumpReadyRight.bmp", 0, 9, true, 0.033f);
@@ -1340,6 +1342,16 @@ StateInfo Worm::updateWalk(StateInfo _state)
 		{
 			return "JumpReady";
 		}
+
+		if (mainRender_->GetCurAnimationFrame() == 6)
+		{
+			GameEngineSoundManager::GetInstance().PlaySoundByName("Walk-Expand.wav");
+		}
+		else if (mainRender_->GetCurAnimationFrame() == 14)
+		{
+			GameEngineSoundManager::GetInstance().PlaySoundByName("Walk-Compress.wav");
+		}
+
 	}
 
 	normalMove();
@@ -1396,6 +1408,9 @@ StateInfo Worm::startJump(StateInfo _state)
 		speed_.x *= -1.0f;
 		bBackJump_ = false;
 	}
+
+	GameEngineSoundManager::GetInstance().PlaySoundByName("JUMP1.WAV");
+
 	return StateInfo();
 }
 
@@ -1542,6 +1557,7 @@ StateInfo Worm::updateBazookaAim(StateInfo _state)
 StateInfo Worm::startBazookaFire(StateInfo _state)
 {
 	firePower_ = 100.0f;
+	soundPowerUp_.Play();
 	return StateInfo();
 }
 
@@ -1553,6 +1569,12 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 		newBaz->SetBazooka(forward_, firePower_);
 		//bFocus_ = false;
+
+		if (soundPowerUp_.IsPlaying())
+		{
+			soundPowerUp_.Stop();
+		}
+
 		return "BazookaWait";
 	}
 
@@ -1605,6 +1627,8 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 		float4 MousePos = mouse->GetPos() + mouse->GetGameController()->GetCameraPos();
 
 		mouseTargetPos_ = MousePos;
+
+		GameEngineSoundManager::GetInstance().PlaySoundByName("CursorSelect.wav");
 
 		mouse->MouseBlock(true);
 
@@ -1913,9 +1937,31 @@ StateInfo Worm::updateFirepunchFly(StateInfo _state)
 			mainRender_->ChangeAnimation("FirepunchEndRight", std::string("firePunchEndRight.bmp"));
 			return "FirepunchEnd";
 		}
+		if (nullptr != groundCheckCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+		{
+			speed_ = { 0.0f, 0.0f };
+			return "Idle";
+		}
 	}
 
 
+	if (nullptr != leftSideCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		SetMove({ 3.0f, 0.0f });
+		speed_.x *= -1.f;
+	}
+
+	if (nullptr != rightSideCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		SetMove({ -3.0f, 0.0f });
+		speed_.x *= 1.f;
+	}
+
+	if (speed_.y < 0 && nullptr != headCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
+	{
+		SetMove({ 0.0f, 1.0f });
+		speed_.y = 0.0f;
+	}
 
 	//SetMove(speed_ * deltaTime_);
 	normalMove();
@@ -2182,6 +2228,7 @@ StateInfo Worm::updateSheepAim(StateInfo _state)
 
 StateInfo Worm::startSheepFire(StateInfo _state)
 {
+	GameEngineSoundManager::GetInstance().PlaySoundByName("LAUGH.WAV");
 	return StateInfo();
 }
 
@@ -2268,6 +2315,7 @@ StateInfo Worm::updateSuperSheepAim(StateInfo _state)
 
 StateInfo Worm::startSuperSheepFire(StateInfo _state)
 {
+	GameEngineSoundManager::GetInstance().PlaySoundByName("LAUGH.WAV");
 	return StateInfo();
 }
 

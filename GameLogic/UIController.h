@@ -15,6 +15,7 @@ class TimerDigit;
 class Weapon;
 class WormName;
 class WormArrow;
+class WormHPNumber;
 class WormHPBlankWindow;
 class UIController : public GameEngineActor
 {
@@ -33,6 +34,9 @@ private:	// 관리하는 모든 UI
 	WormName* curWormName_;
 	WormArrow* curWormArrow_;
 	WormHPBlankWindow* curWormHPWindow_;
+	WormHPNumber* curHPNumberHundred_;
+	WormHPNumber* curHPNumberTen_;
+	WormHPNumber* curHPNumber_;
 
 	TimerBlankWindow* curTimerWindow_;
 	TimerDigit* curTimerDigitTen_;
@@ -72,6 +76,10 @@ public:
 	TimerBlankWindow* GetCurTimerWindow();
 	TimerDigit* GetCurTimerDigitTen();
 	TimerDigit* GetCurTimerDigit();
+
+	WormHPNumber* GetCurHPNumberHundred();
+	WormHPNumber* GetCurHPNumberTen();
+	WormHPNumber* GetCurHPNumber();
 
 public:
 	virtual void Start() override;

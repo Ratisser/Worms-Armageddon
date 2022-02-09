@@ -149,8 +149,8 @@ void PlayLevel::LevelUpdate()
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 4 Pos X : ", Controller_->GetWormList()[3]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[3]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 5 Pos X : ", Controller_->GetWormList()[4]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[4]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Worm 6 Pos X : ", Controller_->GetWormList()[5]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[5]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 7 Pos X : ", Controller_->GetWormList()[6]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[6]->GetPos().y);
-		GameEngineDebugExtension::PrintDebugWindowText("Worm 8 Pos X : ", Controller_->GetWormList()[7]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[7]->GetPos().y);
+//		GameEngineDebugExtension::PrintDebugWindowText("Worm 7 Pos X : ", Controller_->GetWormList()[6]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[6]->GetPos().y);
+//		GameEngineDebugExtension::PrintDebugWindowText("Worm 8 Pos X : ", Controller_->GetWormList()[7]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[7]->GetPos().y);
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
@@ -171,7 +171,7 @@ void PlayLevel::wormLoading()
 	float4 minMaxInfo = GlobalValue::MapMinMaxInfo[GlobalValue::CurPlayMap];
 
 
-	for (size_t i = 0; i < 8; i++)
+	for (size_t i = 0; i < 6; i++)
 	{
 		Controller_->CreateWorm(minMaxInfo.x, minMaxInfo.y);
 	}

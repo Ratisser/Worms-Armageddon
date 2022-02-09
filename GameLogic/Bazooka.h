@@ -3,6 +3,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
+#include <GameEngineSoundPlayer.h>
 
 #include "WeaponBase.h"
 

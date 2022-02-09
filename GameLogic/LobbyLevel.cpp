@@ -74,10 +74,22 @@ void LobbyLevel::Loading_SJH()
 		}
 	}
 
-	// 맵선택 키 생성
-	if (false == GameEngineInput::GetInst().IsKey("Lobby_MapSelect"))
+	// 로비 마우스 왼쪽버튼클릭 키 생성
+	// 기본옵션메뉴와 충돌시 : 다음옵션으로 이동
+	// 준비상태 이미지와 충돌시 : 준비완료/미완료 선택
+	// 플레이어선택목록과 충돌시 : 플레이어 선택완료
+	// 채팅입력박스와 충돌시 : 채팅입력박스 활성화
+	if (false == GameEngineInput::GetInst().IsKey("LobbyLevel_MouseLButton"))
 	{
-		GameEngineInput::GetInst().CreateKey("Lobby_MapSelect", VK_RBUTTON);
+		GameEngineInput::GetInst().CreateKey("LobbyLevel_MouseLButton", VK_LBUTTON);
+	}
+
+	// 로비 마우스 오른쪽버튼클릭 키 생성
+	// 맵선택 이미지와 충돌시 : 다음맵 선택
+	// 옵션메뉴와 충돌시 : 이전옵션으로 이동
+	if (false == GameEngineInput::GetInst().IsKey("LobbyLevel_MouseRButton"))
+	{
+		GameEngineInput::GetInst().CreateKey("LobbyLevel_MouseRButton", VK_RBUTTON);
 	}
 
 	float4 HalfResoultion = GameEngineWindow::GetInst().GetSize().halffloat4();

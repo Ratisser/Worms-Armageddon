@@ -45,6 +45,9 @@ private:
 	StateInfo startActionEnd(StateInfo _state);
 	StateInfo updateActionEnd(StateInfo _state);
 
+	StateInfo startSettlement(StateInfo _state); // 턴 넘어가기 직전에 일종의 "결산" 단계입니다.
+	StateInfo updateSettlement(StateInfo _state); // 대미지 판정 등을 해 주는 단계라고 생각해주시면 됩니다.
+
 	StateInfo startDeath(StateInfo _state);
 	StateInfo updateDeath(StateInfo _state);
 

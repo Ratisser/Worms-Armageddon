@@ -453,6 +453,9 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOff", Dir.PathToPlusFileName("OFF_btn.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOn", Dir.PathToPlusFileName("ON_btn.bmp"));
 
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOff_MouseOver", Dir.PathToPlusFileName("OFF_btn_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_HostReadyOn_MouseOver", Dir.PathToPlusFileName("ON_btn_MouseOver.bmp"));
+
 	// 로비화면 호스트 생성 리소스
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\Multiplay\\HostJoinScreen\\ReadyYN.seq"))
@@ -515,6 +518,14 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime5", Dir.PathToPlusFileName("000005.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime6", Dir.PathToPlusFileName("000006.bmp"));
 
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime0_MouseOver", Dir.PathToPlusFileName("000000_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime1_MouseOver", Dir.PathToPlusFileName("000001_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime2_MouseOver", Dir.PathToPlusFileName("000002_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime3_MouseOver", Dir.PathToPlusFileName("000003_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime4_MouseOver", Dir.PathToPlusFileName("000004_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime5_MouseOver", Dir.PathToPlusFileName("000005_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_TernTime6_MouseOver", Dir.PathToPlusFileName("000006_MouseOver.bmp"));
+
 	// 라운드타임
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\RoundTime"))
@@ -530,6 +541,14 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime4", Dir.PathToPlusFileName("000005.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime5", Dir.PathToPlusFileName("000006.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime6", Dir.PathToPlusFileName("000007.bmp"));
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime0_MouseOver", Dir.PathToPlusFileName("000001_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime1_MouseOver", Dir.PathToPlusFileName("000002_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime2_MouseOver", Dir.PathToPlusFileName("000003_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime3_MouseOver", Dir.PathToPlusFileName("000004_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime4_MouseOver", Dir.PathToPlusFileName("000005_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime5_MouseOver", Dir.PathToPlusFileName("000006_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_RoundTime6_MouseOver", Dir.PathToPlusFileName("000007_MouseOver.bmp"));
 
 	// 승리 조건
 	Dir.MoveParent("Worms-Armageddon");
@@ -547,6 +566,14 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired5", Dir.PathToPlusFileName("000005.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired6", Dir.PathToPlusFileName("000006.bmp"));
 
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired0_MouseOver", Dir.PathToPlusFileName("000000_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired1_MouseOver", Dir.PathToPlusFileName("000001_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired2_MouseOver", Dir.PathToPlusFileName("000002_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired3_MouseOver", Dir.PathToPlusFileName("000003_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired4_MouseOver", Dir.PathToPlusFileName("000004_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired5_MouseOver", Dir.PathToPlusFileName("000005_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WinSrequired6_MouseOver", Dir.PathToPlusFileName("000006_MouseOver.bmp"));
+
 	// Worm 체력
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions\\WormEnergy"))
@@ -560,6 +587,11 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy2", Dir.PathToPlusFileName("000002.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy3", Dir.PathToPlusFileName("000003.bmp"));
 
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy0_MouseOver", Dir.PathToPlusFileName("000000_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy1_MouseOver", Dir.PathToPlusFileName("000001_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy2_MouseOver", Dir.PathToPlusFileName("000002_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormEnergy3_MouseOver", Dir.PathToPlusFileName("000003_MouseOver.bmp"));
+
 	// 턴교체 On/Off
 	Dir.MoveParent("Worms-Armageddon");
 	if (false == Dir.MoveChild("\\Resources\\Image\\UI\\gameoptions"))
@@ -572,9 +604,16 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect1", Dir.PathToPlusFileName("WormSelectON.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect2", Dir.PathToPlusFileName("WormSelectRANDOM.bmp"));
 
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect0_MouseOver", Dir.PathToPlusFileName("WormSelectOFF_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect1_MouseOver", Dir.PathToPlusFileName("WormSelectON_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_WormSelect2_MouseOver", Dir.PathToPlusFileName("WormSelectRANDOM_MouseOver.bmp"));
+
 	// 텔레포트 On/Off
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin0", Dir.PathToPlusFileName("TeleportinOFF.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin1", Dir.PathToPlusFileName("TeleportinON.bmp"));
+
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin0_MouseOver", Dir.PathToPlusFileName("TeleportinOFF_MouseOver.bmp"));
+	GameEngineImage::GetInst().LoadGameImage("Lobby_BasicOption_Teleportin1_MouseOver", Dir.PathToPlusFileName("TeleportinON_MouseOver.bmp"));
 
 	// 선택가능한 플레이어 & 선택한 플레이어관련
 	Dir.MoveParent("Worms-Armageddon");
@@ -771,6 +810,27 @@ void SoundLoad()
 		}
 	}
 
+	{
+		fs::path path(fs::current_path());
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			path = path.parent_path();
+		}
+
+		if (path.filename().string() != "Worms-Armageddon")
+		{
+			GameEngineDebug::MsgBoxError("존재하지 않는 경로 \"Worms-Armageddon\"");
+		}
+
+
+		path = path / "Resources" / "Sound" / "English";
+
+		for (const fs::path& p : fs::directory_iterator(path))
+		{
+			RS::LoadSoundFromFile(p.string());
+		}
+	}
+
 	GameEngineDirectroy dir = GameEngineDirectroy();
 	dir.MoveParent("Worms-Armageddon");
 	dir.MoveChild("\\Resources\\Sound\\Effects");
@@ -781,6 +841,7 @@ void SoundLoad()
 	//RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
 	//RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
 	//RS::LoadSoundFromFile(dir / "DRILL.WAV");
+	//RS::LoadImageFromFile(dir / "FirePunchImpact.WAV");
 
 	//// Title Screen Sound
 	//RS::LoadSoundFromFile(dir / "Worms_TitleScreen.mp3");

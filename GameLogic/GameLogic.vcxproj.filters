@@ -390,6 +390,9 @@
     <ClInclude Include="WormHPBlankWindow.h">
       <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClInclude>
+    <ClInclude Include="WormHPNumber.h">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClInclude>
     <ClInclude Include="Effectkamismk.h">
       <Filter>Actor\Effect\01. EffectActor\kamismk</Filter>
     </ClInclude>
@@ -643,6 +646,9 @@
     </ClCompile>
     <ClCompile Include="Explosion.cpp">
       <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="WormHPNumber.cpp">
+      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

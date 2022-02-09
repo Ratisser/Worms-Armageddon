@@ -81,28 +81,28 @@ void BottomNameTag::StartPosInit(int _wormNumber)
 	switch (_wormNumber)
 	{
 	case 0:
-		SetPos({ 572, 580 });
+		SetPos({ 572, 610 });
 		break;
 	case 1:
-		SetPos({ 572, 600 });
+		SetPos({ 572, 630 });
 		break;
 	case 2:
-		SetPos({ 572, 620 });
+		SetPos({ 572, 650 });
 		break;
 	case 3:
-		SetPos({ 572, 640 });
+		SetPos({ 572, 670 });
 		break;
 	case 4:
-		SetPos({ 572, 660 });
+		SetPos({ 572, 690 });
 		break;
 	case 5:
-		SetPos({ 572, 680 });
+		SetPos({ 572, 710 });
 		break;
 	case 6:
-		SetPos({ 572, 700 });
+		SetPos({ 572, 730 });
 		break;
 	case 7:
-		SetPos({ 572, 720 });
+		SetPos({ 572, 750 });
 		break;
 	default:
 		SetPos({ 0, 0 });

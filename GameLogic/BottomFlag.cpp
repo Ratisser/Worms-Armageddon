@@ -84,28 +84,28 @@ void BottomFlag::StartPosInit(int _wormNumber)
 	switch (_wormNumber)
 	{
 	case 0:
-		SetPos({ 605, 580 });
+		SetPos({ 605, 610 });
 		break;
 	case 1:
-		SetPos({ 605, 600 });
+		SetPos({ 605, 630 });
 		break;
 	case 2:
-		SetPos({ 605, 620 });
+		SetPos({ 605, 650 });
 		break;
 	case 3:
-		SetPos({ 605, 640 });
+		SetPos({ 605, 670 });
 		break;
 	case 4:
-		SetPos({ 605, 660 });
+		SetPos({ 605, 690 });
 		break;
 	case 5:
-		SetPos({ 605, 680 });
+		SetPos({ 605, 710 });
 		break;
 	case 6:
-		SetPos({ 605, 700 });
+		SetPos({ 605, 730 });
 		break;
 	case 7:
-		SetPos({ 605, 720 });
+		SetPos({ 605, 750 });
 		break;
 	default:
 		SetPos({ 0, 0 });

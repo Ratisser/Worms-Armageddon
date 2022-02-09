@@ -38,6 +38,7 @@ enum class RenderOrder
 	UI,
 	UI1,
 	UI2,
+	UI3,
 	Mouse = 999,
 	MAX
 };

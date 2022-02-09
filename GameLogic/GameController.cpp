@@ -6,6 +6,7 @@
 #include <GameEngineInput.h>
 #include <GameEngineDebugExtension.h>
 
+#include "GameOptionInfo.h"
 #include "Worm.h"
 #include "UIController.h"
 #include "WeaponSheet.h"
@@ -19,6 +20,7 @@
 #include "WormName.h"
 #include "TimerBlankWindow.h"
 #include "TimerDigit.h"
+#include "WormHPNumber.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -96,42 +98,16 @@ void GameController::Start()
 
 void GameController::UpdateBefore()
 {
+	// UI
+	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
+	{
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
+		prevwormIndex_ = wormIndex_;
+	}
 }
 
 void GameController::Update()
 {
-	// UI
-	if (true == GameEngineInput::GetInst().IsDown("WeaponSheet"))
-	{
-		if (wormIndex_ != MAX_WORM_COUNT)
-		{
-			// 이전 플레이어와 현재플레이어가 달라지면
-			// 이전플레이어의 무기창이 비활성화되고
-			// 현재 플레이어의 무기창이 활성화된다.
-			if (prevwormIndex_ != wormIndex_ && prevwormIndex_ != MAX_WORM_COUNT &&
-				true == wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->IsActive())
-			{
-				wormList_[prevwormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-
-				// 마우스커서위치 강제셋팅
-				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
-				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
-
-				// 
-				prevwormIndex_ = wormIndex_;
-			}
-			else
-			{
-				wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
-
-				// 마우스커서위치 강제셋팅
-				//float4 MousePos = wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->GetSheetActivePos();
-				//GameEngineWindow::GetInst().SetMousePos(MousePos.ix(), MousePos.iy());
-			}
-		}
-	}
-
 	state_.Update();
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
@@ -224,7 +200,6 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 		}
 	}
 
-
 	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
 	newArrow->SetParent(newWorm);
 
@@ -234,6 +209,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 
 
 	wormList_.push_back(newWorm);
+
 	xPosList_.push_back(wormXPosContainer_);
 	wormList_[0]->SetFocus(true);
 }
@@ -254,31 +230,48 @@ void GameController::CreateWormUI()
 		wormList_[i]->SetUIController(CurUIController);
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
-		std::string SheetName = wormList_[i]->GetName();
-		SheetName += "_WeaponSheet";
-		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
-
+		// 플레이어당 하단 UI 상태바 및 국기 지정
 		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->NameInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->StartPosInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->NationInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->StartPosInit(static_cast<int>(i));
-		
+
+		// 플레이어당 이름 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurWormName()->NameInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormName()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 현재플레이중인 플레이어 화살표 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 현재체력 표시 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurWormHPWindow()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 턴 타이머 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->SetParentWorm(wormList_[i]);
-
 		wormList_[i]->GetCurUIController()->GetCurTimerDigitTen()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurTimerDigit()->SetParentWorm(wormList_[i]);
 
+		// 플레이어당 체력표시텍스트 UI 지정
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetDigitToHundred();
+		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->HPInit();
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetDigitToTen();
+		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->HPInit();
+		wormList_[i]->GetCurUIController()->GetCurHPNumber()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurHPNumber()->ColorInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurHPNumber()->HPInit();
+
+		// 플레이어당 무기창 지정 및 활성화 무기 지정
+		std::string SheetName = wormList_[i]->GetName();
+		SheetName += "_WeaponSheet";
+		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetName(SheetName);
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
@@ -295,7 +288,7 @@ void GameController::CreateWormUI()
 		ItemListTest[9] = eItemList::WEAPON_PNEUMATICDRILL;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
-		// 
+		// 무기창 기능 참고용
 		//CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
 		//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
 		ItemListTest.clear();
@@ -322,6 +315,7 @@ void GameController::initState()
 	state_.CreateState("NextWorm", &GameController::startNextWorm, &GameController::updateNextWorm);
 	state_.CreateState("Action", &GameController::startAction, &GameController::updateAction);
 	state_.CreateState("ActionEnd", &GameController::startActionEnd, &GameController::updateActionEnd);
+	state_.CreateState("Settlement", &GameController::startSettlement, &GameController::updateSettlement);
 	state_.CreateState("Death", &GameController::startDeath, &GameController::updateDeath);
 	state_.CreateState("Victory", &GameController::startVictory, &GameController::updateVictory);
 	state_.CreateState("ItemDrop", &GameController::startItemDrop, &GameController::updateItemDrop);
@@ -331,6 +325,7 @@ void GameController::initState()
 
 StateInfo GameController::startNextWorm(StateInfo _state)
 {
+	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
 	return "";
 }
 
@@ -367,7 +362,10 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 	}
 
 	currentWorm_->AddActionToken(1);
-	currentTurnTime_ = DEFAULT_TURN_TIME;
+
+	// 대기실 턴타임셋팅에 따라 턴타임이 달라짐 - 220207 SJH 수정
+	currentTurnTime_ = GameOptionInfo::TernTime;
+	//currentTurnTime_ = DEFAULT_TURN_TIME;
 	return "Action";
 }
 
@@ -386,11 +384,19 @@ StateInfo GameController::updateAction(StateInfo _state)
 	if (GameEngineInput::GetInst().IsDown("TestKey"))
 	{
 		currentWorm_->SubtractActionToken(1);
+
+		// 강제전환으로인한 무기창 및 무기아이콘 비활성화
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+
 		currentTurnTime_ = 0.0f;
 	}
 
 	if (currentTurnTime_ < 0)
 	{
+		// 턴시간 초과로 인한 플레이어 전환이 발생하므로 이곳에서
+		// 무기창 비활성이 된다.
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+
 		return "ActionEnd";
 	}
 	return StateInfo();
@@ -405,9 +411,23 @@ StateInfo GameController::startActionEnd(StateInfo _state)
 
 StateInfo GameController::updateActionEnd(StateInfo _state)
 {
+
 	currentWorm_ = nullptr;
+	return "Settlement";
+	// return "NextWorm";
+}
+
+StateInfo GameController::startSettlement(StateInfo _state)
+{
+	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
+	return StateInfo();
+}
+
+StateInfo GameController::updateSettlement(StateInfo _state)
+{
 	return "NextWorm";
 }
+
 
 StateInfo GameController::startDeath(StateInfo _state)
 {

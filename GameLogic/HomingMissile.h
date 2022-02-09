@@ -3,6 +3,7 @@
 
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
+#include <GameEngineSoundPlayer.h>
 
 #include "WeaponBase.h"
 
@@ -48,6 +49,7 @@ private:
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
+	bool bHomingSound_;
 
 	float degree_;
 	float deltaTime_;
@@ -55,6 +57,8 @@ private:
 	float rotAngle_;
 	float endTime_;
 	float homingTime;
+
+	GameEngineSoundPlayer soundWhoosh_;
 
 public:
 	void SetPower(float4 _direction, float _firePower)

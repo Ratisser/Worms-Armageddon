@@ -8,7 +8,8 @@
 #include <GameEngineCollision.h>
 
 LobbyImage::LobbyImage() :
-	hostready_(false),
+	hostready_(true),
+	mouseover_(false),
 	backdropSpriteRender_(nullptr),
 	hostboxSpriteRender_(nullptr),
 	hostreadySpriteRender_(nullptr),
@@ -24,6 +25,7 @@ LobbyImage::~LobbyImage() // default destructer 디폴트 소멸자
 
 LobbyImage::LobbyImage(LobbyImage&& _other) noexcept :
 	hostready_(_other.hostready_),
+	mouseover_(_other.mouseover_),
 	backdropSpriteRender_(_other.backdropSpriteRender_),
 	hostboxSpriteRender_(_other.hostboxSpriteRender_),
 	hostreadySpriteRender_(_other.hostreadySpriteRender_),
@@ -49,7 +51,7 @@ void LobbyImage::Start()
 	hostboxSpriteRender_->SetCameraEffectOff();
 
 	// Host Ready Button Image
-	hostreadySpriteRender_ = CreateRenderer("Lobby_HostReadyOff");
+	hostreadySpriteRender_ = CreateRenderer("Lobby_HostReadyOn");
 	ImageHarfSize = hostreadySpriteRender_->GetImageSize().halffloat4();
 	hostreadySpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 230.f));
 	hostreadySpriteRender_->SetRenderSize(float4(200.f, 150.f));
@@ -72,11 +74,43 @@ void LobbyImage::UpdateBefore()
 	GameEngineCollision* ColUI = hostreadyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MOUSE));
 	if (nullptr != ColUI)
 	{
+		if (false == mouseover_)
+		{
+			// 마우스오버 이미지로 변경
+			std::string ImageName = "";
+			if (true == hostready_)
+			{
+				ImageName = "Lobby_HostReadyOn";
+			}
+			else
+			{
+				ImageName = "Lobby_HostReadyOff";
+			}
+
+			ImageName += "_MouseOver";
+
+			hostreadySpriteRender_->SetImage(ImageName);
+			float4 ImageHarfSize = hostreadySpriteRender_->GetImageSize().halffloat4();
+			hostreadySpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 230.f));
+			hostreadySpriteRender_->SetRenderSize(float4(200.f, 150.f));
+
+			// MouseOver Flag On
+			mouseover_ = true;
+		}
+
 		if (true == GameEngineInput::GetInst().IsDown("Host_Ready"))
 		{
 			if (true == hostready_)
 			{
-				hostreadySpriteRender_->SetImage("Lobby_HostReadyOff");
+				// 마우스오버 이미지로 변경
+				std::string ImageName = "Lobby_HostReadyOff";
+				if (true == mouseover_)
+				{
+					ImageName += "_MouseOver";
+					mouseover_ = false;
+				}
+
+				hostreadySpriteRender_->SetImage(ImageName);
 				float4 ImageHarfSize = hostreadySpriteRender_->GetImageSize().halffloat4();
 				hostreadySpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 230.f));
 				hostreadySpriteRender_->SetRenderSize(float4(200.f, 150.f));
@@ -87,6 +121,15 @@ void LobbyImage::UpdateBefore()
 			}
 			else
 			{
+				std::string ImageName = "Lobby_HostReadyOn";
+				if (true == mouseover_)
+				{
+					ImageName += "_MouseOver";
+					mouseover_ = false;
+				}
+
+				hostreadySpriteRender_->SetImage(ImageName);
+
 				hostreadySpriteRender_->SetImage("Lobby_HostReadyOn");
 				float4 ImageHarfSize = hostreadySpriteRender_->GetImageSize().halffloat4();
 				hostreadySpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 230.f));
@@ -97,6 +140,27 @@ void LobbyImage::UpdateBefore()
 				LobbyHost::SetCurHostReady(hostready_);
 			}
 		}
+	}
+	else
+	{
+		// 마우스일반 이미지로 변경
+		std::string ImageName = "";
+		if (true == hostready_)
+		{
+			ImageName = "Lobby_HostReadyOn";
+		}
+		else
+		{
+			ImageName = "Lobby_HostReadyOff";
+		}
+
+		hostreadySpriteRender_->SetImage(ImageName);
+		float4 ImageHarfSize = hostreadySpriteRender_->GetImageSize().halffloat4();
+		hostreadySpriteRender_->SetPivotPos(float4(ImageHarfSize.x + 10.f, ImageHarfSize.y + 230.f));
+		hostreadySpriteRender_->SetRenderSize(float4(200.f, 150.f));
+
+		// MouseOver Flag On
+		mouseover_ = false;
 	}
 
 	// Player Select

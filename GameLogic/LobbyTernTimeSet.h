@@ -10,6 +10,8 @@ class LobbyTernTimeSet : public GameEngineActor
 {
 private:	// member Var
 	int ImageIndex_;
+	int PrevInfinityRandom_;
+	bool MouseOver_;
 
 private:
 	GameEngineRenderer* mainrenderer_;

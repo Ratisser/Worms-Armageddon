@@ -8,6 +8,7 @@
 #include  "WormName.h"
 #include  "WormArrow.h"
 #include "WormHPBlankWindow.h"
+#include "WormHPNumber.h"
 
 #include "TimerBlankWindow.h"
 #include "TimerDigit.h"
@@ -118,6 +119,21 @@ WormHPBlankWindow* UIController::GetCurWormHPWindow()
 	return curWormHPWindow_;
 }
 
+WormHPNumber* UIController::GetCurHPNumberHundred()
+{
+	return curHPNumberHundred_;
+}
+
+WormHPNumber* UIController::GetCurHPNumberTen()
+{
+	return curHPNumberTen_;
+}
+
+WormHPNumber* UIController::GetCurHPNumber()
+{
+	return curHPNumber_;
+}
+
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -141,6 +157,10 @@ void UIController::Start()
 	curTimerDigitTen_->SetPos({ 28,690 });
 	curTimerDigit_ = GetLevel()->CreateActor<TimerDigit>();
 	curTimerDigit_->SetPos({ 48,690 });
+
+	curHPNumberHundred_ = GetLevel()->CreateActor<WormHPNumber>();
+	curHPNumberTen_ = GetLevel()->CreateActor<WormHPNumber>();
+	curHPNumber_ = GetLevel()->CreateActor<WormHPNumber>();
 }
 
 void UIController::UpdateBefore()
@@ -158,4 +178,5 @@ void UIController::UpdateAfter()
 void UIController::Render()
 {
 }
+
 

@@ -6,6 +6,7 @@
 #include <GameEngineLevelManager.h>
 #include <GameEngineLevel.h>
 #include <GameEngineCollision.h>
+#include <GameEngineSoundManager.h>
 
 #include "WindController.h"
 #include "eCollisionGroup.h"
@@ -45,6 +46,7 @@ void Bazooka::Start()
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 
+	GameEngineSoundManager::GetInstance().PlaySoundByName("ROCKETRELEASE.WAV");
 }
 
 void Bazooka::UpdateBefore()
@@ -107,6 +109,9 @@ void Bazooka::Update()
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->CreateExplosion100(pos_);
+
+		GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+
 		Death();
 	}
 
