@@ -130,9 +130,6 @@ void LobbyCreateTeam::Render()
 
 void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 {
-	// 현재 선택된 플레이어 인덱스 저장
-	CurSelectIndex_.push_back(_Index);
-
 	// 넘겨받은 플레이어명으로 플레이어인지 CPU인지 판단한다.
 	std::string CurSelPlayerName = _Name;
 	
@@ -204,8 +201,17 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	// 최대 4명의 선택가능 플레이어가 표시되므로
 	// 전체선택가능 플레이어목록에서 4명인덱스 추출하여
 	// 선택가능플레이어 목록 갱신을 위한 인덱스 추출
+	// 이미 선택한 목록의 인덱스를 포함하는 경우를 제외하기 위하여 
+	// 검사
 	ActiveStartIndex_ = FistOnPlayerIdx;
-	ActiveEndIndex_ = FistOnPlayerIdx + 4;
+	ActiveEndIndex_ = FistOnPlayerIdx + 4 + static_cast<int>(CurSelectIndex_.size());
+	if (ActiveEndIndex_ > static_cast<int>(SelectablePlayerList.size()))
+	{
+		ActiveEndIndex_ = static_cast<int>(SelectablePlayerList.size());
+	}
+
+	// 현재 선택된 플레이어 인덱스 저장
+	CurSelectIndex_.push_back(_Index);
 }
 
 void LobbyCreateTeam::SetSelectablePlayerSort()
@@ -268,8 +274,21 @@ void LobbyCreateTeam::SetSelectablePlayerSort()
 	// 현재 선택된 플레이어를 제외한 갱신
 	if (true == Flag)
 	{
-		for (int i = addindex; i < addindex + continuecnt; ++i)
+		// 추가할 항목이 없다면 리턴
+		if (-1 == addindex)
 		{
+			return;
+		}
+
+		--CalcIndex;
+		for (int i = addindex; i <= addindex + continuecnt; ++i)
+		{
+			if (i >= static_cast<int>(SelectablePlayerList.size()))
+			{
+				Flag = false;
+				break;
+			}
+
 			SelectablePlayerList[i]->ChangePlayerPos(float4(272.f, (245.f + (CalcIndex * 36.f))), float4(230.f, (236.f + (CalcIndex * 34.f))), float4(32.f, 32.f));
 			SelectablePlayerList[i]->SetPlayerOn(CalcIndex);
 
