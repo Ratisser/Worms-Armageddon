@@ -1,6 +1,7 @@
 #include "LobbyCreateTeam.h"
 #include "LobbySelectablePlayer.h"
 #include "eCollisionGroup.h"
+#include "GameOptionInfo.h"
 
 #include <EngineEnum.h>
 #include <GameEngineWindow.h>
@@ -161,7 +162,7 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	SelectPlayerRendererList.push_back(NewRender);
 
 	// 현재 선택한 플레이어 수 저장
-	PlayWormCount = static_cast<int>(SelectPlayerRendererList.size());
+	GameOptionInfo::CurWormCnt = static_cast<int>(SelectPlayerRendererList.size());
 
 	// 플레이어이름 표시 및 선택한 플레이어이름목록에 추가
 	int NameListSize = static_cast<int>(SelectPlayerNameList.size());

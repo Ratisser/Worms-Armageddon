@@ -55,14 +55,16 @@ public:
 	bool GetCurPlayerShow() const;
 	GameEngineCollision* GetMainCollision() const;
 
-public:
+public:// 선택가능한 플레이어 목록에서의 플레이어 정보 초기 세팅 및 플레이어 선택으로 인한 정보 변경
 	void SetPlayerInfo(LobbyCreateTeam* _Parent, const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
 	void ChangePlayerPos(const float4& _NamePos, const float4& _RenderPos, const float4& _RenderSize = float4::ZERO);
+
+public: // 플레이어 선택으로 인한 활성화/비활성화
 	void SetPlayerOn(int _ActiveIndex);
 	void SetPlayerOff();
 	void DelActiveIndex();
 
-public:
+public: // 플레이어 생성(CPU or PLAYER)
 	void CreatePlayer(const std::string& _PlayerName, int _Index, int _CPUIndex, bool _PlayerAndCPU = true);
 };
 
