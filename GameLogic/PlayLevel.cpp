@@ -37,6 +37,7 @@
 #include "Cloud.h"
 
 #include "GlobalValue.h"
+#include "GameOptionInfo.h"
 
 
 FadeObject* PlayLevel::fadeObject_ = nullptr;
@@ -165,7 +166,7 @@ void PlayLevel::wormLoading()
 	Controller_ = CreateActor<GameController>("GameController");
 
 
-	float4 minMaxInfo = GlobalValue::MapMinMaxInfo[GlobalValue::CurPlayMap];
+	float4 minMaxInfo = GameOptionInfo::MapMinMaxInfo[GameOptionInfo::CurPlayMap];
 
 
 	for (size_t i = 0; i < 6; i++)

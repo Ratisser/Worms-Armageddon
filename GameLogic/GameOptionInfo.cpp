@@ -1,5 +1,19 @@
 #include "GameOptionInfo.h"
 
+//========================= Game Option ===========================//
+
+// 현재 생성하는 게임의 플레이어 수
+int GameOptionInfo::CurWormCnt = 0;
+
+// 현재 생성하는 게임의 맵(초기값 강제 지정)
+std::string GameOptionInfo::CurPlayMap = "MapTrain";
+
+// 현재 생성하는 게임의 충돌맵(초기값 강제 지정)
+std::string GameOptionInfo::CurPlayColMap = "MapTrain_Ground";
+
+// 현재 생성하는 게임 맵의 최소/최대 위치값목록
+std::unordered_map<std::string, float4> GameOptionInfo::MapMinMaxInfo = std::unordered_map<std::string, float4>();
+
 //======================= Game Basic Option =======================//
 
 // 턴타임

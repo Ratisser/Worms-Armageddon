@@ -43,8 +43,12 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
-public:
+public: // 선택가능 플레이어 목록 -> 선택된플레이어 목록 : 플레이어 선택하기 기능
 	void SetSelectPlayer(const std::string& _Name, int _Index);
 	void SetSelectablePlayerSort();
+
+public: // 현재 선택된 플레이어 옵션렌더러 생성
+	void CreateSelectPlayerOption();
+
 };
 

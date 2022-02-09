@@ -1,6 +1,7 @@
 #include "LobbySelectMapImage.h"
 #include "eCollisionGroup.h"
 #include "GlobalValue.h"
+#include "GameOptionInfo.h"
 
 #include <GameEngineWindow.h>
 #include <GameEngineInput.h>
@@ -77,14 +78,14 @@ void LobbySelectMapImage::UpdateBefore()
 			// 단, 맵이름을 넘겨줄때 LobbyMap_ 문자열을 제외한 문자열을 넘긴다.
 			std::string CurMapName = mapimagenamelist_[curmapimage_];
 			CurMapName = CurMapName.substr(9);
-			GlobalValue::CurPlayMap = CurMapName;
+			GameOptionInfo::CurPlayMap = CurMapName;
 
 			// 현재선택된 맵타입의 충돌맵 이름 저장
 			// 단, 맵이름을 넘겨줄때 LobbyMap_ 문자열을 제외한 문자열에 _Ground 문자열을 이어붙인 이름 저장
 			std::string CurColMapName = mapimagenamelist_[curmapimage_];
 			CurColMapName = CurColMapName.substr(9);
 			CurColMapName += "_Ground";
-			GlobalValue::CurPlayColMap = CurColMapName;
+			GameOptionInfo::CurPlayColMap = CurColMapName;
 		}
 	}
 }

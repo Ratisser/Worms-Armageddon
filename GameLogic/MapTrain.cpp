@@ -1,5 +1,5 @@
 #include "MapTrain.h"
-#include "GlobalValue.h"
+#include "GameOptionInfo.h"
 #include "eCollisionGroup.h"
 
 #include <GameEngineWindow.h>
@@ -89,17 +89,17 @@ void MapTrain::UpdateBefore()
 	if (false == firstupdate_)
 	{
 		// 맵 렌더러 생성 및 위치 지정
-		mainSpriteRender_ = CreateRenderer(GlobalValue::CurPlayMap);
+		mainSpriteRender_ = CreateRenderer(GameOptionInfo::CurPlayMap);
 		float4 imageSize = mainSpriteRender_->GetImageSize();
 		mainSpriteRender_->SetPivotPos(imageSize.halffloat4());
 
 		// 충돌맵 렌더러 생성 및 위치 지정
-		colSpriteRender_ = CreateRenderer(GlobalValue::CurPlayColMap);
+		colSpriteRender_ = CreateRenderer(GameOptionInfo::CurPlayColMap);
 		imageSize = colSpriteRender_->GetImageSize();
 		colSpriteRender_->SetPivotPos(imageSize.halffloat4());
 
 		bodyCollision_ = CreateCollision(eCollisionGroup::MAP, CollisionCheckType::IMAGE);
-		bodyCollision_->SetImage(GlobalValue::CurPlayColMap);
+		bodyCollision_->SetImage(GameOptionInfo::CurPlayColMap);
 
 		// 최초갱신일때만 실행되도록 설정
 		firstupdate_ = true;

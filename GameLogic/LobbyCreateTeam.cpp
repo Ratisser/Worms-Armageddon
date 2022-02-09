@@ -299,3 +299,7 @@ void LobbyCreateTeam::SetSelectablePlayerSort()
 	}
 }
 
+void LobbyCreateTeam::CreateSelectPlayerOption()
+{
+}
+
