@@ -315,6 +315,7 @@ void GameController::initState()
 	state_.CreateState("NextWorm", &GameController::startNextWorm, &GameController::updateNextWorm);
 	state_.CreateState("Action", &GameController::startAction, &GameController::updateAction);
 	state_.CreateState("ActionEnd", &GameController::startActionEnd, &GameController::updateActionEnd);
+	state_.CreateState("Settlement", &GameController::startSettlement, &GameController::updateSettlement);
 	state_.CreateState("Death", &GameController::startDeath, &GameController::updateDeath);
 	state_.CreateState("Victory", &GameController::startVictory, &GameController::updateVictory);
 	state_.CreateState("ItemDrop", &GameController::startItemDrop, &GameController::updateItemDrop);
@@ -410,9 +411,23 @@ StateInfo GameController::startActionEnd(StateInfo _state)
 
 StateInfo GameController::updateActionEnd(StateInfo _state)
 {
+
 	currentWorm_ = nullptr;
+	return "Settlement";
+	// return "NextWorm";
+}
+
+StateInfo GameController::startSettlement(StateInfo _state)
+{
+	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
+	return StateInfo();
+}
+
+StateInfo GameController::updateSettlement(StateInfo _state)
+{
 	return "NextWorm";
 }
+
 
 StateInfo GameController::startDeath(StateInfo _state)
 {

@@ -393,9 +393,6 @@
     <ClInclude Include="WormHPNumber.h">
       <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
     </ClInclude>
-    <ClInclude Include="HUDpos.h">
-      <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">

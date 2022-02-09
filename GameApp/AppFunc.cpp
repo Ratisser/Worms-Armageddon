@@ -820,6 +820,7 @@ void SoundLoad()
 	//RS::LoadSoundFromFile(dir / "BlowTorch.WAV");
 	//RS::LoadSoundFromFile(dir / "GIRDERIMPACT.WAV");
 	//RS::LoadSoundFromFile(dir / "DRILL.WAV");
+	//RS::LoadImageFromFile(dir / "FirePunchImpact.WAV");
 
 	//// Title Screen Sound
 	//RS::LoadSoundFromFile(dir / "Worms_TitleScreen.mp3");

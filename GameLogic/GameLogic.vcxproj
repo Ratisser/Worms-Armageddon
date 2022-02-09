@@ -74,7 +74,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="HUDpos.h" />
     <ClInclude Include="LobbyCreateTeam.h">
       <SubType>
       </SubType>
