@@ -15,7 +15,7 @@
 #include <vector>
 #include <filesystem>
 
-#include <GlobalValue.h>
+#include <GameOptionInfo.h>
 
 
 namespace fs = std::filesystem;
@@ -24,10 +24,10 @@ void AppResourcesInit()
 {
 	// 맵 최소, 최대값 초기화
 	{
-		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapTrain", { 800.f, 3300.f }));
-		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapBooks", { 200.f, 3640.f }));
-		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapCars", { 200.f, 3640.f }));
-		GlobalValue::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapCity", { 400.f, 3440.f }));
+		GameOptionInfo::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapTrain", { 800.f, 3300.f }));
+		GameOptionInfo::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapBooks", { 200.f, 3640.f }));
+		GameOptionInfo::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapCars", { 200.f, 3640.f }));
+		GameOptionInfo::MapMinMaxInfo.insert(std::pair<std::string, float4>("MapCity", { 400.f, 3440.f }));
 
 	}
 
