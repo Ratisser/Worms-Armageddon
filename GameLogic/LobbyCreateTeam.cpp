@@ -165,6 +165,9 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	// 임시주석 : 테스트 편의로 인해 6으로 고정 추후 가동시 주석해제
 	//GameOptionInfo::CurWormCnt = static_cast<int>(SelectPlayerRendererList.size());
 
+	// 현재 선택한 플레이어명을 저장
+	//GameOptionInfo::CurPlayerName.push_back(_Name);
+
 	// 플레이어이름 표시 및 선택한 플레이어이름목록에 추가
 	int NameListSize = static_cast<int>(SelectPlayerNameList.size());
 	SelectPlayerNameList.push_back(CurSelPlayerName);

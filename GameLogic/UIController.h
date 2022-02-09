@@ -25,12 +25,13 @@ private:	// member Var
 private:	// 관리하는 모든 UI
 	// Weapon Sheet 관련
 	WeaponSheet* weaponsheet_;
+
 	// 화면하단 웜 스테이터스 관련
 	BottomNameTag* bottomNameTag_;
 	BottomFlag* bottomFlag_;
 	BottomHealthBar* bottomHealthBar_;
 
-	//
+	// 플레이어상단 웜 스테이터스 관련
 	WormName* curWormName_;
 	WormArrow* curWormArrow_;
 	WormHPBlankWindow* curWormHPWindow_;
@@ -38,6 +39,7 @@ private:	// 관리하는 모든 UI
 	WormHPNumber* curHPNumberTen_;
 	WormHPNumber* curHPNumber_;
 
+	// 플레이어 턴타임 관련
 	TimerBlankWindow* curTimerWindow_;
 	TimerDigit* curTimerDigitTen_;
 	TimerDigit* curTimerDigit_;
@@ -48,7 +50,7 @@ public:
 
 protected:		// delete constructer
 	UIController(const UIController& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	UIController(UIController&& _other) noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
+	UIController(UIController&& _other) noexcept = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
 private:		//delete operator
 	UIController& operator=(const UIController& _other) = delete; // default Copy operator 디폴트 대입 연산자
@@ -65,21 +67,24 @@ public: // 플레이어가 기믹오브젝트 획득 또는 아이템사용시 설정해야하는 항목
 public:
 	Worm* GetCurPlayer() const;
 	WeaponSheet* GetCurWeaponSheet() const;
+
+public:
 	BottomNameTag* GetCurBottomNameTag() const;
 	BottomFlag* GetCurBottomFlag() const;
 	BottomHealthBar* GetCurBottomHealthBar();
 
+public:
 	WormName* GetCurWormName();
 	WormArrow* GetCurWormArrow();
 	WormHPBlankWindow* GetCurWormHPWindow();
-
-	TimerBlankWindow* GetCurTimerWindow();
-	TimerDigit* GetCurTimerDigitTen();
-	TimerDigit* GetCurTimerDigit();
-
 	WormHPNumber* GetCurHPNumberHundred();
 	WormHPNumber* GetCurHPNumberTen();
 	WormHPNumber* GetCurHPNumber();
+
+public:
+	TimerBlankWindow* GetCurTimerWindow();
+	TimerDigit* GetCurTimerDigitTen();
+	TimerDigit* GetCurTimerDigit();
 
 public:
 	virtual void Start() override;

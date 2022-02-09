@@ -5,8 +5,8 @@
 #include "BottomNameTag.h"
 #include "BottomFlag.h"
 #include "BottomHealthBar.h"
-#include  "WormName.h"
-#include  "WormArrow.h"
+#include "WormName.h"
+#include "WormArrow.h"
 #include "WormHPBlankWindow.h"
 #include "WormHPNumber.h"
 
@@ -19,28 +19,24 @@
 
 
 UIController::UIController() :
-	curplayer_(nullptr),
 	weaponsheet_(nullptr),
 	bottomNameTag_(nullptr),
 	bottomFlag_(nullptr),
-	bottomHealthBar_(nullptr)
+	bottomHealthBar_(nullptr),
+	curWormName_(nullptr),
+	curWormArrow_(nullptr),
+	curWormHPWindow_(nullptr),
+	curHPNumberHundred_(nullptr),
+	curHPNumberTen_(nullptr),
+	curHPNumber_(nullptr),
+	curTimerWindow_(nullptr),
+	curTimerDigitTen_(nullptr),
+	curTimerDigit_(nullptr)
 {
-
 }
 
 UIController::~UIController()
 {
-}
-
-UIController::UIController(UIController&& _other) noexcept :
-	curplayer_(_other.curplayer_),
-	weaponsheet_(_other.weaponsheet_),
-	bottomNameTag_(_other.bottomNameTag_),
-	bottomFlag_(_other.bottomFlag_),
-	bottomHealthBar_(_other.bottomHealthBar_)
-
-{
-
 }
 
 void UIController::SetCurPlayer(Worm* _curplayer)
@@ -145,22 +141,25 @@ void UIController::Start()
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
 	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정														// 해당 WeaponSheet를 생성한 UIController 저장
 
+	// 플레이어 하단 상태
 	bottomNameTag_ = GetLevel()->CreateActor<BottomNameTag>();
 	bottomFlag_ = GetLevel()->CreateActor<BottomFlag>();
 	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
+
+	// 플레이어 위 UI
 	curWormName_ = GetLevel()->CreateActor<WormName>();
 	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
 	curWormHPWindow_ = GetLevel()->CreateActor<WormHPBlankWindow>();
+	curHPNumberHundred_ = GetLevel()->CreateActor<WormHPNumber>();
+	curHPNumberTen_ = GetLevel()->CreateActor<WormHPNumber>();
+	curHPNumber_ = GetLevel()->CreateActor<WormHPNumber>();
 
+	// 플레이어 턴타임 UI
 	curTimerWindow_ = GetLevel()->CreateActor<TimerBlankWindow>();
 	curTimerDigitTen_ = GetLevel()->CreateActor<TimerDigit>();
 	curTimerDigitTen_->SetPos({ 28,690 });
 	curTimerDigit_ = GetLevel()->CreateActor<TimerDigit>();
 	curTimerDigit_->SetPos({ 48,690 });
-
-	curHPNumberHundred_ = GetLevel()->CreateActor<WormHPNumber>();
-	curHPNumberTen_ = GetLevel()->CreateActor<WormHPNumber>();
-	curHPNumber_ = GetLevel()->CreateActor<WormHPNumber>();
 }
 
 void UIController::UpdateBefore()
@@ -178,5 +177,3 @@ void UIController::UpdateAfter()
 void UIController::Render()
 {
 }
-
-

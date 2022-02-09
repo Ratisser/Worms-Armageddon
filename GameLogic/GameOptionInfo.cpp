@@ -7,6 +7,9 @@
 //int GameOptionInfo::CurWormCnt = 0;
 int GameOptionInfo::CurWormCnt = 6;
 
+// 현재 생성하는 게임의 플레이어명 목록
+std::vector<std::string> GameOptionInfo::CurPlayerName;
+
 // 현재 생성하는 게임의 맵(초기값 강제 지정)
 std::string GameOptionInfo::CurPlayMap = "MapTrain";
 
