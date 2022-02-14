@@ -27,6 +27,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AirStrike.h" />
     <ClInclude Include="BackGroundGradation.h">
       <SubType>
       </SubType>
@@ -337,6 +338,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AirStrike.cpp" />
     <ClCompile Include="BackGroundGradation.cpp">
       <SubType>
       </SubType>

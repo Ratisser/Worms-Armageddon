@@ -417,6 +417,9 @@
     <ClInclude Include="TopHPText.h">
       <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
     </ClInclude>
+    <ClInclude Include="AirStrike.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -676,6 +679,9 @@
     </ClCompile>
     <ClCompile Include="TopHPText.cpp">
       <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClCompile>
+    <ClCompile Include="AirStrike.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -177,6 +177,11 @@ private:
 	StateInfo startDrillFire(StateInfo _state);
 	StateInfo updateDrillFire(StateInfo _state);
 
+	StateInfo startAirStrikeOn(StateInfo _state);
+	StateInfo updateAirStrikeOn(StateInfo _state);
+	StateInfo startAirStrikeFire(StateInfo _state);
+	StateInfo updateAirStrikeFire(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
