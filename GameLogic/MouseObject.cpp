@@ -74,6 +74,14 @@ void MouseObject::MoveMousePos(bool _Flag)
 	}
 }
 
+void MouseObject::MouseBlock(bool _bool)
+{
+	mouseMoveBlock = _bool;
+
+	mouseAimRenderer_->ChangeAnimation("mouseAim", std::string("markerr.bmp"));
+	mouseAimRenderer_->SetPivotPos(GetLevel()->GetCamPos());
+}
+
 void MouseObject::SetGameController(GameController* _MainController)
 {
 	gamecontroller_ = _MainController;
@@ -87,8 +95,8 @@ void MouseObject::Start()
 	mainrenderer_->SetRenderSize(float4(32.f, 32.f));
 	mainrenderer_->SetCameraEffectOff();
 
-	mouseAimRenderer_ = CreateRenderer("Bazooka");
-	mouseAimRenderer_->SetCameraEffectOff();
+	mouseAimRenderer_ = CreateRenderer("markerr.bmp");
+	mouseAimRenderer_->CreateAnimation("mouseAim", "markerr.bmp", 0, 9, true, 0.03f);
 
 	float4 HarfIamgeSize = mainrenderer_->GetImageSize().halffloat4();
 	mainrenderer_->SetPivotPos(HarfIamgeSize);
@@ -262,6 +270,6 @@ void MouseObject::Render()
 	}
 	else
 	{
-		mouseAimRenderer_->Render();
+		mouseAimRenderer_->AnimationUpdate();
 	}
 }

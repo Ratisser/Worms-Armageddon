@@ -82,6 +82,7 @@ void AppResourcesInit()
 		float4 cutSize = float4(60.f, 60.f);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("markerr.bmp"), cutSize);
 
 		if (false == Dir.MoveChild("\\Weapons\\"))
 		{
