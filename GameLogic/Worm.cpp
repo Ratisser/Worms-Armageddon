@@ -278,6 +278,55 @@ void Worm::initInput()
 	{
 		GameEngineInput::GetInst().CreateKey("Mouse", VK_LBUTTON);
 	}
+
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF1"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF1", '1');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF2"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF2", '2');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF3"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF3", '3');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF4"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF4", '4');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF5"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF5", '5');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF6"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF6", '6');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF7"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF7", '7');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF8"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF8", '8');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF9"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF9", '9');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF10"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF10", '10');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF11"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF11", '11');
+	}
+	if (false == GameEngineInput::GetInst().IsKey("WeaponF12"))
+	{
+		GameEngineInput::GetInst().CreateKey("WeaponF12", '12');
+	}
 }
 
 void Worm::initCollision()
@@ -1040,6 +1089,92 @@ void Worm::setAimingForward()
 	}
 }
 
+void Worm::InputUpdate()
+{
+	if (bFocus_ == true)
+	{
+		if (GameEngineInput::GetInst().IsPress("WeaponF1"))
+		{
+			if (currentWeapon_ == eItemList::WEAPON_BAZOOKA)
+			{
+				currentWeapon_ = eItemList::WEAPON_HOMINGMISSILE;
+			}
+			else
+			{
+				currentWeapon_ = eItemList::WEAPON_BAZOOKA;
+			}
+
+			ChangeState("WeaponOn");
+		}
+
+		if (GameEngineInput::GetInst().IsPress("WeaponF2"))
+		{
+			if (currentWeapon_ != eItemList::WEAPON_BATTLEAXE)
+			{
+				currentWeapon_ = eItemList::WEAPON_BATTLEAXE;
+			}
+
+			ChangeState("WeaponOn");
+		}
+
+		if (GameEngineInput::GetInst().IsPress("WeaponF3"))
+		{
+			if (currentWeapon_ != eItemList::WEAPON_UZI)
+			{
+				currentWeapon_ = eItemList::WEAPON_UZI;
+			}
+
+			ChangeState("WeaponOn");
+		}
+
+		if (GameEngineInput::GetInst().IsPress("WeaponF4"))
+		{
+			if (currentWeapon_ != eItemList::WEAPON_FIREPUNCH)
+			{
+				currentWeapon_ = eItemList::WEAPON_FIREPUNCH;
+			}
+
+			ChangeState("WeaponOn");
+		}
+
+		if (GameEngineInput::GetInst().IsPress("WeaponF5"))
+		{
+			if (currentWeapon_ == eItemList::WEAPON_SHEEP)
+			{
+				currentWeapon_ = eItemList::WEAPON_SUPERSHEEP;
+			}
+			else if (currentWeapon_ == eItemList::WEAPON_SUPERSHEEP)
+			{
+				currentWeapon_ = eItemList::WEAPON_SHEEP;
+			}
+			else
+			{
+				currentWeapon_ = eItemList::WEAPON_SHEEP;
+			}
+
+			ChangeState("WeaponOn");
+		}
+
+		if (GameEngineInput::GetInst().IsPress("WeaponF7"))
+		{
+			if (currentWeapon_ == eItemList::WEAPON_BLOWTORCH)
+			{
+				currentWeapon_ = eItemList::WEAPON_PNEUMATICDRILL;
+			}
+			else if (currentWeapon_ == eItemList::WEAPON_PNEUMATICDRILL)
+			{
+				currentWeapon_ = eItemList::WEAPON_GIRDER;
+			}
+			else
+			{
+				currentWeapon_ = eItemList::WEAPON_BLOWTORCH;
+			}
+
+			ChangeState("WeaponOn");
+		}
+	}
+}
+
 StateInfo Worm::StartHit(StateInfo _state)
 {
 	crosshairRender_->Off();
@@ -1214,7 +1349,7 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	}
 
 	normalMove();
-
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -1499,6 +1634,8 @@ StateInfo Worm::updateBazookaAim(StateInfo _state)
 
 	normalMove();
 
+	InputUpdate();
+
 	return StateInfo();
 }
 
@@ -1608,7 +1745,8 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 		return "BazookaFire";
 	}
 
-	normalMove();
+	normalMove(); 
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -1707,7 +1845,7 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 	}
 
 	normalMove();
-
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -1743,7 +1881,7 @@ StateInfo Worm::updateHomingFire(StateInfo _state)
 			return "HomingWait";
 		}
 	}
-
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -1807,7 +1945,7 @@ StateInfo Worm::updateFirepunchReady(StateInfo _state)
 	}
 
 	normalMove();
-
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -2076,7 +2214,7 @@ StateInfo Worm::updateUziAim(StateInfo _state)
 	}
 
 	normalMove();
-
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -2171,6 +2309,7 @@ StateInfo Worm::updateSheepAim(StateInfo _state)
 	}
 
 	normalMove();
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -2258,6 +2397,7 @@ StateInfo Worm::updateSuperSheepAim(StateInfo _state)
 	}
 
 	normalMove();
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -2343,6 +2483,7 @@ StateInfo Worm::updateBattleAxeOn(StateInfo _state)
 	}
 
 	normalMove();
+	InputUpdate();
 	return StateInfo();
 }
 StateInfo Worm::startBattleAxeFire1(StateInfo _state)
@@ -2455,6 +2596,7 @@ StateInfo Worm::startGirderOn(StateInfo _state)
 
 StateInfo Worm::updateGirderOn(StateInfo _state)
 {
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -2502,7 +2644,7 @@ StateInfo Worm::updateBlowtorchOn(StateInfo _state)
 	}
 
 	normalMove();
-
+	InputUpdate();
 	return StateInfo();
 }
 
@@ -2602,7 +2744,7 @@ StateInfo Worm::updateDrillOn(StateInfo _state)
 	}
 
 	normalMove();
-
+	InputUpdate();
 	return StateInfo();
 }
 

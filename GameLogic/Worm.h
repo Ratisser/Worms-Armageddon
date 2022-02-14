@@ -76,6 +76,8 @@ private:
 
 	void setAimingForward();
 
+	void InputUpdate();
+
 private:
 	StateInfo StartHit(StateInfo _state);
 	StateInfo updateHit(StateInfo _state);

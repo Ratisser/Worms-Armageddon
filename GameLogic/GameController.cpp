@@ -89,7 +89,7 @@ void GameController::Start()
 	// TODO : 테스트가 끝난 후 삭제
 	if (false == GameEngineInput::GetInst().IsKey("TestKey"))
 	{
-		GameEngineInput::GetInst().CreateKey("TestKey", '1');
+		GameEngineInput::GetInst().CreateKey("TestKey", 0xC0);
 	}
 
 	// UI
