@@ -191,6 +191,12 @@ public:
 		{
 			pivotpos_ = _Value;
 		}
+
+		void SetPivotMove(float4 _pos)
+		{
+			pivotpos_ += _pos;
+		}
+
 		void SetRenderSize(const float4& _Value)
 		{
 			rendersize_ = _Value;

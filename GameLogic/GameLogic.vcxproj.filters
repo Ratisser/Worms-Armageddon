@@ -139,6 +139,15 @@
     <Filter Include="Actor\Effect\01. EffectActor\kamismk">
       <UniqueIdentifier>{1d0c178a-5618-4307-8c17-7241f3b74c59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\UI\WormStateUI">
+      <UniqueIdentifier>{5900260c-4cad-414c-91dd-5326f656a871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\WormStateUI\BottomState">
+      <UniqueIdentifier>{d7bf9dda-a162-47fc-884f-ee27dbb59690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\WormStateUI\TopState">
+      <UniqueIdentifier>{0923b639-514f-4568-bb0a-d930eefb170e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -399,6 +408,15 @@
     <ClInclude Include="Explosion.h">
       <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClInclude>
+    <ClInclude Include="BottomStateUI.h">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\BottomState</Filter>
+    </ClInclude>
+    <ClInclude Include="WormTopStateUI.h">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClInclude>
+    <ClInclude Include="TopHPText.h">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -649,6 +667,15 @@
     </ClCompile>
     <ClCompile Include="WormHPNumber.cpp">
       <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomStateUI.cpp">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\BottomState</Filter>
+    </ClCompile>
+    <ClCompile Include="WormTopStateUI.cpp">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClCompile>
+    <ClCompile Include="TopHPText.cpp">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

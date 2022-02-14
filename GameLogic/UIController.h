@@ -7,9 +7,8 @@
 
 class Worm;
 class WeaponSheet;
-class BottomNameTag;
-class BottomFlag;
-class BottomHealthBar;
+class BottomStateUI;
+class WormTopStateUI;
 class TimerBlankWindow;
 class TimerDigit;
 class Weapon;
@@ -27,17 +26,10 @@ private:	// 관리하는 모든 UI
 	WeaponSheet* weaponsheet_;
 
 	// 화면하단 웜 스테이터스 관련
-	BottomNameTag* bottomNameTag_;
-	BottomFlag* bottomFlag_;
-	BottomHealthBar* bottomHealthBar_;
+	BottomStateUI* bottomstate_;
 
 	// 플레이어상단 웜 스테이터스 관련
-	WormName* curWormName_;
-	WormArrow* curWormArrow_;
-	WormHPBlankWindow* curWormHPWindow_;
-	WormHPNumber* curHPNumberHundred_;
-	WormHPNumber* curHPNumberTen_;
-	WormHPNumber* curHPNumber_;
+	WormTopStateUI* wormtopstate_;
 
 	// 플레이어 턴타임 관련
 	TimerBlankWindow* curTimerWindow_;
@@ -69,17 +61,10 @@ public:
 	WeaponSheet* GetCurWeaponSheet() const;
 
 public:
-	BottomNameTag* GetCurBottomNameTag() const;
-	BottomFlag* GetCurBottomFlag() const;
-	BottomHealthBar* GetCurBottomHealthBar();
+	BottomStateUI* GetCurBottomState() const;
 
 public:
-	WormName* GetCurWormName();
-	WormArrow* GetCurWormArrow();
-	WormHPBlankWindow* GetCurWormHPWindow();
-	WormHPNumber* GetCurHPNumberHundred();
-	WormHPNumber* GetCurHPNumberTen();
-	WormHPNumber* GetCurHPNumber();
+	WormTopStateUI* GetCurTopState() const;
 
 public:
 	TimerBlankWindow* GetCurTimerWindow();
