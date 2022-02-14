@@ -631,6 +631,9 @@ std::string Worm::getWeaponAimState()
 
 void Worm::setAnimationWeaponOn()
 {
+	MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+	mouse->MouseBlock(false);
+
 	switch (currentWeapon_)
 	{
 	case eItemList::WEAPON_JETPACK:
