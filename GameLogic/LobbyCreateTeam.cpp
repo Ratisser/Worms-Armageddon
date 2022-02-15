@@ -241,7 +241,8 @@ void LobbyCreateTeam::SetSelectablePlayerSort()
 	int continuecnt = 0;
 	bool Flag = false;
 	bool SamePlayer = false;
-	for (int i = ActiveStartIndex_; i < ActiveEndIndex_; ++i)
+	int i = 0;
+	for (i = ActiveStartIndex_; i < ActiveEndIndex_; ++i)
 	{
 		// 선택가능 플레이어목록의 최대치를 넘어가면 중단
 		if (i >= static_cast<int>(SelectablePlayerList.size()))
@@ -279,18 +280,20 @@ void LobbyCreateTeam::SetSelectablePlayerSort()
 			addindex = i;
 		}
 	}
-
+	
 	// 현재 선택된 플레이어를 제외한 갱신
 	if (true == Flag)
 	{
-		// 추가할 항목이 없다면 리턴
+		// 현재 선택가능목록 마지막 인덱스에 있는 플레이어가 선택되었다면
 		if (-1 == addindex)
 		{
-			return;
+			++CalcIndex;
+			addindex = i;
+			continuecnt = 0;
 		}
 
 		--CalcIndex;
-		for (int i = addindex; i <= addindex + continuecnt; ++i)
+		for (int i = addindex; i <= (addindex + continuecnt); ++i)
 		{
 			if (i >= static_cast<int>(SelectablePlayerList.size()))
 			{
