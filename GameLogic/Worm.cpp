@@ -22,6 +22,7 @@
 #include "Bazooka.h"
 #include "FirePunch.h"
 #include "HomingMissile.h"
+#include "AirStrike.h"
 #include "MouseObject.h"
 #include "GameController.h"
 #include "Uzi.h"
@@ -62,6 +63,7 @@ Worm::Worm()
 	, bulletFocusActor_(nullptr)
 	, blowTorchMoveTime_(3.f)
 	, drillMoveTime_(0.f)
+	, airStrikeTime_(3.f)
 	, soundWhoosh_("DRILL.WAV")
 	, soundPowerUp_("ROCKETPOWERUP.WAV")
 	, DamageSpeed_(0.0f)
@@ -240,6 +242,11 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("DrillOffLeft", "drillOffLeft.bmp", 0, 12, false, 0.033f);
 	mainRender_->CreateAnimation("DrillOffRight", "drillOffRight.bmp", 0, 12, false, 0.033f);
 
+	mainRender_->CreateAnimation("AirStrikeOnLeft", "AirStrikeOnLeft.bmp", 0, 9, false, 0.033f); // 에어 스트라이크 애니메이션입니다.
+	mainRender_->CreateAnimation("AirStrikeOnRight", "AirStrikeOnRight.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("AirStrikeOffLeft", "AirStrikeOffLeft.bmp", 0, 9, false, 0.033f);
+	mainRender_->CreateAnimation("AirStrikeOffRight", "AirStrikeOffRight.bmp", 0, 9, false, 0.033f);
+
 	mainRender_->ChangeAnimation("IdleRight", std::string("idleRight.bmp"));
 
 	crosshairRender_ = CreateRenderer("crshairr.bmp");
@@ -407,6 +414,10 @@ void Worm::initState()
 	state_.CreateState("DrillOn", &Worm::startDrillOn, &Worm::updateDrillOn);
 	state_.CreateState("DrillFire", &Worm::startDrillFire, &Worm::updateDrillFire);
 
+	state_.CreateState("AirStrikeOn", &Worm::startAirStrikeOn, &Worm::updateAirStrikeOn);
+	state_.CreateState("AirStrikeFire", &Worm::startAirStrikeFire, &Worm::updateAirStrikeFire);
+	state_.CreateState("AirStrikeWait", &Worm::startAirStrikeWait, &Worm::updateAirStrikeWait);
+
 	state_.ChangeState("Idle");
 }
 
@@ -548,6 +559,7 @@ std::string Worm::getWeaponAimState()
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
 	case eItemList::WEAPON_AIRSTRIKE:
+		return "AirStrikeOn";
 		break;
 	case eItemList::WEAPON_NAPALMSTRIKE:
 		break;
@@ -753,6 +765,16 @@ void Worm::setAnimationWeaponOn()
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
 	case eItemList::WEAPON_AIRSTRIKE:
+		crosshairRender_->Off();
+
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("AirStrikeOnLeft", std::string("AirStrikeOnLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("AirStrikeOnRight", std::string("AirStrikeOnRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_NAPALMSTRIKE:
 		break;
@@ -861,6 +883,9 @@ void Worm::setAnimationWeaponOn()
 
 void Worm::setAnimationWeaponOff()
 {
+	MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+	mouse->MouseBlock(false);
+
 	switch (currentWeapon_)
 	{
 	case eItemList::WEAPON_JETPACK:
@@ -980,6 +1005,14 @@ void Worm::setAnimationWeaponOff()
 	case eItemList::WEAPON_MOLEBOMB:
 		break;
 	case eItemList::WEAPON_AIRSTRIKE:
+		if (bLeft_)
+		{
+			mainRender_->ChangeAnimation("AirStrikeOffLeft", std::string("AirStrikeOffLeft.bmp"));
+		}
+		else
+		{
+			mainRender_->ChangeAnimation("AirStrikeOffRight", std::string("AirStrikeOffRight.bmp"));
+		}
 		break;
 	case eItemList::WEAPON_NAPALMSTRIKE:
 		break;
@@ -1108,6 +1141,7 @@ void Worm::InputUpdate()
 			}
 
 			ChangeState("WeaponOn");
+			return;
 		}
 
 		if (GameEngineInput::GetInst().IsPress("WeaponF2"))
@@ -1118,6 +1152,7 @@ void Worm::InputUpdate()
 			}
 
 			ChangeState("WeaponOn");
+			return;
 		}
 
 		if (GameEngineInput::GetInst().IsPress("WeaponF3"))
@@ -1128,6 +1163,7 @@ void Worm::InputUpdate()
 			}
 
 			ChangeState("WeaponOn");
+			return;
 		}
 
 		if (GameEngineInput::GetInst().IsPress("WeaponF4"))
@@ -1138,6 +1174,7 @@ void Worm::InputUpdate()
 			}
 
 			ChangeState("WeaponOn");
+			return;
 		}
 
 		if (GameEngineInput::GetInst().IsPress("WeaponF5"))
@@ -1156,6 +1193,18 @@ void Worm::InputUpdate()
 			}
 
 			ChangeState("WeaponOn");
+			return;
+		}
+
+		if (GameEngineInput::GetInst().IsPress("WeaponF6"))
+		{
+			if (currentWeapon_ != eItemList::WEAPON_AIRSTRIKE)
+			{
+				currentWeapon_ = eItemList::WEAPON_AIRSTRIKE;
+			}
+
+			ChangeState("WeaponOn");
+			return;
 		}
 
 		if (GameEngineInput::GetInst().IsPress("WeaponF7"))
@@ -1174,6 +1223,7 @@ void Worm::InputUpdate()
 			}
 
 			ChangeState("WeaponOn");
+			return;
 		}
 	}
 }
@@ -1262,7 +1312,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 	DamageAcc_ += 10.f;
 
 
-	
+
 	return StateInfo();
 }
 
@@ -1704,10 +1754,6 @@ StateInfo Worm::startHomingStart(StateInfo _state)
 
 StateInfo Worm::updateHomingStart(StateInfo _state)
 {
-	// 마우스 포지션 클릭
-	// 마우스 이미지 x로 변경
-	// 마우스 이동 불가
-
 	if (GameEngineInput::GetInst().IsDown("Mouse"))
 	{
 		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
@@ -1748,7 +1794,7 @@ StateInfo Worm::updateHomingStart(StateInfo _state)
 		return "BazookaFire";
 	}
 
-	normalMove(); 
+	normalMove();
 	InputUpdate();
 	return StateInfo();
 }
@@ -2799,6 +2845,90 @@ StateInfo Worm::updateDrillFire(StateInfo _state)
 	return StateInfo();
 }
 
+StateInfo Worm::startAirStrikeOn(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateAirStrikeOn(StateInfo _state)
+{
+	if (GameEngineInput::GetInst().IsDown("Mouse"))
+	{
+		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+
+		float4 MousePos = mouse->GetPos() + mouse->GetGameController()->GetCameraPos();
+
+		mouseTargetPos_ = MousePos;
+
+		GameEngineSoundManager::GetInstance().PlaySoundByName("CursorSelect.wav");
+
+		mouse->MouseBlock(true);
+
+		AirStrike* newAirStrike = parentLevel_->CreateActor<AirStrike>();
+		newAirStrike->SetAirStrike(bLeft_, mouseTargetPos_);
+
+		return "AirStrikeFire";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+	{
+		bLeft_ = true;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("RightArrow"))
+	{
+		bLeft_ = false;
+		nextState_ = "Walk";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsDown("Jump"))
+	{
+		nextState_ = "JumpReady";
+		return "WeaponOff";
+	}
+
+	if (GameEngineInput::GetInst().IsPress("Fire"))
+	{
+		return "BazookaFire";
+	}
+
+	normalMove();
+	InputUpdate();
+	return StateInfo();
+}
+
+StateInfo Worm::startAirStrikeFire(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateAirStrikeFire(StateInfo _state)
+{
+	airStrikeTime_ -= deltaTime_;
+
+	if (airStrikeTime_ <= 0.f)
+	{
+		airStrikeTime_ = 3.f;
+		return "AirStrikeWait";
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::startAirStrikeWait(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Worm::updateAirStrikeWait(StateInfo _state)
+{
+	nextState_ = "Idle";
+	return "WeaponOff";
+}
+
 
 void Worm::SetCurWeapon(eItemList _WeaponType)
 {
@@ -2824,7 +2954,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	//받은 데미지 만큼 밀려나게끔
 
 	DamageDir_ = _MoveDir;
-	bound_ = 100/_numDamage;// 이만큼 튕긴다.
+	bound_ = 100 / _numDamage;// 이만큼 튕긴다.
 
 	hp_ -= _numDamage;
 	Hit_ = true;

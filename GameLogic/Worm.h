@@ -181,6 +181,8 @@ private:
 	StateInfo updateAirStrikeOn(StateInfo _state);
 	StateInfo startAirStrikeFire(StateInfo _state);
 	StateInfo updateAirStrikeFire(StateInfo _state);
+	StateInfo startAirStrikeWait(StateInfo _state);
+	StateInfo updateAirStrikeWait(StateInfo _state);
 
 private:
 	const float MOVE_SPEED = 100.f;
@@ -222,6 +224,7 @@ private:
 	float firePower_;
 	float blowTorchMoveTime_;
 	float drillMoveTime_;
+	float airStrikeTime_;
 
 	bool Hit_;
 	int bound_;
