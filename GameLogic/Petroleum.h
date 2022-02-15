@@ -1,8 +1,11 @@
 #pragma once
 #include <GameEngineActor.h>
+#include "PetroleumManager.h"
 
 class Petroleum : public GameEngineActor
 {
+	friend class PetroleumManager;
+
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
 
@@ -51,6 +54,7 @@ public:
 	virtual void Render() override;
 
 private:
+	void PetroleumUpdate();
 	void initCollision();
 
 public:

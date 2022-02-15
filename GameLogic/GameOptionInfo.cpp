@@ -3,7 +3,12 @@
 //========================= Game Option ===========================//
 
 // 현재 생성하는 게임의 플레이어 수
-int GameOptionInfo::CurWormCnt = 0;
+// 임시 : 테스트 편의를 위해 초기값 6으로 세팅 추후 0으로 변경예정
+//int GameOptionInfo::CurWormCnt = 0;
+int GameOptionInfo::CurWormCnt = 6;
+
+// 현재 생성하는 게임의 플레이어명 목록
+std::vector<std::string> GameOptionInfo::CurPlayerName;
 
 // 현재 생성하는 게임의 맵(초기값 강제 지정)
 std::string GameOptionInfo::CurPlayMap = "MapTrain";

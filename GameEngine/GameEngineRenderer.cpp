@@ -21,7 +21,7 @@ GameEngineRenderer::FrameAnimation::FrameAnimation()
 
 GameEngineRenderer::FrameAnimation::FrameAnimation(FrameAnimation& obj)
 {
-	*this = obj;
+	//*this = obj;
 }
 
 GameEngineRenderer::FrameAnimation::~FrameAnimation()

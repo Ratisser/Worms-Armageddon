@@ -101,6 +101,8 @@ void BottomFlag::StartPosInit(int _wormNumber)
 	case 5:
 		SetPos({ 605, 710 });
 		break;
+
+
 	case 6:
 		SetPos({ 605, 730 });
 		break;

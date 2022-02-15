@@ -27,6 +27,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AirStrike.h" />
+    <ClInclude Include="AirStrikeBullet.h" />
     <ClInclude Include="BackGroundGradation.h">
       <SubType>
       </SubType>
@@ -36,6 +38,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="BottomStateUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ChattingHistory.h">
       <SubType>
       </SubType>
@@ -209,6 +215,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Petroleum.h" />
+    <ClInclude Include="PetroleumManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
@@ -248,6 +258,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TopHPText.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -323,8 +337,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WormTopStateUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AirStrike.cpp" />
+    <ClCompile Include="AirStrikeBullet.cpp" />
     <ClCompile Include="BackGroundGradation.cpp">
       <SubType>
       </SubType>
@@ -334,6 +354,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="BottomStateUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ChattingHistory.cpp">
       <SubType>
       </SubType>
@@ -505,6 +529,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Petroleum.cpp" />
+    <ClCompile Include="PetroleumManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>
@@ -541,6 +569,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TopHPText.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -612,6 +644,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="WormName.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WormTopStateUI.cpp">
       <SubType>
       </SubType>
     </ClCompile>

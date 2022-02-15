@@ -2,11 +2,11 @@
 #include "WeaponSheet.h"
 #include "Weapon.h"
 
-#include "BottomNameTag.h"
-#include "BottomFlag.h"
-#include "BottomHealthBar.h"
-#include  "WormName.h"
-#include  "WormArrow.h"
+#include "BottomStateUI.h"
+
+#include "WormTopStateUI.h"
+#include "WormName.h"
+#include "WormArrow.h"
 #include "WormHPBlankWindow.h"
 #include "WormHPNumber.h"
 
@@ -21,26 +21,16 @@
 UIController::UIController() :
 	curplayer_(nullptr),
 	weaponsheet_(nullptr),
-	bottomNameTag_(nullptr),
-	bottomFlag_(nullptr),
-	bottomHealthBar_(nullptr)
+	bottomstate_(nullptr),
+	wormtopstate_(nullptr),
+	curTimerWindow_(nullptr),
+	curTimerDigitTen_(nullptr),
+	curTimerDigit_(nullptr)
 {
-
 }
 
 UIController::~UIController()
 {
-}
-
-UIController::UIController(UIController&& _other) noexcept :
-	curplayer_(_other.curplayer_),
-	weaponsheet_(_other.weaponsheet_),
-	bottomNameTag_(_other.bottomNameTag_),
-	bottomFlag_(_other.bottomFlag_),
-	bottomHealthBar_(_other.bottomHealthBar_)
-
-{
-
 }
 
 void UIController::SetCurPlayer(Worm* _curplayer)
@@ -74,29 +64,14 @@ WeaponSheet* UIController::GetCurWeaponSheet() const
 	return weaponsheet_;
 }
 
-BottomHealthBar* UIController::GetCurBottomHealthBar()
+BottomStateUI* UIController::GetCurBottomState() const
 {
-	return bottomHealthBar_;
+	return bottomstate_;
 }
 
-BottomNameTag* UIController::GetCurBottomNameTag() const
+WormTopStateUI* UIController::GetCurTopState() const
 {
-	return bottomNameTag_;
-}
-
-BottomFlag* UIController::GetCurBottomFlag() const
-{
-	return bottomFlag_;
-}
-
-WormName* UIController::GetCurWormName()
-{
-	return curWormName_;
-}
-
-WormArrow* UIController::GetCurWormArrow()
-{
-	return curWormArrow_;
+	return wormtopstate_;
 }
 
 TimerBlankWindow* UIController::GetCurTimerWindow()
@@ -114,26 +89,6 @@ TimerDigit* UIController::GetCurTimerDigit()
 	return curTimerDigit_;
 }
 
-WormHPBlankWindow* UIController::GetCurWormHPWindow()
-{
-	return curWormHPWindow_;
-}
-
-WormHPNumber* UIController::GetCurHPNumberHundred()
-{
-	return curHPNumberHundred_;
-}
-
-WormHPNumber* UIController::GetCurHPNumberTen()
-{
-	return curHPNumberTen_;
-}
-
-WormHPNumber* UIController::GetCurHPNumber()
-{
-	return curHPNumber_;
-}
-
 void UIController::Start()
 {
 	float4 Resolution = GameEngineWindow::GetInst().GetSize();
@@ -145,22 +100,18 @@ void UIController::Start()
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
 	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정														// 해당 WeaponSheet를 생성한 UIController 저장
 
-	bottomNameTag_ = GetLevel()->CreateActor<BottomNameTag>();
-	bottomFlag_ = GetLevel()->CreateActor<BottomFlag>();
-	bottomHealthBar_ = GetLevel()->CreateActor<BottomHealthBar>();
-	curWormName_ = GetLevel()->CreateActor<WormName>();
-	curWormArrow_ = GetLevel()->CreateActor<WormArrow>();
-	curWormHPWindow_ = GetLevel()->CreateActor<WormHPBlankWindow>();
+	// 플레이어 하단 상태
+	bottomstate_ = GetLevel()->CreateActor<BottomStateUI>();
 
+	// 플레이어 상단 상태
+	wormtopstate_ = GetLevel()->CreateActor<WormTopStateUI>();
+
+	// 플레이어 턴타임 UI
 	curTimerWindow_ = GetLevel()->CreateActor<TimerBlankWindow>();
 	curTimerDigitTen_ = GetLevel()->CreateActor<TimerDigit>();
 	curTimerDigitTen_->SetPos({ 28,690 });
 	curTimerDigit_ = GetLevel()->CreateActor<TimerDigit>();
 	curTimerDigit_->SetPos({ 48,690 });
-
-	curHPNumberHundred_ = GetLevel()->CreateActor<WormHPNumber>();
-	curHPNumberTen_ = GetLevel()->CreateActor<WormHPNumber>();
-	curHPNumber_ = GetLevel()->CreateActor<WormHPNumber>();
 }
 
 void UIController::UpdateBefore()
@@ -178,5 +129,3 @@ void UIController::UpdateAfter()
 void UIController::Render()
 {
 }
-
-

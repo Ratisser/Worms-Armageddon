@@ -9,6 +9,11 @@ private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
 	float waterLevel_;
 
+private:
+	bool roundtimechk_; // 로비화면의 라운드타임체크 Flag
+	float waterincreasetime_;
+	float waterincreaserange_;
+
 public:
 	WaterLevel(); // default constructer 디폴트 생성자
 	~WaterLevel(); // default destructer 디폴트 소멸자
@@ -27,6 +32,10 @@ public:
 public:
 	void WaterLevelUp(float deltaTime); // 수면 상승
 	void WaterLevelDown(float deltaTime); // 수면 하강
+
+public:
+	void TernChangeWaterLevelUp();
+	void SetWaterIncreaseRange(float _Range = 800.f);
 
 public:
 	virtual void Start() override;

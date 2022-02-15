@@ -1,6 +1,7 @@
 #include "LobbyStartButton.h"
 #include "ChattingInput.h"
 #include "LobbyHost.h"
+#include "GameOptionInfo.h"
 
 #include <EngineEnum.h>
 #include "eCollisionGroup.h"
@@ -89,8 +90,8 @@ void LobbyStartButton::Update()
 		// 마우스와 충돌중에 클릭되었을때
 		if (true == GameEngineInput::GetInst().IsDown("LobbyLevel_MouseLButton"))
 		{
-			// Host가 Ready 상태이여만 게임시작 가능
-			if (true == LobbyHost::SetCurHostReady())
+			// Host가 Ready 상태이며 생성하는 게임의 플레이어 수가 존재할 때 게임시작 가능
+			if (true == LobbyHost::SetCurHostReady() && 0 < GameOptionInfo::CurWormCnt)
 			{
 				// 씬전환
 				GameEngineLevelManager::GetInst().ChangeLevel("PlayLevel", true);
