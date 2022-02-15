@@ -40,6 +40,7 @@ Worm::Worm()
 	, leftSideCollision_(nullptr)
 	, rightSideCollision_(nullptr)
 	, headCollision_(nullptr)
+	, HitBoxCollision_(nullptr)
 	, accelation_(float4::ZERO)
 	, speed_(float4::ZERO)
 	, direction_(float4::RIGHT)
@@ -115,6 +116,15 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("Slide_IdleLeft_", "SlideL_.bmp", 0, 2, true, 0.033f);
 	mainRender_->CreateAnimation("Slide_IdleLeft_U", "SlideL_u.bmp", 0, 2, true, 0.033f);
 	mainRender_->CreateAnimation("Slide_IdleLeft_D", "SlideL_d.bmp", 0, 2, true, 0.033f);
+	
+	//맞으면 날아가는 모션
+	mainRender_->CreateAnimation("wfly1_L", "wfly1_L.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("wfly2_L", "wfly2_L.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("wfly3_L", "wfly3_L.bmp", 0, 31, false, FLT_MAX);
+
+	mainRender_->CreateAnimation("wfly1_R", "wfly1_R.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("wfly2_R", "wfly2_R.bmp", 0, 31, false, FLT_MAX);
+	mainRender_->CreateAnimation("wfly3_R", "wfly3_R.bmp", 0, 31, false, FLT_MAX);
 
 	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_", this, &Worm::HitEnd);
 	mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_U", this, &Worm::HitEnd);
@@ -301,6 +311,9 @@ void Worm::initCollision()
 	headCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER), CollisionCheckType::POINT);
 	headCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	headCollision_->SetPivot({ 0.0f, -PLAYER_BOTTOM_PIVOT + 9.f });
+
+	HitBoxCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER_HITBOX), CollisionCheckType::RECT);
+	HitBoxCollision_->SetSize(float4(10.f, 30.f,0.f));
 }
 
 void Worm::initState()
@@ -2679,7 +2692,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	//받은 데미지 만큼 밀려나게끔
 
 	DamageDir_ = _MoveDir;
-	bound_ = 100/_numDamage;// 이만큼 튕긴다.
+	bound_ = _numDamage/25;// 이만큼 튕긴다.
 
 	hp_ -= _numDamage;
 	Hit_ = true;
@@ -2808,6 +2821,7 @@ void Worm::Render()
 	//leftSideCollision_->DebugRender();
 	//rightSideCollision_->DebugRender();
 	//headCollision_->DebugRender();
+	//HitBoxCollision_->DebugRender();
 }
 
 void Worm::ChangeState(std::string _stateName)

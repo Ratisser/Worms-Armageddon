@@ -4,6 +4,7 @@ enum class eCollisionGroup
 {
 	MAP,
 	PLAYER,
+	PLAYER_HITBOX,
 	MONSTER,
 	UI,
 	MOUSE,

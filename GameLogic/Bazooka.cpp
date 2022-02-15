@@ -108,9 +108,9 @@ void Bazooka::Update()
 	else
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->CreateExplosion100(pos_);
+		level->CreateExplosion100(pos_,50,true);
 
-		GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 
 		Death();
 	}

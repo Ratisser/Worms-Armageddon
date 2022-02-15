@@ -192,6 +192,8 @@ private:
 	GameEngineCollision* rightSideCollision_;
 	GameEngineCollision* headCollision_;
 
+	GameEngineCollision* HitBoxCollision_;
+
 	GameEngineFSM<Worm> state_;
 
 	GameEngineSoundPlayer soundWhoosh_;

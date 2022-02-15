@@ -167,7 +167,7 @@ void Petroleum::Update()
 			mainSpriteRender_->ChangeAnimation("petrol-4", std::string("petrol-4")); 
 			mainSpriteRender_->SetAnimationCurrentFrame(frameIndex);
 		}
-		else if (Cur_LifeTime_ < 0.9f)
+		else if (Cur_LifeTime_ < 0.75f)
 		{			
 			mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
 			Burn_ = true;

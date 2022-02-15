@@ -19,6 +19,11 @@ GameEngineRenderer::FrameAnimation::FrameAnimation()
 
 }
 
+GameEngineRenderer::FrameAnimation::FrameAnimation(FrameAnimation& obj)
+{
+	*this = obj;
+}
+
 GameEngineRenderer::FrameAnimation::~FrameAnimation()
 {
 	auto iterfirst = FrameFunctionList_.begin();

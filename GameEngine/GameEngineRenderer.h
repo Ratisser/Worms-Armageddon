@@ -29,6 +29,10 @@ private:
 	class FrameAnimation : public GameEngineNameBase
 	{
 		friend GameEngineRenderer;
+	private:
+		FrameAnimation();
+		FrameAnimation(FrameAnimation& obj);
+		~FrameAnimation();
 
 	private:
 		int start_;
@@ -53,10 +57,6 @@ private:
 		std::function<void()>   EndFunction_; //에니메이션 종료 함수
 		std::list<AnimationNotify*>   FrameFunctionList_; //프레임 호출 함수 리스트
 		//
-
-	private:
-		FrameAnimation();
-		~FrameAnimation();
 	private:
 		void Reset()
 		{

@@ -668,6 +668,14 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL2_u.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideL2_d.bmp"), cutSize);
 
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wfly1_R.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wfly2_R.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wfly3_R.bmp"), cutSize);
+
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wfly1_L.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wfly2_L.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wfly3_L.bmp"), cutSize);
+
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkLeft.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("walkRight.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("jumpReadyLeft.bmp"), cutSize);
