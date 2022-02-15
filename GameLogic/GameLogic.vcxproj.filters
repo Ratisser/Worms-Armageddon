@@ -25,9 +25,6 @@
     <Filter Include="Actor\PlayLevel\Background">
       <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\WaterLevel">
-      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\PlayLevel\Effect">
       <UniqueIdentifier>{69f89989-73f7-4bca-a3e9-e400a91cc847}</UniqueIdentifier>
     </Filter>
@@ -148,6 +145,9 @@
     <Filter Include="Actor\PlayLevel\UI\WormStateUI\TopState">
       <UniqueIdentifier>{0923b639-514f-4568-bb0a-d930eefb170e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\Water">
+      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -193,13 +193,13 @@
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
     <ClInclude Include="WaterWave.h">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClInclude>
     <ClInclude Include="UnderWater.h">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClInclude>
     <ClInclude Include="WaterLevel.h">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClInclude>
     <ClInclude Include="EffectSmklt.h">
       <Filter>Actor\Effect\01. EffectActor\Smkit</Filter>
@@ -456,13 +456,13 @@
       <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="UnderWater.cpp">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClCompile>
     <ClCompile Include="WaterLevel.cpp">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClCompile>
     <ClCompile Include="WaterWave.cpp">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClCompile>
     <ClCompile Include="EffectSmklt.cpp">
       <Filter>Actor\Effect\01. EffectActor\Smkit</Filter>

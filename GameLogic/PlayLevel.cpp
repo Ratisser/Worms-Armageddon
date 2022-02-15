@@ -118,7 +118,7 @@ void PlayLevel::Loading()
 	WindBarHider* windBarHider = CreateActor<WindBarHider>();
 	windBarHider->SetParentController(windController_);
 
-	MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
+	//MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	CreateGimmickObject();
 
 	wormLoading();
@@ -164,7 +164,7 @@ void PlayLevel::LevelUpdate()
 
 
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
-		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
+		//GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
 	//디버그
 	{
