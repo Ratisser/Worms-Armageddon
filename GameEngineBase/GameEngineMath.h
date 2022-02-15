@@ -228,8 +228,6 @@ public:
 		return ReturnValue;
 	}
 
-
-
 	float4 operator*(const float4 _other) const
 	{
 		float4 ReturnValue;

@@ -54,6 +54,18 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EndingImage.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EndingLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="EndingText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FirePunch.h">
       <SubType>
       </SubType>
@@ -367,6 +379,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Effectex.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EndingImage.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EndingLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="EndingText.cpp">
       <SubType>
       </SubType>
     </ClCompile>
