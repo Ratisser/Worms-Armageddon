@@ -82,6 +82,7 @@ void AppResourcesInit()
 		float4 cutSize = float4(60.f, 60.f);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("markerr.bmp"), cutSize);
 
 		if (false == Dir.MoveChild("\\Weapons\\"))
 		{
@@ -126,6 +127,11 @@ void AppResourcesInit()
 		GameEngineImage::GetInst().LoadGameImage("Grdl6b", Dir.PathToPlusFileName("grdl6b.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Grdl7b", Dir.PathToPlusFileName("grdl7b.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("Grdl8b", Dir.PathToPlusFileName("grdl8b.bmp"));
+
+		GameEngineImage::GetInst().LoadGameImage("airjetbLeft", Dir.PathToPlusFileName("airjetbLeft.bmp"));
+		GameEngineImage::GetInst().LoadGameImage("airjetbRight", Dir.PathToPlusFileName("airjetbRight.bmp"));
+
+		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("airmisl.bmp"), cutSize);
 
 		TitleLevelInit();
 		MenuSelectInit();
@@ -771,6 +777,11 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "drillOnRight.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "drillOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "drillOffRight.bmp", cutSize);
+	// 에어 스트라이크 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "AirStrikeOnLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "AirStrikeOnRight.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "AirStrikeOffLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "AirStrikeOffRight.bmp", cutSize);
 
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();

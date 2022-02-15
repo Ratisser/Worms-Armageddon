@@ -12,6 +12,8 @@
 #include <GameEngineImage.h>
 #include <GameEngineImageFile.h>
 
+#include <algorithm>
+
 int LobbyCreateTeam::PlayWormCount = 0;
 
 LobbyCreateTeam::LobbyCreateTeam() :
@@ -162,7 +164,13 @@ void LobbyCreateTeam::SetSelectPlayer(const std::string& _Name, int _Index)
 	SelectPlayerRendererList.push_back(NewRender);
 
 	// 현재 선택한 플레이어 수 저장
-	GameOptionInfo::CurWormCnt = static_cast<int>(SelectPlayerRendererList.size());
+	// 임시주석 : 테스트 편의로 인해 6으로 고정 추후 가동시 주석해제
+	//GameOptionInfo::CurWormCnt = static_cast<int>(SelectPlayerRendererList.size());
+
+	// 현재 선택한 플레이어명을 저장 후 정렬
+	// 임시주석 : 테스트 편의로 인해 6으로 고정 추후 가동시 주석해제
+	//GameOptionInfo::CurPlayerName.push_back(_Name);
+	//std::sort(GameOptionInfo::CurPlayerName.begin(), GameOptionInfo::CurPlayerName.end());
 
 	// 플레이어이름 표시 및 선택한 플레이어이름목록에 추가
 	int NameListSize = static_cast<int>(SelectPlayerNameList.size());
@@ -233,7 +241,8 @@ void LobbyCreateTeam::SetSelectablePlayerSort()
 	int continuecnt = 0;
 	bool Flag = false;
 	bool SamePlayer = false;
-	for (int i = ActiveStartIndex_; i < ActiveEndIndex_; ++i)
+	int i = 0;
+	for (i = ActiveStartIndex_; i < ActiveEndIndex_; ++i)
 	{
 		// 선택가능 플레이어목록의 최대치를 넘어가면 중단
 		if (i >= static_cast<int>(SelectablePlayerList.size()))
@@ -271,18 +280,20 @@ void LobbyCreateTeam::SetSelectablePlayerSort()
 			addindex = i;
 		}
 	}
-
+	
 	// 현재 선택된 플레이어를 제외한 갱신
 	if (true == Flag)
 	{
-		// 추가할 항목이 없다면 리턴
+		// 현재 선택가능목록 마지막 인덱스에 있는 플레이어가 선택되었다면
 		if (-1 == addindex)
 		{
-			return;
+			++CalcIndex;
+			addindex = i;
+			continuecnt = 0;
 		}
 
 		--CalcIndex;
-		for (int i = addindex; i <= addindex + continuecnt; ++i)
+		for (int i = addindex; i <= (addindex + continuecnt); ++i)
 		{
 			if (i >= static_cast<int>(SelectablePlayerList.size()))
 			{

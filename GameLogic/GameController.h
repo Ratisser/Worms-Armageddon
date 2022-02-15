@@ -6,6 +6,7 @@
 
 class GameEngineMath;
 class Worm;
+class WaterLevel;
 class GameController : public GameEngineActor
 {
 public:
@@ -64,6 +65,9 @@ public:
 		return cameraPos_;
 	}
 
+public:
+	void MakeWaterLevel(float _WaterLevel = 1350.f); // 맵 바닥의 수면 생성
+
 private:
 	const int MAX_WORM_COUNT = 8;
 	const float DEFAULT_TURN_TIME = 46.f;
@@ -83,5 +87,8 @@ private:
 
 	float currentTurnTime_;
 
+
+private: // 물관련
+	WaterLevel* WaterLevel_;
 };
 

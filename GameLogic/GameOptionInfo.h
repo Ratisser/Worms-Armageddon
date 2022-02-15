@@ -4,12 +4,15 @@
 #include <GameEngineMath.h>
 
 // 설명 : 로비화면에서 설정하는 모든 게임옵션을 관리하며, 전역으로 해당 값들을 사용할 수 있다.
-//        단, 로비레벨에서 조작하는 것 외에 임의의 조작을 피해야한다.
+//        단, 로비레벨에서 조작하는 것 외에 임의의 조작을 하지않는다.
 class GameOptionInfo
 {
 public: // 게임 옵션
 	// 현재 생성하는 게임의 플레이어 수
 	static int CurWormCnt;
+
+	// 현재 생성하는 게임의 플레이어목록
+	static std::vector<std::string> CurPlayerName;
 
 	// 현재 생성하는 게임의 맵
 	static std::string CurPlayMap;

@@ -25,9 +25,6 @@
     <Filter Include="Actor\PlayLevel\Background">
       <UniqueIdentifier>{45caa6aa-6a80-4f03-b04e-2e2941882894}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Actor\WaterLevel">
-      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Actor\PlayLevel\Effect">
       <UniqueIdentifier>{69f89989-73f7-4bca-a3e9-e400a91cc847}</UniqueIdentifier>
     </Filter>
@@ -139,6 +136,18 @@
     <Filter Include="Actor\Effect\01. EffectActor\kamismk">
       <UniqueIdentifier>{1d0c178a-5618-4307-8c17-7241f3b74c59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\PlayLevel\UI\WormStateUI">
+      <UniqueIdentifier>{5900260c-4cad-414c-91dd-5326f656a871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\WormStateUI\BottomState">
+      <UniqueIdentifier>{d7bf9dda-a162-47fc-884f-ee27dbb59690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\UI\WormStateUI\TopState">
+      <UniqueIdentifier>{0923b639-514f-4568-bb0a-d930eefb170e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\PlayLevel\Water">
+      <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -184,13 +193,13 @@
       <Filter>Actor\PlayLevel\Background</Filter>
     </ClInclude>
     <ClInclude Include="WaterWave.h">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClInclude>
     <ClInclude Include="UnderWater.h">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClInclude>
     <ClInclude Include="WaterLevel.h">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClInclude>
     <ClInclude Include="EffectSmklt.h">
       <Filter>Actor\Effect\01. EffectActor\Smkit</Filter>
@@ -399,6 +408,18 @@
     <ClInclude Include="Explosion.h">
       <Filter>Actor\Effect\02. EffectBundleActor\Explosion</Filter>
     </ClInclude>
+    <ClInclude Include="BottomStateUI.h">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\BottomState</Filter>
+    </ClInclude>
+    <ClInclude Include="WormTopStateUI.h">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClInclude>
+    <ClInclude Include="TopHPText.h">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClInclude>
+    <ClInclude Include="AirStrike.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -435,13 +456,13 @@
       <Filter>Actor\PlayLevel\UI\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="UnderWater.cpp">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClCompile>
     <ClCompile Include="WaterLevel.cpp">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClCompile>
     <ClCompile Include="WaterWave.cpp">
-      <Filter>Actor\WaterLevel</Filter>
+      <Filter>Actor\PlayLevel\Water</Filter>
     </ClCompile>
     <ClCompile Include="EffectSmklt.cpp">
       <Filter>Actor\Effect\01. EffectActor\Smkit</Filter>
@@ -649,6 +670,18 @@
     </ClCompile>
     <ClCompile Include="WormHPNumber.cpp">
       <Filter>Actor\PlayLevel\UI\HUD\PersonalHUD</Filter>
+    </ClCompile>
+    <ClCompile Include="BottomStateUI.cpp">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\BottomState</Filter>
+    </ClCompile>
+    <ClCompile Include="WormTopStateUI.cpp">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClCompile>
+    <ClCompile Include="TopHPText.cpp">
+      <Filter>Actor\PlayLevel\UI\WormStateUI\TopState</Filter>
+    </ClCompile>
+    <ClCompile Include="AirStrike.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

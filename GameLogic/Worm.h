@@ -76,6 +76,8 @@ private:
 
 	void setAimingForward();
 
+	void InputUpdate();
+
 private:
 	StateInfo StartHit(StateInfo _state);
 	StateInfo updateHit(StateInfo _state);
@@ -175,6 +177,13 @@ private:
 	StateInfo startDrillFire(StateInfo _state);
 	StateInfo updateDrillFire(StateInfo _state);
 
+	StateInfo startAirStrikeOn(StateInfo _state);
+	StateInfo updateAirStrikeOn(StateInfo _state);
+	StateInfo startAirStrikeFire(StateInfo _state);
+	StateInfo updateAirStrikeFire(StateInfo _state);
+	StateInfo startAirStrikeWait(StateInfo _state);
+	StateInfo updateAirStrikeWait(StateInfo _state);
+
 private:
 	const float MOVE_SPEED = 100.f;
 	const float GRAVITY_POWER = 600.f;
@@ -217,6 +226,7 @@ private:
 	float firePower_;
 	float blowTorchMoveTime_;
 	float drillMoveTime_;
+	float airStrikeTime_;
 
 	bool Hit_;
 	int bound_;

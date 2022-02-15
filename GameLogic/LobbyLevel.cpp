@@ -13,6 +13,9 @@
 #include "LobbyCreateTeam.h"
 
 // 게임옵션관련
+// 게임옵션
+#include "GameOptionInfo.h"
+
 // 기본
 #include "LobbyTernTimeSet.h"
 #include "LobbyRoundTimeSet.h"
@@ -51,6 +54,9 @@ void LobbyLevel::Loading()
 {
 	// 대기실화면 배경 및 맵선택 이미지
 	Loading_SJH();
+
+	// 대기실화면 로딩시 선택된 플레이어이름 목록 클리어
+	GameOptionInfo::CurPlayerName.clear();
 }
 
 void LobbyLevel::LevelUpdate()

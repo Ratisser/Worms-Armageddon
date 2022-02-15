@@ -55,11 +55,7 @@ public:
 		return gamecontroller_;
 	}
 
-	void MouseBlock(bool _bool)
-	{
-		mouseMoveBlock = _bool;
-	}
-
+	void MouseBlock(bool _bool);
 public:
 	void SetGameController(GameController* _MainController);
 

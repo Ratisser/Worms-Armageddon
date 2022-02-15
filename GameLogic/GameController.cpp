@@ -12,6 +12,13 @@
 #include "WeaponSheet.h"
 #include "WeaponIcon.h"
 #include "Weapon.h"
+#include "BottomStateUI.h"
+#include "WormTopStateUI.h"
+
+#include "WaterLevel.h"
+#include "WaterWave.h"
+#include "UnderWater.h"
+
 #include "WormArrow.h"
 #include "WormHPBlankWindow.h"
 #include "BottomHealthBar.h"
@@ -33,6 +40,7 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, state_(this)
 	, currentTurnTime_(0.0f)
 	, wormXPosContainer_(0.0f)
+	, WaterLevel_(nullptr)
 {
 
 }
@@ -45,6 +53,7 @@ GameController::~GameController() // default destructer 디폴트 소멸자
 void GameController::Start()
 {
 	initState();
+	MakeWaterLevel();
 
 	if (false == GameEngineInput::GetInst().IsKey("W"))
 	{
@@ -86,7 +95,7 @@ void GameController::Start()
 	// TODO : 테스트가 끝난 후 삭제
 	if (false == GameEngineInput::GetInst().IsKey("TestKey"))
 	{
-		GameEngineInput::GetInst().CreateKey("TestKey", '1');
+		GameEngineInput::GetInst().CreateKey("TestKey", 0xC0);
 	}
 
 	// UI
@@ -230,24 +239,15 @@ void GameController::CreateWormUI()
 		wormList_[i]->SetUIController(CurUIController);
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
-		// 플레이어당 하단 UI 상태바 및 국기 지정
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->RenderColorInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurBottomHealthBar()->StartPosInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->NameInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurBottomNameTag()->StartPosInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->NationInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurBottomFlag()->StartPosInit(static_cast<int>(i));
+		// 플레이어당 하단 상태 UI
+		//wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
+		//wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
+		//wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
 
-		// 플레이어당 이름 UI 지정
-		wormList_[i]->GetCurUIController()->GetCurWormName()->NameInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurWormName()->SetParentWorm(wormList_[i]);
-
-		// 플레이어당 현재플레이중인 플레이어 화살표 UI 지정
-		wormList_[i]->GetCurUIController()->GetCurWormArrow()->ColorInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurWormArrow()->SetParentWorm(wormList_[i]);
-
-		// 플레이어당 현재체력 표시 UI 지정
-		wormList_[i]->GetCurUIController()->GetCurWormHPWindow()->SetParentWorm(wormList_[i]);
+		// 플레이어당 상단 상태 UI
+		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
+		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
+		//wormList_[i]->GetCurUIController()->GetCurTopState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어당 턴 타이머 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
@@ -256,17 +256,17 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurTimerDigit()->SetParentWorm(wormList_[i]);
 
 		// 플레이어당 체력표시텍스트 UI 지정
-		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetParentWorm(wormList_[i]);
-		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->ColorInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetDigitToHundred();
-		wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->HPInit();
-		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetParentWorm(wormList_[i]);
-		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->ColorInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetDigitToTen();
-		wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->HPInit();
-		wormList_[i]->GetCurUIController()->GetCurHPNumber()->SetParentWorm(wormList_[i]);
-		wormList_[i]->GetCurUIController()->GetCurHPNumber()->ColorInit(static_cast<int>(i));
-		wormList_[i]->GetCurUIController()->GetCurHPNumber()->HPInit();
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetParentWorm(wormList_[i]);
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->ColorInit(static_cast<int>(i));
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->SetDigitToHundred();
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberHundred()->HPInit();
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetParentWorm(wormList_[i]);
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->ColorInit(static_cast<int>(i));
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->SetDigitToTen();
+		//wormList_[i]->GetCurUIController()->GetCurHPNumberTen()->HPInit();
+		//wormList_[i]->GetCurUIController()->GetCurHPNumber()->SetParentWorm(wormList_[i]);
+		//wormList_[i]->GetCurUIController()->GetCurHPNumber()->ColorInit(static_cast<int>(i));
+		//wormList_[i]->GetCurUIController()->GetCurHPNumber()->HPInit();
 
 		// 플레이어당 무기창 지정 및 활성화 무기 지정
 		std::string SheetName = wormList_[i]->GetName();
@@ -275,7 +275,7 @@ void GameController::CreateWormUI()
 
 		// 초기 아이템 목록지정
 		std::vector<eItemList> ItemListTest;
-		ItemListTest.resize(10);
+		ItemListTest.resize(11);
 		ItemListTest[0] = eItemList::WEAPON_BAZOOKA;
 		ItemListTest[1] = eItemList::WEAPON_HOMINGMISSILE;
 		ItemListTest[2] = eItemList::WEAPON_FIREPUNCH;
@@ -286,6 +286,7 @@ void GameController::CreateWormUI()
 		ItemListTest[7] = eItemList::WEAPON_SUPERSHEEP;
 		ItemListTest[8] = eItemList::WEAPON_BLOWTORCH;
 		ItemListTest[9] = eItemList::WEAPON_PNEUMATICDRILL;
+		ItemListTest[10] = eItemList::WEAPON_AIRSTRIKE;
 		CurUIController->CreateWeaponList(ItemListTest);				// 플레이어가 처음 가지고있는 아이템목록(최초지정)
 
 		// 무기창 기능 참고용
@@ -397,6 +398,12 @@ StateInfo GameController::updateAction(StateInfo _state)
 		// 무기창 비활성이 된다.
 		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
 
+		// 라운타임 초과 및 플레이어 턴초과시 물높이 상승
+		if (nullptr != WaterLevel_)
+		{
+			WaterLevel_->TernChangeWaterLevelUp();
+		}
+
 		return "ActionEnd";
 	}
 	return StateInfo();
@@ -457,4 +464,78 @@ StateInfo GameController::startItemDrop(StateInfo _state)
 StateInfo GameController::updateItemDrop(StateInfo _state)
 {
 	return StateInfo();
+}
+
+void GameController::MakeWaterLevel(float _WaterLevel)
+{
+	WaterLevel_ = GetLevel()->CreateActor<WaterLevel>("WaterLevel"); // 모든 파도 actor 그룹화
+	WaterLevel_->SetwaterLevel(_WaterLevel);
+
+	WaterWave* WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave1");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
+	WaterWaveactor->SetPos(float4(0.f, _WaterLevel, 0.f));
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave2");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
+	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 30.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(2);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave3");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 60.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(4);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave4");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 90.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(6);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave5");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 120.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(8);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	UnderWater* UnderWaterActor = GetLevel()->CreateActor<UnderWater>("UnderWater");
+	UnderWaterActor->SetPos(float4(0.f, _WaterLevel + 680.f, 0.f));
+	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterLevel_->Waterlist.push_back(UnderWaterActor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave6");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
+	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel, 0.f));
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave7");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
+	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 30.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(2);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave8");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 60.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(4);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave9");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 90.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(6);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	WaterWaveactor = GetLevel()->CreateActor<WaterWave>("WaterWave10");
+	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 120.f, 0.f));
+	WaterWaveactor->SetAnimationCurrentFrame(8);
+	WaterLevel_->Waterlist.push_back(WaterWaveactor);
+
+	UnderWaterActor = GetLevel()->CreateActor<UnderWater>("UnderWater2");
+	UnderWaterActor->SetPos(float4(2560.f, _WaterLevel + 680.f, 0.f));
+	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
+	WaterLevel_->Waterlist.push_back(UnderWaterActor);
 }

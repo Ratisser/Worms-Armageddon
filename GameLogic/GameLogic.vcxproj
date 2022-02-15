@@ -27,6 +27,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AirStrike.h" />
+    <ClInclude Include="AirStrikeBullet.h" />
     <ClInclude Include="BackGroundGradation.h">
       <SubType>
       </SubType>
@@ -36,6 +38,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Bazooka.h" />
+    <ClInclude Include="BottomStateUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ChattingHistory.h">
       <SubType>
       </SubType>
@@ -251,6 +257,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="TopHPText.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="UIController.h">
       <SubType>
       </SubType>
@@ -323,8 +333,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WormTopStateUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AirStrike.cpp" />
+    <ClCompile Include="AirStrikeBullet.cpp" />
     <ClCompile Include="BackGroundGradation.cpp">
       <SubType>
       </SubType>
@@ -334,6 +350,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Bazooka.cpp" />
+    <ClCompile Include="BottomStateUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ChattingHistory.cpp">
       <SubType>
       </SubType>
@@ -544,6 +564,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TopHPText.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="UIController.cpp">
       <SubType>
       </SubType>
@@ -612,6 +636,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="WormName.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WormTopStateUI.cpp">
       <SubType>
       </SubType>
     </ClCompile>
