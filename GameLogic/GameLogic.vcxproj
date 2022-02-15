@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirStrike.h" />
+    <ClInclude Include="AirStrikeBullet.h" />
     <ClInclude Include="BackGroundGradation.h">
       <SubType>
       </SubType>
@@ -339,6 +340,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AirStrike.cpp" />
+    <ClCompile Include="AirStrikeBullet.cpp" />
     <ClCompile Include="BackGroundGradation.cpp">
       <SubType>
       </SubType>

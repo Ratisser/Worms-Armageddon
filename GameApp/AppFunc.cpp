@@ -130,6 +130,7 @@ void AppResourcesInit()
 
 		GameEngineImage::GetInst().LoadGameImage("airjetbLeft", Dir.PathToPlusFileName("airjetbLeft.bmp"));
 		GameEngineImage::GetInst().LoadGameImage("airjetbRight", Dir.PathToPlusFileName("airjetbRight.bmp"));
+
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("airmisl.bmp"), cutSize);
 
 		TitleLevelInit();
