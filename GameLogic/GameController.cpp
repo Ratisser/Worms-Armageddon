@@ -447,8 +447,20 @@ StateInfo GameController::startSettlement(StateInfo _state)
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
-	settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		if (true == wormList_[i]->isDamagedThisTurn())
+		{
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
+		}
+	}
 
+	if (true)
+	{
+		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
+		// 모든 웜이 Idle 상태로 돌아오고, UI 변환이 완료됐을 때 시간이 돌게 설계할 것
+	}
+	
 	if (SETTLEMENT_TIME <= settementTime_)
 	{
 		settementTime_ = 0.0f;

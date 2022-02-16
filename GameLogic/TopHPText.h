@@ -25,9 +25,8 @@ private:
 	int UpdateNum;
 
 private:
-	const float NUMBER_CHANGE_TIME = 0.1f;
+	const float NUMBER_CHANGE_TIME = 0.01f;
 	float deltaTime_;
-	bool isChangingDone_;
 
 private:
 	bool HundredFlag_;
@@ -65,7 +64,6 @@ public:
 
 public:
 	void UpdateHPText();
-	void UpdateHP();
 	void ChangeHPText();
 };
 

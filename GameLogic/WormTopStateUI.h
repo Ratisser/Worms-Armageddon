@@ -30,6 +30,7 @@ private:
 private:
 	TopHPText* HPText_;
 	bool isHPTextNeedChange_;
+
 	void UpdateTextAnimation();
 
 public:

@@ -421,88 +421,6 @@ void TopHPText::UpdateHPText()
 	}
 }
 
-void TopHPText::UpdateHP()
-{
-	// 현재 플레이어의 체력을 갱신시키고, PrevHP 값을 얻어오지만,
-// 시각적으로 표시화하는 함수는 아닙니다.
-
-	Worm* CurWorm = ParentHPBoxUI_->GetParentWorm();
-	if (nullptr != CurWorm)
-	{
-		// 플레이어가 사망하지않았고 이전 체력과 달라진 경우 갱신
-		CurHP_ = CurWorm->GetCurHP();
-		if (PrevHP_ != CurHP_)
-		{
-			// 현재체력으로 각 자리의 목표값을 얻어낸다.
-			UpdateHundredNum = 100;
-			UpdateTenNum = 100;
-			UpdateNum = 100;
-
-			HPUpdateStart_ = true;
-		}
-
-		if (true == HPUpdateStart_)
-		{
-
-
-
-
-			// 갱신 종료이 종료되면 Flag 해제
-			if (true == HPUpdateEnd_)
-			{
-				HPUpdateStart_ = false;
-				HPUpdateEnd_ = false;
-			}
-		}
-
-		if (true == HPUpdateStart_)
-		{
-			// 각 자릿수의 Number를 찾아낸다.
-			int HundredNum = 0;
-			int TenNum = 0;
-			int Num = 0;
-
-			if (true == HundredFlag_)
-			{
-				HundredNum = CurHP_ / 100;
-				if (0 >= HundredNum)
-				{
-					HundredFlag_ = false;
-				}
-				else
-				{
-					HundredNum = CurHP_ / 100;
-					//HPHundredNumRenderer_->ChangeAnimation(std::to_string(HundredNum));
-				}
-			}
-
-			if (true == TenFlag_)
-			{
-				TenNum = CurHP_ / 10;
-				TenNum = TenNum % 10;
-				// 만약 0이 나왔을때 백의자리가 있다면 Flag True
-				if (true == HundredFlag_)
-				{
-					//HPTenNumRenderer_->ChangeAnimation(std::to_string(TenNum));
-				}
-				else
-				{
-					TenFlag_ = false;
-				}
-			}
-
-			if (0 != (CurHP_ / 1))
-			{
-				NumFlag_ = true;
-
-				Num = CurHP_ % 10;
-				//HPNumRenderer_->ChangeAnimation(std::to_string(Num));
-			}
-
-			PrevHP_ = CurHP_;
-		}
-	}
-}
 
 
 void TopHPText::ChangeHPText()
@@ -516,7 +434,6 @@ void TopHPText::ChangeHPText()
 
 		if (PrevHP_ == CurHP_)
 		{
-			isChangingDone_ = true;
 			return;
 		}
 
@@ -524,16 +441,14 @@ void TopHPText::ChangeHPText()
 		{
 			
 			deltaTime_ += GameEngineTime::GetInst().GetDeltaTime();
-			HPHundredNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ /100));
-			HPTenNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ / 10));
-			HPNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ % 10));
-
-			PrevHP_--;
 
 			if (deltaTime_ >= NUMBER_CHANGE_TIME)
 			{
+				HPHundredNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ / 100));
+				HPTenNumRenderer_->ChangeAnimation(std::to_string((PrevHP_ / 10)%10));
+				HPNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ % 10));
+				PrevHP_--;
 				deltaTime_ = 0.0f;
-				isChangingDone_ = true;
 				return;
 			}
 		}
