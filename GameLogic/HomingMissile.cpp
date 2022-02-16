@@ -178,7 +178,7 @@ void HomingMissile::Update()
 	}
 	else
 	{
-		GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->CreateExplosion100(pos_);

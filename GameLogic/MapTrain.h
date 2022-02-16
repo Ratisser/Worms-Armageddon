@@ -16,11 +16,15 @@ private:	// member Var
 	GameEngineRenderer* boomEdgeSpriteRender_;
 	GameEngineCollision* bodyCollision_;
 
+	GameEngineRenderer* boomSpriteRender4_;
+	GameEngineRenderer* boomSpriteRender6_;
 	GameEngineRenderer* boomSpriteRender13_;
 	GameEngineRenderer* boomSpriteRender25_;
 	GameEngineRenderer* boomSpriteRender50_;
 	GameEngineRenderer* boomSpriteRender75_;
 	GameEngineRenderer* boomSpriteRender100_;
+	GameEngineRenderer* boomEdgeSpriteRender4_;
+	GameEngineRenderer* boomEdgeSpriteRender6_;
 	GameEngineRenderer* boomEdgeSpriteRender13_;
 	GameEngineRenderer* boomEdgeSpriteRender25_;
 	GameEngineRenderer* boomEdgeSpriteRender50_;
@@ -48,6 +52,8 @@ public:
 
 public:
 	void GroundUpdate(float4 pos, float4 size);
+	void GroundUpdate4(float4 pos);
+	void GroundUpdate6(float4 pos);
 	void GroundUpdate13(float4 pos);
 	void GroundUpdate25(float4 pos);
 	void GroundUpdate50(float4 pos);

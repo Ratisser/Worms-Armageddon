@@ -109,9 +109,9 @@ void AirStrikeBullet::Update()
 	else
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->CreateExplosion100(pos_);
+		level->CreateExplosion75(pos_);
 
-		GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 
 		Death();
 	}

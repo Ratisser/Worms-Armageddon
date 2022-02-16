@@ -71,11 +71,15 @@ void MapTrain::Start()
 	boomSpriteRender_ = CreateRenderer("Boom");
 	boomEdgeSpriteRender_ = CreateRenderer("BoomEdge");
 
+	boomSpriteRender4_ = CreateRenderer("Boom_4");
+	boomSpriteRender6_ = CreateRenderer("Boom_6");
 	boomSpriteRender13_ = CreateRenderer("Boom_13");
 	boomSpriteRender25_ = CreateRenderer("Boom_25");
 	boomSpriteRender50_ = CreateRenderer("Boom_50");
 	boomSpriteRender75_ = CreateRenderer("Boom_75");
 	boomSpriteRender100_ = CreateRenderer("Boom_100");
+	boomEdgeSpriteRender4_ = CreateRenderer("BoomEdge_4");
+	boomEdgeSpriteRender6_ = CreateRenderer("BoomEdge_6");
 	boomEdgeSpriteRender13_ = CreateRenderer("BoomEdge_13");
 	boomEdgeSpriteRender25_ = CreateRenderer("BoomEdge_25");
 	boomEdgeSpriteRender50_ = CreateRenderer("BoomEdge_50");
@@ -144,6 +148,58 @@ void MapTrain::GroundUpdate(float4 pos, float4 size)
 		size,
 		{ 0.f, 0.f },
 		{ 100.f, 100.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate4(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender4_->GetImage(),
+		pos,
+		{ 16.f, 16.f },
+		{ 0.f, 0.f },
+		{ 16.f, 16.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender4_->GetImage(),
+		pos,
+		{ 16.f, 16.f },
+		{ 0.f, 0.f },
+		{ 16.f, 16.f },
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
+void MapTrain::GroundUpdate6(float4 pos)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(boomSpriteRender6_->GetImage(),
+		pos,
+		{ 18.f, 18.f },
+		{ 0.f, 0.f },
+		{ 18.f, 18.f },
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(boomEdgeSpriteRender6_->GetImage(),
+		pos,
+		{ 18.f, 18.f },
+		{ 0.f, 0.f },
+		{ 18.f, 18.f },
 		RGB(0, 255, 0));
 
 	mapImage->TransCopy(colSpriteRender_->GetImage(),

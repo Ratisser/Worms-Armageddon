@@ -79,6 +79,9 @@ private:
 	void InputUpdate();
 
 private:
+	StateInfo StartDrown(StateInfo _state);
+	StateInfo updateDrown(StateInfo _state);
+
 	StateInfo StartHit(StateInfo _state);
 	StateInfo updateHit(StateInfo _state);
 
@@ -193,6 +196,7 @@ private:
 	const float AIM_STEP_RADIAN = 0.0986111f; // 180 / 32 * RADIAN -> 조준 스프라이트가 32단계일 때
 
 private:
+	GameEngineMath::Random random_;
 	GameEngineRenderer* mainRender_;
 	GameEngineRenderer* crosshairRender_;
 	GameEngineCollision* bottomCenterCollision_;
@@ -233,7 +237,7 @@ private:
 	float4 DamageDir_;
 	float DamageSpeed_;
 	float DamageAcc_;
-	float DamageAccRessit_;
+	//float DamageAccRessit_;
 	float WindSpeed_;
 
 	int hp_;

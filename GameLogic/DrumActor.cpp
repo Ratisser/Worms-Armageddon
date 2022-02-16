@@ -12,7 +12,9 @@
 #include "PlayLevel.h"
 #include "WindController.h"
 #include "Petroleum.h"
+#include "PetroleumManager.h"
 
+#define COUNT 40.f
 
 DrumActor::DrumActor():
 	Phase_(0.f),
@@ -121,11 +123,11 @@ void DrumActor::UpdateAfter()
 void DrumActor::Render()
 {
 #ifdef _DEBUG
-	if (GetLevel<PlayLevel>()->GetDebug())
-	{
-		BodyCollision_->DebugRender();
-		groundCollision_->DebugRender();
-	}
+	//if (GetLevel<PlayLevel>()->GetDebug())
+	//{
+	//	BodyCollision_->DebugRender();
+	//	groundCollision_->DebugRender();
+	//}
 #endif // DEBUG
 	mainSpriteRender_->AnimationUpdate();
 }
@@ -151,8 +153,6 @@ void DrumActor::DrumExplode()
 	float RandomFloat;
 	float4 RandomRot = { 1.f,0.f,0.f };
 
-	int count = 40;
-
 	//360도를 5등분하고, count를 5군데에 무작위하게 군집하여 배치
 
 	//72도, 5번 실행하면서 count/5를 하여 for문 돌리기,
@@ -164,7 +164,7 @@ void DrumActor::DrumExplode()
 		RandomFloat = random_.RandomFloat(-20.f, 20.f);
 		degree_ = (360.f * 0.2f * i) + RandomFloat;
 
-		for (int j = 0; j < (count / 5); ++j)
+		for (int j = 0; j < (COUNT / 5); ++j)
 		{
 			RandomRot = { 1.f,0.f,0.f }; //초기화
 			RandomFloat = random_.RandomFloat(-20.f, 20.f);
@@ -172,34 +172,17 @@ void DrumActor::DrumExplode()
 
 			RandomRot = RandomRot.DegreeTofloat2(degree__);
 
-			RandomRot.x *= PetroleumSpeed;
-			RandomRot.y *= PetroleumSpeed;
+			RandomRot.x *= PetroleumSpeed+ RandomFloat;
+			RandomRot.y *= PetroleumSpeed+ RandomFloat;
 
 			Petroleum* _Petroleum = parentLevel_->CreateActor<Petroleum>(pos_);
+			GetLevel<PlayLevel>()->GetPetroleumManager()->AddVecPetroleum(_Petroleum);
+
 			_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
 			_Petroleum->SetDir(RandomRot);
 			_Petroleum->SetWindSpeed(WindSpeed_);
 		}
 	}
-
-	//for (int i = 0; i < count; ++i)
-	//{
-	//	RandomRot = { 1.f,0.f,0.f }; //초기화
-
-	//	RandomFloat = random_.RandomFloat(-30.f, 30.f);
-	//	degree_ = (i * 360.f/(float)count) + RandomFloat;
-
-	//	RandomRot = RandomRot.DegreeTofloat2(degree_);
-	//	
-	//	RandomRot.x*= PetroleumSpeed;
-	//	RandomRot.y*= PetroleumSpeed;
-
-	//	Petroleum* _Petroleum = GetLevel<PlayLevel>()->CreateActor<Petroleum>(pos_);
-	//	_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
-	//	_Petroleum->SetDir(RandomRot);
-	//	_Petroleum->SetWindSpeed(WindSpeed_);
-	//}
-
 	Death();
 }
 

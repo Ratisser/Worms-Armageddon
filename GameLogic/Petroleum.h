@@ -1,11 +1,9 @@
 #pragma once
 #include <GameEngineActor.h>
-#include "PetroleumManager.h"
 
 class Petroleum : public GameEngineActor
 {
 	friend class PetroleumManager;
-
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
 
@@ -16,16 +14,18 @@ private:	// member Var
 	float4 prevPos_;
 
 	float degree_;
-	float deltaTime_;
+	//float deltaTime_;
 
 	float WindAcc_;
 	float WindSpeed_;
 	float GravityAcc;
 	float GravitySpeed;
 
+	bool isLive_;
+
 	bool Burn_;
 	bool Isground_;
-	bool CountSecond_[5]; // 정수의 초를 새기 위한 배열
+	bool CountSecond_[10]; // 정수의 초를 새기 위한 배열
 
 	float Cur_LifeTime_;
 	float Max_LifeTime_;
@@ -54,10 +54,21 @@ public:
 	virtual void Render() override;
 
 private:
-	void PetroleumUpdate();
 	void initCollision();
-
+	//void PetroleumUpdate(float deltaTime_);
+	void PetroleumMoveUpdate(float deltaTime_);
+	void PetroleumGroundUpdate(float deltaTime_);
 public:
+	void SetisLive(bool _isLive)
+	{
+		isLive_ = _isLive;
+	}
+
+	bool GetisLive()
+	{
+		return isLive_;
+	}
+
 	void SetDir(float4 _Dir)
 	{
 		Dir_ = _Dir;

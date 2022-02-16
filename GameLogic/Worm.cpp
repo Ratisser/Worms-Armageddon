@@ -69,7 +69,6 @@ Worm::Worm()
 	, soundPowerUp_("ROCKETPOWERUP.WAV")
 	, DamageSpeed_(0.0f)
 	, DamageAcc_(0.0f)
-	, DamageAccRessit_(0.0f)
 	, WindSpeed_(0.0f)
 	, Hit_(false)
 	, bound_(0)
@@ -374,10 +373,12 @@ void Worm::initCollision()
 
 void Worm::initState()
 {
+	state_.CreateState("Drown", &Worm::StartDrown, &Worm::updateDrown);
+	state_.CreateState("Hit", &Worm::StartHit, &Worm::updateHit);
+
 	state_.CreateState("Idle", &Worm::startIdle, &Worm::updateIdle);
 	state_.CreateState("Walk", &Worm::startWalk, &Worm::updateWalk);
 
-	state_.CreateState("Hit", &Worm::StartHit, &Worm::updateHit);
 
 	state_.CreateState("JumpReady", &Worm::startJumpReady, &Worm::updateJumpReady);
 	state_.CreateState("Jump", &Worm::startJump, &Worm::updateJump);
@@ -1241,14 +1242,8 @@ void Worm::InputUpdate()
 	}
 }
 
-StateInfo Worm::StartHit(StateInfo _state)
+StateInfo Worm::StartDrown(StateInfo _state)
 {
-	crosshairRender_->Off();
-
-	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
-
-	DamageAccRessit_ = DamageAcc_ / 10.f;
-	DamageAcc_ = bound_;
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("Slide_IdleLeft_", std::string("SlideL_.bmp"));
@@ -1258,26 +1253,71 @@ StateInfo Worm::StartHit(StateInfo _state)
 		mainRender_->ChangeAnimation("Slide_IdleRight_", std::string("SlideR_.bmp"));
 	}
 
+	//updateDrown 끝날때 까지 카메라 고정
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateDrown(StateInfo _state)
+{
+	SetMove({ 0.f, 200.f * deltaTime_ ,0.f });
+
+	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
+
+	if (pos_.y > waterlevel + 400.f)
+	{
+		//Death();
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::StartHit(StateInfo _state)
+{
+	crosshairRender_->Off();
+
+	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
+
+	//DamageAccRessit_ = DamageAcc_ / 10.f;
+	DamageAcc_ = bound_;
+
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("Slide_IdleLeft_", std::string("SlideL_.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("Slide_IdleRight_", std::string("SlideR_.bmp"));
+	}
+
+	
+	switch (random_.RandomInt(0, 2))
+	{
+	case 0:
+		GameEngineSoundManager::GetInstance().PlaySoundByName("OW1.WAV");
+		break;
+	case 1:
+		GameEngineSoundManager::GetInstance().PlaySoundByName("OW2.WAV");
+		break;
+	case 2:
+		GameEngineSoundManager::GetInstance().PlaySoundByName("OW3.WAV");
+		break;
+	}
+
 	switch (bound_)
 	{
-		//살짝만 밀림
 	case 0:
 		DamageSpeed_ = 200.f;
 		break;
-		// 조금 밀림
 	case 1:
 		DamageSpeed_ = 400.f;
-
 		break;
-		// 많이 밀림
 	case 2:
 		DamageSpeed_ = 600.f;
 		break;
-		// 튕겨저 날라감 (바닥에 꽃힘)
 	case 3:
 		DamageSpeed_ = 800.f;
 		break;
-
 	default:
 		DamageSpeed_ = 1000.f;
 		break;
@@ -2964,9 +3004,15 @@ UIController* Worm::GetCurUIController() const
 
 void Worm::Damage(int _numDamage, float4 _MoveDir)
 {
+	// updatebefore 에서 호출됨
+
 	//받은 데미지 만큼 밀려나게끔
 
-	DamageDir_ = _MoveDir;
+	DamageDir_ = _MoveDir; 
+	if (DamageDir_.x < 0)
+	{
+		bLeft_ = true;
+	}
 	bound_ = _numDamage/25;// 이만큼 튕긴다.
 
 	hp_ -= _numDamage;
@@ -2976,8 +3022,14 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	{
 		hp_ = 0;
 	}
-
 	ChangeState("Hit");
+	//if (true == state_.IsCurStateName("Hit"))
+	//{
+	//	
+	//}
+	//else
+	//{
+	//}
 }
 
 bool Worm::IsDie() const
@@ -3073,6 +3125,13 @@ void Worm::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 	state_.Update();
+
+	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
+
+	if (pos_.y >= waterlevel+200.f)
+	{
+		ChangeState("Drown");
+	}
 }
 
 void Worm::UpdateAfter()

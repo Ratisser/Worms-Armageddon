@@ -6,6 +6,7 @@
 #include <GameEngineNameBase.h>
 #include <GameEngineMath.h>
 
+
 // 분류 :
 // 용도 :
 // 설명 :
@@ -171,53 +172,6 @@ public:
 		return NewActor;
 	}
 
-	////테스트중, 사용하지 말것
-	//template<typename ActorType>
-	//ActorType* CloneActor(std::string _Name,float4 Pos)
-	//{
-	//	//중복된 이름이 있거나 이름이 아예 없는 경우 체크하기
-
-	//	auto iter0 = CloneActorMap_.find(_Name);
-
-	//	if(nullptr == iter0)
-	//	{
-	//		GameEngineDebug::MsgBoxError("존재하지 않는 CloneActor");
-	//		return nullptr;
-	//	}
-
-	//	ActorType* NewActor = new ActorType();
-	//	(*NewActor) = (*iter0);
-
-	//	NewActor->SetName("ClonedActor");
-	//	NewActor->SetLevel(this);
-	//	NewActor->SetPos(Pos);
-
-	//	// 미리 Start()가 되어있는, 완전히 셋팅 완료된 Actor를 소환하는것
-	//	//NewActor->Start();
-
-	//	UpdateIter->second.push_back(NewActor);
-	//	RenderIter->second.push_back(NewActor);
-	//	return NewActor;
-	//}
-
-	////테스트중, 사용하지 말것
-	//template<typename ActorType>
-	//void CreateCloneActor(std::string _Name)
-	//{
-	//	//중복된 이름이 있거나 이름이 아예 없는 경우 체크하기
-
-	//	if (CloneActorMap_.find(_Name))
-	//	{
-	//		GameEngineDebug::MsgBoxError("이미 존재하는 CloneActor");
-	//		return nullptr;
-	//	}
-
-	//	ActorType* NewCloneActor = new ActorType();
-
-	//	NewCloneActor->Start();
-
-	//	CloneActorMap_.push_back(NewActor);
-	//}
 
 	GameEngineActor* FindActor(const std::string& _actorName);
 

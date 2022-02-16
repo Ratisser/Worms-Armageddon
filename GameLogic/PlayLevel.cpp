@@ -88,6 +88,7 @@ void PlayLevel::Loading()
 	
 	fadeObject_ = CreateActor<FadeObject>();
 	loadingImage_ = CreateActor<LoadingImage>();
+	PetroleumManager_ = CreateActor<PetroleumManager>();
 
 	CreateActor<BackGroundGradation>();
 	Train_ = CreateActor<MapTrain>();
@@ -173,6 +174,11 @@ void PlayLevel::LevelUpdate()
 			CreateGimmickObject();
 		}
 	}
+}
+
+const float PlayLevel::GetWaterLevel()
+{
+	return Controller_->GetWaterLevel();
 }
 
 void PlayLevel::wormLoading()
@@ -269,6 +275,18 @@ void PlayLevel::GroundUpdate13(float4 _pos)
 {
 	float4 _Pos = float4(_pos.x - 12.5f, _pos.y- 12.5f);
 	Train_->GroundUpdate13(_Pos);
+}
+
+void PlayLevel::GroundUpdate6(float4 _pos)
+{
+	float4 _Pos = float4(_pos.x - 9.f, _pos.y - 9.f);
+	Train_->GroundUpdate6(_Pos);
+}
+
+void PlayLevel::GroundUpdate4(float4 _pos)
+{
+	float4 _Pos = float4(_pos.x - 8.f, _pos.y - 8.f);
+	Train_->GroundUpdate4(_Pos);
 }
 
 void PlayLevel::KeySetting()

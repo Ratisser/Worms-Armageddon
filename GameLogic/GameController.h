@@ -65,6 +65,8 @@ public:
 		return cameraPos_;
 	}
 
+	const float GetWaterLevel();
+
 public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f); // ¸Ê ¹Ù´ÚÀÇ ¼ö¸é »ý¼º
 

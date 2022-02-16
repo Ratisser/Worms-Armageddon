@@ -33,6 +33,7 @@ Explosion::Explosion(Explosion&& _other) noexcept :
 
 void Explosion::Start()
 {
+	GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 	ExplosionCollision_ = CreateCollision
 	(static_cast<int>(eCollisionGroup::WEAPON), CollisionCheckType::CIRCLE);
 }

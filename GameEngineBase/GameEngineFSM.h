@@ -207,20 +207,6 @@ public:
 		curState_->CallStart();
 	}
 
-
-private:
-	State* FindState(const std::string& _name)
-	{
-		typename std::map<std::string, State*>::iterator FindAniIter = allState_.find(_name);
-
-		if (FindAniIter == allState_.end())
-		{
-			return nullptr;
-		}
-
-		return FindAniIter->second;
-	}
-
 	bool IsCurStateName(const std::string& _Name)
 	{
 		if (nullptr == curState_)
@@ -236,6 +222,20 @@ private:
 
 		return false;
 	}
+
+private:
+	State* FindState(const std::string& _name)
+	{
+		typename std::map<std::string, State*>::iterator FindAniIter = allState_.find(_name);
+
+		if (FindAniIter == allState_.end())
+		{
+			return nullptr;
+		}
+
+		return FindAniIter->second;
+	}
+
 
 public:
 	void Update()

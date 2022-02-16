@@ -10,6 +10,7 @@ enum class eCollisionGroup
 	MOUSE,
 	GIMMICK_OBJECT,
 	PETROLEUM,
+	PETROLEUM_HITBOX,
 	DRUM,
 	WEAPON,
 	MAX

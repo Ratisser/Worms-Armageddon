@@ -8,6 +8,7 @@
 class LoadingImage;
 class FadeObject;
 class WindController;
+class PetroleumManager;
 class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
@@ -44,8 +45,14 @@ public:
 public:
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
 	WindController* windController_;
+	PetroleumManager* PetroleumManager_;
 
 public:
+	PetroleumManager* GetPetroleumManager()
+	{
+		return PetroleumManager_;
+	} 
+
 	WindController* GetWindController()
 	{
 		return windController_;
@@ -67,6 +74,8 @@ public:
 	void GroundUpdate50(float4 _pos);
 	void GroundUpdate25(float4 _pos);
 	void GroundUpdate13(float4 _pos);
+	void GroundUpdate6(float4 _pos);
+	void GroundUpdate4(float4 _pos);
 
 	void KeySetting();
 
@@ -79,6 +88,8 @@ public:
 	{
 		return Train_;
 	}
+
+	const float GetWaterLevel();
 
 private:
 	void wormLoading();

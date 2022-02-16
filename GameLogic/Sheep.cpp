@@ -229,7 +229,7 @@ StateInfo Sheep::startExplosion(StateInfo _state)
 	level->CreateExplosion100(pos_);
 	explosionDelay_ = 2.0f;
 	mainRender_->Off();
-	GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+	//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 	return StateInfo();
 }
 

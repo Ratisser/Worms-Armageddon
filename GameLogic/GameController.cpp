@@ -466,6 +466,11 @@ StateInfo GameController::updateItemDrop(StateInfo _state)
 	return StateInfo();
 }
 
+const float GameController::GetWaterLevel()
+{
+	return WaterLevel_->GetWaterLevel();
+}
+
 void GameController::MakeWaterLevel(float _WaterLevel)
 {
 	WaterLevel_ = GetLevel()->CreateActor<WaterLevel>("WaterLevel"); // 모든 파도 actor 그룹화
