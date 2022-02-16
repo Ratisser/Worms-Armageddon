@@ -57,17 +57,10 @@ void BottomStateUI::Update()
 			if (0 >= CurHP_)
 			{
 
-
-
-
 				return;
 			}
 
 			// 아니라면 체력바렌더러를 데미지만큼 깍아낸다.
-
-
-
-
 			PrevHP_ = CurHP_;
 		}
 	}
@@ -75,6 +68,7 @@ void BottomStateUI::Update()
 
 void BottomStateUI::UpdateAfter()
 {
+
 }
 
 void BottomStateUI::Render()

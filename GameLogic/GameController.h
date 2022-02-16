@@ -71,6 +71,7 @@ public:
 private:
 	const int MAX_WORM_COUNT = 8;
 	const float DEFAULT_TURN_TIME = 46.f;
+	const float SETTLEMENT_TIME = 4.0f;
 
 private:
 	GameEngineFSM<GameController> state_;
@@ -85,6 +86,7 @@ private:
 	float4 cameraPos_;
 	float wormXPosContainer_;
 
+	float settementTime_;
 	float currentTurnTime_;
 
 

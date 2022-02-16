@@ -60,6 +60,7 @@ Worm::Worm()
 	, bFocus_(false)
 	, uicontroller_(nullptr)
 	, hp_(GameOptionInfo::WormEnergy)
+	, prevHp_(GameOptionInfo::WormEnergy)
 	, actionToken_(0)
 	, bulletFocusActor_(nullptr)
 	, blowTorchMoveTime_(3.f)
@@ -2977,6 +2978,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 		hp_ = 0;
 	}
 
+	isDamaged_ = true;
 	ChangeState("Hit");
 }
 
@@ -3073,6 +3075,8 @@ void Worm::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 	state_.Update();
+
+
 }
 
 void Worm::UpdateAfter()

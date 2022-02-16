@@ -58,6 +58,28 @@ public:
 		return hp_;
 	}
 
+	int GetPrevHp()
+	{
+		return prevHp_;
+	}
+
+	void ResetisDamaged()
+	{
+		isDamaged_ = false;
+		return;
+	}
+
+	void SetisDamaged()
+	{
+		isDamaged_ = true;
+		return;
+	}
+
+	bool isDamagedThisTurn()
+	{
+		return isDamaged_;
+	}
+
 private:
 	void initRenderer();
 	void initInput();
@@ -237,6 +259,8 @@ private:
 	float WindSpeed_;
 
 	int hp_;
+	int prevHp_;
+	bool isDamaged_;
 	int actionToken_;
 
 	eItemList currentWeapon_;

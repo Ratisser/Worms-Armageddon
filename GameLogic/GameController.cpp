@@ -28,6 +28,7 @@
 #include "TimerBlankWindow.h"
 #include "TimerDigit.h"
 #include "WormHPNumber.h"
+#include "TopHPText.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -41,6 +42,7 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, currentTurnTime_(0.0f)
 	, wormXPosContainer_(0.0f)
 	, WaterLevel_(nullptr)
+	, settementTime_(0.0f)
 {
 
 }
@@ -240,9 +242,9 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
 		// 플레이어당 하단 상태 UI
-		//wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
-		//wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
-		//wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어당 상단 상태 UI
 		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
@@ -327,6 +329,12 @@ void GameController::initState()
 StateInfo GameController::startNextWorm(StateInfo _state)
 {
 	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
+
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		wormList_[i]->ResetisDamaged();
+	}
+
 	return "";
 }
 
@@ -426,13 +434,34 @@ StateInfo GameController::updateActionEnd(StateInfo _state)
 
 StateInfo GameController::startSettlement(StateInfo _state)
 {
-	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		if (true == wormList_[i]->isDamagedThisTurn())
+		{
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
+		}
+	}
+
 	return StateInfo();
 }
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
-	return "NextWorm";
+
+
+
+	if (true == allSettlementDone_)
+	{
+		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
+	}
+
+	if (SETTLEMENT_TIME <= settementTime_)
+	{
+		settementTime_ = 0.0f;
+		return "NextWorm";
+	}
+
+	return StateInfo();
 }
 
 

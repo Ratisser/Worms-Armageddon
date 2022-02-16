@@ -24,6 +24,10 @@ private:
 	int UpdateTenNum;
 	int UpdateNum;
 
+private:
+	const float NUMBER_CHANGE_TIME = 0.1f;
+	float deltaTime_;
+	bool isChangingDone_;
 
 private:
 	bool HundredFlag_;
@@ -61,6 +65,7 @@ public:
 
 public:
 	void UpdateHPText();
-	
+	void UpdateHP();
+	void ChangeHPText();
 };
 

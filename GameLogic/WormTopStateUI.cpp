@@ -19,7 +19,8 @@ WormTopStateUI::WormTopStateUI() :
 	NameRenderer_(nullptr),
 	ArrowRenderer_(nullptr),
 	HPBoxRenderer_(nullptr),
-	HPText_(nullptr)
+	HPText_(nullptr),
+	isHPTextNeedChange_(false)
 {
 	SetRenderOrder(static_cast<int>(RenderOrder::UI));
 }
@@ -53,6 +54,7 @@ void WormTopStateUI::Start()
 
 void WormTopStateUI::UpdateBefore()
 {
+
 }
 
 void WormTopStateUI::Update()
@@ -60,6 +62,8 @@ void WormTopStateUI::Update()
 	// 플레이어 위치에 따라서 이동
 	if (true == WormLinked_)
 	{
+		UpdateTextAnimation();
+
 		if (nullptr != NameRenderer_)
 		{
 			NameRenderer_->SetPivotPos(float4(ParentWorm_->GetPos().x, ParentWorm_->GetPos().y - 50.f));
@@ -284,4 +288,16 @@ void WormTopStateUI::SetPlayerNamePos()
 {
 	// 초기 위치 자신이 속한 Worm의 상단에 위치 시킨다.
 	NameRenderer_->SetPivotPos(float4(ParentWorm_->GetPos().x, ParentWorm_->GetPos().y - 50.f));
+}
+
+void WormTopStateUI::UpdateTextAnimation()
+{
+	if (false == isHPTextNeedChange_)
+	{
+		return;
+	}
+
+
+
+	
 }
