@@ -14,6 +14,7 @@ private:	// member Var
 private:
 	int WormIndex_;
 	int PlayerColorIndex_;
+	int ImageStartIndex_;
 	int PrevHP_;
 	int CurHP_;
 
@@ -63,7 +64,7 @@ public:
 	void HPTextInit();
 
 public:
-	void UpdateHPText();
 	void ChangeHPText();
+	void CheckHPTextZero();
 };
 

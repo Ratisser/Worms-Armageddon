@@ -292,6 +292,6 @@ void WormTopStateUI::SetPlayerNamePos()
 
 void WormTopStateUI::UpdateTextAnimation()
 {
-		HPText_->ChangeHPText();
-		return;
+	HPText_->ChangeHPText();
+	return;
 }
