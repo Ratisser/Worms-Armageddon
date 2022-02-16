@@ -247,9 +247,9 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어당 상단 상태 UI
-		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
-		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
-		//wormList_[i]->GetCurUIController()->GetCurTopState()->GameStartInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
+		wormList_[i]->GetCurUIController()->GetCurTopState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어당 턴 타이머 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
@@ -400,9 +400,9 @@ StateInfo GameController::updateAction(StateInfo _state)
 		currentTurnTime_ = 0.0f;
 	}
 
-	if (currentTurnTime_ < 0)
+	if (currentTurnTime_ < 0 || 0 == currentWorm_->GetActionTokenCount())
 	{
-		// 턴시간 초과로 인한 플레이어 전환이 발생하므로 이곳에서
+		// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
 		// 무기창 비활성이 된다.
 		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
 
@@ -447,13 +447,7 @@ StateInfo GameController::startSettlement(StateInfo _state)
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
-
-
-
-	if (true == allSettlementDone_)
-	{
-		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
-	}
+	settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
 
 	if (SETTLEMENT_TIME <= settementTime_)
 	{

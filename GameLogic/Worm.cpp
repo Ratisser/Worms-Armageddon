@@ -1352,43 +1352,47 @@ StateInfo Worm::updateIdle(StateInfo _state)
 {
 	addGravity();
 
-	weaponEquipDelay_ += deltaTime_;
-
-	if (true == bFocus_)
+	if (0 != GetActionTokenCount())
 	{
-		if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
-		{
-			weaponEquipDelay_ = 0.0f;
-			return "WeaponOn";
-		}
+		weaponEquipDelay_ += deltaTime_;
 
-		if (GameEngineInput::GetInst().IsPress("UpArrow"))
+		if (true == bFocus_)
 		{
-			return "WeaponOn";
-		}
+			if (weaponEquipDelay_ > WEAPON_EQUIP_DELAY)
+			{
+				weaponEquipDelay_ = 0.0f;
+				return "WeaponOn";
+			}
 
-		if (GameEngineInput::GetInst().IsPress("DownArrow"))
-		{
-			return "WeaponOn";
-		}
+			if (GameEngineInput::GetInst().IsPress("UpArrow"))
+			{
+				return "WeaponOn";
+			}
 
-		if (GameEngineInput::GetInst().IsPress("LeftArrow"))
-		{
-			bLeft_ = true;
-			return "Walk";
-		}
+			if (GameEngineInput::GetInst().IsPress("DownArrow"))
+			{
+				return "WeaponOn";
+			}
 
-		if (GameEngineInput::GetInst().IsPress("RightArrow"))
-		{
-			bLeft_ = false;
-			return "Walk";
-		}
+			if (GameEngineInput::GetInst().IsPress("LeftArrow"))
+			{
+				bLeft_ = true;
+				return "Walk";
+			}
 
-		if (GameEngineInput::GetInst().IsDown("Jump"))
-		{
-			return "JumpReady";
+			if (GameEngineInput::GetInst().IsPress("RightArrow"))
+			{
+				bLeft_ = false;
+				return "Walk";
+			}
+
+			if (GameEngineInput::GetInst().IsDown("Jump"))
+			{
+				return "JumpReady";
+			}
 		}
 	}
+	
 
 	// ¶³¾îÁö´Â Áß
 	if (speed_.y > 0.0f)
@@ -1749,11 +1753,13 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 
 StateInfo Worm::startBazookaWait(StateInfo _state)
 {
+	SubtractActionToken(1);
 	return StateInfo();
 }
 
 StateInfo Worm::updateBazookaWait(StateInfo _state)
 {
+
 	nextState_ = "Idle";
 	return "WeaponOff";
 }
