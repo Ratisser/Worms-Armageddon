@@ -1730,7 +1730,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		{
 			soundPowerUp_.Stop();
 		}
-
+		SubtractActionToken(1);
 		return "BazookaWait";
 	}
 
@@ -1744,6 +1744,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 			newBaz->SetBazooka(forward_, firePower_);
 			//bFocus_ = false;
+			SubtractActionToken(1);
 			return "BazookaWait";
 		}
 	}
@@ -1753,7 +1754,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 
 StateInfo Worm::startBazookaWait(StateInfo _state)
 {
-	SubtractActionToken(1);
+	
 	return StateInfo();
 }
 
@@ -2010,6 +2011,7 @@ StateInfo Worm::updateFirepunchReady(StateInfo _state)
 
 	if (GameEngineInput::GetInst().IsDown("Fire"))
 	{
+	
 		return "FirepunchStart";
 	}
 
@@ -2131,6 +2133,7 @@ StateInfo Worm::startFirepunchEnd(StateInfo _state)
 
 StateInfo Worm::updateFirepunchEnd(StateInfo _state)
 {
+
 	addGravity();
 	// ¶³¾îÁö´Â Áß
 	if (nullptr != groundCheckCollision_->CollisionGroupCheckOne(eCollisionGroup::MAP))
@@ -2146,9 +2149,6 @@ StateInfo Worm::updateFirepunchEnd(StateInfo _state)
 			mainRender_->ChangeAnimation("FirepunchLandRight", std::string("firePunchLandRight.bmp"));
 			return "FirepunchLand";
 		}
-	}
-	else
-	{
 	}
 
 	normalMove();
@@ -2177,6 +2177,7 @@ StateInfo Worm::updateFirepunchLand(StateInfo _state)
 
 StateInfo Worm::startFirepunchOff(StateInfo _state)
 {
+	SubtractActionToken(1);
 	return StateInfo();
 }
 
