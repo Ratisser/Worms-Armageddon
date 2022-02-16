@@ -8,27 +8,18 @@
 #include <GameEngineTime.h>
 
 EndingText::EndingText() :
-	MakerTitleRenderer_(nullptr),
 	TextRendererSize_(0),
 	Text_{},
 	TextSize_(-1),
 	TextStartPos_(float4::ZERO),
-	TextScale_(float4::ZERO)
+	TextScale_(float4::ZERO),
+	Move_(false),
+	MoveSpeed_(50.f)
 {
-	SetRenderOrder(static_cast<int>(RenderOrder::UI));
+	SetRenderOrder(static_cast<int>(RenderOrder::BackGround1));
 }
 
 EndingText::~EndingText()
-{
-}
-
-EndingText::EndingText(EndingText&& _other) noexcept :
-	MakerTitleRenderer_(_other.MakerTitleRenderer_),
-	TextRendererSize_(_other.TextRendererSize_),
-	Text_(_other.Text_),
-	TextSize_(_other.TextSize_),
-	TextStartPos_(_other.TextStartPos_),
-	TextScale_(_other.TextScale_)
 {
 }
 
@@ -42,6 +33,11 @@ void EndingText::UpdateBefore()
 
 void EndingText::Update()
 {
+	if (true == Move_)
+	{
+		// 이동 시작
+		SetMove(float4::UP * GameEngineTime::GetInst().GetDeltaTime() * MoveSpeed_);
+	}
 }
 
 void EndingText::UpdateAfter()
@@ -62,12 +58,11 @@ void EndingText::Render()
 	}
 }
 
-void EndingText::EndingTextInit(const std::string& _Text, const float4& _Pos, const float4& _Scale)
+void EndingText::EndingTextInit(const std::string& _Text, const float4& _Pos)
 {
 	Text_ = _Text;
 	TextSize_ = static_cast<int>(Text_.size());
 	TextStartPos_ = _Pos;
-	TextScale_ = _Scale;
 
 	// 대문자로 변환
 	std::transform(Text_.begin(), Text_.end(), Text_.begin(), std::toupper);
@@ -129,18 +124,19 @@ void EndingText::EndingTextInit(const std::string& _Text, const float4& _Pos, co
 		}
 
 		NewRender->SetCameraEffectOff();
-		//NewRender->Off();
+		NewRender->Off();
 
 		// 위치 지정
 		float4 CalcPos = TextStartPos_;
-		CalcPos.x = TextStartPos_.x + (CurIndex * 26.f);
+		CalcPos.x = TextStartPos_.x + (CurIndex * 32.f);
 		NewRender->SetPivotPos(CalcPos);
-
-		// 크기 지정
-		NewRender->SetRenderSize(TextScale_);
 
 		TextRenderer_.push_back(NewRender);
 		++TextRendererSize_;
 	}
 }
 
+void EndingText::MoveStart()
+{
+	Move_ = true;
+}

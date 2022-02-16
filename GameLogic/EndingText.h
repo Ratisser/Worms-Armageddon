@@ -7,9 +7,6 @@
 class EndingText : public GameEngineActor
 {
 private:	// member Var
-	GameEngineRenderer* MakerTitleRenderer_;
-
-private:
 	std::vector<GameEngineRenderer*> TextRenderer_;
 	int TextRendererSize_;
 
@@ -19,13 +16,17 @@ private:
 	float4 TextStartPos_;
 	float4 TextScale_;
 
+private:
+	bool Move_;
+	float MoveSpeed_;
+
 public:
 	EndingText(); // default constructer 디폴트 생성자
 	~EndingText(); // default destructer 디폴트 소멸자
 
 protected:		// delete constructer
 	EndingText(const EndingText& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	EndingText(EndingText&& _other) noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
+	EndingText(EndingText&& _other) noexcept = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
 private:		//delete operator
 	EndingText& operator=(const EndingText& _other) = delete; // default Copy operator 디폴트 대입 연산자
@@ -39,6 +40,7 @@ public:
 	virtual void Render() override;
 
 public:
-	void EndingTextInit(const std::string& _Text, const float4& _Pos, const float4& _Scale);
+	void EndingTextInit(const std::string& _Text, const float4& _Pos);
+	void MoveStart();
 };
 

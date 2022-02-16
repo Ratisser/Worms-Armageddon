@@ -442,6 +442,9 @@
     <ClInclude Include="PetroleumManager.h">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
     </ClInclude>
+    <ClInclude Include="EndingFade.h">
+      <Filter>Actor\EndingLevel\EndingImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -717,6 +720,9 @@
     <ClCompile Include="AirStrikeBullet.cpp" />
     <ClCompile Include="PetroleumManager.cpp">
       <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingFade.cpp">
+      <Filter>Actor\EndingLevel\EndingImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,41 +2,73 @@
 
 #include "EndingImage.h"
 #include "EndingText.h"
+#include "EndingFade.h"
+
+#include <GameEngineWindow.h>
 
 EndingLevel::EndingLevel()
 {
-
 }
 
 EndingLevel::~EndingLevel()
 {
-
-}
-
-EndingLevel::EndingLevel(EndingLevel&& _other) noexcept
-{
-
 }
 
 void EndingLevel::Loading()
 {
-	CreateActor<EndingImage>();
+	float4 WindowSize = GameEngineWindow::GetInst().GetSize();
+	float4 HarfWindow = WindowSize.halffloat4();
+
+	// 엔딩뒷배경
+	EndingImage* EndingBackDrop = CreateActor<EndingImage>();
+
+	// 크래딧
+	EndingText* Credit = CreateActor<EndingText>();
+	Credit->EndingTextInit("CREDIT", float4(HarfWindow.x - 70.f, 740.f));
 
 	// 팀이름
 	EndingText* TeamName = CreateActor<EndingText>();
-	TeamName->EndingTextInit("WTeam", float4(800.f, 300.f), float4(300.f, 300.f));
-
-	// 크레딧
-	//EndingText* CreditText = CreateActor<EndingText>();
-	//CreditText->EndingTextInit("CREDIT", float4(500.f, 500.f), float4(300.f, 300.f));
+	TeamName->EndingTextInit("TEAMNAME   WTEAM", float4(HarfWindow.x - 270.f, 810.f));
 
 	// 제작자
-	//EndingText* SHINJONGHA = CreateActor<EndingText>();
-	//SHINJONGHA->EndingTextInit("shin jong ha", float4(500.f, 500.f), float4(300.f, 300.f));
+	EndingText* Developer = CreateActor<EndingText>();
+	Developer->EndingTextInit("DEVELOPER", float4(HarfWindow.x - 300.f, 880.f));
+
+	// 박종원
+	EndingText* PARKJONGWON = CreateActor<EndingText>();
+	PARKJONGWON->EndingTextInit("PARK JONGWON", float4(HarfWindow.x + 70.f, 880.f));
+
+	// 신종하
+	EndingText* SHINJONGHA = CreateActor<EndingText>();
+	SHINJONGHA->EndingTextInit("SHIN JONGHA", float4(HarfWindow.x + 70.f, 920.f));
+
+	// 안지용
+	EndingText* AHNJIYONG = CreateActor<EndingText>();
+	AHNJIYONG->EndingTextInit("AHN  JIYONG", float4(HarfWindow.x + 70.f, 960.f));
+
+	// 이현
+	EndingText* LEEHYUN = CreateActor<EndingText>();
+	LEEHYUN->EndingTextInit("LEE  HYUN", float4(HarfWindow.x + 70.f, 1000.f));
+
+	// 조규현
+	EndingText* JOGYUHYEON = CreateActor<EndingText>();
+	JOGYUHYEON->EndingTextInit("JO   GYUHYEON", float4(HarfWindow.x + 70.f, 1040.f));
 
 	// 감사합니다
 	EndingText* ThankYou = CreateActor<EndingText>();
-	ThankYou->EndingTextInit("TANK YOU", float4(700.f, 600.f), float4(300.f, 300.f));
+	ThankYou->EndingTextInit("THANK YOU", float4(HarfWindow.x - 150.f, 1140.f));
+
+	// Fade In/Out 
+	EndingFade* EndingFadeImage = CreateActor<EndingFade>();
+	EndingFadeImage->PushCreditText(Credit);
+	EndingFadeImage->PushCreditText(TeamName);
+	EndingFadeImage->PushCreditText(Developer);
+	EndingFadeImage->PushCreditText(PARKJONGWON);
+	EndingFadeImage->PushCreditText(SHINJONGHA);
+	EndingFadeImage->PushCreditText(AHNJIYONG);
+	EndingFadeImage->PushCreditText(LEEHYUN);
+	EndingFadeImage->PushCreditText(JOGYUHYEON);
+	EndingFadeImage->PushCreditText(ThankYou);
 }
 
 void EndingLevel::LevelUpdate()

@@ -42,6 +42,8 @@ LobbyHost::LobbyHost(LobbyHost&& _other) noexcept :
 
 void LobbyHost::Start()
 {
+	curhostready_ = true;
+
 	// 현재 PC의 이름 가져오기
 	char ComputerName[256] = {};
 	unsigned long ComputerNameLen = 100;

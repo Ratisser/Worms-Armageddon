@@ -659,7 +659,7 @@ void EndingImageInit()
 
 	// ¾ËÆÄºª
 	GameEngineImageFile* digitSprite = GameEngineImage::GetInst().LoadGameImage("Ending_Alphabet", Dir.PathToPlusFileName("AlphabetUpper_Font.bmp"));
-	digitSprite->Cut({ 25,26 });
+	digitSprite->Cut({ 50,52 });
 
 }
 

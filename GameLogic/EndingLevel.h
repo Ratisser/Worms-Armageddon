@@ -14,7 +14,7 @@ public:
 
 protected:		// delete constructer
 	EndingLevel(const EndingLevel& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	EndingLevel(EndingLevel&& _other) noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
+	EndingLevel(EndingLevel&& _other) noexcept = delete; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
 private:		//delete operator
 	EndingLevel& operator=(const EndingLevel& _other) = delete; // default Copy operator 디폴트 대입 연산자
