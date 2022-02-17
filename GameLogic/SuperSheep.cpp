@@ -31,6 +31,7 @@ SuperSheep::SuperSheep()
 	, direction_(float4::UP)
 	, animDelay_(ANIM_DELAY)
 	, soundWhoosh_("SUPERSHEEPWHOOSH.WAV")
+	, EffectSpawnTime_(0.0f)
 {
 
 }
@@ -325,7 +326,7 @@ StateInfo SuperSheep::startExplosion(StateInfo _state)
 {
 	PlayLevel* level = (PlayLevel*)GetLevel();
 	level->CreateExplosion100(pos_);
-	explosionDelay_ = 2.0f;
+	explosionDelay_ = 3.0f;
 	mainRender_->Off();
 	GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 	return StateInfo();
@@ -339,6 +340,7 @@ StateInfo SuperSheep::updateExplosion(StateInfo _state)
 	{
 		parentWorm_->ChangeState("Idle");
 		parentWorm_->BulletFocusOff();
+		parentWorm_->SubtractActionToken(1);
 		Death();
 	}
 	return StateInfo();
