@@ -14,6 +14,15 @@ BottomStateUI::BottomStateUI() :
 	PlayerColorIndex_(-1),
 	PrevHP_(0),
 	CurHP_(0),
+	RenderPos_(float4::ZERO),
+	CurDamage_(0.f),
+	InitHPBarLen_(0.f),
+	CurHPBarLen_(0.f),
+	PrevHPBarLen_(0.f),
+	TargetHPBarLen_(0.f),
+	DecreaseSpeed_(1.f),
+	DecreaseHPBar_(false),
+	DeltaAccumulate_(0.f),
 	FlagRenderer_(nullptr),
 	NameRenderer_(nullptr),
 	HPBarRenderer_(nullptr)
@@ -21,9 +30,8 @@ BottomStateUI::BottomStateUI() :
 	SetRenderOrder(static_cast<int>(RenderOrder::UI3));
 }
 
-BottomStateUI::~BottomStateUI() // default destructer 디폴트 소멸자
+BottomStateUI::~BottomStateUI()
 {
-
 }
 
 void BottomStateUI::Start()
@@ -43,27 +51,37 @@ void BottomStateUI::Start()
 
 void BottomStateUI::UpdateBefore()
 {
+	if (true == DecreaseHPBar_)
+	{
+		// 델타타임 누적
+		PrevHPBarLen_ -= GameEngineTime::GetInst().GetDeltaTime() * DecreaseSpeed_;
+		if (TargetHPBarLen_ >= PrevHPBarLen_)
+		{
+			if (1.f >= PrevHPBarLen_)
+			{
+				HPBarRenderer_->SetRenderSize(float4(1.f, 17.f));
+
+				// 게임컨트롤 호출해서 HPBar 정렬
+
+
+
+				DecreaseHPBar_ = false;
+				return;
+			}
+
+			CurHPBarLen_ = PrevHPBarLen_;
+			DecreaseHPBar_ = false;
+
+			return;
+		}
+
+		// 체력바 크기는 100 x 17
+		HPBarRenderer_->SetRenderSize(float4(PrevHPBarLen_, 17.f));
+	}
 }
 
 void BottomStateUI::Update()
 {
-	// 플레이어의 HP상태에 따라 플레이어 Worm Total HP Bar 이미지 갱신
-	if (nullptr != ParentWorm_)
-	{
-		CurHP_ = ParentWorm_->GetCurHP();
-		if (PrevHP_ != CurHP_)
-		{
-			// 현재 플레이어가 죽었을때는 하단 상태바를 죽인다.
-			if (0 >= CurHP_)
-			{
-
-				return;
-			}
-
-			// 아니라면 체력바렌더러를 데미지만큼 깍아낸다.
-			PrevHP_ = CurHP_;
-		}
-	}
 }
 
 void BottomStateUI::UpdateAfter()
@@ -94,9 +112,28 @@ int BottomStateUI::GetWormIndex()
 	return WormIndex_;
 }
 
+float BottomStateUI::GetHPBarRenderSize() const
+{
+	// 1.f 이하이면 플레이어 사망으로 처리
+	return TargetHPBarLen_;
+}
+
 void BottomStateUI::SetParentWorm(Worm* _Parent)
 {
 	ParentWorm_ = _Parent;
+	InitHPBarLen_ = static_cast<float>(ParentWorm_->GetCurHP());
+	if (InitHPBarLen_ >= 100.f)
+	{
+		DecreaseSpeed_ = 50.f;
+	}
+	else
+	{
+		DecreaseSpeed_ = 30.f;
+	}
+
+	PrevHP_ = CurHP_ = ParentWorm_->GetCurHP();
+
+	PrevHPBarLen_ = CurHPBarLen_ = 100.f;
 }
 
 void BottomStateUI::SetParentUIController(UIController* _ParentUI)
@@ -386,51 +423,87 @@ void BottomStateUI::SetHPBarPos()
 	if (0 != MaxWormCnt)
 	{
 		// 현재 생성된 플레이어의 갯수를 이용하여 시작위치를 설정한다.
-		float4 StartPos = float4::ZERO;
+		RenderPos_ = float4::ZERO;
 		--MaxWormCnt;
 		switch (MaxWormCnt)
 		{
 			case 0:
 			{
-				StartPos = float4(672.f, 710.f);
+				RenderPos_ = float4(672.f, 710.f);
 				break;
 			}
 			case 1:
 			{
-				StartPos = float4(672.f, 690.f);
+				RenderPos_ = float4(672.f, 690.f);
 				break;
 			}
 			case 2:
 			{
-				StartPos = float4(672.f, 670.f);
+				RenderPos_ = float4(672.f, 670.f);
 				break;
 			}
 			case 3:
 			{
-				StartPos = float4(672.f, 650.f);
+				RenderPos_ = float4(672.f, 650.f);
 				break;
 			}
 			case 4:
 			{
-				StartPos = float4(672.f, 630.f);
+				RenderPos_ = float4(672.f, 630.f);
 				break;
 			}
 			case 5:
 			{
-				StartPos = float4(672.f, 610.f);
+				RenderPos_ = float4(672.f, 610.f);
 				break;
 			}
 			default:
 			{
-				StartPos = float4(0.f, 0.f);
+				RenderPos_ = float4(0.f, 0.f);
 				break;
 			}
 		}
 
 		// Worm Index를 이용하여 시작 위치부터의 자신의 위치를 계산한다.
-		StartPos.y += static_cast<float>(WormIndex_ * 20);
-		HPBarRenderer_->SetPivotPos(StartPos);
+		RenderPos_.y += static_cast<float>(WormIndex_ * 20);
+		HPBarRenderer_->SetPivotPos(RenderPos_);
 		HPBarRenderer_->SetCameraEffectOff();
 	}
 }
 
+void BottomStateUI::DecreaseHPBar()
+{
+	// 해당 플레이어의 체력을 기준으로 감소 목표치 계산 및 Flag On
+	CurHP_ = ParentWorm_->GetCurHP();
+	CurDamage_ = static_cast<float>(PrevHP_ - CurHP_);
+	if (InitHPBarLen_ == 200.f)
+	{
+		CurDamage_ *= 0.5f;
+	}
+	else if (InitHPBarLen_ == 150.f)
+	{
+		CurDamage_ *= 0.7f;
+	}
+	else if (InitHPBarLen_ == 50.f)
+	{
+		CurDamage_ *= 2.f;
+	}
+
+	if (0.f >= CurHP_)
+	{
+		TargetHPBarLen_ = 1.f;
+	}
+	else
+	{
+		TargetHPBarLen_ = CurHPBarLen_ - static_cast<float>(CurDamage_);
+		if (0.f >= TargetHPBarLen_)
+		{
+			TargetHPBarLen_ = 1.f;
+		}
+	}
+
+	DecreaseHPBar_ = true;
+
+	// 데미지 계산이 완료되었으므로 현재체력을 이전체력에 저장
+	PrevHP_ = CurHP_;
+}
