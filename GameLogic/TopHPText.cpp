@@ -343,10 +343,7 @@ void TopHPText::ChangeHPText()
 
 			if (deltaTime_ >= NUMBER_CHANGE_TIME)
 			{
-				HPHundredNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ / 100));
-				HPTenNumRenderer_->ChangeAnimation(std::to_string((PrevHP_ / 10)%10));
-				HPNumRenderer_->ChangeAnimation(std::to_string(PrevHP_ % 10));
-				PrevHP_--;
+				ChangeTextAnimation(PrevHP_);
 				deltaTime_ = 0.0f;
 				return;
 			}
@@ -354,14 +351,23 @@ void TopHPText::ChangeHPText()
 	}
 }
 
+void TopHPText::ChangeTextAnimation(int _prevHp)
+{
+	HPHundredNumRenderer_->ChangeAnimation(std::to_string(_prevHp / 100));
+	HPTenNumRenderer_->ChangeAnimation(std::to_string((_prevHp / 10) % 10));
+	HPNumRenderer_->ChangeAnimation(std::to_string(_prevHp % 10));
+	PrevHP_--;
+	CheckHPTextZero();
+}
+
 void TopHPText::CheckHPTextZero()
 {
-	if (ImageStartIndex_ == HPHundredNumRenderer_->GetCurAnimationFrame())
+	if (true == HPHundredNumRenderer_->IsCurAnimationName("0"))
 	{
 		HundredFlag_ = false;
 	}
 
-	if (ImageStartIndex_ == HPTenNumRenderer_->GetCurAnimationFrame())
+	if (true == HPTenNumRenderer_->IsCurAnimationName("0") && false == HundredFlag_)
 	{
 		TenFlag_ = false;
 	}

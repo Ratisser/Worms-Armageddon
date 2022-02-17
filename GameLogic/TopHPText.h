@@ -66,5 +66,7 @@ public:
 public:
 	void ChangeHPText();
 	void CheckHPTextZero();
+
+	void ChangeTextAnimation(int _prevHp);
 };
 
