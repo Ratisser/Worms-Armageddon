@@ -7,7 +7,6 @@
 
 class LoadingImage;
 class FadeObject;
-class WindController;
 class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
@@ -43,13 +42,6 @@ public:
 
 public:
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
-	WindController* windController_;
-
-public:
-	WindController* GetWindController()
-	{
-		return windController_;
-	}
 
 public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
@@ -78,6 +70,11 @@ public:
 	MapTrain* GetMap() const
 	{
 		return Train_;
+	}
+
+	GameController* GetGameController()
+	{
+		return Controller_;
 	}
 
 private:

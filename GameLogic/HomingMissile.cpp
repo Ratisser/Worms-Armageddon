@@ -13,6 +13,7 @@
 #include "eCollisionCheckColor.h"
 #include "PlayLevel.h"
 #include "Explosion.h"
+#include "GameController.h"
 #include "MouseObject.h"
 
 HomingMissile::HomingMissile()
@@ -80,7 +81,7 @@ void HomingMissile::Update()
 		launchTime_ -= deltaTime_;
 
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		float windSpeed = level->GetWindController()->GetCurrentWindSpeed();
+		float windSpeed = level->GetGameController()->GetWindController()->GetCurrentWindSpeed();
 
 		if (launchTime_ >= 0.f)
 		{

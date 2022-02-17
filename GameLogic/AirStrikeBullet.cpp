@@ -12,6 +12,7 @@
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 #include "PlayLevel.h"
+#include "GameController.h"
 #include "Explosion.h"
 
 AirStrikeBullet::AirStrikeBullet()
@@ -63,7 +64,7 @@ void AirStrikeBullet::Update()
 	if (nullptr == groundCheckCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		float windSpeed = level->GetWindController()->GetCurrentWindSpeed();
+		float windSpeed = level->GetGameController()->GetWindController()->GetCurrentWindSpeed();
 
 		bGround_ = false;
 

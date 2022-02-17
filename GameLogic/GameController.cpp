@@ -339,6 +339,8 @@ StateInfo GameController::startNextWorm(StateInfo _state)
 {
 	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
 
+	RandomTurnWind();
+
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		wormList_[i]->ResetisDamaged();
@@ -601,4 +603,20 @@ void GameController::WindInit()
 	windBar->SetParentController(windController_);
 	WindBarHider* windBarHider = GetLevel()->CreateActor<WindBarHider>();
 	windBarHider->SetParentController(windController_);
+}
+
+void GameController::RandomTurnWind()
+{
+	int diceRoll = windDice_.RandomInt(1, 2);
+	switch (diceRoll)
+	{
+	case 1:
+		windController_->SetWind(WindDir::TOLEFT, 300.0f);
+		break;
+	case 2:
+		windController_->SetWind(WindDir::TORIGHT, 300.0f);
+		break;
+	default:
+		break;
+	}
 }

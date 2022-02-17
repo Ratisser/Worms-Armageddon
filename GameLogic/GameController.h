@@ -95,13 +95,13 @@ private:
 private: // 바람관련
 	WindController* windController_;
 	void WindInit();
-	//std::vector<BackgroundScatter> backGroundScatter_;
-
+	GameEngineMath::Random windDice_;
 public:
 	WindController* GetWindController()
 	{
 		return windController_;
 	}
+	void RandomTurnWind();
 
 private: // 물관련
 	WaterLevel* WaterLevel_;

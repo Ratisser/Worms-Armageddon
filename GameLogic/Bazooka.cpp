@@ -9,6 +9,7 @@
 #include <GameEngineSoundManager.h>
 
 #include "WindController.h"
+#include "GameController.h"
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"
 #include "PlayLevel.h"
@@ -62,7 +63,7 @@ void Bazooka::Update()
 	if (nullptr == groundCheckCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		float windSpeed = level->GetWindController()->GetCurrentWindSpeed();
+		float windSpeed = level->GetGameController()->GetWindController()->GetCurrentWindSpeed();
 
 		bGround_ = false;
 
