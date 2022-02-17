@@ -20,12 +20,18 @@ private:
 	int PlayerColorIndex_;
 
 private:
+	float Deltatime_;
+
+private:
 	GameEngineRenderer* NameRenderer_;
 	GameEngineRenderer* ArrowRenderer_;
 	GameEngineRenderer* HPBoxRenderer_;
 
 private:
 	TopHPText* HPText_;
+	bool isHPTextNeedChange_;
+
+	void UpdateTextAnimation();
 
 public:
 	WormTopStateUI(); // default constructer 디폴트 생성자
@@ -68,5 +74,16 @@ public:
 public:
 	void SettingRendererPos();
 	void SetPlayerNamePos();
+
+public:
+	TopHPText* GetHPText()
+	{
+		return HPText_;
+	}
+
+	void SetTextChangeRequest()
+	{
+		isHPTextNeedChange_ = true;
+	}
 };
 

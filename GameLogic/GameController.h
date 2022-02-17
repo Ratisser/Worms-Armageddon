@@ -7,6 +7,9 @@
 class GameEngineMath;
 class Worm;
 class WaterLevel;
+class WindController;
+class BackGroundScatter;
+class BottomStateUI;
 class GameController : public GameEngineActor
 {
 public:
@@ -70,9 +73,15 @@ public:
 public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f); // 맵 바닥의 수면 생성
 
+public: // 턴 종료시 UI관련 갱신
+	void TernEndUIUpdate();
+	void BottomStateHPBarSort();
+	void CurPlayerDeathCheck();
+
 private:
 	const int MAX_WORM_COUNT = 8;
 	const float DEFAULT_TURN_TIME = 46.f;
+	const float SETTLEMENT_TIME = 4.0f;
 
 private:
 	GameEngineFSM<GameController> state_;
@@ -87,12 +96,28 @@ private:
 	float4 cameraPos_;
 	float wormXPosContainer_;
 
+	float settementTime_;
 	float currentTurnTime_;
 
 	bool WormDeathReady_; // 다음 worm을 죽일때가 옴
+	bool WormDeathProgressing_; // 다음 worm을 죽일때가 옴
 	float WormDeathWaitingTime_; // worm을 죽일 간격
+
+private: // 바람관련
+	WindController* windController_;
+	void WindInit();
+	GameEngineMath::Random windDice_;
+public:
+	WindController* GetWindController()
+	{
+		return windController_;
+	}
+	void RandomTurnWind();
 
 private: // 물관련
 	WaterLevel* WaterLevel_;
+
+private: // 하단상태바 정렬관련
+	std::vector<BottomStateUI*> PlayerHPBarList_;
 };
 

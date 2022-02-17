@@ -28,6 +28,14 @@
 #include "TimerBlankWindow.h"
 #include "TimerDigit.h"
 #include "WormHPNumber.h"
+#include "TopHPText.h"
+
+#include "WindBarBlank.h"
+#include "WindBar.h"
+#include "WindBarHider.h"
+#include "BackgroundScatter.h"
+#include "WindController.h"
+#include "Cloud.h"
 
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
@@ -37,12 +45,15 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, prevwormIndex_(MAX_WORM_COUNT)
 	, IsCameraMove_(false)
 	, WormDeathReady_(false)
+	, WormDeathProgressing_(false)
 	, cameraPos_(0.f, 0.f)
 	, state_(this)
 	, currentTurnTime_(0.0f)
 	, wormXPosContainer_(0.0f)
 	, WormDeathWaitingTime_(0.0f)
 	, WaterLevel_(nullptr)
+	, settementTime_(0.0f)
+	, windController_(nullptr)
 {
 
 }
@@ -54,6 +65,7 @@ GameController::~GameController() // default destructer 디폴트 소멸자
 
 void GameController::Start()
 {
+	WindInit();
 	initState();
 	MakeWaterLevel();
 
@@ -242,14 +254,17 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
 		// 플레이어당 하단 상태 UI
-		//wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
-		//wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
-		//wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
+
+		// 플레이어 하단 상태바관련 관리목록에 추가
+		PlayerHPBarList_.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
 
 		// 플레이어당 상단 상태 UI
-		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
-		//wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
-		//wormList_[i]->GetCurUIController()->GetCurTopState()->GameStartInit(static_cast<int>(i));
+		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
+		wormList_[i]->GetCurUIController()->GetCurTopState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어당 턴 타이머 UI 지정
 		wormList_[i]->GetCurUIController()->GetCurTimerWindow()->RenderColorInit(static_cast<int>(i));
@@ -329,6 +344,14 @@ void GameController::initState()
 StateInfo GameController::startNextWorm(StateInfo _state)
 {
 	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
+
+	RandomTurnWind();
+
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		wormList_[i]->ResetisDamaged();
+	}
+
 	return "";
 }
 
@@ -394,11 +417,10 @@ StateInfo GameController::updateAction(StateInfo _state)
 		currentTurnTime_ = 0.0f;
 	}
 
-	if (currentTurnTime_ < 0)
+	if (currentTurnTime_ < 0 || 0 == currentWorm_->GetActionTokenCount())
 	{
-		// 턴시간 초과로 인한 플레이어 전환이 발생하므로 이곳에서
-		// 무기창 비활성이 된다.
-		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+		// 턴종료시 UI 처리
+		TernEndUIUpdate();
 
 		// 라운타임 초과 및 플레이어 턴초과시 물높이 상승
 		if (nullptr != WaterLevel_)
@@ -428,51 +450,90 @@ StateInfo GameController::updateActionEnd(StateInfo _state)
 
 StateInfo GameController::startSettlement(StateInfo _state)
 {
-	GameEngineSoundManager::GetInstance().PlaySoundByName("YESSIR.WAV");
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		if (true == wormList_[i]->isDamagedThisTurn())
+		{
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
+		}
+	}
+
 	return StateInfo();
 }
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		if (true == wormList_[i]->isDamagedThisTurn())
+		{
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
+		}
+	}
+
+	if (true)
+	{
+		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
+		// 모든 웜이 Idle 상태로 돌아오고, UI 변환이 완료됐을 때 시간이 돌게 설계할 것
+	}
+	
+	////////////////////////// Worm Death 진행 ////////////////////////
 	//1. 죽을 얘가 있는지 확인
 	Worm* CurDeathWorm = nullptr;
+	// Death를 진행시킬 worm
 
+	//TODO : 
+	/// //////////////////////// 근데 이거 wormList_ 내부의 wrom이 죽으면 알아서 인식 하나?///////////////
+	
 	if (false == WormDeathReady_)
 	{
 		for (int i = 0; i < wormList_.size(); ++i)
 		{
-			if (wormList_[i]->GetDeathReady_())
+			if (true == wormList_[i]->GetDeathReady_())
 			{
+				// 데미지를 입어 죽게될 worm은 GetDeathReady_()를 통해 bool 값을 전달한다.
+
 				CurDeathWorm = wormList_[i];
-				WormDeathReady_ = true;
-				break;
+				WormDeathReady_ = true; // 컨트롤러가 worm의 Death를 진행할 준비중이다.
+				WormDeathProgressing_ = true; // 컨트롤러가 Death상태 진행중이다..
+				break; // 하나라도 찾으면 break 하고 죽음 상태를 시작한다.
 			}
+			WormDeathProgressing_ = false; // 죽어야할 worm을 하나도 못 찾았다.
+		}
+
+		//worm의 죽음 상태 변화를 시작함 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
+		if (nullptr != CurDeathWorm)
+		{
+			//TODO : 게임 컨트롤러에서 모든 웜들의 행동, 드럼통 기름 등등이 움직임이 모두 멈춘것을 확인하면 호출하도록 할것
+
+			CurDeathWorm->SetDeathReady(false);
+			CurDeathWorm->SetDeathStart(true);
 		}
 	}
 
-	//worm을 죽음 대기 상태로 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
-	if (nullptr != CurDeathWorm)
-	{
-		CurDeathWorm->SetDeathReady(false);
-		CurDeathWorm->SetDeathStart(true);
-	}
-
-	//다음 worm 죽이기까지 대기상태
+	//다음 worm 죽이기까지 컨트롤러를 대기시킨다.
 	if (true == WormDeathReady_)
 	{
 		WormDeathWaitingTime_ += GameEngineTime::GetInst().GetDeltaTime();
 
-		if (WormDeathWaitingTime_ > 3.f)
+		if (WormDeathWaitingTime_ > 3.f) // 3초가 지나면 대기가 끝난다.
 		{
-			WormDeathReady_ = false;
+			WormDeathReady_ = false; // 다시 다음 worm을 찾을 준비가 됬따.
 			WormDeathWaitingTime_ = 0.f;
 			//대기가 끝남
 		}
-		return StateInfo();
 	}
 
+	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 웜으로 넘겨준다.
+	{
+		if (SETTLEMENT_TIME <= settementTime_)
+		{
+			settementTime_ = 0.0f;
+			return "NextWorm";
+		}
+	}
 
-	return "NextWorm";
+	return StateInfo();
 }
 
 
@@ -583,4 +644,80 @@ void GameController::MakeWaterLevel(float _WaterLevel)
 	UnderWaterActor->SetPos(float4(2560.f, _WaterLevel + 680.f, 0.f));
 	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
 	WaterLevel_->Waterlist.push_back(UnderWaterActor);
+}
+
+void GameController::TernEndUIUpdate()
+{
+	// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
+	// 무기창 비활성이 된다.
+	wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+
+	// 현재 플레이어 턴 종료시 하단상태바 정렬시작
+	BottomStateHPBarSort();
+
+	// 정렬완료 후 현재 플레이어가 체력이 0이면
+	// 화면밖으로 떨어뜨리며 죽인다.
+	CurPlayerDeathCheck();
+}
+
+void GameController::BottomStateHPBarSort()
+{
+	// 현재 플레이어의 체력에 따라 정렬 시작
+
+
+
+	
+
+}
+
+void GameController::CurPlayerDeathCheck()
+{
+	// 현재플레이어가 죽었으므로
+	//if (0 >= wormList_[currentIndex_]->GetCurHP())
+	//{
+		// 현재 플레이어의 상태바는 화면밖으로 내보내며
+		// 현재 하단상태바 목록의 존재하는 상태들을 한칸내린다.
+
+	//}
+
+	// 이때 현재 플레이어 목록에 체력이 0인 플레이어가 존재한다면
+	// 해당 플레이어도 상태바를 화면밖으로 내보내며 
+	// 위의 플레이어목록을 재정렬한다.
+	// 없다면 종료
+
+}
+
+void GameController::WindInit()
+{
+	windController_ = GetLevel()->CreateActor<WindController>();
+
+	for (int i = 0; i < 70; i++)
+	{
+		BackgroundScatter* newScatter = GetLevel()->CreateActor<BackgroundScatter>();
+		newScatter->SetParent(windController_);
+		Cloud* newCloud = GetLevel()->CreateActor<Cloud>();
+		newCloud->SetParent(windController_);
+	}
+	// 바람 UI 바 생성
+	GetLevel()->CreateActor<WindBarBlank>();
+	WindBar* windBar = GetLevel()->CreateActor<WindBar>();
+	windBar->SetParentController(windController_);
+	WindBarHider* windBarHider = GetLevel()->CreateActor<WindBarHider>();
+	windBarHider->SetParentController(windController_);
+}
+
+void GameController::RandomTurnWind()
+{
+	int diceRoll = windDice_.RandomInt(1, 2);
+	switch (diceRoll)
+	{
+	case 1:
+		windController_->SetWind(WindDir::TOLEFT, 300.0f);
+		break;
+	case 2:
+		windController_->SetWind(WindDir::TORIGHT, 300.0f);
+		break;
+	default:
+		break;
+	}
 }

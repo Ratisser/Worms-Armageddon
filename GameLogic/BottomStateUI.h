@@ -16,8 +16,23 @@ private:	// member Var
 private:
 	int WormIndex_;
 	int PlayerColorIndex_;
+
+private:
 	int PrevHP_;
 	int CurHP_;
+	float4 FlagRenderPos_;
+	float4 NameRenderPos_;
+	float4 HPBarRenderPos_;
+
+private:
+	float CurDamage_;
+	float InitHPBarLen_;
+	float CurHPBarLen_;
+	float PrevHPBarLen_;
+	float TargetHPBarLen_;
+	bool DecreaseHPBar_;
+	float DecreaseSpeed_;
+	float DeltaAccumulate_;
 
 private:
 	GameEngineRenderer* FlagRenderer_;
@@ -45,10 +60,13 @@ public:
 
 public:
 	int GetWormIndex();
+	float GetHPBarRenderSize() const;
+	float4 GetHPBarCurRenderPos() const;
 
 public:
 	void SetParentWorm(Worm* _Parent);
 	void SetParentUIController(UIController* _ParentUI);
+	void SetBottomStateBarRenderPos(float _RenderPos);
 
 public:
 	void GameStartInit(int _WormIndex);
@@ -64,5 +82,8 @@ public:
 	void SetFlagPos();
 	void SetNamePos();
 	void SetHPBarPos();
+
+public:
+	void DecreaseHPBar();
 };
 

@@ -50,14 +50,9 @@ public:
 
 public:
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
-	WindController* windController_;
+
 
 public:
-
-	WindController* GetWindController()
-	{
-		return windController_;
-	}
 
 public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f);
@@ -88,6 +83,11 @@ public:
 	MapTrain* GetMap() const
 	{
 		return Train_;
+	}
+
+	GameController* GetGameController()
+	{
+		return Controller_;
 	}
 
 	const float GetWaterLevel();

@@ -14,6 +14,8 @@ private:	// member Var
 	bool isDigitTen_;
 	bool isDigitHundred_;
 
+	float deltaTime_;
+
 public:
 	WormHPNumber(); // default constructer 디폴트 생성자
 	~WormHPNumber(); // default destructer 디폴트 소멸자

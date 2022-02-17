@@ -147,6 +147,7 @@ void AppResourcesInit()
 		GimmickObjectImageInit();
 		EffectImageInit();
 		LobbyImageInit();
+		EndingImageInit();
 	}
 
 	// 사운드 로드
@@ -639,6 +640,31 @@ void LobbyImageInit()
 	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU3", Dir.PathToPlusFileName("000003.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU4", Dir.PathToPlusFileName("000004.bmp"));
 	GameEngineImage::GetInst().LoadGameImage("Lobby_CPU5", Dir.PathToPlusFileName("000005.bmp"));
+}
+
+void EndingImageInit()
+{
+	GameEngineDirectroy Dir = GameEngineDirectroy();
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	GameEngineImage::GetInst().LoadGameImage("Ending_BackDrop", Dir.PathToPlusFileName("Worms_EndingBackDrop.bmp"));
+
+	Dir.MoveParent("Worms-Armageddon");
+	if (false == Dir.MoveChild("\\Resources\\Image\\Font"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	// 알파벳
+	GameEngineImageFile* digitSprite = GameEngineImage::GetInst().LoadGameImage("Ending_Alphabet", Dir.PathToPlusFileName("AlphabetUpper_Font.bmp"));
+	digitSprite->Cut({ 50,52 });
+
 }
 
 void LoadSoundFromFileLoop(const std::string& _path, bool _loop)

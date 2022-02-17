@@ -14,6 +14,7 @@ private:	// member Var
 private:
 	int WormIndex_;
 	int PlayerColorIndex_;
+	int ImageStartIndex_;
 	int PrevHP_;
 	int CurHP_;
 
@@ -24,6 +25,9 @@ private:
 	int UpdateTenNum;
 	int UpdateNum;
 
+private:
+	const float NUMBER_CHANGE_TIME = 0.01f;
+	float deltaTime_;
 
 private:
 	bool HundredFlag_;
@@ -60,7 +64,9 @@ public:
 	void HPTextInit();
 
 public:
-	void UpdateHPText();
-	
+	void ChangeHPText();
+	void CheckHPTextZero();
+
+	void ChangeTextAnimation(int _prevHp);
 };
 

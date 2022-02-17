@@ -11,8 +11,8 @@
 
 #include "PlayLevel.h"
 #include "WindController.h"
+#include "GameController.h"
 #include "Petroleum.h"
-#include "PetroleumManager.h"
 
 #define COUNT 40.f
 
@@ -145,7 +145,7 @@ void DrumActor::initCollision()
 
 void DrumActor::DrumExplode()
 {
-	WindSpeed_ = GetLevel<PlayLevel>()->GetWindController()->GetCurrentWindSpeed();
+	WindSpeed_ = GetLevel<PlayLevel>()->GetGameController()->GetWindController()->GetCurrentWindSpeed();
 
 	// 촘촘히 약 5방향으로 나누어, 군집되도록 생성하기
 	GetLevel<PlayLevel>()->CreateExplosion75(pos_);

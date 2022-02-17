@@ -165,6 +165,8 @@ void TitleImage::Start()
 	{
 		GameEngineInput::GetInst().CreateKey("Lobby_Skip", 's');
 	}
+
+	ShowCursor(true);
 }
 
 void TitleImage::Update()

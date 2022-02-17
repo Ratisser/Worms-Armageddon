@@ -47,7 +47,6 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
-	windController_(nullptr),
 	loadingImage_(nullptr),
 	isDebugOn_(true),
 	randomGenerator_(),
@@ -69,7 +68,6 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	: Train_(nullptr),
 	Bazooka_(nullptr),
 	WaterLevel_(nullptr),
-	windController_(nullptr),
 	loadingImage_(nullptr),
 	isDebugOn_(true),
 	randomGenerator_(),
@@ -97,30 +95,21 @@ void PlayLevel::Loading()
 	Train_ = CreateActor<MapTrain>();
 	Train_->UpdateBefore();
 
-	{
-		windController_ = CreateActor<WindController>();
-	}
+	//{
+	//	windController_ = CreateActor<WindController>();
+	//}
 
-	for (int i = 0; i < 70; i++)
-	{
-		BackgroundScatter* newScatter = CreateActor<BackgroundScatter>();
-		newScatter->SetParent(windController_);
-	}
 
-	for (int i = 0; i < 50; i++)
-	{
-		Cloud* newCloud = CreateActor<Cloud>();
-		newCloud->SetParent(windController_);
-	}
+
+	//for (int i = 0; i < 50; i++)
+	//{
+	//	Cloud* newCloud = CreateActor<Cloud>();
+	//	newCloud->SetParent(windController_);
+	//}
 
 	// 뒷배경 생성
 	CreateActor<Midground>();
-	// 바람 UI 바 생성
-	CreateActor<WindBarBlank>();
-	WindBar* windBar = CreateActor<WindBar>();
-	windBar->SetParentController(windController_);
-	WindBarHider* windBarHider = CreateActor<WindBarHider>();
-	windBarHider->SetParentController(windController_);
+
 
 	//MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
 	//CreateGimmickObject();
@@ -167,7 +156,7 @@ void PlayLevel::LevelUpdate()
 //		GameEngineDebugExtension::PrintDebugWindowText("Worm 8 Pos X : ", Controller_->GetWormList()[7]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[7]->GetPos().y);
 
 
-		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", windController_->GetCurrentWindDir(), ", Wind Speed : ", windController_->GetCurrentWindSpeed());
+		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", Controller_->GetWindController()->GetCurrentWindDir(), ", Wind Speed : ", Controller_->GetWindController()->GetCurrentWindSpeed());
 		//GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
 	}
 	//디버그

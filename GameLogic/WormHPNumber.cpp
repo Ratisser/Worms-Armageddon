@@ -5,7 +5,7 @@
 #include "GameOptionInfo.h"
 #include "Worm.h"
 WormHPNumber::WormHPNumber() // default constructer 디폴트 생성자
-	: mainRender_(nullptr), isDigitTen_(false), parent_(nullptr), isWormLinked_(false)
+	: mainRender_(nullptr), isDigitTen_(false), parent_(nullptr), isWormLinked_(false), deltaTime_(0.0f)
 {
 
 }
@@ -16,7 +16,7 @@ WormHPNumber::~WormHPNumber() // default destructer 디폴트 소멸자
 }
 
 WormHPNumber::WormHPNumber(WormHPNumber&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
-	: mainRender_(nullptr), isDigitTen_(false), parent_(nullptr), isWormLinked_(false)
+	: mainRender_(nullptr), isDigitTen_(false), parent_(nullptr), isWormLinked_(false), deltaTime_(0.0f)
 {
 
 }
@@ -259,7 +259,7 @@ void WormHPNumber::HPInit()
 
 void WormHPNumber::UpdateHP(int _hp)
 {
-	
+	// 세틀먼트 스테이트의 델타타임 시간동안 숫자가 쫘라락 - 하고 가는 애니메이션 연출을 해 줍니다.
 	int parentCurHP = parent_->GetCurHP();
 
 	if (true == isDigitHundred_)

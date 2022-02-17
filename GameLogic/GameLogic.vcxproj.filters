@@ -148,6 +148,15 @@
     <Filter Include="Actor\PlayLevel\Water">
       <UniqueIdentifier>{da4556a8-b00a-4787-be4b-3e7f4153e821}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Actor\EndingLevel">
+      <UniqueIdentifier>{c1a81d2d-5484-411e-8dae-8ba6301abbf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EndingLevel\EndingImage">
+      <UniqueIdentifier>{cc5fa946-d604-462f-9232-614a58da8070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\EndingLevel\EndingText">
+      <UniqueIdentifier>{1d068459-6bc8-4cad-a9ac-e6ee67376cc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLevel.h">
@@ -420,7 +429,21 @@
     <ClInclude Include="AirStrike.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="AirStrikeBullet.h" />
+    <ClInclude Include="EndingLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingImage.h">
+      <Filter>Actor\EndingLevel\EndingImage</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingText.h">
+      <Filter>Actor\EndingLevel\EndingText</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingFade.h">
+      <Filter>Actor\EndingLevel\EndingImage</Filter>
+    </ClInclude>
+    <ClInclude Include="AirStrikeBullet.h">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -684,7 +707,21 @@
     <ClCompile Include="AirStrike.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="AirStrikeBullet.cpp" />
+    <ClCompile Include="EndingLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingImage.cpp">
+      <Filter>Actor\EndingLevel\EndingImage</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingText.cpp">
+      <Filter>Actor\EndingLevel\EndingText</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingFade.cpp">
+      <Filter>Actor\EndingLevel\EndingImage</Filter>
+    </ClCompile>
+    <ClCompile Include="AirStrikeBullet.cpp">
+      <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="UIController사용법.txt">

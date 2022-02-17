@@ -22,6 +22,9 @@ enum class RenderOrder
 	BackGround,
 	BackGround1,
 	BackGround2,
+	BackGround3,
+	BackGround4,
+	BackGround5,
 	MapBack,
 	MapBack1,
 	MapBack2,
@@ -39,6 +42,8 @@ enum class RenderOrder
 	UI1,
 	UI2,
 	UI3,
+	UI4,
+	UI5,
 	Mouse = 999,
 	MAX
 };

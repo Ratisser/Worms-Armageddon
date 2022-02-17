@@ -13,6 +13,7 @@
 #include <LobbyLevel.h>
 #include <LoadingLevel.h>
 #include <PlayLevel.h>
+#include <EndingLevel.h>
 
 
 #include <GameEngineMath.h>
@@ -49,6 +50,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	GameEngineLevelManager::GetInst().CreateLevel<MenuSelectLevel>("MenuSelectLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<LobbyLevel>("LobbyLevel");
 	GameEngineLevelManager::GetInst().CreateLevel<PlayLevel>("PlayLevel");
+	GameEngineLevelManager::GetInst().CreateLevel<EndingLevel>("EndingLevel");
 
 
 	// 최초 씬 지정.
