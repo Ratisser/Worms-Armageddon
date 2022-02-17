@@ -30,6 +30,13 @@
 #include "WormHPNumber.h"
 #include "TopHPText.h"
 
+#include "WindBarBlank.h"
+#include "WindBar.h"
+#include "WindBarHider.h"
+#include "BackgroundScatter.h"
+#include "WindController.h"
+#include "Cloud.h"
+
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
@@ -43,6 +50,7 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, wormXPosContainer_(0.0f)
 	, WaterLevel_(nullptr)
 	, settementTime_(0.0f)
+	, windController_(nullptr)
 {
 
 }
@@ -54,6 +62,7 @@ GameController::~GameController() // default destructer 디폴트 소멸자
 
 void GameController::Start()
 {
+	WindInit();
 	initState();
 	MakeWaterLevel();
 
@@ -573,4 +582,23 @@ void GameController::MakeWaterLevel(float _WaterLevel)
 	UnderWaterActor->SetPos(float4(2560.f, _WaterLevel + 680.f, 0.f));
 	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
 	WaterLevel_->Waterlist.push_back(UnderWaterActor);
+}
+
+void GameController::WindInit()
+{
+	windController_ = GetLevel()->CreateActor<WindController>();
+
+	for (int i = 0; i < 70; i++)
+	{
+		BackgroundScatter* newScatter = GetLevel()->CreateActor<BackgroundScatter>();
+		newScatter->SetParent(windController_);
+		Cloud* newCloud = GetLevel()->CreateActor<Cloud>();
+		newCloud->SetParent(windController_);
+	}
+	// 바람 UI 바 생성
+	GetLevel()->CreateActor<WindBarBlank>();
+	WindBar* windBar = GetLevel()->CreateActor<WindBar>();
+	windBar->SetParentController(windController_);
+	WindBarHider* windBarHider = GetLevel()->CreateActor<WindBarHider>();
+	windBarHider->SetParentController(windController_);
 }

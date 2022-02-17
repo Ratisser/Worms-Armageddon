@@ -7,6 +7,8 @@
 class GameEngineMath;
 class Worm;
 class WaterLevel;
+class WindController;
+class BackGroundScatter;
 class GameController : public GameEngineActor
 {
 public:
@@ -89,6 +91,17 @@ private:
 	float settementTime_;
 	float currentTurnTime_;
 
+
+private: // 바람관련
+	WindController* windController_;
+	void WindInit();
+	//std::vector<BackgroundScatter> backGroundScatter_;
+
+public:
+	WindController* GetWindController()
+	{
+		return windController_;
+	}
 
 private: // 물관련
 	WaterLevel* WaterLevel_;
