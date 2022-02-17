@@ -255,6 +255,9 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
 		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
 
+		// 플레이어 하단 상태바관련 관리목록에 추가
+		PlayerHPBarList_.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
+
 		// 플레이어당 상단 상태 UI
 		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
@@ -413,9 +416,8 @@ StateInfo GameController::updateAction(StateInfo _state)
 
 	if (currentTurnTime_ < 0 || 0 == currentWorm_->GetActionTokenCount())
 	{
-		// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
-		// 무기창 비활성이 된다.
-		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+		// 턴종료시 UI 처리
+		TernEndUIUpdate();
 
 		// 라운타임 초과 및 플레이어 턴초과시 물높이 상승
 		if (nullptr != WaterLevel_)
@@ -584,6 +586,47 @@ void GameController::MakeWaterLevel(float _WaterLevel)
 	UnderWaterActor->SetPos(float4(2560.f, _WaterLevel + 680.f, 0.f));
 	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
 	WaterLevel_->Waterlist.push_back(UnderWaterActor);
+}
+
+void GameController::TernEndUIUpdate()
+{
+	// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
+	// 무기창 비활성이 된다.
+	wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+
+	// 현재 플레이어 턴 종료시 하단상태바 정렬시작
+	BottomStateHPBarSort();
+
+	// 정렬완료 후 현재 플레이어가 체력이 0이면
+	// 화면밖으로 떨어뜨리며 죽인다.
+	CurPlayerDeathCheck();
+}
+
+void GameController::BottomStateHPBarSort()
+{
+	// 현재 플레이어의 체력에 따라 정렬 시작
+
+
+
+	
+
+}
+
+void GameController::CurPlayerDeathCheck()
+{
+	// 현재플레이어가 죽었으므로
+	//if (0 >= wormList_[currentIndex_]->GetCurHP())
+	//{
+		// 현재 플레이어의 상태바는 화면밖으로 내보내며
+		// 현재 하단상태바 목록의 존재하는 상태들을 한칸내린다.
+
+	//}
+
+	// 이때 현재 플레이어 목록에 체력이 0인 플레이어가 존재한다면
+	// 해당 플레이어도 상태바를 화면밖으로 내보내며 
+	// 위의 플레이어목록을 재정렬한다.
+	// 없다면 종료
+
 }
 
 void GameController::WindInit()

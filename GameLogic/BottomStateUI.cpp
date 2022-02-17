@@ -14,7 +14,9 @@ BottomStateUI::BottomStateUI() :
 	PlayerColorIndex_(-1),
 	PrevHP_(0),
 	CurHP_(0),
-	RenderPos_(float4::ZERO),
+	FlagRenderPos_(float4::ZERO),
+	NameRenderPos_(float4::ZERO),
+	HPBarRenderPos_(float4::ZERO),
 	CurDamage_(0.f),
 	InitHPBarLen_(0.f),
 	CurHPBarLen_(0.f),
@@ -118,6 +120,11 @@ float BottomStateUI::GetHPBarRenderSize() const
 	return TargetHPBarLen_;
 }
 
+float4 BottomStateUI::GetHPBarCurRenderPos() const
+{
+	return FlagRenderPos_;
+}
+
 void BottomStateUI::SetParentWorm(Worm* _Parent)
 {
 	ParentWorm_ = _Parent;
@@ -139,6 +146,17 @@ void BottomStateUI::SetParentWorm(Worm* _Parent)
 void BottomStateUI::SetParentUIController(UIController* _ParentUI)
 {
 	ParentUI_ = _ParentUI;
+}
+
+void BottomStateUI::SetBottomStateBarRenderPos(float _RenderPos)
+{
+	FlagRenderPos_.y = _RenderPos;
+	NameRenderPos_.y = _RenderPos;
+	HPBarRenderPos_.y = _RenderPos;
+
+	FlagRenderer_->SetPivotPos(float4(605.f, FlagRenderPos_.y));
+	NameRenderer_->SetPivotPos(float4(572.f, NameRenderPos_.y));
+	HPBarRenderer_->SetPivotPos(float4(672.f, HPBarRenderPos_.y));
 }
 
 void BottomStateUI::GameStartInit(int _WormIndex)
@@ -315,50 +333,50 @@ void BottomStateUI::SetFlagPos()
 	if (0 != MaxWormCnt)
 	{
 		// 현재 생성된 플레이어의 갯수를 이용하여 시작위치를 설정한다.
-		float4 StartPos = float4::ZERO;
+		FlagRenderPos_ = float4::ZERO;
 		--MaxWormCnt;
 		switch (MaxWormCnt)
 		{
 			case 0:
 			{
-				StartPos = float4(605.f, 710.f);
+				FlagRenderPos_ = float4(605.f, 710.f);
 				break;
 			}
 			case 1:
 			{
-				StartPos = float4(605.f, 690.f);
+				FlagRenderPos_ = float4(605.f, 690.f);
 				break;
 			}
 			case 2:
 			{
-				StartPos = float4(605.f, 670.f);
+				FlagRenderPos_ = float4(605.f, 670.f);
 				break;
 			}
 			case 3:
 			{
-				StartPos = float4(605.f, 650.f);
+				FlagRenderPos_ = float4(605.f, 650.f);
 				break;
 			}
 			case 4:
 			{
-				StartPos = float4(605.f, 630.f);
+				FlagRenderPos_ = float4(605.f, 630.f);
 				break;
 			}
 			case 5:
 			{
-				StartPos = float4(605.f, 610.f);
+				FlagRenderPos_ = float4(605.f, 610.f);
 				break;
 			}
 			default:
 			{
-				StartPos = float4(0.f, 0.f);
+				FlagRenderPos_ = float4(0.f, 0.f);
 				break;
 			}
 		}
 		
 		// Worm Index를 이용하여 시작 위치부터의 자신의 위치를 계산한다.
-		StartPos.y += static_cast<float>(WormIndex_ * 20);
-		FlagRenderer_->SetPivotPos(StartPos);
+		FlagRenderPos_.y += static_cast<float>(WormIndex_ * 20);
+		FlagRenderer_->SetPivotPos(FlagRenderPos_);
 		FlagRenderer_->SetCameraEffectOff();
 	}
 }
@@ -369,50 +387,50 @@ void BottomStateUI::SetNamePos()
 	if (0 != MaxWormCnt)
 	{
 		// 현재 생성된 플레이어의 갯수를 이용하여 시작위치를 설정한다.
-		float4 StartPos = float4::ZERO;
+		NameRenderPos_ = float4::ZERO;
 		--MaxWormCnt;
 		switch (MaxWormCnt)
 		{
 			case 0:
 			{
-				StartPos = float4(572.f, 710.f);
+				NameRenderPos_ = float4(572.f, 710.f);
 				break;
 			}
 			case 1:
 			{
-				StartPos = float4(572.f, 690.f);
+				NameRenderPos_ = float4(572.f, 690.f);
 				break;
 			}
 			case 2:
 			{
-				StartPos = float4(572.f, 670.f);
+				NameRenderPos_ = float4(572.f, 670.f);
 				break;
 			}
 			case 3:
 			{
-				StartPos = float4(572.f, 650.f);
+				NameRenderPos_ = float4(572.f, 650.f);
 				break;
 			}
 			case 4:
 			{
-				StartPos = float4(572.f, 630.f);
+				NameRenderPos_ = float4(572.f, 630.f);
 				break;
 			}
 			case 5:
 			{
-				StartPos = float4(572.f, 610.f);
+				NameRenderPos_ = float4(572.f, 610.f);
 				break;
 			}
 			default:
 			{
-				StartPos = float4(0.f, 0.f);
+				NameRenderPos_ = float4(0.f, 0.f);
 				break;
 			}
 		}
 
 		// Worm Index를 이용하여 시작 위치부터의 자신의 위치를 계산한다.
-		StartPos.y += static_cast<float>(WormIndex_ * 20);
-		NameRenderer_->SetPivotPos(StartPos);
+		NameRenderPos_.y += static_cast<float>(WormIndex_ * 20);
+		NameRenderer_->SetPivotPos(NameRenderPos_);
 		NameRenderer_->SetCameraEffectOff();
 	}
 }
@@ -423,50 +441,50 @@ void BottomStateUI::SetHPBarPos()
 	if (0 != MaxWormCnt)
 	{
 		// 현재 생성된 플레이어의 갯수를 이용하여 시작위치를 설정한다.
-		RenderPos_ = float4::ZERO;
+		HPBarRenderPos_ = float4::ZERO;
 		--MaxWormCnt;
 		switch (MaxWormCnt)
 		{
 			case 0:
 			{
-				RenderPos_ = float4(672.f, 710.f);
+				HPBarRenderPos_ = float4(672.f, 710.f);
 				break;
 			}
 			case 1:
 			{
-				RenderPos_ = float4(672.f, 690.f);
+				HPBarRenderPos_ = float4(672.f, 690.f);
 				break;
 			}
 			case 2:
 			{
-				RenderPos_ = float4(672.f, 670.f);
+				HPBarRenderPos_ = float4(672.f, 670.f);
 				break;
 			}
 			case 3:
 			{
-				RenderPos_ = float4(672.f, 650.f);
+				HPBarRenderPos_ = float4(672.f, 650.f);
 				break;
 			}
 			case 4:
 			{
-				RenderPos_ = float4(672.f, 630.f);
+				HPBarRenderPos_ = float4(672.f, 630.f);
 				break;
 			}
 			case 5:
 			{
-				RenderPos_ = float4(672.f, 610.f);
+				HPBarRenderPos_ = float4(672.f, 610.f);
 				break;
 			}
 			default:
 			{
-				RenderPos_ = float4(0.f, 0.f);
+				HPBarRenderPos_ = float4(0.f, 0.f);
 				break;
 			}
 		}
 
 		// Worm Index를 이용하여 시작 위치부터의 자신의 위치를 계산한다.
-		RenderPos_.y += static_cast<float>(WormIndex_ * 20);
-		HPBarRenderer_->SetPivotPos(RenderPos_);
+		HPBarRenderPos_.y += static_cast<float>(WormIndex_ * 20);
+		HPBarRenderer_->SetPivotPos(HPBarRenderPos_);
 		HPBarRenderer_->SetCameraEffectOff();
 	}
 }

@@ -20,7 +20,9 @@ private:
 private:
 	int PrevHP_;
 	int CurHP_;
-	float4 RenderPos_;
+	float4 FlagRenderPos_;
+	float4 NameRenderPos_;
+	float4 HPBarRenderPos_;
 
 private:
 	float CurDamage_;
@@ -59,10 +61,12 @@ public:
 public:
 	int GetWormIndex();
 	float GetHPBarRenderSize() const;
+	float4 GetHPBarCurRenderPos() const;
 
 public:
 	void SetParentWorm(Worm* _Parent);
 	void SetParentUIController(UIController* _ParentUI);
+	void SetBottomStateBarRenderPos(float _RenderPos);
 
 public:
 	void GameStartInit(int _WormIndex);
