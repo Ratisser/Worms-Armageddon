@@ -76,22 +76,26 @@ class GameEngineFSM
 
 		void CallStart()
 		{
+#ifdef _DEBUG
 			if (nullptr == parent_->ObjectPtr_)
 			{
 				GameEngineDebug::AssertFalse();
 				return;
 			}
-
+#endif // _DEBUG
 			(parent_->ObjectPtr_->*StateStart)({ GetName(), 0.0f });
 			StateTime = 0.0f;
 		}
+
 		void CallUpdate()
 		{
+#ifdef _DEBUG
 			if (nullptr == parent_->ObjectPtr_)
 			{
 				GameEngineDebug::AssertFalse();
 				return;
 			}
+#endif // _DEBUG
 
 			StateTime += GameEngineTime::GetInst().GetDeltaTime();
 			StateInfo Return = (parent_->ObjectPtr_->*StateUpdate)({GetName(), StateTime });
@@ -105,12 +109,12 @@ class GameEngineFSM
 			{
 				return;
 			}
-
+#ifdef _DEBUG
 			if (nullptr == parent_->FindState(Return._NextState))
 			{
 				GameEngineDebug::AssertFalse();
 			}
-
+#endif // _DEBUG
 			// 넘어갈수 있는곳인데.
 			if (0 >= Return.Time)
 			{
@@ -181,11 +185,12 @@ public:		//delete operator
 public:
 	void CreateState(const std::string& _name, StateInfo(FSMType::* _StartFunc)(StateInfo), StateInfo(FSMType::* _UpdateFunc)(StateInfo))
 	{
+#ifdef _DEBUG
 		if (nullptr != FindState(_name))
 		{
 			GameEngineDebug::AssertFalse();
 		}
-
+#endif // _DEBUG
 		State* NewState = new State(this);
 		NewState->SetName(_name);
 
@@ -198,12 +203,14 @@ public:
 	void ChangeState(const std::string& _Name)
 	{
 		curState_ = FindState(_Name);
-
+#ifdef _DEBUG
 		if (nullptr == curState_)
 		{
 			GameEngineDebug::AssertFalse();
 			return;
 		}
+#endif // _DEBUG
+
 		curState_->CallStart();
 	}
 
@@ -240,11 +247,13 @@ private:
 public:
 	void Update()
 	{
+#ifdef _DEBUG
 		if (nullptr == curState_)
 		{
 			GameEngineDebug::AssertFalse();
 			return;
 		}
+#endif // _DEBUG
 
 		//if (0 < nextState_.Time)
 		//{

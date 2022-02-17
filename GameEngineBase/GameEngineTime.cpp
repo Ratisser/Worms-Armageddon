@@ -32,16 +32,16 @@ void GameEngineTime::TimeCheck()
 	deltaTime_ = static_cast<double>((endCheck_.QuadPart - startCheck_.QuadPart)) / static_cast<double>(timeCount_.QuadPart);
 	startCheck_.QuadPart = endCheck_.QuadPart;
 
-	if (deltaTime_ > 0.0333333333333)
-		deltaTime_ = 0.0333333333333;
+	if (deltaTime_ > 0.01666f)
+		deltaTime_ = 0.01666f;
 
 	Second_ += deltaTime_;
 	F_++;
 
-	if (Second_ >= 1.0)
+	if (Second_ >= 1.f)
 	{
 		FPS_ = F_;
 		F_ = 0;
-		Second_ = 0.0;
+		Second_ = 0.f;
 	}
 }

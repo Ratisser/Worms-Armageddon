@@ -421,9 +421,6 @@
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="AirStrikeBullet.h" />
-    <ClInclude Include="PetroleumManager.h">
-      <Filter>Actor\PlayLevel\GimmickObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -688,9 +685,6 @@
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="AirStrikeBullet.cpp" />
-    <ClCompile Include="PetroleumManager.cpp">
-      <Filter>Actor\PlayLevel\GimmickObject</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="UIController사용법.txt">

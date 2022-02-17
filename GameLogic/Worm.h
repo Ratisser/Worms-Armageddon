@@ -57,7 +57,25 @@ public:
 	{
 		return hp_;
 	}
+	const bool GetDeathReady_()
+	{
+		return DeathReady_;
+	}
 
+	void SetDeathEnd(bool _DeathEnd)
+	{
+		DeathEnd_ = _DeathEnd;
+	}
+
+	void SetDeathStart(bool _DeathStart)
+	{
+		DeathStart_ = _DeathStart;
+	}
+
+	void SetDeathReady(bool _DeathReady)
+	{
+		DeathReady_ = _DeathReady;
+	}
 private:
 	void initRenderer();
 	void initInput();
@@ -79,11 +97,15 @@ private:
 	void InputUpdate();
 
 private:
+#pragma region StateInfo
 	StateInfo StartDrown(StateInfo _state);
 	StateInfo updateDrown(StateInfo _state);
 
 	StateInfo StartHit(StateInfo _state);
 	StateInfo updateHit(StateInfo _state);
+
+	StateInfo StartDeath(StateInfo _state);
+	StateInfo updateDeath(StateInfo _state);
 
 	StateInfo startIdle(StateInfo _state);
 	StateInfo updateIdle(StateInfo _state);
@@ -186,6 +208,7 @@ private:
 	StateInfo updateAirStrikeFire(StateInfo _state);
 	StateInfo startAirStrikeWait(StateInfo _state);
 	StateInfo updateAirStrikeWait(StateInfo _state);
+#pragma endregion
 
 private:
 	const float MOVE_SPEED = 100.f;
@@ -222,6 +245,10 @@ private:
 	bool bGround_;
 	bool bBackJump_;
 	bool bFocus_;
+	bool Hit_;
+	bool DeathReady_; // 죽은 상태, 아직 동작은 않함
+	bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함
+	bool DeathEnd_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함
 
 	float deltaTime_;
 	float weaponEquipDelay_;
@@ -232,12 +259,14 @@ private:
 	float drillMoveTime_;
 	float airStrikeTime_;
 
-	bool Hit_;
+	float WAVWaiting_;
+	bool SoundWait_;
+
 	int bound_;
+
 	float4 DamageDir_;
 	float DamageSpeed_;
 	float DamageAcc_;
-	//float DamageAccRessit_;
 	float WindSpeed_;
 
 	int hp_;
@@ -257,5 +286,9 @@ private:
 		Hit_ = false;
 	}
 
+	void Die()
+	{
+		DeathEnd_ = true;
+	}
 };
 

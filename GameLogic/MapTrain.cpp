@@ -117,7 +117,29 @@ void MapTrain::Update()
 
 void MapTrain::UpdateAfter()
 {
+	//TODO :: 쓰레드 구현은 해놓음
+	/*if (GroundUpdateList_.empty())
+		return;
+	if (std::thread::hardware_concurrency() <5)
+		GameEngineDebug::MsgBoxError("쓰레드를 돌리기에 cpu가 너무 좆같습니다.");
 
+	int size = GroundUpdateList_.size();
+	int core = size * 0.25f;
+
+	std::thread core1([&]() {Threading(0, core); });
+	std::thread core2([&]() {Threading(core, core * 2); });
+	std::thread core3([&]() {Threading(core * 2, core * 3); });
+	std::thread core4([&]() {Threading(core * 3, size); });
+
+	core1.join();
+	core2.join();
+	core3.join();
+	core4.join();
+
+	if (!(core1.joinable() && core2.joinable() && core3.joinable() && core4.joinable()))
+	{
+		GroundUpdateList_.clear();
+	}*/
 }
 
 void MapTrain::Render()
@@ -132,8 +154,44 @@ void MapTrain::Render()
 	mainSpriteRender_->Render();
 }
 
+void MapTrain::Threading(int start, int end)
+{
+	for (int i = start; i < end; ++i)
+	{
+		GroundUpdate(GroundUpdateList_[i]);
+	}
+}
+
+void MapTrain::GroundUpdate(GroundUpdateDesc Desc)
+{
+	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
+	ColImage->TransCopy(Desc.image_->GetImage(),
+		Desc.Pos_,
+		Desc.size_,
+		{ 0.f, 0.f },
+		Desc.size_,
+		RGB(0, 255, 0));
+
+	GameEngineImageFile* mapImage = mainSpriteRender_->GetImage();
+	mapImage->TransCopy(Desc.edgeimage_->GetImage(),
+		Desc.Pos_,
+		Desc.size_,
+		{ 0.f, 0.f },
+		Desc.size_,
+		RGB(0, 255, 0));
+
+	mapImage->TransCopy(colSpriteRender_->GetImage(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		{ 0.f, 0.f },
+		colSpriteRender_->GetImageSize(),
+		RGB(0, 0, 255));
+}
+
 void MapTrain::GroundUpdate(float4 pos, float4 size)
 {
+	GroundUpdateList_.push_back(GroundUpdateDesc(pos, size, boomSpriteRender_, boomEdgeSpriteRender_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender_->GetImage(),
 		pos,
@@ -160,6 +218,8 @@ void MapTrain::GroundUpdate(float4 pos, float4 size)
 
 void MapTrain::GroundUpdate4(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(16.f, 16.f), boomSpriteRender4_, boomEdgeSpriteRender4_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender4_->GetImage(),
 		pos,
@@ -186,6 +246,8 @@ void MapTrain::GroundUpdate4(float4 pos)
 
 void MapTrain::GroundUpdate6(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(18.f, 18.f), boomSpriteRender6_, boomEdgeSpriteRender6_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender6_->GetImage(),
 		pos,
@@ -212,6 +274,8 @@ void MapTrain::GroundUpdate6(float4 pos)
 
 void MapTrain::GroundUpdate13(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(25.f, 25.f), boomSpriteRender13_, boomEdgeSpriteRender13_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender13_->GetImage(),
 		pos,
@@ -238,6 +302,8 @@ void MapTrain::GroundUpdate13(float4 pos)
 
 void MapTrain::GroundUpdate25(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(37.f, 37.f), boomSpriteRender25_, boomEdgeSpriteRender25_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender25_->GetImage(),
 		pos,
@@ -264,6 +330,8 @@ void MapTrain::GroundUpdate25(float4 pos)
 
 void MapTrain::GroundUpdate50(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(62.f, 62.f), boomSpriteRender50_, boomEdgeSpriteRender50_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender50_->GetImage(),
 		pos,
@@ -290,6 +358,8 @@ void MapTrain::GroundUpdate50(float4 pos)
 
 void MapTrain::GroundUpdate75(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(87.f, 87.f), boomSpriteRender75_, boomEdgeSpriteRender75_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender75_->GetImage(),
 		pos,
@@ -316,6 +386,8 @@ void MapTrain::GroundUpdate75(float4 pos)
 
 void MapTrain::GroundUpdate100(float4 pos)
 {
+	//GroundUpdateList_.push_back(GroundUpdateDesc(pos, float4(112.f,112.f), boomSpriteRender100_, boomEdgeSpriteRender100_));
+
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();
 	ColImage->TransCopy(boomSpriteRender100_->GetImage(),
 		pos,

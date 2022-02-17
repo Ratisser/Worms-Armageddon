@@ -30,18 +30,14 @@ private:
 	LARGE_INTEGER timeCount_;
 	LARGE_INTEGER startCheck_;
 	LARGE_INTEGER endCheck_;
-	double deltaTime_;
-	double Second_;
+	float deltaTime_;
+	float Second_;
 	int F_;
 	int FPS_;
 
 public:
 	// 여기에 이렇게 헤더에 구현한 이유
 	// 리턴하는게 기본자료형이어서
-	double GetDeltaTimeD()
-	{
-		return deltaTime_;
-	}
 
 	int GetFPS()
 	{
@@ -50,7 +46,7 @@ public:
 
 	float GetDeltaTime()
 	{
-		return static_cast<float>(deltaTime_);
+		return deltaTime_;
 	}
 public:
 	GameEngineTime(); // default constructer 디폴트 생성자

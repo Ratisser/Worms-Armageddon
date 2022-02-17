@@ -8,7 +8,7 @@
 class LoadingImage;
 class FadeObject;
 class WindController;
-class PetroleumManager;
+class MouseObject;
 class PlayLevel : public GameEngineLevel
 {
 private:	// member Var
@@ -16,6 +16,8 @@ private:	// member Var
 	class Bazooka* Bazooka_;
 	class GameController* Controller_;
 	bool isDebugOn_;
+
+	MouseObject* MouseObject_;
 
 private:
 	GameEngineMath::Random randomGenerator_;
@@ -41,17 +43,16 @@ public:
 	void Loading() override;
 	void LevelUpdate() override;
 
+	//const float4 GetMousePos()
+	//{
+	//	return MouseObject_->GetPos();
+	//}
 
 public:
 	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
 	WindController* windController_;
-	PetroleumManager* PetroleumManager_;
 
 public:
-	PetroleumManager* GetPetroleumManager()
-	{
-		return PetroleumManager_;
-	} 
 
 	WindController* GetWindController()
 	{

@@ -32,6 +32,7 @@
 #include "Effectkamismk.h"
 
 #include "BackgroundScatter.h"
+#include "PetroleumManager.h"
 #include "Midground.h"
 #include "WindController.h"
 #include "FadeObject.h"
@@ -53,7 +54,8 @@ PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	isWormLanded_(false),// default constructer 디폴트 생성자
 	fadeInterTime_(0.0f),
 	isFadeIn_(false),
-	Controller_(nullptr)
+	Controller_(nullptr),
+	MouseObject_(nullptr)
 {
 
 }
@@ -74,7 +76,8 @@ PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constr
 	isWormLanded_(false),
 	fadeInterTime_(0.0f),
 	isFadeIn_(false),
-	Controller_(nullptr)
+	Controller_(nullptr),
+	MouseObject_(nullptr)
 {
 
 }
@@ -88,7 +91,7 @@ void PlayLevel::Loading()
 	
 	fadeObject_ = CreateActor<FadeObject>();
 	loadingImage_ = CreateActor<LoadingImage>();
-	PetroleumManager_ = CreateActor<PetroleumManager>();
+	//PetroleumManager_ = CreateActor<PetroleumManager>();
 
 	CreateActor<BackGroundGradation>();
 	Train_ = CreateActor<MapTrain>();
@@ -120,7 +123,7 @@ void PlayLevel::Loading()
 	windBarHider->SetParentController(windController_);
 
 	//MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
-	CreateGimmickObject();
+	//CreateGimmickObject();
 
 	wormLoading();
 
@@ -193,8 +196,8 @@ void PlayLevel::wormLoading()
 		Controller_->CreateWorm(minMaxInfo.x, minMaxInfo.y);
 	}
 
-	MouseObject* MainMouse = CreateActor<MouseObject>("PlayLevelMouse");
-	MainMouse->SetGameController(Controller_);
+	MouseObject_ = CreateActor<MouseObject>("PlayLevelMouse");
+	MouseObject_->SetGameController(Controller_);
 
 	// 플레이어별 UIController 생성
 	Controller_->CreateWormUI();
@@ -389,7 +392,7 @@ void PlayLevel::MakeWaterLevel(float _WaterLevel) // 맵 바닥의 수면 생성
 
 void PlayLevel::CreateGimmickObject()
 {
-	DrumActor* DrumActor1 = CreateActor<DrumActor>(float4(1600.f,150.f));
+	DrumActor* DrumActor1 = CreateActor<DrumActor>(MouseObject_->GetPos()+ GetCamPos());
 	DrumActor1->SetRenderOrder((int)RenderOrder::Worm);
 	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 }

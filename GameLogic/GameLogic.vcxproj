@@ -215,10 +215,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Petroleum.h" />
-    <ClInclude Include="PetroleumManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PlayLevel.h">
       <SubType>
       </SubType>
@@ -529,10 +525,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Petroleum.cpp" />
-    <ClCompile Include="PetroleumManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>

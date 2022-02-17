@@ -29,6 +29,9 @@ private:	// member Var
 	std::map<int, std::list<GameEngineActor*>> allActorUpdateList_;
 	std::map<int, std::list<GameEngineActor*>> allActorRenderList_;
 
+	//
+
+
 	// std::map<int, std::list<Renderer*>> allActorRenderList_;
 
 	std::map<int, std::list<GameEngineCollision*>> allActorCollisionList_;

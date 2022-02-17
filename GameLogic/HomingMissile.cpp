@@ -181,7 +181,7 @@ void HomingMissile::Update()
 		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->CreateExplosion100(pos_);
+		level->CreateExplosion100(pos_,75,true);
 
 		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
 		mouse->MouseBlock(false);

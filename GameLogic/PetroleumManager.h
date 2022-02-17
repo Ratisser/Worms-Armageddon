@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineActor.h>
 #include <vector>
+#include <functional>
 // 분류 : 
 // 용도 : 
 // 설명 : 
@@ -32,6 +33,7 @@ public:
 private:
 	float deltaTime_;
 	std::vector<Petroleum*> VecPetroleum_;
+	std::function<void()> UpdateFucn_;
 	int VecPetroleumCount_; // 직접 새어보는 갯수
 
 	int CoreCount_;
@@ -40,7 +42,6 @@ private:
 	void PetroleumUpdate(int start, int end, float _deltaTime);
 	void PetroleumMoveUpdate(int start, int end, float _deltaTime);
 	void PetroleumGroundUpdate(int start, int end, float _deltaTime);
-
 
 public:
 	void AddVecPetroleum(Petroleum* _Petroleum)

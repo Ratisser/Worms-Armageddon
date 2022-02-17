@@ -36,10 +36,12 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, wormIndex_(0)
 	, prevwormIndex_(MAX_WORM_COUNT)
 	, IsCameraMove_(false)
+	, WormDeathReady_(false)
 	, cameraPos_(0.f, 0.f)
 	, state_(this)
 	, currentTurnTime_(0.0f)
 	, wormXPosContainer_(0.0f)
+	, WormDeathWaitingTime_(0.0f)
 	, WaterLevel_(nullptr)
 {
 
@@ -432,6 +434,44 @@ StateInfo GameController::startSettlement(StateInfo _state)
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
+	//1. 죽을 얘가 있는지 확인
+	Worm* CurDeathWorm = nullptr;
+
+	if (false == WormDeathReady_)
+	{
+		for (int i = 0; i < wormList_.size(); ++i)
+		{
+			if (wormList_[i]->GetDeathReady_())
+			{
+				CurDeathWorm = wormList_[i];
+				WormDeathReady_ = true;
+				break;
+			}
+		}
+	}
+
+	//worm을 죽음 대기 상태로 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
+	if (nullptr != CurDeathWorm)
+	{
+		CurDeathWorm->SetDeathReady(false);
+		CurDeathWorm->SetDeathStart(true);
+	}
+
+	//다음 worm 죽이기까지 대기상태
+	if (true == WormDeathReady_)
+	{
+		WormDeathWaitingTime_ += GameEngineTime::GetInst().GetDeltaTime();
+
+		if (WormDeathWaitingTime_ > 3.f)
+		{
+			WormDeathReady_ = false;
+			WormDeathWaitingTime_ = 0.f;
+			//대기가 끝남
+		}
+		return StateInfo();
+	}
+
+
 	return "NextWorm";
 }
 

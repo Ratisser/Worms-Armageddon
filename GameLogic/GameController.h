@@ -89,6 +89,8 @@ private:
 
 	float currentTurnTime_;
 
+	bool WormDeathReady_; // 다음 worm을 죽일때가 옴
+	float WormDeathWaitingTime_; // worm을 죽일 간격
 
 private: // 물관련
 	WaterLevel* WaterLevel_;

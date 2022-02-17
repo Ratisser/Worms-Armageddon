@@ -1,5 +1,8 @@
 #pragma once
 #include <GameEngineActor.h>
+
+#include <thread>
+
 // 분류 : 
 // 용도 : 
 // 설명 : 
@@ -31,6 +34,25 @@ private:	// member Var
 	GameEngineRenderer* boomEdgeSpriteRender75_;
 	GameEngineRenderer* boomEdgeSpriteRender100_;
 
+	struct GroundUpdateDesc
+	{
+		friend class MapTrain;
+	private:
+		GroundUpdateDesc(float4 _pos, float4 _size, GameEngineRenderer* _image, GameEngineRenderer* _edgeimage)
+		{
+			Pos_ = _pos;
+			size_ = _size;
+			image_ = _image;
+			edgeimage_ = _edgeimage;
+		}
+		float4 Pos_;
+		float4 size_;
+		GameEngineRenderer* edgeimage_;
+		GameEngineRenderer* image_;
+	};
+
+	std::vector<GroundUpdateDesc> GroundUpdateList_;
+
 public:
 	MapTrain(); // default constructer 디폴트 생성자
 	~MapTrain(); // default destructer 디폴트 소멸자
@@ -50,7 +72,13 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+private:
+
+	void Threading(int start, int end);
+	void GroundUpdate(GroundUpdateDesc Desc);
+
 public:
+
 	void GroundUpdate(float4 pos, float4 size);
 	void GroundUpdate4(float4 pos);
 	void GroundUpdate6(float4 pos);

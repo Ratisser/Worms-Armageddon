@@ -29,6 +29,7 @@ void PetroleumManager::Start()
 	//{
 	//	CoreCount_ = 4;
 	//}
+
 	VecPetroleum_.reserve(160);
 }
 
@@ -95,45 +96,71 @@ void PetroleumManager::Update()
 
 	int size = VecPetroleum_.size();
 
-	int core = size / CoreCount_;
+	int core = size / 10;
 
-	if (CoreCount_ == 8)
-	{
-		PetroleumMoveUpdate(0, size, deltaTime_);
-
-		std::thread core1([&]() {PetroleumGroundUpdate(0, core, deltaTime_); });
+	//if (CoreCount_ == 9)
+	//{
+		//PetroleumMoveUpdate(0, size, deltaTime_);
+		//PetroleumGroundUpdate(0, size, deltaTime_);
+		/*std::thread core1([&]() {PetroleumGroundUpdate(0, core, deltaTime_); });
 		std::thread core2([&]() {PetroleumGroundUpdate(core, core * 2, deltaTime_); });
 		std::thread core3([&]() {PetroleumGroundUpdate(core * 2, core * 3, deltaTime_); });
-		std::thread core4([&]() {PetroleumGroundUpdate(core * 3, size, deltaTime_); });
+		std::thread core4([&]() {PetroleumGroundUpdate(core * 3, core * 4, deltaTime_); });
+		std::thread core5([&]() {PetroleumGroundUpdate(core * 4, core * 5, deltaTime_); });
+		std::thread core6([&]() {PetroleumGroundUpdate(core * 5, core * 6, deltaTime_); });
+		std::thread core7([&]() {PetroleumGroundUpdate(core * 6, core * 7, deltaTime_); });
+		std::thread core8([&]() {PetroleumGroundUpdate(core * 7, core * 8, deltaTime_); });
+		std::thread core9([&]() {PetroleumGroundUpdate(core * 8, core * 9, deltaTime_); });
+		std::thread core10([&]() {PetroleumGroundUpdate(core * 9, size, deltaTime_); });
 		core1.join();
 		core2.join();
 		core3.join();
-		core4.join();	
-	}
-	else if (CoreCount_ == 3)
-	{
-		std::thread core1([&]() {PetroleumUpdate(0, core, deltaTime_); });
-		std::thread core2([&]() {PetroleumUpdate(core, core * 2, deltaTime_); });
-		std::thread core3([&]() {PetroleumUpdate(core * 2, size, deltaTime_); });
-		core1.join();
-		core2.join();
-		core3.join();
-	}
-	else if (CoreCount_ == 2)
-	{
-		std::thread core1([&]() {PetroleumUpdate(0, core, deltaTime_); });
-		std::thread core2([&]() {PetroleumUpdate(core, size, deltaTime_); });
-		core1.join();
-		core2.join();
-	}
-	else if (CoreCount_ == 1)
-	{
-		PetroleumUpdate(0, size, deltaTime_);
-	}
-	else
-	{
-		GameEngineDebug::MsgBoxError("std::thread::hardware_concurrency() 계산 오류");
-	}
+		core4.join();
+		core5.join();
+		core6.join();
+		core7.join();
+		core8.join();
+		core9.join();
+		core10.join();*/
+	//}
+
+	//else if (CoreCount_ == 4)
+	//{
+	//	PetroleumMoveUpdate(0, size, deltaTime_);
+	//	//PetroleumGroundUpdate(0, size, deltaTime_);
+	//	std::thread core1([&]() {PetroleumGroundUpdate(0, core, deltaTime_); });
+	//	std::thread core2([&]() {PetroleumGroundUpdate(core, core * 2, deltaTime_); });
+	//	std::thread core3([&]() {PetroleumGroundUpdate(core * 2, core * 3, deltaTime_); });
+	//	std::thread core4([&]() {PetroleumGroundUpdate(core * 3, size, deltaTime_); });
+	//	core1.join();
+	//	core2.join();
+	//	core3.join();
+	//	core4.join();	
+	//}
+	//else if (CoreCount_ == 3)
+	//{
+	//	std::thread core1([&]() {PetroleumUpdate(0, core, deltaTime_); });
+	//	std::thread core2([&]() {PetroleumUpdate(core, core * 2, deltaTime_); });
+	//	std::thread core3([&]() {PetroleumUpdate(core * 2, size, deltaTime_); });
+	//	core1.join();
+	//	core2.join();
+	//	core3.join();
+	//}
+	//else if (CoreCount_ == 2)
+	//{
+	//	std::thread core1([&]() {PetroleumUpdate(0, core, deltaTime_); });
+	//	std::thread core2([&]() {PetroleumUpdate(core, size, deltaTime_); });
+	//	core1.join();
+	//	core2.join();
+	//}
+	//else if (CoreCount_ == 1)
+	//{
+	//	PetroleumUpdate(0, size, deltaTime_);
+	//}
+	//else
+	//{
+	//	GameEngineDebug::MsgBoxError("std::thread::hardware_concurrency() 계산 오류");
+	//}
 
 	if (VecPetroleumCount_ == 0)
 	{

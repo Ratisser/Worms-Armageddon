@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineActor.h>
+#include <GameEngineFSM.h>
 
 class Petroleum : public GameEngineActor
 {
@@ -9,6 +10,10 @@ private:	// member Var
 
 	GameEngineCollision* groundCollision_; // ¹Ù´Ú
 	GameEngineCollision* BodyCollision_; // ¸öÅë
+
+	GameEngineFSM<Petroleum> state_;
+	GameEngineFSM<Petroleum> PhysicalState_;
+	std::string nextState_;
 
 	float4 Dir_;
 	float4 prevPos_;
@@ -20,6 +25,8 @@ private:	// member Var
 	float WindSpeed_;
 	float GravityAcc;
 	float GravitySpeed;
+
+	float deltaTime_;
 
 	bool isLive_;
 
@@ -58,6 +65,45 @@ private:
 	//void PetroleumUpdate(float deltaTime_);
 	void PetroleumMoveUpdate(float deltaTime_);
 	void PetroleumGroundUpdate(float deltaTime_);
+
+	StateInfo AirStart(StateInfo _state);
+	StateInfo AirUpdate(StateInfo _state);
+
+	StateInfo GroundStart(StateInfo _state);
+	StateInfo GroundUpdate(StateInfo _state);
+
+
+
+	StateInfo LiquidPhase0Start(StateInfo _state);
+	StateInfo LiquidPhase0Update(StateInfo _state);
+
+	StateInfo LiquidPhase1Start(StateInfo _state);
+	StateInfo LiquidPhase1Update(StateInfo _state);
+
+	StateInfo LiquidPhase2Start(StateInfo _state);
+	StateInfo LiquidPhase2Update(StateInfo _state);
+
+	StateInfo LiquidPhase3Start(StateInfo _state);
+	StateInfo LiquidPhase3Update(StateInfo _state);
+
+	StateInfo Phase1Start(StateInfo _state);
+	StateInfo Phase1Update(StateInfo _state);
+
+	StateInfo Phase2Start(StateInfo _state);
+	StateInfo Phase2Update(StateInfo _state);
+
+	StateInfo Phase3Start(StateInfo _state);
+	StateInfo Phase3Update(StateInfo _state);
+
+	StateInfo Phase4Start(StateInfo _state);
+	StateInfo Phase4Update(StateInfo _state);
+
+	StateInfo Phase5Start(StateInfo _state);
+	StateInfo Phase5Update(StateInfo _state);
+
+
+	void CalFrameIndex();
+	void WormCollision();
 public:
 	void SetisLive(bool _isLive)
 	{
@@ -85,21 +131,5 @@ public:
 	{
 		WindAcc_ = _WindSpeed / 150.f;
 	}
-
-	float tempfuc(float degree)
-	{
-
-		degree *= -1;
-		degree += 90;
-
-
-		if (degree < 0)
-		{
-			degree += 360;
-		}
-
-		return degree;
-	}
-
 };
 

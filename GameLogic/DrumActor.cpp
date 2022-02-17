@@ -81,17 +81,17 @@ void DrumActor::Update()
 		return;
 	}
 
-	else if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM)))
+	else if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::PETROLEUM_HITBOX)))
 	{
 		Phase_ += deltaTime_;
 		
-		if (Phase_ >= 2.f)
+		if (Phase_ >= 1.f)
 		{
 			DrumExplode();
 			return;
 		}
 
-		else if (Phase_ > 1.5f)
+		else if (Phase_ > 0.75f)
 		{
 			mainSpriteRender_->ChangeAnimation("oildrum4", std::string("oildrum4"));
 
@@ -102,7 +102,7 @@ void DrumActor::Update()
 			mainSpriteRender_->ChangeAnimation("oildrum3", std::string("oildrum3"));
 			mainSpriteRender_->SetAnimationCurrentFrame(mainSpriteRender_->GetCurAnimationFrame());
 		}
-		else if (Phase_ > 0.f)
+		else if (Phase_ > 0.25f)
 		{
 			mainSpriteRender_->ChangeAnimation("oildrum2", std::string("oildrum2"));
 			mainSpriteRender_->SetAnimationCurrentFrame(mainSpriteRender_->GetCurAnimationFrame());
@@ -176,7 +176,6 @@ void DrumActor::DrumExplode()
 			RandomRot.y *= PetroleumSpeed+ RandomFloat;
 
 			Petroleum* _Petroleum = parentLevel_->CreateActor<Petroleum>(pos_);
-			GetLevel<PlayLevel>()->GetPetroleumManager()->AddVecPetroleum(_Petroleum);
 
 			_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
 			_Petroleum->SetDir(RandomRot);
