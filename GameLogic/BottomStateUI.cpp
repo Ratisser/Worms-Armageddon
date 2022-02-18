@@ -3,6 +3,7 @@
 
 #include "Worm.h"
 #include "UIController.h"
+#include "GameController.h"
 
 #include <EngineEnum.h>
 #include <GameEngineRenderer.h>
@@ -63,13 +64,14 @@ void BottomStateUI::UpdateBefore()
 			{
 				HPBarRenderer_->SetRenderSize(float4(1.f, 17.f));
 
-				// 게임컨트롤 호출해서 HPBar 정렬
-
-
-
 				DecreaseHPBar_ = false;
 				return;
 			}
+
+			CurHP_ = ParentWorm_->GetCurHP();
+
+			// 게임컨트롤 호출해서 HPBar 정렬
+			GameController::BottomStateHPBarSortCheck(this);
 
 			CurHPBarLen_ = PrevHPBarLen_;
 			DecreaseHPBar_ = false;
@@ -109,9 +111,24 @@ void BottomStateUI::Render()
 	}
 }
 
+Worm* BottomStateUI::GetParentWorm() const
+{
+	return ParentWorm_;
+}
+
 int BottomStateUI::GetWormIndex()
 {
 	return WormIndex_;
+}
+
+int BottomStateUI::GetCurHP() const
+{
+	return CurHP_;
+}
+
+int BottomStateUI::GetPrevHP() const
+{
+	return PrevHP_;
 }
 
 float BottomStateUI::GetHPBarRenderSize() const
@@ -120,9 +137,24 @@ float BottomStateUI::GetHPBarRenderSize() const
 	return TargetHPBarLen_;
 }
 
-float4 BottomStateUI::GetHPBarCurRenderPos() const
+float4 BottomStateUI::GetFlagsCurRenderPos() const
 {
 	return FlagRenderPos_;
+}
+
+float4 BottomStateUI::GetNameCurRenderPos() const
+{
+	return NameRenderPos_;
+}
+
+float4 BottomStateUI::GetHPBarCurRenderPos() const
+{
+	return HPBarRenderPos_;
+}
+
+float BottomStateUI::GetBottomUIYPos() const
+{
+	return HPBarRenderPos_.y;
 }
 
 void BottomStateUI::SetParentWorm(Worm* _Parent)

@@ -74,9 +74,9 @@ public:
 	void MakeWaterLevel(float _WaterLevel = 1350.f); // 맵 바닥의 수면 생성
 
 public: // 턴 종료시 UI관련 갱신
-	void TernEndUIUpdate();
-	void BottomStateHPBarSort();
-	void CurPlayerDeathCheck();
+	static void BottomStateHPBarSortCheck(BottomStateUI* _CurUI);
+	static void BottomStateHPBarSortStart();
+	static void CurPlayerDeathCheck();
 
 private:
 	const int MAX_WORM_COUNT = 8;
@@ -118,6 +118,9 @@ private: // 물관련
 	WaterLevel* WaterLevel_;
 
 private: // 하단상태바 정렬관련
-	std::vector<BottomStateUI*> PlayerHPBarList_;
+	static std::vector<BottomStateUI*> PlayerHPBarList_;
+	static bool BottomUISortStart;
+	static int SortStartIndex;
+	static float SortDeltaTime;
 };
 

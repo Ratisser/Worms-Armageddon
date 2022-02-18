@@ -37,6 +37,11 @@
 #include "WindController.h"
 #include "Cloud.h"
 
+std::vector<BottomStateUI*> GameController::PlayerHPBarList_;
+bool GameController::BottomUISortStart = false;
+int GameController::SortStartIndex = -1;
+float GameController::SortDeltaTime = 0.f;
+
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
@@ -132,6 +137,12 @@ void GameController::UpdateBefore()
 void GameController::Update()
 {
 	state_.Update();
+
+	// 220218 SJH Test
+	if (true == BottomUISortStart)
+	{
+		BottomStateHPBarSortStart();
+	}
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
 	GameEngineDebugExtension::PrintDebugWindowText("wormListSize : ", wormList_.size());
@@ -419,8 +430,9 @@ StateInfo GameController::updateAction(StateInfo _state)
 
 	if (currentTurnTime_ < 0 || 0 == currentWorm_->GetActionTokenCount())
 	{
-		// 턴종료시 UI 처리
-		TernEndUIUpdate();
+		// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
+		// 무기창 비활성이 된다.
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
 
 		// 라운타임 초과 및 플레이어 턴초과시 물높이 상승
 		if (nullptr != WaterLevel_)
@@ -646,28 +658,87 @@ void GameController::MakeWaterLevel(float _WaterLevel)
 	WaterLevel_->Waterlist.push_back(UnderWaterActor);
 }
 
-void GameController::TernEndUIUpdate()
-{
-	// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
-	// 무기창 비활성이 된다.
-	wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
-
-	// 현재 플레이어 턴 종료시 하단상태바 정렬시작
-	BottomStateHPBarSort();
-
-	// 정렬완료 후 현재 플레이어가 체력이 0이면
-	// 화면밖으로 떨어뜨리며 죽인다.
-	CurPlayerDeathCheck();
-}
-
-void GameController::BottomStateHPBarSort()
+void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 {
 	// 현재 플레이어의 체력에 따라 정렬 시작
+	int Size = static_cast<int>(PlayerHPBarList_.size());
+	for (int i = 0; i < Size; ++i)
+	{
+		if (Size == i + 1)
+		{
+			break;
+		}
 
+		if (PlayerHPBarList_[i + 1] == _CurUI)
+		{
+			continue;
+		}
 
+		if (PlayerHPBarList_[i]->GetCurHP() < PlayerHPBarList_[i + 1]->GetCurHP())
+		{
+			SortStartIndex = i;
+			BottomUISortStart = true;
+		}
+	}
+}
 
-	
+void GameController::BottomStateHPBarSortStart()
+{
+	SortDeltaTime += GameEngineTime::GetInst().GetDeltaTime();
+	if (0.3f <= SortDeltaTime)
+	{
+		SortDeltaTime = 0.f;
 
+		int Size = static_cast<int>(PlayerHPBarList_.size());
+		bool Flag = false;
+		for (int i = SortStartIndex; i < SortStartIndex + 1; ++i)
+		{
+			//if (i == Size)
+			//{
+				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
+				//BottomUISortStart = false;
+				//return;
+			//}
+
+			for (int j = SortStartIndex + 1; j < Size; ++j)
+			{
+				if (PlayerHPBarList_[i] == PlayerHPBarList_[j])
+				{
+					continue;
+				}
+
+				if (PlayerHPBarList_[i]->GetCurHP() < PlayerHPBarList_[j]->GetCurHP())
+				{
+					// 실질적인 렌더링 위치를 변경하고
+					float CurPlayerYPos = PlayerHPBarList_[i]->GetBottomUIYPos();
+					float ComparePlayerYPos = PlayerHPBarList_[j]->GetBottomUIYPos();
+					PlayerHPBarList_[i]->SetBottomStateBarRenderPos(ComparePlayerYPos);
+					PlayerHPBarList_[j]->SetBottomStateBarRenderPos(CurPlayerYPos);
+
+					// PlayerHPBarList_ 순서를 변경
+					BottomStateUI* Temp = PlayerHPBarList_[i];
+					PlayerHPBarList_[i] = PlayerHPBarList_[j];
+					PlayerHPBarList_[j] = Temp;
+
+					SortStartIndex = j;
+
+					Flag = true;
+
+					break;
+				}
+			}
+
+			if (true == Flag)
+			{
+				Flag = false;
+				break;
+			}
+		}
+
+		// 정렬완료 후 현재 플레이어가 체력이 0이면
+		// 화면밖으로 떨어뜨리며 죽인다.
+		//CurPlayerDeathCheck();
+	}
 }
 
 void GameController::CurPlayerDeathCheck()
