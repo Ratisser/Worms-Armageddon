@@ -162,6 +162,7 @@ void MapTrain::Threading(int start, int end)
 	}
 }
 
+//쓰레드에 사용할 함수
 void MapTrain::GroundUpdate(GroundUpdateDesc Desc)
 {
 	GameEngineImageFile* ColImage = colSpriteRender_->GetImage();

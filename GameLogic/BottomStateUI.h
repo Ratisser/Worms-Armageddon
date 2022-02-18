@@ -59,9 +59,15 @@ public:
 	virtual void Render() override;
 
 public:
+	Worm* GetParentWorm() const;
 	int GetWormIndex();
+	int GetCurHP() const;
+	int GetPrevHP() const;
 	float GetHPBarRenderSize() const;
+	float4 GetFlagsCurRenderPos() const;
+	float4 GetNameCurRenderPos() const;
 	float4 GetHPBarCurRenderPos() const;
+	float GetBottomUIYPos() const;
 
 public:
 	void SetParentWorm(Worm* _Parent);

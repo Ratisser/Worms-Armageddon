@@ -103,8 +103,6 @@ void Worm::initRenderer()
 	//mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_", this, &Worm::HitEnd);
 	//mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_", this, &Worm::HitEnd);
 
-
-
 	mainRender_->CreateAnimation("wdie", "wdie.bmp", 0, 59, false, 0.033f);
 	mainRender_->SetAnimationEndFunction<Worm>("wdie", this, &Worm::Die);
 
@@ -1258,6 +1256,13 @@ void Worm::InputUpdate()
 	}
 }
 
+void Worm::WormDeath()
+{
+
+
+	Death();
+}
+
 #pragma region Stage
 
 StateInfo Worm::StartDrown(StateInfo _state)
@@ -1292,8 +1297,7 @@ StateInfo Worm::updateDrown(StateInfo _state)
 
 StateInfo Worm::StartHit(StateInfo _state)
 {
-	//TODO : 벽을 뚫고 들어가게 됬을경우 껴버려서 계속 소리가 재생됨
-	//TODO : 충돌 알고리즘을 2~3중으로 설계하여 뚫고 들어갈일 없애버리기
+	//TODO : 벽을 뚫고 들어가게 됬을경우 껴버려서 계속 소리가 재생됨, 충돌 알고리즘을 2~3중으로 설계하여 뚫고 들어갈일 없애버리기
 
 	crosshairRender_->Off();
 
@@ -1466,8 +1470,8 @@ StateInfo Worm::updateDeath(StateInfo _state)
 	if (true == DeathEnd_)
 	{
 		DeathEnd_ = false;
-		HitBoxCollision_->CollisionOff();
-		GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
+		//HitBoxCollision_->CollisionOff();
+		//GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
 		//TODO : 컨트롤러 작업 완료시 주석 해제
 	}
 
@@ -1494,16 +1498,17 @@ StateInfo Worm::startIdle(StateInfo _state)
 
 StateInfo Worm::updateIdle(StateInfo _state)
 {
+	if (true == DeathStart_)
+	{
+		return "Death";
+	}
+
 	addGravity();
 
 	if (0 != GetActionTokenCount())
 	{
 		weaponEquipDelay_ += deltaTime_;
 
-		if (true == DeathStart_)
-		{
-			return "Death";
-		}
 
 		if (true == bFocus_)
 		{
@@ -3245,6 +3250,13 @@ void Worm::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 	state_.Update();
+
+	if (DeathEnd_ == true)
+	{
+		WormDeath();
+	}
+
+
 
 	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
 

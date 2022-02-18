@@ -124,6 +124,8 @@ private:
 
 	void InputUpdate();
 
+	void WormDeath();
+
 private:
 #pragma region StateInfo
 	StateInfo StartDrown(StateInfo _state);
@@ -275,8 +277,8 @@ private:
 	bool bFocus_;
 	bool Hit_;
 	bool DeathReady_; // 죽은 상태, 아직 동작은 않함
-	bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함
-	bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림
+	bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함 // Death 에니메이션의 호출
+	bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림 // Death 에니메이션 종료후 설정됨
 
 	float deltaTime_;
 	float weaponEquipDelay_;
@@ -311,12 +313,16 @@ private:
 	GameEngineActor* bulletFocusActor_;
 
 
+
+	// 에니메이션이 호출하는 함수//
+
+
 	void HitEnd()
 	{
 		Hit_ = false;
 	}
 
-	void Die()
+	void Die() 
 	{
 		DeathEnd_ = true;
 	}

@@ -73,7 +73,7 @@ public:
 	virtual void Render() override;
 
 private:
-
+	//쓰레드에 사용할 함수
 	void Threading(int start, int end);
 	void GroundUpdate(GroundUpdateDesc Desc);
 
