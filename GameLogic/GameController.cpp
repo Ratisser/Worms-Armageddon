@@ -37,6 +37,11 @@
 #include "WindController.h"
 #include "Cloud.h"
 
+std::vector<BottomStateUI*> GameController::PlayerHPBarList_;
+bool GameController::BottomUISortStart = false;
+int GameController::SortStartIndex = -1;
+float GameController::SortDeltaTime = 0.f;
+
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
@@ -133,6 +138,12 @@ void GameController::UpdateBefore()
 void GameController::Update()
 {
 	state_.Update();
+
+	// 220218 SJH Test
+	if (true == BottomUISortStart)
+	{
+		BottomStateHPBarSortStart();
+	}
 
 	//int size = wormList_.size();
 
@@ -448,8 +459,9 @@ StateInfo GameController::updateAction(StateInfo _state)
 
 	if (currentTurnTime_ < 0 || 0 == currentWorm_->GetActionTokenCount())
 	{
-		// 턴종료시 UI 처리
-		TernEndUIUpdate();
+		// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
+		// 무기창 비활성이 된다.
+		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
 
 		// 라운타임 초과 및 플레이어 턴초과시 물높이 상승
 		if (nullptr != WaterLevel_)
@@ -643,82 +655,6 @@ const float GameController::GetWaterLevel()
 	return WaterLevel_->GetWaterLevel();
 }
 
-void GameController::TernEndUIUpdate()
-{
-	// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
-	// 무기창 비활성이 된다.
-	wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
-
-	// 현재 플레이어 턴 종료시 하단상태바 정렬시작
-	BottomStateHPBarSort();
-
-	// 정렬완료 후 현재 플레이어가 체력이 0이면
-	// 화면밖으로 떨어뜨리며 죽인다.
-	CurPlayerDeathCheck();
-}
-
-void GameController::BottomStateHPBarSort()
-{
-	// 현재 플레이어의 체력에 따라 정렬 시작
-
-
-
-	
-
-}
-
-void GameController::CurPlayerDeathCheck()
-{
-	// 현재플레이어가 죽었으므로
-	//if (0 >= wormList_[currentIndex_]->GetCurHP())
-	//{
-		// 현재 플레이어의 상태바는 화면밖으로 내보내며
-		// 현재 하단상태바 목록의 존재하는 상태들을 한칸내린다.
-
-	//}
-
-	// 이때 현재 플레이어 목록에 체력이 0인 플레이어가 존재한다면
-	// 해당 플레이어도 상태바를 화면밖으로 내보내며 
-	// 위의 플레이어목록을 재정렬한다.
-	// 없다면 종료
-
-}
-
-void GameController::WindInit()
-{
-	windController_ = GetLevel()->CreateActor<WindController>();
-
-	for (int i = 0; i < 70; i++)
-	{
-		BackgroundScatter* newScatter = GetLevel()->CreateActor<BackgroundScatter>();
-		newScatter->SetParent(windController_);
-		Cloud* newCloud = GetLevel()->CreateActor<Cloud>();
-		newCloud->SetParent(windController_);
-	}
-	// 바람 UI 바 생성
-	GetLevel()->CreateActor<WindBarBlank>();
-	WindBar* windBar = GetLevel()->CreateActor<WindBar>();
-	windBar->SetParentController(windController_);
-	WindBarHider* windBarHider = GetLevel()->CreateActor<WindBarHider>();
-	windBarHider->SetParentController(windController_);
-}
-
-void GameController::RandomTurnWind()
-{
-	int diceRoll = windDice_.RandomInt(1, 2);
-	switch (diceRoll)
-	{
-	case 1:
-		windController_->SetWind(WindDir::TOLEFT, 300.0f);
-		break;
-	case 2:
-		windController_->SetWind(WindDir::TORIGHT, 300.0f);
-		break;
-	default:
-		break;
-	}
-}
-
 void GameController::MakeWaterLevel(float _WaterLevel)
 {
 	WaterLevel_ = GetLevel()->CreateActor<WaterLevel>("WaterLevel"); // 모든 파도 actor 그룹화
@@ -791,4 +727,139 @@ void GameController::MakeWaterLevel(float _WaterLevel)
 	UnderWaterActor->SetPos(float4(2560.f, _WaterLevel + 680.f, 0.f));
 	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
 	WaterLevel_->Waterlist.push_back(UnderWaterActor);
+}
+
+void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
+{
+	// 현재 플레이어의 체력에 따라 정렬 시작
+	int Size = static_cast<int>(PlayerHPBarList_.size());
+	for (int i = 0; i < Size; ++i)
+	{
+		if (Size == i + 1)
+		{
+			break;
+		}
+
+		if (PlayerHPBarList_[i + 1] == _CurUI)
+		{
+			continue;
+		}
+
+		if (PlayerHPBarList_[i]->GetCurHP() < PlayerHPBarList_[i + 1]->GetCurHP())
+		{
+			SortStartIndex = i;
+			BottomUISortStart = true;
+		}
+	}
+}
+
+void GameController::BottomStateHPBarSortStart()
+{
+	SortDeltaTime += GameEngineTime::GetInst().GetDeltaTime();
+	if (0.3f <= SortDeltaTime)
+	{
+		SortDeltaTime = 0.f;
+
+		int Size = static_cast<int>(PlayerHPBarList_.size());
+		bool Flag = false;
+		for (int i = SortStartIndex; i < SortStartIndex + 1; ++i)
+		{
+			//if (i == Size)
+			//{
+				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
+				//BottomUISortStart = false;
+				//return;
+			//}
+
+			for (int j = SortStartIndex + 1; j < Size; ++j)
+			{
+				if (PlayerHPBarList_[i] == PlayerHPBarList_[j])
+				{
+					continue;
+				}
+
+				if (PlayerHPBarList_[i]->GetCurHP() < PlayerHPBarList_[j]->GetCurHP())
+				{
+					// 실질적인 렌더링 위치를 변경하고
+					float CurPlayerYPos = PlayerHPBarList_[i]->GetBottomUIYPos();
+					float ComparePlayerYPos = PlayerHPBarList_[j]->GetBottomUIYPos();
+					PlayerHPBarList_[i]->SetBottomStateBarRenderPos(ComparePlayerYPos);
+					PlayerHPBarList_[j]->SetBottomStateBarRenderPos(CurPlayerYPos);
+
+					// PlayerHPBarList_ 순서를 변경
+					BottomStateUI* Temp = PlayerHPBarList_[i];
+					PlayerHPBarList_[i] = PlayerHPBarList_[j];
+					PlayerHPBarList_[j] = Temp;
+
+					SortStartIndex = j;
+
+					Flag = true;
+
+					break;
+				}
+			}
+
+			if (true == Flag)
+			{
+				Flag = false;
+				break;
+			}
+		}
+
+		// 정렬완료 후 현재 플레이어가 체력이 0이면
+		// 화면밖으로 떨어뜨리며 죽인다.
+		//CurPlayerDeathCheck();
+	}
+}
+
+void GameController::CurPlayerDeathCheck()
+{
+	// 현재플레이어가 죽었으므로
+	//if (0 >= wormList_[currentIndex_]->GetCurHP())
+	//{
+		// 현재 플레이어의 상태바는 화면밖으로 내보내며
+		// 현재 하단상태바 목록의 존재하는 상태들을 한칸내린다.
+
+	//}
+
+	// 이때 현재 플레이어 목록에 체력이 0인 플레이어가 존재한다면
+	// 해당 플레이어도 상태바를 화면밖으로 내보내며 
+	// 위의 플레이어목록을 재정렬한다.
+	// 없다면 종료
+
+}
+
+void GameController::WindInit()
+{
+	windController_ = GetLevel()->CreateActor<WindController>();
+
+	for (int i = 0; i < 70; i++)
+	{
+		BackgroundScatter* newScatter = GetLevel()->CreateActor<BackgroundScatter>();
+		newScatter->SetParent(windController_);
+		Cloud* newCloud = GetLevel()->CreateActor<Cloud>();
+		newCloud->SetParent(windController_);
+	}
+	// 바람 UI 바 생성
+	GetLevel()->CreateActor<WindBarBlank>();
+	WindBar* windBar = GetLevel()->CreateActor<WindBar>();
+	windBar->SetParentController(windController_);
+	WindBarHider* windBarHider = GetLevel()->CreateActor<WindBarHider>();
+	windBarHider->SetParentController(windController_);
+}
+
+void GameController::RandomTurnWind()
+{
+	int diceRoll = windDice_.RandomInt(1, 2);
+	switch (diceRoll)
+	{
+	case 1:
+		windController_->SetWind(WindDir::TOLEFT, 300.0f);
+		break;
+	case 2:
+		windController_->SetWind(WindDir::TORIGHT, 300.0f);
+		break;
+	default:
+		break;
+	}
 }

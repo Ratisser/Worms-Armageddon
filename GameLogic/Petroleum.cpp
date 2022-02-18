@@ -678,13 +678,13 @@ void Petroleum::WormCollision()
 
 			if (Dir.y < 0)
 			{
-				Dir.y * -1;
+				Dir.y *= -1;
 			}
 
 			Dir.Normalize2D();
 
 
-			dynamic_cast<Worm*>((*iter0)->GetActor())->Damage(10.f, Dir);
+			dynamic_cast<Worm*>((*iter0)->GetActor())->Damage(10, Dir);
 
 			++iter0;
 		}
