@@ -46,7 +46,6 @@ FadeObject* PlayLevel::fadeObject_ = nullptr;
 PlayLevel::PlayLevel() // default constructer 디폴트 생성자
 	: Train_(nullptr),
 	Bazooka_(nullptr),
-	WaterLevel_(nullptr),
 	loadingImage_(nullptr),
 	isDebugOn_(true),
 	randomGenerator_(),
@@ -67,7 +66,6 @@ PlayLevel::~PlayLevel() // default destructer 디폴트 소멸자
 PlayLevel::PlayLevel(PlayLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자	
 	: Train_(nullptr),
 	Bazooka_(nullptr),
-	WaterLevel_(nullptr),
 	loadingImage_(nullptr),
 	isDebugOn_(true),
 	randomGenerator_(),
@@ -157,7 +155,7 @@ void PlayLevel::LevelUpdate()
 
 
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", Controller_->GetWindController()->GetCurrentWindDir(), ", Wind Speed : ", Controller_->GetWindController()->GetCurrentWindSpeed());
-		//GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", WaterLevel_->GetWaterLevel());
+		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", Controller_->GetWaterLevel());
 	}
 	//디버그
 	{
@@ -302,81 +300,6 @@ void PlayLevel::KeySetting()
 	{
 		GameEngineInput::GetInst().CreateKey("TestWaterLevelDown", 'E');
 	}
-}
-
-void PlayLevel::MakeWaterLevel(float _WaterLevel) // 맵 바닥의 수면 생성
-{
-	WaterLevel_ = CreateActor<WaterLevel>("WaterLevel"); // 모든 파도 actor 그룹화
-	WaterLevel_->SetwaterLevel(_WaterLevel);
-
-	WaterWave* WaterWaveactor = CreateActor<WaterWave>("WaterWave1");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
-	WaterWaveactor->SetPos(float4(0.f, _WaterLevel, 0.f));
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave2");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
-	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 30.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(2);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave3");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 60.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(4);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave4");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 90.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(6);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave5");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(0.f, _WaterLevel + 120.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(8);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	UnderWater* UnderWaterActor = CreateActor<UnderWater>("UnderWater");
-	UnderWaterActor->SetPos(float4(0.f, _WaterLevel + 680.f, 0.f));
-	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterLevel_->Waterlist.push_back(UnderWaterActor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave6");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
-	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel, 0.f));
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave7");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Back);
-	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 30.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(2);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave8");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 60.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(4);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave9");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 90.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(6);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	WaterWaveactor = CreateActor<WaterWave>("WaterWave10");
-	WaterWaveactor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterWaveactor->SetPos(float4(2560.f, _WaterLevel + 120.f, 0.f));
-	WaterWaveactor->SetAnimationCurrentFrame(8);
-	WaterLevel_->Waterlist.push_back(WaterWaveactor);
-
-	UnderWaterActor = CreateActor<UnderWater>("UnderWater2");
-	UnderWaterActor->SetPos(float4(2560.f, _WaterLevel + 680.f, 0.f));
-	UnderWaterActor->SetRenderOrder((int)RenderOrder::WaterLevel_Front);
-	WaterLevel_->Waterlist.push_back(UnderWaterActor);
-
 }
 
 void PlayLevel::CreateGimmickObject()

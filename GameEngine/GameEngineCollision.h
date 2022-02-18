@@ -53,6 +53,8 @@ private:
 	float4 Pivot_;
 	float4 size_;
 
+	bool CollisionOn_;
+
 	float radius_;
 	FRect rect_;
 
@@ -66,6 +68,20 @@ private:
 	float4 GetCollisionPos();
 
 public:
+	void CollisionOn()
+	{
+		CollisionOn_ = true;
+	}
+	void CollisionOff()
+	{
+		CollisionOn_ = false;
+	}
+
+	bool GetCollision_On_Off()
+	{
+		return CollisionOn_;
+	}
+
 	GameEngineActor* GetActor()
 	{
 		return actor_;

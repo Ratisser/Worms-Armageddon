@@ -7,7 +7,6 @@ class WaterLevel : public GameEngineActor
 {
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
-	float waterLevel_;
 
 private:
 	bool roundtimechk_; // 로비화면의 라운드타임체크 Flag
@@ -47,11 +46,11 @@ public:
 public:
 	const float GetWaterLevel()
 	{
-		return waterLevel_;
+		return pos_.y;
 	}
 
 	void SetwaterLevel(float _waterLevel)
 	{
-		waterLevel_ = _waterLevel;
+		pos_.y = _waterLevel;
 	}
 };

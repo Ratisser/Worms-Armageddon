@@ -11,6 +11,7 @@ GameEngineCollision::GameEngineCollision()
 	: colType_(CollisionCheckType::MAX)
 	, groupIndex_(0)
 	, isCamEffect_(true)
+	, CollisionOn_(true)
 	, actor_(nullptr)
 	, imageptr_(nullptr)
 	, CheckColor(RGB(0, 0, 0))
@@ -32,6 +33,7 @@ GameEngineCollision::GameEngineCollision(GameEngineCollision&& _other) noexcept
 	: colType_(CollisionCheckType::MAX)
 	, groupIndex_(0)
 	, isCamEffect_(true)
+	, CollisionOn_(true)
 	, actor_(nullptr)
 	, imageptr_(nullptr)
 	, CheckColor(RGB(0, 0, 0))
@@ -44,6 +46,11 @@ GameEngineCollision::GameEngineCollision(GameEngineCollision&& _other) noexcept
 
 bool GameEngineCollision::CollisionCheck(GameEngineCollision* _other) 
 {
+	if ((false == CollisionOn_) || false == _other->CollisionOn_)
+	{
+		return false;
+	}
+
 	if (nullptr == this)
 	{
 		GameEngineDebug::AssertFalse();
@@ -133,6 +140,11 @@ std::list<GameEngineCollision*> GameEngineCollision::CollisionGroupCheck(int _ot
 	std::list<GameEngineCollision*> ReturnList;
 
 	// 상대 그룹을 얻어와야 일단 뭔가를 시작할수 있다.
+	if (false == GetCollision_On_Off())
+	{
+		return ReturnList;
+	}
+
 	if (nullptr == this)
 	{
 		GameEngineDebug::AssertFalse();

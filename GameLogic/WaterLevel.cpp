@@ -12,7 +12,6 @@
 
 WaterLevel::WaterLevel() // default constructer 디폴트 생성자
 	:mainSpriteRender_(nullptr),
-	waterLevel_(0.f),
 	roundtimechk_(false),
 	waterincreasetime_(0.f),
 	waterincreaserange_(800.f)
@@ -26,7 +25,6 @@ WaterLevel::~WaterLevel() // default destructer 디폴트 소멸자
 
 WaterLevel::WaterLevel(WaterLevel&& _other) noexcept  // default RValue Copy constructer 디폴트 RValue 복사생성자
 	:mainSpriteRender_(nullptr),
-	waterLevel_(0.f),
 	roundtimechk_(_other.roundtimechk_),
 	waterincreasetime_(_other.waterincreasetime_),
 	waterincreaserange_(_other.waterincreaserange_)
@@ -42,7 +40,7 @@ void WaterLevel::WaterLevelUp(float deltaTime)
 	{
 		(*iterfirst)->SetMove(float4::UP * waterincreaserange_ * deltaTime);
 	}
-	waterLevel_ -= (waterincreaserange_ * deltaTime);
+	pos_.y -= (waterincreaserange_ * deltaTime);
 }
 
 void WaterLevel::WaterLevelDown(float deltaTime)
@@ -54,7 +52,7 @@ void WaterLevel::WaterLevelDown(float deltaTime)
 	{
 		(*iterfirst)->SetMove(float4::DOWN * waterincreaserange_ * deltaTime);
 	}
-	waterLevel_ += (waterincreaserange_ * deltaTime);
+	pos_.y += (waterincreaserange_ * deltaTime);
 }
 
 void WaterLevel::TernChangeWaterLevelUp()
@@ -69,7 +67,7 @@ void WaterLevel::TernChangeWaterLevelUp()
 		{
 			(*iterfirst)->SetMove(float4::UP * waterincreaserange_ * deltaTime);
 		}
-		waterLevel_ -= (waterincreaserange_ * deltaTime);
+		pos_.y -= (waterincreaserange_ * deltaTime);
 	}
 }
 

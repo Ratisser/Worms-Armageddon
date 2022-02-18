@@ -67,6 +67,12 @@ public:
 		DeathEnd_ = _DeathEnd;
 	}
 
+	const bool GetDeathEnd()
+	{
+		return DeathEnd_;
+	}
+
+
 	void SetDeathStart(bool _DeathStart)
 	{
 		DeathStart_ = _DeathStart;
@@ -270,7 +276,7 @@ private:
 	bool Hit_;
 	bool DeathReady_; // 죽은 상태, 아직 동작은 않함
 	bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함
-	bool DeathEnd_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함
+	bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림
 
 	float deltaTime_;
 	float weaponEquipDelay_;

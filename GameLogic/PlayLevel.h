@@ -49,13 +49,6 @@ public:
 	//}
 
 public:
-	WaterLevel* WaterLevel_; // 수면 조절용 - 이현
-
-
-public:
-
-public:
-	void MakeWaterLevel(float _WaterLevel = 1350.f);
 	void CreateGimmickObject();
 
 	void CreateExplosion100(float4 Pos, int _Damage = 100, bool _DamageToDist = false); //test

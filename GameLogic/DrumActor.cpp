@@ -148,16 +148,10 @@ void DrumActor::DrumExplode()
 	WindSpeed_ = GetLevel<PlayLevel>()->GetGameController()->GetWindController()->GetCurrentWindSpeed();
 
 	// 촘촘히 약 5방향으로 나누어, 군집되도록 생성하기
-	GetLevel<PlayLevel>()->CreateExplosion75(pos_);
+	GetLevel<PlayLevel>()->CreateExplosion75(pos_,100);
 
 	float RandomFloat;
 	float4 RandomRot = { 1.f,0.f,0.f };
-
-	//360도를 5등분하고, count를 5군데에 무작위하게 군집하여 배치
-
-	//72도, 5번 실행하면서 count/5를 하여 for문 돌리기,
-
-	//72도 간격으로 +- 20도씩, 8개 생성, 72도 간격도 -12~12 오차 주기
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -176,6 +170,7 @@ void DrumActor::DrumExplode()
 			RandomRot.y *= PetroleumSpeed+ RandomFloat;
 
 			Petroleum* _Petroleum = parentLevel_->CreateActor<Petroleum>(pos_);
+			GetLevel<PlayLevel>()->GetGameController()->IncresePetroleumCount();
 
 			_Petroleum->SetRenderOrder((int)RenderOrder::Effect);
 			_Petroleum->SetDir(RandomRot);

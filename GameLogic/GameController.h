@@ -9,7 +9,8 @@ class Worm;
 class WaterLevel;
 class WindController;
 class BackGroundScatter;
-class BottomStateUI;
+class BottomStateUI; 
+class Petroleum;
 class GameController : public GameEngineActor
 {
 public:
@@ -31,8 +32,12 @@ public:
 	void CreateWorm(const float _minX, const float _maxX);
 	void CreateWormUI();
 
+	void SetFocusOnlyOneWorm(Worm* _Worm);
+	
+
 	std::vector<Worm*> GetWormList() const;
 	Worm* GetCurWorm() const;
+	
 
 private:
 	void initState();
@@ -52,6 +57,9 @@ private:
 	StateInfo startSettlement(StateInfo _state); // 턴 넘어가기 직전에 일종의 "결산" 단계입니다.
 	StateInfo updateSettlement(StateInfo _state); // 대미지 판정 등을 해 주는 단계라고 생각해주시면 됩니다.
 
+	StateInfo startDeathPhase(StateInfo _state); // 대미지 판정 이후, 웜들의 죽음을 순차적으로 판별,
+	StateInfo updateDeathPhase(StateInfo _state); // 진행하는 단계 (제작중);
+
 	StateInfo startDeath(StateInfo _state);
 	StateInfo updateDeath(StateInfo _state);
 
@@ -70,13 +78,14 @@ public:
 
 	const float GetWaterLevel();
 
-public:
-	void MakeWaterLevel(float _WaterLevel = 1350.f); // 맵 바닥의 수면 생성
 
 public: // 턴 종료시 UI관련 갱신
 	void TernEndUIUpdate();
 	void BottomStateHPBarSort();
 	void CurPlayerDeathCheck();
+
+public:
+	void MakeWaterLevel(float _WaterLevel = 1350.f); // 맵 바닥의 수면 생성
 
 private:
 	const int MAX_WORM_COUNT = 8;
@@ -87,27 +96,44 @@ private:
 	GameEngineFSM<GameController> state_;
 	std::vector<Worm*> wormList_;
 	std::vector<float> xPosList_;
+
+	int PetroleumCount_; // 현재 활성중인 기름 숫자
+
 	size_t currentIndex_;
 	Worm* currentWorm_;
-	float cameraMoveSpeed_;
+
+	Worm* CurDeathWorm_;
+	Worm* NextDeathWorm_;
+
 	int wormIndex_;
 	int prevwormIndex_;
-	bool IsCameraMove_;
 	float4 cameraPos_;
-	float wormXPosContainer_;
 
+	float cameraMoveSpeed_;
+	float wormXPosContainer_;
 	float settementTime_;
 	float currentTurnTime_;
+	float WormDeathWaitingTime_; // worm을 죽일 간격
 
+	bool IsCameraMove_;
 	bool WormDeathReady_; // 다음 worm을 죽일때가 옴
 	bool WormDeathProgressing_; // 다음 worm을 죽일때가 옴
-	float WormDeathWaitingTime_; // worm을 죽일 간격
 
 private: // 바람관련
 	WindController* windController_;
 	void WindInit();
 	GameEngineMath::Random windDice_;
 public:
+	void IncresePetroleumCount()
+	{
+		PetroleumCount_++;
+	}
+
+	void DecresePetroleumCount()
+	{
+		PetroleumCount_--;
+	}
+
 	WindController* GetWindController()
 	{
 		return windController_;

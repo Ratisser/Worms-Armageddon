@@ -383,6 +383,7 @@ void Worm::initCollision()
 
 	HitBoxCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::PLAYER_HITBOX), CollisionCheckType::RECT);
 	HitBoxCollision_->SetSize(float4(10.f, 30.f,0.f));
+	
 }
 
 void Worm::initState()
@@ -1297,7 +1298,6 @@ StateInfo Worm::StartHit(StateInfo _state)
 	crosshairRender_->Off();
 
 	WindSpeed_ = GetLevel<PlayLevel>()->GetGameController()->GetWindController()->GetCurrentWindSpeed();
-
 	//DamageAccRessit_ = DamageAcc_ / 10.f;
 	DamageAcc_ = bound_;
 
@@ -1361,7 +1361,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 		}
 	}
 
-
 	GameEngineCollision* bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
 	GameEngineCollision* Left = leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
 	GameEngineCollision* Right = rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
@@ -1369,11 +1368,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 	if (nullptr != bottom)
 	{
 		DamageAcc_ = 0.f;
-
-		if (true == DeathStart_)
-		{
-			ChangeState("Death");
-		}
 
 		if (Hit_ == false)
 		{
@@ -1417,9 +1411,9 @@ StateInfo Worm::updateHit(StateInfo _state)
 
 	if (nullptr == Right && nullptr != Left)
 	{
-		if (DamageDir_.x + WindSpeed_ >= 0)//오른쪽 진행
+		if ((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) >= 0)//오른쪽 진행
 		{
-			SetMove((DamageDir_.x+WindSpeed_) * (DamageSpeed_ * deltaTime_),0.f);
+			SetMove((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
 			//Left = leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
 			//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
 			//if (nullptr != Left)
@@ -1434,9 +1428,9 @@ StateInfo Worm::updateHit(StateInfo _state)
 	}
 	else if (nullptr == Left && nullptr != Right)
 	{
-		if(DamageDir_.x + WindSpeed_ <= 0)
+		if((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) <= 0)
 		{
-			SetMove((DamageDir_.x + WindSpeed_) * (DamageSpeed_ * deltaTime_), 0.f);
+			SetMove((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
 			//Right = rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
 			//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
 			//if (nullptr != Right)
@@ -1449,12 +1443,10 @@ StateInfo Worm::updateHit(StateInfo _state)
 			//}
 		}
 	}
-	//else
-	//{
-	//	SetMove((DamageDir_.x + WindSpeed_) * (DamageSpeed_ * deltaTime_), 0.f);
-	//}
-
-
+	else
+	{
+		SetMove((DamageDir_.x *(WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
+	}
 
 	return StateInfo();
 }
@@ -1473,11 +1465,10 @@ StateInfo Worm::updateDeath(StateInfo _state)
 	// 턴이 멈추었는가(종료) 확인후, 에니메이션 재생, 레벨 메니저 주관하에 차례대로 ㅈㄴ행되게끔
 	if (true == DeathEnd_)
 	{
-		GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
 		DeathEnd_ = false;
-		//Death();
-		//TODO : 웜 죽는거 컨트롤러와 연결
-
+		HitBoxCollision_->CollisionOff();
+		GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
+		//TODO : 컨트롤러 작업 완료시 주석 해제
 	}
 
 	return StateInfo();
@@ -1508,6 +1499,11 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	if (0 != GetActionTokenCount())
 	{
 		weaponEquipDelay_ += deltaTime_;
+
+		if (true == DeathStart_)
+		{
+			return "Death";
+		}
 
 		if (true == bFocus_)
 		{

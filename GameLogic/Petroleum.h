@@ -60,11 +60,14 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+	void PetroleumDeath();
+
+
 private:
 	void initCollision();
 	//void PetroleumUpdate(float deltaTime_);
-	void PetroleumMoveUpdate(float deltaTime_);
-	void PetroleumGroundUpdate(float deltaTime_);
+	//void PetroleumMoveUpdate(float deltaTime_);
+	//void PetroleumGroundUpdate(float deltaTime_);
 
 	StateInfo AirStart(StateInfo _state);
 	StateInfo AirUpdate(StateInfo _state);
@@ -101,14 +104,9 @@ private:
 	StateInfo Phase5Start(StateInfo _state);
 	StateInfo Phase5Update(StateInfo _state);
 
-
 	void CalFrameIndex();
 	void WormCollision();
 public:
-	void SetisLive(bool _isLive)
-	{
-		isLive_ = _isLive;
-	}
 
 	bool GetisLive()
 	{
