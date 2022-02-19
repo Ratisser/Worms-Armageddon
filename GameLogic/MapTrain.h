@@ -52,6 +52,8 @@ private:	// member Var
 	};
 
 	std::vector<GroundUpdateDesc> GroundUpdateList_;
+	int CoreCount_;
+	std::vector<std::thread> ThreadList_;
 
 public:
 	MapTrain(); // default constructer 디폴트 생성자

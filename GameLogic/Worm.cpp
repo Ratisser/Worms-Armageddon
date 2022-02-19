@@ -1500,10 +1500,11 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	{
 		weaponEquipDelay_ += deltaTime_;
 
-		if (true == DeathStart_)
-		{
-			return "Death";
-		}
+		//TODO: Death 페이즈 진입 조건
+		// 현재 플레이어가 아닌 다른 플레이어가 데미지를 입은경우, bool값만 조정하고 일단 그냥 진행하기
+		// 현재 플레이어가 데미지를 입을경우 (기름통) 등으로 활동 중단, 대기후 결산 페이즈 진행
+		// 만약 어떤 worm이 데미지를 입었는데 그것이 curworm일 경우, 강제로 엑션 토큰 회수
+		
 
 		if (true == bFocus_)
 		{
@@ -1541,7 +1542,13 @@ StateInfo Worm::updateIdle(StateInfo _state)
 			}
 		}
 	}
-	
+	else if (0 == GetActionTokenCount())
+	{
+		if (true == DeathStart_)
+		{
+			return "Death";
+		}
+	}
 
 	// 떨어지는 중
 	if (speed_.y > 0.0f)
@@ -3174,6 +3181,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 		hp_ = 0;
 		DeathReady_ = true;
 	}
+	ClearActionToken();
 	ChangeState("Hit");
 	//if (true == state_.IsCurStateName("Hit"))
 	//{

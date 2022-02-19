@@ -146,14 +146,16 @@ void GameController::Update()
 	}
 
 	//int size = wormList_.size();
+	//auto iter0 = wormList_.begin();
 
 	//for (int i = 0; i < size; ++i)
-	//{
-	//	auto iter0 = (wormList_.begin() + i);
-	//	if ((* iter0)->GetDeathEnd())
-	//	{
-	//		wormList_.erase(iter0);
-	//	}
+	//{	
+		/*if (wormList_[i]->GetDeathEnd())
+		{
+			wormList_[i]->Death();
+			wormList_.erase(wormList_.begin() + i);
+		}*/
+	//}
 	//TODO : 웜 삭제 구현
 	//}
 
@@ -568,10 +570,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 
 		//worm의 죽음 상태 변화를 시작함 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
 		if (nullptr != CurDeathWorm_)
-		{		
-			//currentWorm_->SetFocus(false);
-			//CurDeathWorm_->SetFocus(true);
-			//NextDeathWorm_->SetFocus(false);
+		{					
 			CurDeathWorm_->SetDeathReady(false);
 			CurDeathWorm_->SetDeathStart(true);
 		}
