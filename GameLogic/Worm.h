@@ -34,6 +34,7 @@ public:
 	void SetCurWeapon(eItemList _WeaponType);
 	void SetUIController(UIController* _uicontroller);
 	UIController* GetCurUIController() const;
+	void DeleteUIController();
 
 	void Damage(int _numDamage, float4 _MoveDir);
 	bool IsDie() const;
@@ -48,6 +49,9 @@ public:
 	void BulletFocusOn(GameEngineActor* _actor);
 	void BulletFocusOff();
 
+	void WormDeath();
+
+public:
 	eItemList GetCurrentWeapon() const
 	{
 		return currentWeapon_;
@@ -123,8 +127,6 @@ private:
 	void setAimingForward();
 
 	void InputUpdate();
-
-	void WormDeath();
 
 private:
 #pragma region StateInfo
@@ -250,14 +252,15 @@ private:
 
 private:
 	GameEngineMath::Random random_;
+
 	GameEngineRenderer* mainRender_;
 	GameEngineRenderer* crosshairRender_;
+
 	GameEngineCollision* bottomCenterCollision_;
 	GameEngineCollision* groundCheckCollision_;
 	GameEngineCollision* leftSideCollision_;
 	GameEngineCollision* rightSideCollision_;
 	GameEngineCollision* headCollision_;
-
 	GameEngineCollision* HitBoxCollision_;
 
 	GameEngineFSM<Worm> state_;
@@ -305,11 +308,9 @@ private:
 	int actionToken_;
 
 	eItemList currentWeapon_;
-
 	std::string nextState_;
 
 	UIController* uicontroller_;
-
 	GameEngineActor* bulletFocusActor_;
 
 

@@ -145,20 +145,24 @@ void GameController::Update()
 		BottomStateHPBarSortStart();
 	}
 
-	//int size = wormList_.size();
+	int size = wormList_.size();
+	auto iter0 = wormList_.begin();
 
-	//for (int i = 0; i < size; ++i)
-	//{
-	//	auto iter0 = (wormList_.begin() + i);
-	//	if ((* iter0)->GetDeathEnd())
-	//	{
-	//		wormList_.erase(iter0);
-	//	}
+	for (int i = 0; i < size; ++i)
+	{	
+		if (wormList_[i]->GetDeathEnd())
+		{
+			wormList_[i]->WormDeath();
+			wormList_.erase(wormList_.begin() + i);
+		}
+	}
 	//TODO : 웜 삭제 구현
 	// 웜을 삭제하게 되면 웜 인덱스도 바꾸어 주어야함
 	// 죽을 녀석 찾아다가 포커싱 해줘야함(모륵겟슴)
 	// 그밖에 웜 리스트, 커런트 웜에 연결된 모든놈들 다 찾아다가 떼어내야함
 	// 각각의 기능을 만들고 하나에 합쳐놓기
+	// settlemnet state에서 순차적으로 죽음 실행하고, 포커싱 해주고, 그 과정에서 wormdeath를 호출해 주고, 
+	// 마지막에 리스트에서 일괄 지워버린다.
 	//}
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
@@ -167,30 +171,31 @@ void GameController::Update()
 
 void GameController::UpdateAfter()
 {
-	if (true == GameEngineInput::GetInst().IsPress("W"))
 	{
-		GetLevel()->SetCamMove(float4::UP * cameraMoveSpeed_);
-		IsCameraMove_ = true;
-	}
+		if (true == GameEngineInput::GetInst().IsPress("W"))
+		{
+			GetLevel()->SetCamMove(float4::UP * cameraMoveSpeed_);
+			IsCameraMove_ = true;
+		}
 
-	if (true == GameEngineInput::GetInst().IsPress("S"))
-	{
-		GetLevel()->SetCamMove(float4::DOWN * cameraMoveSpeed_);
-		IsCameraMove_ = true;
-	}
+		if (true == GameEngineInput::GetInst().IsPress("S"))
+		{
+			GetLevel()->SetCamMove(float4::DOWN * cameraMoveSpeed_);
+			IsCameraMove_ = true;
+		}
 
-	if (true == GameEngineInput::GetInst().IsPress("A"))
-	{
-		GetLevel()->SetCamMove(float4::LEFT * cameraMoveSpeed_);
-		IsCameraMove_ = true;
-	}
+		if (true == GameEngineInput::GetInst().IsPress("A"))
+		{
+			GetLevel()->SetCamMove(float4::LEFT * cameraMoveSpeed_);
+			IsCameraMove_ = true;
+		}
 
-	if (true == GameEngineInput::GetInst().IsPress("D"))
-	{
-		GetLevel()->SetCamMove(float4::RIGHT * cameraMoveSpeed_);
-		IsCameraMove_ = true;
+		if (true == GameEngineInput::GetInst().IsPress("D"))
+		{
+			GetLevel()->SetCamMove(float4::RIGHT * cameraMoveSpeed_);
+			IsCameraMove_ = true;
+		}
 	}
-
 	if (IsCameraMove_)
 	{
 		if (GameEngineInput::GetInst().IsPress("UpArrow"))
@@ -213,6 +218,8 @@ void GameController::UpdateAfter()
 	else
 	{
 		cameraPos_ = GetLevel()->GetCamPos();
+
+		//wrom 인덱스가 아니라 cur worm을 참고해 오게 하면 좋을것 같다.
 
 		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
 		float4 MoveVector = cameraMovePos - cameraPos_;
@@ -254,10 +261,8 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 	WormArrow* newArrow = GetLevel()->CreateActor<WormArrow>();
 	newArrow->SetParent(newWorm);
 
-
 	newWorm->SetPos({ wormXPosContainer_ , -500.0f });
 	newWorm->SetFocus(false);
-
 
 	wormList_.push_back(newWorm);
 
@@ -348,12 +353,28 @@ void GameController::SetFocusOnlyOneWorm(Worm* _Worm)
 		if (_Worm == wormList_[i])
 		{
 			wormList_[i]->SetFocus(true);
+			currentWorm_ = wormList_[i];
 		}
 		else
 		{
 			wormList_[i]->SetFocus(false);
 		}
+	}
+}
 
+void GameController::SetFocusOnlyOneWorm(int _WormIndex)
+{
+	for (int i = 0; i < wormList_.size(); ++i)
+	{
+		if (_WormIndex == i)
+		{
+			wormList_[i]->SetFocus(true);
+			currentWorm_ = wormList_[i];
+		}
+		else
+		{
+			wormList_[i]->SetFocus(false);
+		}
 	}
 }
 
@@ -369,7 +390,7 @@ Worm* GameController::GetCurWorm() const
 		return nullptr;
 	}
 
-	return wormList_[wormIndex_];
+	return currentWorm_;
 }
 
 void GameController::initState()
@@ -410,23 +431,9 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 		if (wormIndex_ == wormList_.size())
 		{
 			wormIndex_ = 0;
-
 		}
 
-		size_t size = wormList_.size();
-		for (int i = 0; i < size; i++)
-		{
-			if (i == wormIndex_)
-			{
-				wormList_[wormIndex_]->SetFocus(true);
-				currentWorm_ = wormList_[wormIndex_];
-
-			}
-			else
-			{
-				wormList_[i]->SetFocus(false);
-			}
-		}
+		SetFocusOnlyOneWorm(wormIndex_);
 		IsCameraMove_ = false;
 		return "";
 	}
@@ -456,7 +463,7 @@ StateInfo GameController::updateAction(StateInfo _state)
 		currentWorm_->SubtractActionToken(1);
 
 		// 강제전환으로인한 무기창 및 무기아이콘 비활성화
-		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+		currentWorm_->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
 
 		currentTurnTime_ = 0.0f;
 	}
@@ -465,7 +472,7 @@ StateInfo GameController::updateAction(StateInfo _state)
 	{
 		// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
 		// 무기창 비활성이 된다.
-		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
+		currentWorm_->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetTernOff();
 
 		// 라운타임 초과 및 플레이어 턴초과시 물높이 상승
 		if (nullptr != WaterLevel_)
@@ -539,7 +546,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	if (false == WormDeathReady_)
 	{
 		
-			CurDeathWorm_ = NextDeathWorm_;
+		CurDeathWorm_ = NextDeathWorm_;
 		
 		NextDeathWorm_ = nullptr;
 
@@ -570,18 +577,12 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 			}
 		}
 
-		// worm 죽음 과정이 gamecontroller 의 흐름과 어울리지 않고 깨버리는 느낌이 들므
-		// 보완할것
-
 		//TODO :  DeathStart가 되어 에니메이션을 재생하고, 재생이 완료 후, DeathEnd가 된것을 인지하면
 		// nextworm state로 넘어가고, 그 nextworm에 다음 죽게될 worm을 넘겨주어야함
 
 		//worm의 죽음 상태 변화를 시작함 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
 		if (nullptr != CurDeathWorm_)
-		{		
-			//currentWorm_->SetFocus(false);
-			//CurDeathWorm_->SetFocus(true);
-			//NextDeathWorm_->SetFocus(false);
+		{					
 			CurDeathWorm_->SetDeathReady(false);
 			CurDeathWorm_->SetDeathStart(true);
 		}
@@ -602,8 +603,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 			//대기가 끝남
 		}
 	}
-	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가
-										// 다음 웜으로 넘겨준다.
+	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
 	{
 		if (SETTLEMENT_TIME <= settementTime_)
 		{
@@ -823,6 +823,8 @@ void GameController::BottomStateHPBarSortStart()
 
 void GameController::CurPlayerDeathCheck()
 {
+	// Worm* 에서 GetDeathEnd로 받아오면 됨 // 이현
+
 	// 현재플레이어가 죽었으므로
 	//if (0 >= wormList_[currentIndex_]->GetCurHP())
 	//{

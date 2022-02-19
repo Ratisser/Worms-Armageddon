@@ -27,7 +27,6 @@ WormTopStateUI::WormTopStateUI() :
 
 WormTopStateUI::~WormTopStateUI()
 {
-
 }
 
 Worm* WormTopStateUI::GetParentWorm() const

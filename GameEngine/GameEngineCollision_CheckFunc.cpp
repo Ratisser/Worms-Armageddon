@@ -36,6 +36,31 @@ void GameEngineCollision::ColCheckFuncInitialize()
 	arrFunc_[static_cast<int>(CollisionCheckType::CIRCLE)][static_cast<int>(CollisionCheckType::CIRCLE)] = &GameEngineCollision::collisionCheckCircleToCircle;
 }
 
+//bool GameEngineCollision::RectToImage(GameEngineCollision* _PointCol, GameEngineCollision* _ImageCol)
+//{
+//	float4 size = _PointCol->GetSize();
+//	float4 Pos;
+//	DWORD Color;
+//	for (int i = 0; i < size.x; ++i)
+//	{
+//		for (int j = 0; j < size.y; ++j)
+//		{
+//			Pos = _PointCol->GetCollisionPos();
+//			Color = _ImageCol->imageptr_->GetColor4Byte(Pos.ix(), Pos.iy());
+//			if (_PointCol->GetColorCheck() == Color)
+//			{
+//				return true;
+//			}
+//		}
+//	}
+//	//if (nullptr == _ImageCol->imageptr_)
+//	//{
+//	//	GameEngineDebug::AssertFalse();
+//	//	return false;
+//	//}
+//	return false;
+//}
+
 bool GameEngineCollision::PointToImage(GameEngineCollision* _PointCol, GameEngineCollision* _ImageCol)
 {
 	float4 Pos = _PointCol->GetCollisionPos();

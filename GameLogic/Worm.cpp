@@ -1258,6 +1258,11 @@ void Worm::InputUpdate()
 
 void Worm::WormDeath()
 {
+	if (bulletFocusActor_ != nullptr)
+	{
+		BulletFocusOff();
+	}
+	DeleteUIController();
 
 
 	Death();
@@ -1297,8 +1302,6 @@ StateInfo Worm::updateDrown(StateInfo _state)
 
 StateInfo Worm::StartHit(StateInfo _state)
 {
-	//TODO : 벽을 뚫고 들어가게 됬을경우 껴버려서 계속 소리가 재생됨, 충돌 알고리즘을 2~3중으로 설계하여 뚫고 들어갈일 없애버리기
-
 	crosshairRender_->Off();
 
 	WindSpeed_ = GetLevel<PlayLevel>()->GetGameController()->GetWindController()->GetCurrentWindSpeed();
@@ -1334,7 +1337,7 @@ StateInfo Worm::StartHit(StateInfo _state)
 	switch (bound_)
 	{
 	case 0:
-		DamageSpeed_ = 300.f;
+		DamageSpeed_ = 200.f;
 		break;
 	case 1:
 		DamageSpeed_ = 400.f;
@@ -1365,57 +1368,77 @@ StateInfo Worm::updateHit(StateInfo _state)
 		}
 	}
 
-	GameEngineCollision* bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-	GameEngineCollision* Left = leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-	GameEngineCollision* Right = rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-
-	if (nullptr != bottom)
-	{
-		DamageAcc_ = 0.f;
-
-		if (Hit_ == false)
-		{
-			//Slide_To_IdleLeft1_ 에니메이션 완료시 실행
-			return "Idle";
-		}
-		if (bound_ <= 0)
-		{
-			if (bLeft_)
-			{
-				mainRender_->ChangeAnimation("Slide_To_IdleLeft1_", std::string("SlideL1_.bmp"));
-				// 에니메이션 재생 완료후, 자동으로 Hit_를 false처리함
+	if ((DamageAcc_ + (DamageDir_.y * DamageSpeed_)) < 0.f)
+	{	// 위로 튕길때
+		if (nullptr != headCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+		{// 위에 부딪히면 
+			if (bound_ <= 0)
+			{//더 튕길 수 없으면
+				DamageDir_.y = 0.f;
 			}
 			else
-			{
-				mainRender_->ChangeAnimation("Slide_To_IdleRight1_", std::string("SlideR1_.bmp"));
-			}
-			//입사각에 맞게 통통 튀면서 튀는 횟수를 모두 소모하면 Hitend
-			// // 입사각을 계산하기 난해함으로, 각도 상관없이 튀는것만 우선 구현
-			//3. 지상에 착지하면 종료		
+			{// 아직 튕길 수 있으면
+				bound_--;
+				if (DamageDir_.y < 0)
+				{
+					DamageDir_.y *= -1.f;  //이리 했는데도 다음 프레임에도 여전히 위에 부딪혀 있으면 잣댐
+				}
+			}			
 		}
-		else
-		{
-			bound_--;
-		}
-		return StateInfo();
-
+		SetMove(0.f, (DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_);			
+		DamageAcc_ += 10.f;
 	}
 	else
-	{
-		SetMove(0.f, (DamageAcc_+ (DamageDir_.y* DamageSpeed_)) * deltaTime_);
-		DamageAcc_ += 10.f;
+	{	// 아래로 튕길때
+		if (nullptr != bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+		{// 땅에 닿으면
+			DamageAcc_ = 0.f;
 
-		//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
+			if (Hit_ == false) //Slide_To_IdleLeft1_ 에니메이션 완료시 실행
+			{			
+				return "Idle";
+			}
+			if (bound_ <= 0)
+			{
+				if (bLeft_)
+				{
+					mainRender_->ChangeAnimation("Slide_To_IdleLeft1_", std::string("SlideL1_.bmp"));
+					// 에니메이션 재생 완료후, 자동으로 Hit_를 false처리함
+				}
+				else
+				{
+					mainRender_->ChangeAnimation("Slide_To_IdleRight1_", std::string("SlideR1_.bmp"));
+				}
+			}
+			else
+			{// 아직 튕길 수 있으면 위로 튕겨준다.
+				bound_--;
+				if (DamageDir_.y > 0)
+				{
+					DamageDir_.y *= -1.f;
+				}
+				DamageAcc_ += 10.f;
+				SetMove(0.f, (DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_);
+			}
+			return StateInfo();
+		}
+		else
+		{// 땅에 안 닿았으면
+			SetMove(0.f, (DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_);
+			DamageAcc_ += 10.f;
 
-		//if (nullptr != bottom)
-		//{
-		//	SetMove(0.f, ((DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_) *-0.5);
-		//}
+			//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
+
+			//if (nullptr != bottom)
+			//{
+			//	SetMove(0.f, ((DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_) *-0.5);
+			//}
+		}
 	}
 
-	if (nullptr == Right && nullptr != Left)
+	if ((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) >= 0)//오른쪽 진행
 	{
-		if ((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) >= 0)//오른쪽 진행
+		if (nullptr == rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			SetMove((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
 			//Left = leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
@@ -1430,9 +1453,9 @@ StateInfo Worm::updateHit(StateInfo _state)
 			//}
 		}
 	}
-	else if (nullptr == Left && nullptr != Right)
+	else if ((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) <= 0)
 	{
-		if((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) <= 0)
+		if (nullptr == leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			SetMove((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
 			//Right = rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
@@ -1449,7 +1472,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 	}
 	else
 	{
-		SetMove((DamageDir_.x *(WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
+		SetMove((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) * deltaTime_, 0.f);
 	}
 
 	return StateInfo();
@@ -1469,10 +1492,11 @@ StateInfo Worm::updateDeath(StateInfo _state)
 	// 턴이 멈추었는가(종료) 확인후, 에니메이션 재생, 레벨 메니저 주관하에 차례대로 ㅈㄴ행되게끔
 	if (true == DeathEnd_)
 	{
-		DeathEnd_ = false;
+		//DeathEnd_ = false;
 		//HitBoxCollision_->CollisionOff();
 		//GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
-		//TODO : 컨트롤러 작업 완료시 주석 해제
+		//WormDeath();
+		//TODO : 웜 삭제 구현시 주석 해제
 	}
 
 	return StateInfo();
@@ -1498,10 +1522,10 @@ StateInfo Worm::startIdle(StateInfo _state)
 
 StateInfo Worm::updateIdle(StateInfo _state)
 {
-	if (true == DeathStart_)
-	{
-		return "Death";
-	}
+	//if (true == DeathStart_)
+	//{
+	//	return "Death";
+	//}
 
 	addGravity();
 
@@ -1509,6 +1533,11 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	{
 		weaponEquipDelay_ += deltaTime_;
 
+		//TODO: Death 페이즈 진입 조건
+		// 현재 플레이어가 아닌 다른 플레이어가 데미지를 입은경우, bool값만 조정하고 일단 그냥 진행하기
+		// 현재 플레이어가 데미지를 입을경우 (기름통) 등으로 활동 중단, 대기후 결산 페이즈 진행
+		// 만약 어떤 worm이 데미지를 입었는데 그것이 curworm일 경우, 강제로 엑션 토큰 회수
+		
 
 		if (true == bFocus_)
 		{
@@ -1546,7 +1575,13 @@ StateInfo Worm::updateIdle(StateInfo _state)
 			}
 		}
 	}
-	
+	else if (0 == GetActionTokenCount())
+	{
+		if (true == DeathStart_)
+		{
+			return "Death";
+		}
+	}
 
 	// 떨어지는 중
 	if (speed_.y > 0.0f)
@@ -1578,7 +1613,6 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	return StateInfo();
 }
 
-
 StateInfo Worm::startWalk(StateInfo _state)
 {
 	if (bLeft_)
@@ -1591,7 +1625,6 @@ StateInfo Worm::startWalk(StateInfo _state)
 	}
 	return StateInfo();
 }
-
 
 StateInfo Worm::updateWalk(StateInfo _state)
 {
@@ -3158,6 +3191,15 @@ UIController* Worm::GetCurUIController() const
 	return uicontroller_;
 }
 
+void Worm::DeleteUIController()
+{
+	if (nullptr == uicontroller_)
+	{
+		GameEngineDebug::MsgBoxError("안됨");
+	}
+	uicontroller_->Death();
+}
+
 void Worm::Damage(int _numDamage, float4 _MoveDir)
 {
 	// updatebefore 에서 호출됨
@@ -3169,7 +3211,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	{
 		bLeft_ = true;
 	}
-	bound_ = _numDamage/25;// 이만큼 튕긴다.
+	bound_ = (_numDamage / 25) - 1; // 이만큼 튕긴다.
 
 	hp_ -= _numDamage;
 	Hit_ = true;
@@ -3179,6 +3221,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 		hp_ = 0;
 		DeathReady_ = true;
 	}
+	ClearActionToken();
 	ChangeState("Hit");
 	//if (true == state_.IsCurStateName("Hit"))
 	//{

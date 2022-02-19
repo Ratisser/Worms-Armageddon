@@ -33,6 +33,7 @@ public:
 	void CreateWormUI();
 
 	void SetFocusOnlyOneWorm(Worm* _Worm);
+	void SetFocusOnlyOneWorm(int _WormIndex);
 	
 
 	std::vector<Worm*> GetWormList() const;
@@ -100,10 +101,12 @@ private:
 	int PetroleumCount_; // 현재 활성중인 기름 숫자
 
 	size_t currentIndex_;
-	Worm* currentWorm_;
 
 	Worm* CurDeathWorm_;
 	Worm* NextDeathWorm_;
+
+	Worm* currentWorm_;
+	Worm* prevWorm_;
 
 	int wormIndex_;
 	int prevwormIndex_;

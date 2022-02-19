@@ -21,6 +21,9 @@ private:
 	static void ColCheckFuncInitialize();
 
 public:
+
+	//static bool RectToImage(GameEngineCollision* _PointCol, GameEngineCollision* _ImageCol);
+
 	static bool PointToImage(GameEngineCollision* _PointCol, GameEngineCollision* _ImageCol);
 	static bool ImageToPoint(GameEngineCollision* _ImageCol, GameEngineCollision* _PointCol);
 

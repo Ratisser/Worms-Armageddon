@@ -87,7 +87,6 @@ void PlayLevel::Loading()
 	
 	fadeObject_ = CreateActor<FadeObject>();
 	loadingImage_ = CreateActor<LoadingImage>();
-	//PetroleumManager_ = CreateActor<PetroleumManager>();
 
 	CreateActor<BackGroundGradation>();
 	Train_ = CreateActor<MapTrain>();
@@ -120,6 +119,8 @@ void PlayLevel::Loading()
 void PlayLevel::LevelUpdate()
 {
 	PJWLevelUpdate();
+
+
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
