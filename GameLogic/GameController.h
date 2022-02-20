@@ -34,6 +34,7 @@ public:
 
 	void SetFocusOnlyOneWorm(Worm* _Worm);
 	void SetFocusOnlyOneWorm(int _WormIndex);
+	void SetCurrentWorm(int _WormIndex);
 	
 
 	std::vector<Worm*> GetWormList() const;

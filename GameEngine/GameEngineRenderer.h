@@ -131,6 +131,7 @@ public:
 	bool IsCurAnimationEnd();
 
 	int GetCurAnimationFrame();
+	std::string GetCurAnimationName();
 
 public:
 	void CurAnimationLoopEnd();

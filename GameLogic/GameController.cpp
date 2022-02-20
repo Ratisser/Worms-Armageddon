@@ -37,6 +37,8 @@
 #include "WindController.h"
 #include "Cloud.h"
 
+#include "PlayLevel.h"
+
 std::vector<BottomStateUI*> GameController::PlayerHPBarList_;
 bool GameController::BottomUISortStart = false;
 int GameController::SortStartIndex = -1;
@@ -151,15 +153,20 @@ void GameController::Update()
 	for (int i = 0; i < size; ++i)
 	{	
 		if (wormList_[i]->GetDeathEnd())
-		{
+		{		
+			if (wormList_[i] == currentWorm_)
+			{
+				currentWorm_ = nullptr;
+			}
+
 			wormList_[i]->WormDeath();
+			GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
 			wormList_.erase(wormList_.begin() + i);
 		}
 	}
 	//TODO : 웜 삭제 구현
-	// 웜을 삭제하게 되면 웜 인덱스도 바꾸어 주어야함
 	// 죽을 녀석 찾아다가 포커싱 해줘야함(모륵겟슴)
-	// 그밖에 웜 리스트, 커런트 웜에 연결된 모든놈들 다 찾아다가 떼어내야함
+	// 웜 리스트, 커런트 웜에 연결된 모든놈들 다 찾아다가 떼어내야함
 	// 각각의 기능을 만들고 하나에 합쳐놓기
 	// settlemnet state에서 순차적으로 죽음 실행하고, 포커싱 해주고, 그 과정에서 wormdeath를 호출해 주고, 
 	// 마지막에 리스트에서 일괄 지워버린다.
@@ -219,8 +226,6 @@ void GameController::UpdateAfter()
 	{
 		cameraPos_ = GetLevel()->GetCamPos();
 
-		//wrom 인덱스가 아니라 cur worm을 참고해 오게 하면 좋을것 같다.
-
 		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
 		float4 MoveVector = cameraMovePos - cameraPos_;
 
@@ -268,6 +273,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 
 	xPosList_.push_back(wormXPosContainer_);
 	wormList_[0]->SetFocus(true);
+	currentWorm_ = wormList_[0];
 }
 
 void GameController::CreateWormUI()
@@ -353,7 +359,6 @@ void GameController::SetFocusOnlyOneWorm(Worm* _Worm)
 		if (_Worm == wormList_[i])
 		{
 			wormList_[i]->SetFocus(true);
-			currentWorm_ = wormList_[i];
 		}
 		else
 		{
@@ -369,13 +374,17 @@ void GameController::SetFocusOnlyOneWorm(int _WormIndex)
 		if (_WormIndex == i)
 		{
 			wormList_[i]->SetFocus(true);
-			currentWorm_ = wormList_[i];
 		}
 		else
 		{
 			wormList_[i]->SetFocus(false);
 		}
 	}
+}
+
+void GameController::SetCurrentWorm(int _WormIndex)
+{
+	currentWorm_ = wormList_[_WormIndex];
 }
 
 std::vector<Worm*> GameController::GetWormList() const
@@ -434,6 +443,8 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 		}
 
 		SetFocusOnlyOneWorm(wormIndex_);
+		SetCurrentWorm(wormIndex_);
+
 		IsCameraMove_ = false;
 		return "";
 	}
@@ -544,8 +555,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	// Death를 진행시킬 worm
 
 	if (false == WormDeathReady_)
-	{
-		
+	{		
 		CurDeathWorm_ = NextDeathWorm_;
 		
 		NextDeathWorm_ = nullptr;

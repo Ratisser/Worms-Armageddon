@@ -281,7 +281,8 @@ private:
 	bool Hit_;
 	bool DeathReady_; // 죽은 상태, 아직 동작은 않함
 	bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함 // Death 에니메이션의 호출
-	bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림 // Death 에니메이션 종료후 설정됨
+	bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림
+	bool DeathAniEnd_;
 
 	float deltaTime_;
 	float weaponEquipDelay_;
@@ -321,11 +322,6 @@ private:
 	void HitEnd()
 	{
 		Hit_ = false;
-	}
-
-	void Die() 
-	{
-		DeathEnd_ = true;
 	}
 };
 

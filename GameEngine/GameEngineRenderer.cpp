@@ -433,6 +433,11 @@ int GameEngineRenderer::GetCurAnimationFrame()
 	return curani_->cur_;
 }
 
+std::string GameEngineRenderer::GetCurAnimationName()
+{
+	return curani_->GetName();
+}
+
 void GameEngineRenderer::CurAnimationLoopEnd()
 {
 	curani_->loop_ = false;
