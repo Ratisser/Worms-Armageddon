@@ -685,7 +685,8 @@ void CharactorImageInit()
 
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("backflp.bmp"), cutSize);
 
-	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wdie.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wdieLeft.bmp"), cutSize);
+	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("wdieRight.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR_.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR_u.bmp"), cutSize);
 	RS::LoadImageFromFileAndCut(dir.PathToPlusFileName("SlideR_d.bmp"), cutSize);

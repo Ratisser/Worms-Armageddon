@@ -632,9 +632,18 @@ StateInfo GameController::startDeathPhase(StateInfo _state)
 
 StateInfo GameController::updateDeathPhase(StateInfo _state)
 {
+	//cameraPos_ = GetLevel()->GetCamPos();S
+	//
+	//float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
+	//float4 MoveVector = cameraMovePos - cameraPos_;
+	//
+	//GetLevel()->SetCamMove(MoveVector * 0.1f);
 	//DeathPhase에서 다시 결산 페이즈로 넘어가, 갱신될 수도 있다.
-	return "NextWorm";
-
+	if (true)
+	{
+		// 죽음 애니메이션이 완전히 끝나면 State 를 다시 Settlement 로 돌려서 더 죽을 웜이 있나를 살펴본다...
+		return "Settlement";
+	}
 	return StateInfo();
 }
 

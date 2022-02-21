@@ -371,4 +371,10 @@ void TopHPText::CheckHPTextZero()
 	{
 		TenFlag_ = false;
 	}
+
+	if (PrevHP_ <= 1 && CurHP_ <= 0)
+	{
+		HPNumRenderer_->ChangeAnimation("0");
+	}
+
 }
