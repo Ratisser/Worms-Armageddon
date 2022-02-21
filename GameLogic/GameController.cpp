@@ -39,9 +39,11 @@
 
 #include "PlayLevel.h"
 
-std::vector<BottomStateUI*> GameController::PlayerHPBarList_;
+std::vector<BottomStateUI*> GameController::PlayerHPBarList;
+std::queue<BottomStateUI*> GameController::PlayerHPBarSortQueue;
 bool GameController::BottomUISortStart = false;
 int GameController::SortStartIndex = -1;
+int GameController::SortEndIndex = -1;
 float GameController::SortDeltaTime = 0.f;
 
 GameController::GameController() // default constructer 디폴트 생성자
@@ -298,7 +300,7 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어 하단 상태바관련 관리목록에 추가
-		PlayerHPBarList_.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
+		PlayerHPBarList.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
 
 		// 플레이어당 상단 상태 UI
 		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
@@ -750,24 +752,36 @@ void GameController::MakeWaterLevel(float _WaterLevel)
 
 void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 {
-	// 현재 플레이어의 체력에 따라 정렬 시작
-	int Size = static_cast<int>(PlayerHPBarList_.size());
-	for (int i = 0; i < Size; ++i)
+	// 현재 이미 다른 플레이어 Bottom HPBar가 정렬중이라면
+	// 대기큐에 해당 플레이어UI저장
+	if (true == BottomUISortStart)
 	{
-		if (Size == i + 1)
+		PlayerHPBarSortQueue.push(_CurUI);
+	}
+	else
+	{
+		// 현재 플레이어의 체력에 따라 정렬 시작
+		int Size = static_cast<int>(PlayerHPBarList.size());
+		for (int i = 0; i < Size; ++i)
 		{
-			break;
+			if (PlayerHPBarList[i] == _CurUI)
+			{
+				SortStartIndex = i;
+			}
 		}
 
-		if (PlayerHPBarList_[i + 1] == _CurUI)
+		for (int i = 0; i < Size; ++i)
 		{
-			continue;
-		}
+			if (PlayerHPBarList[i] == _CurUI)
+			{
+				continue;
+			}
 
-		if (PlayerHPBarList_[i]->GetCurHP() < PlayerHPBarList_[i + 1]->GetCurHP())
-		{
-			SortStartIndex = i;
-			BottomUISortStart = true;
+			if (PlayerHPBarList[SortStartIndex]->GetCurHP() < PlayerHPBarList[i]->GetCurHP())
+			{
+				BottomUISortStart = true;
+				SortEndIndex = i;
+			}
 		}
 	}
 }
@@ -779,36 +793,51 @@ void GameController::BottomStateHPBarSortStart()
 	{
 		SortDeltaTime = 0.f;
 
-		int Size = static_cast<int>(PlayerHPBarList_.size());
+		int Size = static_cast<int>(PlayerHPBarList.size());
 		bool Flag = false;
 		for (int i = SortStartIndex; i < SortStartIndex + 1; ++i)
 		{
-			//if (i == Size)
-			//{
+			// 정렬 종료후 정렬대기열에 정렬할 HPBar가 존재한다면
+			// 해당 HPBar정렬 시작
+			if (SortStartIndex == SortEndIndex)
+			{
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
-				//BottomUISortStart = false;
-				//return;
-			//}
+				BottomUISortStart = false;
+
+				if (!PlayerHPBarSortQueue.empty())
+				{
+					// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
+					BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
+
+					// 정렬시작하므로 큐에서 제거
+					PlayerHPBarSortQueue.pop();
+
+					// 정렬 시작
+					BottomStateHPBarSortCheck(QueueState);
+				}
+
+				return;
+			}
 
 			for (int j = SortStartIndex + 1; j < Size; ++j)
 			{
-				if (PlayerHPBarList_[i] == PlayerHPBarList_[j])
+				if (PlayerHPBarList[i] == PlayerHPBarList[j])
 				{
 					continue;
 				}
 
-				if (PlayerHPBarList_[i]->GetCurHP() < PlayerHPBarList_[j]->GetCurHP())
+				if (PlayerHPBarList[i]->GetCurHP() < PlayerHPBarList[j]->GetCurHP())
 				{
 					// 실질적인 렌더링 위치를 변경하고
-					float CurPlayerYPos = PlayerHPBarList_[i]->GetBottomUIYPos();
-					float ComparePlayerYPos = PlayerHPBarList_[j]->GetBottomUIYPos();
-					PlayerHPBarList_[i]->SetBottomStateBarRenderPos(ComparePlayerYPos);
-					PlayerHPBarList_[j]->SetBottomStateBarRenderPos(CurPlayerYPos);
+					float CurPlayerYPos = PlayerHPBarList[i]->GetBottomUIYPos();
+					float ComparePlayerYPos = PlayerHPBarList[j]->GetBottomUIYPos();
+					PlayerHPBarList[i]->SetBottomStateBarRenderPos(ComparePlayerYPos);
+					PlayerHPBarList[j]->SetBottomStateBarRenderPos(CurPlayerYPos);
 
 					// PlayerHPBarList_ 순서를 변경
-					BottomStateUI* Temp = PlayerHPBarList_[i];
-					PlayerHPBarList_[i] = PlayerHPBarList_[j];
-					PlayerHPBarList_[j] = Temp;
+					BottomStateUI* Temp = PlayerHPBarList[i];
+					PlayerHPBarList[i] = PlayerHPBarList[j];
+					PlayerHPBarList[j] = Temp;
 
 					SortStartIndex = j;
 
@@ -824,10 +853,6 @@ void GameController::BottomStateHPBarSortStart()
 				break;
 			}
 		}
-
-		// 정렬완료 후 현재 플레이어가 체력이 0이면
-		// 화면밖으로 떨어뜨리며 죽인다.
-		//CurPlayerDeathCheck();
 	}
 }
 

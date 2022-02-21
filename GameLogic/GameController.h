@@ -1,5 +1,6 @@
 #pragma once
 
+#include <queue>
 #include <vector>
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
@@ -148,9 +149,11 @@ private: // 물관련
 	WaterLevel* WaterLevel_;
 
 private: // 하단상태바 정렬관련
-	static std::vector<BottomStateUI*> PlayerHPBarList_;
+	static std::vector<BottomStateUI*> PlayerHPBarList;
+	static std::queue<BottomStateUI*> PlayerHPBarSortQueue;
 	static bool BottomUISortStart;
 	static int SortStartIndex;
+	static int SortEndIndex;
 	static float SortDeltaTime;
 };
 
