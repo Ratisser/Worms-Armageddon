@@ -173,9 +173,14 @@ void GameController::Update()
 				currentWorm_ = nullptr;
 			}
 
+			wormList_[i]->GetCurUIController()->CurWormUIControllerDeath();
 			wormList_[i]->WormDeath();
 			GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
 			wormList_.erase(wormList_.begin() + i);
+
+			// 여기서 하단 상태바 위치 재조정 필요
+
+
 			size = wormList_.size();
 		}
 	}

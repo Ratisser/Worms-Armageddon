@@ -129,3 +129,42 @@ void UIController::UpdateAfter()
 void UIController::Render()
 {
 }
+
+void UIController::CurWormUIControllerDeath()
+{
+	// Weapon Sheet 관련
+	if (nullptr != weaponsheet_)
+	{
+		weaponsheet_->Death();
+	}
+
+	// 화면하단 웜 스테이터스 관련
+	if (nullptr != bottomstate_)
+	{
+		// HPText먼저 죽이고 그다음에 얘 죽이고
+		bottomstate_->Death();
+	}
+
+	// 플레이어상단 웜 스테이터스 관련
+	if (nullptr != wormtopstate_)
+	{
+		wormtopstate_->CurWormHPTextDeath();
+		wormtopstate_->Death();
+	}
+
+	// 플레이어 턴타임 관련
+	if (nullptr != curTimerWindow_)
+	{
+		curTimerWindow_->Death();
+	}
+
+	if (nullptr != curTimerDigitTen_)
+	{
+		curTimerDigitTen_->Death();
+	}
+
+	if (nullptr != curTimerDigit_)
+	{
+		curTimerDigit_->Death();
+	}
+}

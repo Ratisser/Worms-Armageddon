@@ -289,6 +289,11 @@ void WormTopStateUI::SetPlayerNamePos()
 	NameRenderer_->SetPivotPos(float4(ParentWorm_->GetPos().x, ParentWorm_->GetPos().y - 50.f));
 }
 
+
+void WormTopStateUI::CurWormHPTextDeath()
+{
+	HPText_->Death();
+}
 void WormTopStateUI::UpdateTextAnimation()
 {
 	HPText_->ChangeHPText();

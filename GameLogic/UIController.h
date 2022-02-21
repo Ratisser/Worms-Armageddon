@@ -78,5 +78,7 @@ public:
 	virtual void UpdateAfter() override;
 	virtual void Render() override;
 
+public:
+	void CurWormUIControllerDeath();
 };
 
