@@ -103,7 +103,8 @@ void Worm::initRenderer()
 	//mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_", this, &Worm::HitEnd);
 	//mainRender_->SetAnimationEndFunction<Worm>("Slide_To_IdleRight1_", this, &Worm::HitEnd);
 
-	mainRender_->CreateAnimation("wdie", "wdie.bmp", 0, 59, false, 0.033f);
+	mainRender_->CreateAnimation("wdieLeft", "wdieLeft.bmp", 0, 59, false, 0.033f);
+	mainRender_->CreateAnimation("wdieRight", "wdieRight.bmp", 0, 59, false, 0.033f);
 
 	mainRender_->CreateAnimation("Slide_To_IdleRight1_", "SlideR1_.bmp", 0, 21, false, 0.033f);
 	mainRender_->CreateAnimation("Slide_To_IdleRight1_U", "SlideR1_u.bmp", 0, 21, false, 0.033f);
@@ -1481,7 +1482,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 
 StateInfo Worm::StartDeath(StateInfo _state)
 {
-	mainRender_->ChangeAnimation("wdie", std::string("wdie.bmp"));
+	mainRender_->ChangeAnimation("wdieLeft", std::string("wdieLeft.bmp"));
 	// 정보만 셋팅
 	// 실행시 레벨 메니저에 pushback 하고
 	// 레벨 메니저에서 순번대로 Death 실행 
@@ -1490,12 +1491,12 @@ StateInfo Worm::StartDeath(StateInfo _state)
 
 StateInfo Worm::updateDeath(StateInfo _state)
 {
-	if (mainRender_->GetCurAnimationName() != "wdie")
+	if (mainRender_->GetCurAnimationName() != "wdieLeft")
 	{
 		GameEngineDebug::AssertFalse();
 	}
 
-	mainRender_->IsCurAnimationEnd();
+	if(true == mainRender_->IsCurAnimationEnd())
 	{
 		DeathEnd_ = true;		
 	}
