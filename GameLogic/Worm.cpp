@@ -1496,7 +1496,7 @@ StateInfo Worm::updateDeath(StateInfo _state)
 		GameEngineDebug::AssertFalse();
 	}
 
-	if(true == mainRender_->IsCurAnimationEnd())
+	if(true == mainRender_->IsCurAnimationEnd()) // 에니메이션 동작이 끝나면
 	{
 		DeathEnd_ = true;		
 	}

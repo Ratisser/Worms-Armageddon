@@ -176,6 +176,7 @@ void GameController::Update()
 			wormList_[i]->WormDeath();
 			GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
 			wormList_.erase(wormList_.begin() + i);
+			size = wormList_.size();
 		}
 	}
 	//TODO : 웜 삭제 구현
@@ -601,10 +602,10 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 			}
 		}
 
-		//TODO :  DeathStart가 되어 에니메이션을 재생하고, 재생이 완료 후, DeathEnd가 된것을 인지하면
+		//TODO :  Worm::DeathStart가 되어 에니메이션을 재생하고, 재생이 완료 후, bool DeathEnd가 된것을 인지하면
 		// nextworm state로 넘어가고, 그 nextworm에 다음 죽게될 worm을 넘겨주어야함
 
-		//worm의 죽음 상태 변화를 시작함 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
+		//worm의 죽음 상태 변화를 시작함 // worm의 대기상태와 GameController의 대기상태는 다름
 		if (nullptr != CurDeathWorm_)
 		{					
 			CurDeathWorm_->SetDeathReady(false);
@@ -639,7 +640,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	return StateInfo();
 }
 
-StateInfo GameController::startDeathPhase(StateInfo _state)
+StateInfo GameController::startDeathPhase(StateInfo _state) // 
 {
 	return StateInfo();
 }
