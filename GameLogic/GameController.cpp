@@ -137,6 +137,18 @@ void GameController::UpdateBefore()
 		wormList_[wormIndex_]->GetCurUIController()->GetCurWeaponSheet()->WeaponSheetActive();
 		prevwormIndex_ = wormIndex_;
 	}
+
+	if (!PlayerHPBarSortQueue.empty() && false == BottomUISortStart)
+	{
+		// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
+		BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
+
+		// 정렬시작하므로 큐에서 제거
+		PlayerHPBarSortQueue.pop();
+
+		// 정렬 시작
+		BottomStateHPBarSortCheck(QueueState);
+	}
 }
 
 void GameController::Update()
@@ -776,6 +788,7 @@ void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 			if (PlayerHPBarList[i] == _CurUI)
 			{
 				SortStartIndex = i;
+				break;
 			}
 		}
 
@@ -786,10 +799,25 @@ void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 				continue;
 			}
 
+			if (SortStartIndex + 1 == Size)
+			{
+				continue;
+			}
+
 			if (PlayerHPBarList[SortStartIndex]->GetCurHP() < PlayerHPBarList[i]->GetCurHP())
 			{
 				BottomUISortStart = true;
 				SortEndIndex = i;
+			}
+			else if (SortStartIndex == Size - 1) // 이미 가장 낮은 체력의 플레이어
+			{
+				BottomUISortStart = false;
+				SortEndIndex = SortStartIndex;
+			}
+
+			if (SortEndIndex < SortStartIndex)
+			{
+				SortEndIndex = SortStartIndex;
 			}
 		}
 	}
@@ -813,17 +841,17 @@ void GameController::BottomStateHPBarSortStart()
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
 				BottomUISortStart = false;
 
-				if (!PlayerHPBarSortQueue.empty())
-				{
-					// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
-					BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
+				//if (!PlayerHPBarSortQueue.empty())
+				//{
+				//	// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
+				//	BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
 
-					// 정렬시작하므로 큐에서 제거
-					PlayerHPBarSortQueue.pop();
+				//	// 정렬시작하므로 큐에서 제거
+				//	PlayerHPBarSortQueue.pop();
 
-					// 정렬 시작
-					BottomStateHPBarSortCheck(QueueState);
-				}
+				//	// 정렬 시작
+				//	BottomStateHPBarSortCheck(QueueState);
+				//}
 
 				return;
 			}
