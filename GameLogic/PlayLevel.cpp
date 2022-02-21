@@ -138,10 +138,10 @@ void PlayLevel::LevelUpdate()
 
 		for (int i = 0; i < GameOptionInfo::CurWormCnt; ++i)
 		{
-			std::string WormName = "Worm ";
-			WormName += std::to_string(i + 1);
+			//std::string WormName = "Worm ";
+			//WormName += std::to_string(i + 1);
 
-			GameEngineDebugExtension::PrintDebugWindowText(WormName + "Pos X : ", Controller_->GetWormList()[i]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[i]->GetPos().y);
+			//GameEngineDebugExtension::PrintDebugWindowText(WormName + "Pos X : ", Controller_->GetWormList()[i]->GetPos().x, ", Pos Y : ", Controller_->GetWormList()[i]->GetPos().y);
 		}
 
 
