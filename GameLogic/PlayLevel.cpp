@@ -182,6 +182,7 @@ void PlayLevel::wormLoading()
 	for (size_t i = 0; i < GameOptionInfo::CurWormCnt; i++)
 	{
 		Controller_->CreateWorm(minMaxInfo.x, minMaxInfo.y);
+		Controller_->CreateDrum(minMaxInfo.x, minMaxInfo.y);
 	}
 
 	MouseObject_ = CreateActor<MouseObject>("PlayLevelMouse");
@@ -306,8 +307,6 @@ void PlayLevel::KeySetting()
 void PlayLevel::CreateGimmickObject()
 {
 	DrumActor* DrumActor1 = CreateActor<DrumActor>(MouseObject_->GetPos()+ GetCamPos());
-	DrumActor1->SetRenderOrder((int)RenderOrder::Worm);
-	//DrumActor1 ->SetPos(float4(2560.f, 1580, 0.f));
 }
 
 void PlayLevel::PJWLevelUpdate()

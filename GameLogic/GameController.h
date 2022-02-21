@@ -32,6 +32,7 @@ public:
 public:
 	void CreateWorm(const float _minX, const float _maxX);
 	void CreateWormUI();
+	void CreateDrum(const float _minX, const float _maxX);
 
 	void SetFocusOnlyOneWorm(Worm* _Worm);
 	void SetFocusOnlyOneWorm(int _WormIndex);

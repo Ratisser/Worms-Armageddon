@@ -8,6 +8,7 @@
 
 #include "GameOptionInfo.h"
 #include "Worm.h"
+#include "DrumActor.h"
 #include "UIController.h"
 #include "WeaponSheet.h"
 #include "WeaponIcon.h"
@@ -49,6 +50,7 @@ float GameController::SortDeltaTime = 0.f;
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
+	, prevWorm_(nullptr)
 	, cameraMoveSpeed_(10.f)
 	, wormIndex_(0)
 	, PetroleumCount_(0)
@@ -64,6 +66,8 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, WaterLevel_(nullptr)
 	, settementTime_(0.0f)
 	, windController_(nullptr)
+	, CurDeathWorm_(nullptr)
+	, NextDeathWorm_(nullptr)
 {
 
 }
@@ -166,31 +170,23 @@ void GameController::Update()
 
 	for (int i = 0; i < size; ++i)
 	{	
-		if (wormList_[i]->GetDeathEnd())
+		//if (wormList_[i]->GetDeathEnd())
+		if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
 		{		
 			if (wormList_[i] == currentWorm_)
 			{
 				currentWorm_ = nullptr;
 			}
-
-			wormList_[i]->GetCurUIController()->CurWormUIControllerDeath();
-			wormList_[i]->WormDeath();
-			GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
+			wormList_[i]->UIControllerDeath();
+			wormList_[i]->WormDeath();			
 			wormList_.erase(wormList_.begin() + i);
 
 			// 여기서 하단 상태바 위치 재조정 필요
 
-
 			size = wormList_.size();
 		}
 	}
-	//TODO : 웜 삭제 구현
-	// 죽을 녀석 찾아다가 포커싱 해줘야함(모륵겟슴)
-	// 웜 리스트, 커런트 웜에 연결된 모든놈들 다 찾아다가 떼어내야함
-	// 각각의 기능을 만들고 하나에 합쳐놓기
-	// settlemnet state에서 순차적으로 죽음 실행하고, 포커싱 해주고, 그 과정에서 wormdeath를 호출해 주고, 
-	// 마지막에 리스트에서 일괄 지워버린다.
-	//}
+	//TODO : 죽을 녀석 찾아다가 포커싱 해줘야함
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
 	GameEngineDebugExtension::PrintDebugWindowText("wormListSize : ", wormList_.size());
@@ -372,6 +368,27 @@ void GameController::CreateWormUI()
 	}
 }
 
+void GameController::CreateDrum(const float _minX, const float _maxX)
+{
+	GameEngineMath::Random randomGenerator;
+	DrumActor* newDrum = parentLevel_->CreateActor<DrumActor>();
+	wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX); // 전에 생성한 좌표를 멤버변수에 저장
+
+	std::vector<float>::iterator startIter = xPosList_.begin();
+	std::vector<float>::iterator endIter = xPosList_.end();
+	for (; startIter != endIter; startIter++)
+	{
+		if (wormXPosContainer_ >= *startIter - 25.0f && wormXPosContainer_ <= *startIter + 25.0f) // 
+		{
+			wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
+			startIter = xPosList_.begin();
+			continue;
+		}
+	}
+
+	newDrum->SetPos({ wormXPosContainer_ , -500.0f });
+}
+
 void GameController::SetFocusOnlyOneWorm(Worm* _Worm)
 {
 	for (int i = 0; i < wormList_.size(); ++i)
@@ -453,6 +470,11 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 {
 	if (currentWorm_ == nullptr)
 	{
+		//TODO : 이부분 수정이 필요해 보임
+		//6마리 웜을 순차적으로 죽이고 마지막 1마리만 남았을때 UpdateAfter에서 문제가 발생했음, 
+		//wormlist_ 에는 [0]만 남았는데 인덱스가 1인경우
+		// 그냥 웜인덱스 시스템을 없애고 웜 진행 순서를 리스트로 구현해 보는건 어떨까 함
+
 		prevwormIndex_ = wormIndex_;
 
 		++wormIndex_;
@@ -582,7 +604,8 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 
 		for (int i = 0; i < wormList_.size(); ++i)
 		{
-			if (true == wormList_[i]->GetDeathReady_())
+			//if (true == wormList_[i]->GetDeathReady_())
+			if ((wormList_[i]->GetDeathState() == Worm::DeathState::DeathReady))
 			{
 				WormDeathReady_ = true; //			(worm)의		Death를		준비중이다.
 				WormDeathProgressing_ = true; //	(컨트롤러)가 Death상태	진행중이다.
@@ -613,8 +636,9 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 		//worm의 죽음 상태 변화를 시작함 만들어줌 // worm의 대기상태와 GameController의 대기상태는 다름
 		if (nullptr != CurDeathWorm_)
 		{					
-			CurDeathWorm_->SetDeathReady(false);
-			CurDeathWorm_->SetDeathStart(true);
+			CurDeathWorm_->SetDeathState(Worm::DeathState::DeathStart);
+			//CurDeathWorm_->SetDeathReady(false);
+			//CurDeathWorm_->SetDeathStart(true);
 		}
 	}
 	//다음 worm 죽이기까지 컨트롤러를 대기시킨다.
