@@ -513,6 +513,7 @@ void Worm::normalMove()
 	}
 }
 
+
 int Worm::getAimingFrame()
 {
 	return static_cast<int>(aimRotation_ / (AIM_STEP_RADIAN));

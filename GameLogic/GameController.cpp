@@ -159,15 +159,12 @@ void GameController::Update()
 {
 	state_.Update();
 
-	// 220218 SJH Test
 	if (true == BottomUISortStart)
 	{
 		BottomStateHPBarSortStart();
 	}
 
 	int size = wormList_.size();
-	auto iter0 = wormList_.begin();
-
 	for (int i = 0; i < size; ++i)
 	{	
 		//if (wormList_[i]->GetDeathEnd())
@@ -180,8 +177,6 @@ void GameController::Update()
 			wormList_[i]->UIControllerDeath();
 			wormList_[i]->WormDeath();			
 			wormList_.erase(wormList_.begin() + i);
-
-			// 여기서 하단 상태바 위치 재조정 필요
 
 			size = wormList_.size();
 		}
@@ -578,14 +573,36 @@ StateInfo GameController::startSettlement(StateInfo _state)
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
+	// Worm 사망절차
+	// 1.   Worm이 사망상태로 넘어가며 애니메이션을 실행한다
+	// 2.   Worm이 사망애니메이션종료후 사망한 Worm위치에 묘지액터가 생성 된다. (기존은 애니메이션종료후 바로사망)
+	//      -. 문제점 : 
+	//                 1) 사망처리중 WORM이 데미지를 입으면 사망상태에서 피격상태로 넘어간다.
+	//                     -. Worm이 사망애니메이션을 실행하게되면 충돌체는 제거되어야한다.(HitBoxCollision_ 얘제거해야함)
+	//                     -. 묘지액터가 생성하면서 hitbox collision을 생성해서 피격처리해야할듯...
+	//                 2) 사망애니메이션이 끝나자마자 WORM을 죽이게되면 UI처리에서 곤란해진다.
+
+	// 결론 : WORM사망애니메이션 실행 -> 종료 -> 렌더링OFF 및 충돌체제거 -> 묘지액터생성(사망한플레이어의 위치)
+	//        -> UI관련처리 -> 해당 Worm사망처리 및 UI관련 사망처리 -> GameController에서 관리하는 Worm목록갱신 -> 턴전환
+
+	// Worm Tern전환 절차
+	// 1. Worm이 한가지 동작을 실행 또는 턴타임초과시 턴전환 시작
+	// 2. Worm과 Next Worm의 전환 중간과정에서 UI관련 처리시작
+	// 3. UI관련 처리 완료 후 턴전환
+
+	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
+
+
+	// 이것은 무엇을 위한 처리인가????
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
-			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest(); // 사용안하는변수인데 왜 Setting하나?
 		}
 	}
 
+	// if문이 왜걸려있나?
 	if (true)
 	{
 		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
@@ -659,6 +676,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	}
 	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
 	{
+		// 4.0f
 		if (SETTLEMENT_TIME <= settementTime_)
 		{
 			settementTime_ = 0.0f;
@@ -870,18 +888,6 @@ void GameController::BottomStateHPBarSortStart()
 			{
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
 				BottomUISortStart = false;
-
-				//if (!PlayerHPBarSortQueue.empty())
-				//{
-				//	// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
-				//	BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
-
-				//	// 정렬시작하므로 큐에서 제거
-				//	PlayerHPBarSortQueue.pop();
-
-				//	// 정렬 시작
-				//	BottomStateHPBarSortCheck(QueueState);
-				//}
 
 				return;
 			}
