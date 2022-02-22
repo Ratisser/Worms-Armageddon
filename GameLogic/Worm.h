@@ -115,6 +115,11 @@ public:
 		DeathEnd
 	};
 
+	bool GetHit() const
+	{
+		return Hit_;
+	}
+
 	DeathState GetDeathState()
 	{
 		return DeathState_;

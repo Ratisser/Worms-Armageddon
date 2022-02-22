@@ -159,10 +159,10 @@ void GameController::Update()
 {
 	state_.Update();
 
-	if (true == BottomUISortStart)
-	{
-		BottomStateHPBarSortStart();
-	}
+	//if (true == BottomUISortStart)
+	//{
+	//	BottomStateHPBarSortStart();
+	//}
 
 	int size = wormList_.size();
 	for (int i = 0; i < size; ++i)
@@ -552,6 +552,12 @@ StateInfo GameController::updateActionEnd(StateInfo _state)
 	if (PetroleumCount_ == 0)
 	{
 		currentWorm_ = nullptr;
+
+		//if (true == BottomUISortStart)
+		//{
+		//	BottomStateHPBarSortStart();
+		//}
+
 		return "Settlement";
 	}
 
@@ -592,14 +598,28 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 
 	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
 
-
+	bool Damagethisturn= false;
 	// 이것은 무엇을 위한 처리인가????
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
+			Damagethisturn = true;
+			if (true == BottomUISortStart)
+			{
+				if (true == BottomStateHPBarSortStart())
+				{
+					wormList_[i]->ResetisDamaged();
+				}
+			}
+
 			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest(); // 사용안하는변수인데 왜 Setting하나?
+
 		}
+	}
+	if (Damagethisturn)
+	{
+		return StateInfo();
 	}
 
 	// if문이 왜걸려있나?
@@ -871,7 +891,7 @@ void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 	}
 }
 
-void GameController::BottomStateHPBarSortStart()
+bool GameController::BottomStateHPBarSortStart()
 {
 	SortDeltaTime += GameEngineTime::GetInst().GetDeltaTime();
 	if (0.3f <= SortDeltaTime)
@@ -889,7 +909,7 @@ void GameController::BottomStateHPBarSortStart()
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
 				BottomUISortStart = false;
 
-				return;
+				return true;
 			}
 
 			for (int j = SortStartIndex + 1; j < Size; ++j)
@@ -927,6 +947,7 @@ void GameController::BottomStateHPBarSortStart()
 			}
 		}
 	}
+	return false;
 }
 
 void GameController::CurPlayerDeathCheck()

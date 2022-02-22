@@ -3216,6 +3216,7 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 
 	hp_ -= _numDamage;
 	Hit_ = true;
+	isDamaged_ = true;
 
 	if (hp_ <= 0)
 	{
