@@ -34,7 +34,7 @@ public:
 	void SetCurWeapon(eItemList _WeaponType);
 	void SetUIController(UIController* _uicontroller);
 	UIController* GetCurUIController() const;
-	void DeleteUIController();
+	void UIControllerDeath();
 
 	void Damage(int _numDamage, float4 _MoveDir);
 	bool IsDie() const;
@@ -61,31 +61,30 @@ public:
 	{
 		return hp_;
 	}
-	const bool GetDeathReady_()
-	{
-		return DeathReady_;
-	}
+	//const bool GetDeathReady_()
+	//{
+	//	return DeathReady_;
+	//}
 
-	void SetDeathEnd(bool _DeathEnd)
-	{
-		DeathEnd_ = _DeathEnd;
-	}
+	//void SetDeathEnd(bool _DeathEnd)
+	//{
+	//	DeathEnd_ = _DeathEnd;
+	//}
 
-	const bool GetDeathEnd()
-	{
-		return DeathEnd_;
-	}
+	//const bool GetDeathEnd()
+	//{
+	//	return DeathEnd_;
+	//}
 
+	//void SetDeathStart(bool _DeathStart)
+	//{
+	//	DeathStart_ = _DeathStart;
+	//}
 
-	void SetDeathStart(bool _DeathStart)
-	{
-		DeathStart_ = _DeathStart;
-	}
-
-	void SetDeathReady(bool _DeathReady)
-	{
-		DeathReady_ = _DeathReady;
-	}
+	//void SetDeathReady(bool _DeathReady)
+	//{
+	//	DeathReady_ = _DeathReady;
+	//}
 	int GetPrevHp()
 	{
 		return prevHp_;
@@ -106,6 +105,24 @@ public:
 	bool isDamagedThisTurn()
 	{
 		return isDamaged_;
+	}
+
+	enum class DeathState
+	{
+		IsLive,
+		DeathReady,
+		DeathStart,
+		DeathEnd
+	};
+
+	DeathState GetDeathState()
+	{
+		return DeathState_;
+	}
+
+	void SetDeathState(DeathState state)
+	{
+		DeathState_ = state;
 	}
 
 private:
@@ -279,9 +296,12 @@ private:
 	bool bBackJump_;
 	bool bFocus_;
 	bool Hit_;
-	bool DeathReady_; // 죽은 상태, 아직 동작은 않함
-	bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함 // Death 에니메이션의 호출
-	bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림
+
+	DeathState DeathState_;
+
+	//bool DeathReady_; // 죽은 상태, 아직 동작은 않함
+	//bool DeathStart_;// 죽음 동작 순번을 기다림, true가 되면 죽음 동작 시작함 // Death 에니메이션의 호출
+	//bool DeathEnd_;// 죽음 동작 에니메이션 완료후 설정됨, 후속 조치를 기다림
 	bool DeathAniEnd_;
 
 	float deltaTime_;

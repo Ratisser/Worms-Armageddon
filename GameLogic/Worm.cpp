@@ -58,9 +58,13 @@ Worm::Worm()
 	, currentWeapon_(eItemList::WEAPON_BAZOOKA)
 	, nextState_("")
 	, bFocus_(false)
-	, DeathReady_(false)
-	, DeathStart_(false)
-	, DeathEnd_(false)
+	, SoundWait_(false)
+	, isDamaged_(false)
+	//, DeathReady_(false)
+	//, DeathStart_(false)
+	//, DeathEnd_(false)
+	, DeathAniEnd_(false)
+	, DeathState_(DeathState::IsLive)
 	, uicontroller_(nullptr)
 	, hp_(GameOptionInfo::WormEnergy)
 	, prevHp_(GameOptionInfo::WormEnergy)
@@ -508,6 +512,7 @@ void Worm::normalMove()
 		SetMove({ 0.0f, -1.0f });
 	}
 }
+
 
 int Worm::getAimingFrame()
 {
@@ -1258,29 +1263,23 @@ void Worm::InputUpdate()
 
 void Worm::WormDeath()
 {
-	if (bulletFocusActor_ != nullptr)
-	{
-		BulletFocusOff();
-	}
-	DeleteUIController();
-
 	Death();
+
+	BulletFocusOff();	
+	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
+	if (pos_.y < waterlevel)
+	{
+		GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
+	}
 }
 
 #pragma region Stage
 
 StateInfo Worm::StartDrown(StateInfo _state)
 {
-	//if (bLeft_)
-	//{
-	//	mainRender_->ChangeAnimation("Slide_IdleLeft_", std::string("SlideL_.bmp"));
-	//}
-	//else
-	//{
-	//	mainRender_->ChangeAnimation("Slide_IdleRight_", std::string("SlideR_.bmp"));
-	//}
-
-	//updateDrown 끝날때 까지 카메라 고정
+	//DeathReady_ = true;
+	DeathState_ = DeathState::DeathEnd;
+	//DeathEnd_ = true;
 
 	return StateInfo();
 }
@@ -1498,7 +1497,8 @@ StateInfo Worm::updateDeath(StateInfo _state)
 
 	if(true == mainRender_->IsCurAnimationEnd()) // 에니메이션 동작이 끝나면
 	{
-		DeathEnd_ = true;		
+		DeathState_ = DeathState::DeathEnd;
+		//DeathEnd_ = true;		
 	}
 	return StateInfo();
 }
@@ -1578,7 +1578,8 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	}
 	else if (0 == GetActionTokenCount())
 	{
-		if (true == DeathStart_)
+		//if (true == DeathStart_)
+		if (DeathState_ == DeathState::DeathStart)
 		{
 			return "Death";
 		}
@@ -3192,13 +3193,12 @@ UIController* Worm::GetCurUIController() const
 	return uicontroller_;
 }
 
-void Worm::DeleteUIController()
+void Worm::UIControllerDeath()
 {
-	if (nullptr == uicontroller_)
+	if (uicontroller_ != nullptr)
 	{
-		GameEngineDebug::MsgBoxError("안됨");
+		uicontroller_->CurWormUIControllerDeath();
 	}
-	uicontroller_->Death();
 }
 
 void Worm::Damage(int _numDamage, float4 _MoveDir)
@@ -3220,7 +3220,8 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	if (hp_ <= 0)
 	{
 		hp_ = 0;
-		DeathReady_ = true;
+		DeathState_ = DeathState::DeathReady;
+		//DeathReady_ = true;
 	}
 	ClearActionToken();
 	ChangeState("Hit");
@@ -3306,7 +3307,7 @@ void Worm::Update()
 
 	if (pos_.y >= waterlevel+200.f)
 	{
-		//ChangeState("Drown");
+		ChangeState("Drown");
 	}
 }
 

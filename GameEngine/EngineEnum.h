@@ -30,6 +30,7 @@ enum class RenderOrder
 	MapBack2,
 	WaterLevel_Back,
 	Map,
+	Drum,
 	Worm,
 	WaterLevel_Front,
 	Effect0,

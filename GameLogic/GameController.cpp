@@ -8,6 +8,7 @@
 
 #include "GameOptionInfo.h"
 #include "Worm.h"
+#include "DrumActor.h"
 #include "UIController.h"
 #include "WeaponSheet.h"
 #include "WeaponIcon.h"
@@ -49,6 +50,7 @@ float GameController::SortDeltaTime = 0.f;
 GameController::GameController() // default constructer 디폴트 생성자
 	: currentIndex_(0)
 	, currentWorm_(nullptr)
+	, prevWorm_(nullptr)
 	, cameraMoveSpeed_(10.f)
 	, wormIndex_(0)
 	, PetroleumCount_(0)
@@ -64,6 +66,8 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, WaterLevel_(nullptr)
 	, settementTime_(0.0f)
 	, windController_(nullptr)
+	, CurDeathWorm_(nullptr)
+	, NextDeathWorm_(nullptr)
 {
 
 }
@@ -155,42 +159,29 @@ void GameController::Update()
 {
 	state_.Update();
 
-	// 220218 SJH Test
 	if (true == BottomUISortStart)
 	{
 		BottomStateHPBarSortStart();
 	}
 
 	int size = wormList_.size();
-	auto iter0 = wormList_.begin();
-
 	for (int i = 0; i < size; ++i)
 	{	
-		if (wormList_[i]->GetDeathEnd())
+		//if (wormList_[i]->GetDeathEnd())
+		if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
 		{		
 			if (wormList_[i] == currentWorm_)
 			{
 				currentWorm_ = nullptr;
 			}
-
-			wormList_[i]->GetCurUIController()->CurWormUIControllerDeath();
-			wormList_[i]->WormDeath();
-			GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
+			wormList_[i]->UIControllerDeath();
+			wormList_[i]->WormDeath();			
 			wormList_.erase(wormList_.begin() + i);
-
-			// 여기서 하단 상태바 위치 재조정 필요
-
 
 			size = wormList_.size();
 		}
 	}
-	//TODO : 웜 삭제 구현
-	// 죽을 녀석 찾아다가 포커싱 해줘야함(모륵겟슴)
-	// 웜 리스트, 커런트 웜에 연결된 모든놈들 다 찾아다가 떼어내야함
-	// 각각의 기능을 만들고 하나에 합쳐놓기
-	// settlemnet state에서 순차적으로 죽음 실행하고, 포커싱 해주고, 그 과정에서 wormdeath를 호출해 주고, 
-	// 마지막에 리스트에서 일괄 지워버린다.
-	//}
+	//TODO : 죽을 녀석 찾아다가 포커싱 해줘야함
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
 	GameEngineDebugExtension::PrintDebugWindowText("wormListSize : ", wormList_.size());
@@ -372,6 +363,27 @@ void GameController::CreateWormUI()
 	}
 }
 
+void GameController::CreateDrum(const float _minX, const float _maxX)
+{
+	GameEngineMath::Random randomGenerator;
+	DrumActor* newDrum = parentLevel_->CreateActor<DrumActor>();
+	wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX); // 전에 생성한 좌표를 멤버변수에 저장
+
+	std::vector<float>::iterator startIter = xPosList_.begin();
+	std::vector<float>::iterator endIter = xPosList_.end();
+	for (; startIter != endIter; startIter++)
+	{
+		if (wormXPosContainer_ >= *startIter - 25.0f && wormXPosContainer_ <= *startIter + 25.0f) // 
+		{
+			wormXPosContainer_ = randomGenerator.RandomFloat(_minX, _maxX);
+			startIter = xPosList_.begin();
+			continue;
+		}
+	}
+
+	newDrum->SetPos({ wormXPosContainer_ , -500.0f });
+}
+
 void GameController::SetFocusOnlyOneWorm(Worm* _Worm)
 {
 	for (int i = 0; i < wormList_.size(); ++i)
@@ -453,6 +465,11 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 {
 	if (currentWorm_ == nullptr)
 	{
+		//TODO : 이부분 수정이 필요해 보임
+		//6마리 웜을 순차적으로 죽이고 마지막 1마리만 남았을때 UpdateAfter에서 문제가 발생했음, 
+		//wormlist_ 에는 [0]만 남았는데 인덱스가 1인경우
+		// 그냥 웜인덱스 시스템을 없애고 웜 진행 순서를 리스트로 구현해 보는건 어떨까 함
+
 		prevwormIndex_ = wormIndex_;
 
 		++wormIndex_;
@@ -556,14 +573,36 @@ StateInfo GameController::startSettlement(StateInfo _state)
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
+	// Worm 사망절차
+	// 1.   Worm이 사망상태로 넘어가며 애니메이션을 실행한다
+	// 2.   Worm이 사망애니메이션종료후 사망한 Worm위치에 묘지액터가 생성 된다. (기존은 애니메이션종료후 바로사망)
+	//      -. 문제점 : 
+	//                 1) 사망처리중 WORM이 데미지를 입으면 사망상태에서 피격상태로 넘어간다.
+	//                     -. Worm이 사망애니메이션을 실행하게되면 충돌체는 제거되어야한다.(HitBoxCollision_ 얘제거해야함)
+	//                     -. 묘지액터가 생성하면서 hitbox collision을 생성해서 피격처리해야할듯...
+	//                 2) 사망애니메이션이 끝나자마자 WORM을 죽이게되면 UI처리에서 곤란해진다.
+
+	// 결론 : WORM사망애니메이션 실행 -> 종료 -> 렌더링OFF 및 충돌체제거 -> 묘지액터생성(사망한플레이어의 위치)
+	//        -> UI관련처리 -> 해당 Worm사망처리 및 UI관련 사망처리 -> GameController에서 관리하는 Worm목록갱신 -> 턴전환
+
+	// Worm Tern전환 절차
+	// 1. Worm이 한가지 동작을 실행 또는 턴타임초과시 턴전환 시작
+	// 2. Worm과 Next Worm의 전환 중간과정에서 UI관련 처리시작
+	// 3. UI관련 처리 완료 후 턴전환
+
+	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
+
+
+	// 이것은 무엇을 위한 처리인가????
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
-			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest(); // 사용안하는변수인데 왜 Setting하나?
 		}
 	}
 
+	// if문이 왜걸려있나?
 	if (true)
 	{
 		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
@@ -582,7 +621,8 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 
 		for (int i = 0; i < wormList_.size(); ++i)
 		{
-			if (true == wormList_[i]->GetDeathReady_())
+			//if (true == wormList_[i]->GetDeathReady_())
+			if ((wormList_[i]->GetDeathState() == Worm::DeathState::DeathReady))
 			{
 				WormDeathReady_ = true; //			(worm)의		Death를		준비중이다.
 				WormDeathProgressing_ = true; //	(컨트롤러)가 Death상태	진행중이다.
@@ -613,8 +653,9 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 		//worm의 죽음 상태 변화를 시작함 // worm의 대기상태와 GameController의 대기상태는 다름
 		if (nullptr != CurDeathWorm_)
 		{					
-			CurDeathWorm_->SetDeathReady(false);
-			CurDeathWorm_->SetDeathStart(true);
+			CurDeathWorm_->SetDeathState(Worm::DeathState::DeathStart);
+			//CurDeathWorm_->SetDeathReady(false);
+			//CurDeathWorm_->SetDeathStart(true);
 		}
 	}
 	//다음 worm 죽이기까지 컨트롤러를 대기시킨다.
@@ -635,6 +676,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	}
 	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
 	{
+		// 4.0f
 		if (SETTLEMENT_TIME <= settementTime_)
 		{
 			settementTime_ = 0.0f;
@@ -846,18 +888,6 @@ void GameController::BottomStateHPBarSortStart()
 			{
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
 				BottomUISortStart = false;
-
-				//if (!PlayerHPBarSortQueue.empty())
-				//{
-				//	// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
-				//	BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
-
-				//	// 정렬시작하므로 큐에서 제거
-				//	PlayerHPBarSortQueue.pop();
-
-				//	// 정렬 시작
-				//	BottomStateHPBarSortCheck(QueueState);
-				//}
 
 				return;
 			}

@@ -49,6 +49,7 @@ DrumActor::DrumActor(DrumActor&& _other) noexcept :
 
 void DrumActor::Start()
 {
+	SetRenderOrder(static_cast<int>(RenderOrder::Drum));
 	mainSpriteRender_ = CreateRenderer("oildrum1");
 
 	mainSpriteRender_->CreateAnimation("oildrum1", "oildrum1", 0, 19, true, 0.1f);
