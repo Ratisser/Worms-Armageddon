@@ -88,17 +88,11 @@ void Explosion::Update()
 					float Damage = Damage_ - ((dist / (size-20.f)) * Damage_);
 
 					dynamic_cast<Worm*>((*iter0)->GetActor())->Damage(static_cast<int>(Damage), Dir);
-
-					// 220217 SJH ADD : 플레이어가 공격을 당했을때 하단 HPBar도 줄어든다.
-					dynamic_cast<Worm*>((*iter0)->GetActor())->GetCurUIController()->GetCurBottomState()->DecreaseHPBar();
 				}
 
 				else
 				{
 					dynamic_cast<Worm*>((*iter0)->GetActor())->Damage(static_cast<int>(Damage_), Dir);
-
-					// 220217 SJH ADD : 플레이어가 공격을 당했을때 하단 HPBar도 줄어든다.
-					dynamic_cast<Worm*>((*iter0)->GetActor())->GetCurUIController()->GetCurBottomState()->DecreaseHPBar();
 				}
 
 				++iter0;

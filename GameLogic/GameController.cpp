@@ -159,6 +159,19 @@ void GameController::UpdateBefore()
 
 void GameController::Update()
 {
+	// 남은 플레이어가 1명이므로 승리로 판단
+	// 남은 플레이어가 없다면 무승부로 판단
+	if (1 == wormList_.size())
+	{
+		// 남은플레이어를 승리상태로 전환
+		int a = 0;
+	}
+	else if (0 == wormList_.size())
+	{
+		// 남은 플레이어가 없으므로 FadeIn/Out처리 후 엔딩씬으로 전환
+		int a = 0;
+	}
+
 	state_.Update();
 
 	// 플레이어가 사망해서 UI가 지워진상태라면
@@ -651,8 +664,8 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	// if문이 왜걸려있나?
 	if (true)
 	{
+		// 모든 웜이 사망처리가 끝나고 ui처리가 끝나면 턴전환 딜레이 계산
 		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
-		// 모든 웜이 Idle 상태로 돌아오고, UI 변환이 완료됐을 때 시간이 돌게 설계할 것
 	}
 	
 	////////////////////////// Worm Death 진행 ////////////////////////
@@ -888,6 +901,13 @@ void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 
 		for (int i = 0; i < Size; ++i)
 		{
+			if (1 == Size && PlayerHPBarList[SortStartIndex] == PlayerHPBarList[i])
+			{
+				// 플레이어가 이미 한마리이므로
+				SortEndIndex = SortStartIndex;
+				continue;
+			}
+
 			if (PlayerHPBarList[i] == _CurUI)
 			{
 				continue;
@@ -930,7 +950,7 @@ bool GameController::BottomStateHPBarSort()
 		{
 			// 정렬 종료후 정렬대기열에 정렬할 HPBar가 존재한다면
 			// 해당 HPBar정렬 시작
-			if (SortStartIndex == SortEndIndex)
+			if (SortStartIndex == SortEndIndex && 1 != Size)
 			{
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
 				BottomUISortStart = false;

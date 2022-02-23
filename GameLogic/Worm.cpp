@@ -1,5 +1,6 @@
 #include "Worm.h"
 #include "UIController.h"
+#include "BottomStateUI.h"
 
 #include <GameEngineRenderer.h>
 #include <GameEngineInput.h>
@@ -3240,6 +3241,9 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	//else
 	//{
 	//}
+
+	// 해당 플레이어 하단 체력상태바 데미지입력
+	uicontroller_->GetCurBottomState()->DecreaseHPBar();
 }
 
 bool Worm::IsDie() const
