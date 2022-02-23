@@ -22,7 +22,6 @@ Sheep::Sheep()
 	, bGround_(false)
 	, jumpDelay_(JUMP_DELAY)
 	, deltaTime_(0.0f)
-	, parentWorm_(nullptr)
 	, explosionDelay_(0.0f)
 {
 }

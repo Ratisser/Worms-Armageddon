@@ -51,7 +51,6 @@ private:
 	StateInfo updateExplosion(StateInfo _state);
 
 private:
-	Worm* parentWorm_;
 	GameEngineFSM<Sheep> state_;
 	GameEngineRenderer* mainRender_;
 

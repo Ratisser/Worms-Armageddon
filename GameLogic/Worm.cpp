@@ -1411,14 +1411,19 @@ StateInfo Worm::updateHit(StateInfo _state)
 					mainRender_->ChangeAnimation("Slide_To_IdleRight1_", std::string("SlideR1_.bmp"));
 				}
 			}
-			else
+			else if (bound_ > 0)
 			{// 아직 튕길 수 있으면 위로 튕겨준다.
 				bound_--;
-				if (DamageDir_.y > 0)
+				//if (DamageDir_.y > 0.f)
+				//{
+				//	DamageDir_.y *= -1.f;
+				//}
+				if (DamageDir_.y > 0.f)
 				{
 					DamageDir_.y *= -1.f;
 				}
-				SetMove(0.f, movey * deltaTime_);
+				movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
+				SetMove(0.f, movey *10.f* deltaTime_);
 				DamageAcc_ += 10.f;
 			}
 			return StateInfo();

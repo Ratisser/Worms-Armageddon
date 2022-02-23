@@ -41,7 +41,6 @@ public:
 private:
 	GameEngineRenderer* mainRender_;
 	GameEngineCollision* fireCollision_;
-	Worm* parent_;
 	float4 direction_;
 	float4 scanPos_;
 	float4 parentForward_;

@@ -116,7 +116,7 @@ void SuperSheep::Render()
 
 void SuperSheep::Initialize(Worm* _parentWorm, bool _bLeft)
 {
-	parentWorm_ = _parentWorm;
+	SetParentWorm(_parentWorm);
 	bLeft_ = _bLeft;
 }
 
