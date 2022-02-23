@@ -1369,12 +1369,13 @@ StateInfo Worm::updateHit(StateInfo _state)
 	float movex = DamageDir_.x * (WindSpeed_ + DamageSpeed_);
 	float movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
 
+	//TODO : 바운드 조건을 걸어서 바운드가 종료되면 튀기지 안게ㅡㅁ
 	if (movey < 0.f)
 	{	// 위로 튕길때
 		if (nullptr != headCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{// 위에 부딪히면 
 			if (bound_ <= 0)
-			{//더 튕길 수 없으면
+			{//더 튕길 수 없으면			
 				DamageDir_.y = 0.f;
 			}
 			else
@@ -1386,6 +1387,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 				}
 			}			
 		}
+		movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
 		SetMove(0.f, movey * deltaTime_);
 		DamageAcc_ += 10.f;
 	}
@@ -1399,6 +1401,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 			{			
 				return "Idle";
 			}
+
 			if (bound_ <= 0)
 			{
 				if (bLeft_)
@@ -1410,21 +1413,17 @@ StateInfo Worm::updateHit(StateInfo _state)
 				{
 					mainRender_->ChangeAnimation("Slide_To_IdleRight1_", std::string("SlideR1_.bmp"));
 				}
-			}
+			}//TODO : 에니메이션이 끝날때까지 계속 튕기는 문제가 있음
 			else if (bound_ > 0)
 			{// 아직 튕길 수 있으면 위로 튕겨준다.
 				bound_--;
-				//if (DamageDir_.y > 0.f)
-				//{
-				//	DamageDir_.y *= -1.f;
-				//}
 				if (DamageDir_.y > 0.f)
 				{
 					DamageDir_.y *= -1.f;
 				}
-				movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
+				/*movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
 				SetMove(0.f, movey *10.f* deltaTime_);
-				DamageAcc_ += 10.f;
+				DamageAcc_ += 10.f;*/
 			}
 			return StateInfo();
 		}
@@ -1583,7 +1582,8 @@ StateInfo Worm::updateIdle(StateInfo _state)
 	}
 	else if (0 == GetActionTokenCount())
 	{
-		//if (true == DeathStart_)
+		//if (true == DeathStart_)\
+		//TODO : 조건 만족되면 조금 기다리다가 실행
 		if (DeathState_ == DeathState::DeathStart)
 		{
 			return "Death";
