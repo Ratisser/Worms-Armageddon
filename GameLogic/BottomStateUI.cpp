@@ -64,6 +64,9 @@ void BottomStateUI::UpdateBefore()
 			{
 				HPBarRenderer_->SetRenderSize(float4(1.f, 17.f));
 
+				// 게임컨트롤 호출해서 HPBar 정렬
+				GameController::BottomStateHPBarSortCheck(this);
+
 				DecreaseHPBar_ = false;
 				return;
 			}
@@ -565,7 +568,11 @@ void BottomStateUI::PositionReadjustment()
 {
 	// 모든 정렬이 끝이나고 해당 함수가 호출되므로
 	// 내 y값에서 -20.f를 해서 위치조정
-	FlagRenderPos_.y -= 20.f;;
-	NameRenderPos_.y -= 20.f;
-	HPBarRenderPos_.y -= 20.f;
+	FlagRenderPos_.y += 20.f;;
+	NameRenderPos_.y += 20.f;
+	HPBarRenderPos_.y += 20.f;
+
+	FlagRenderer_->SetPivotPos(FlagRenderPos_);
+	NameRenderer_->SetPivotPos(NameRenderPos_);
+	HPBarRenderer_->SetPivotPos(HPBarRenderPos_);
 }

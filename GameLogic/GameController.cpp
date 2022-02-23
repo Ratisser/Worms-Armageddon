@@ -161,26 +161,6 @@ void GameController::Update()
 {
 	state_.Update();
 
-	if (true == BottomUIDeath)
-	{
-		int size = wormList_.size();
-		for (int i = 0; i < size; ++i)
-		{
-			if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
-			{
-				if (wormList_[i] == currentWorm_)
-				{
-					currentWorm_ = nullptr;
-				}
-				wormList_[i]->WormDeath();
-				wormList_.erase(wormList_.begin() + i);
-
-				size = wormList_.size();
-			}
-		}
-		BottomUIDeath = false;
-	}
-
 	// 플레이어가 사망해서 UI가 지워진상태라면
 	// 나머지 하단바에 대한 위치 재조정
 	if (true == BottomUISortEnd)
@@ -205,11 +185,30 @@ void GameController::Update()
 					}
 
 					BottomUIDeath = true;
-
-					return;
 				}
 			}
 		}
+	}
+
+	if (true == BottomUIDeath)
+	{
+		int size = wormList_.size();
+		for (int i = 0; i < size; ++i)
+		{
+			if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
+			{
+				if (wormList_[i] == currentWorm_)
+				{
+					currentWorm_ = nullptr;
+				}
+				wormList_[i]->WormDeath();
+				wormList_.erase(wormList_.begin() + i);
+
+				size = wormList_.size();
+			}
+		}
+		BottomUIDeath = false;
+		return;
 	}
 
 	//TODO : 죽을 녀석 찾아다가 포커싱 해줘야함
@@ -941,6 +940,7 @@ bool GameController::BottomStateHPBarSort()
 				if (true == PlayerHPBarSortQueue.empty())
 				{
 					BottomUISortEnd = true;
+
 					return true;
 				}
 			}
