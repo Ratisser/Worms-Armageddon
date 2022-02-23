@@ -165,11 +165,15 @@ void GameController::Update()
 	{
 		// 남은플레이어를 승리상태로 전환
 		int a = 0;
+
+		return;
 	}
 	else if (0 == wormList_.size())
 	{
 		// 남은 플레이어가 없으므로 FadeIn/Out처리 후 엔딩씬으로 전환
 		int a = 0;
+
+		return;
 	}
 
 	state_.Update();
@@ -218,9 +222,10 @@ void GameController::Update()
 				wormList_.erase(wormList_.begin() + i);
 
 				size = wormList_.size();
+
+				BottomUIDeath = false;
 			}
 		}
-		BottomUIDeath = false;
 		return;
 	}
 
