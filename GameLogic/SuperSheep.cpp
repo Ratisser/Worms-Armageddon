@@ -7,7 +7,6 @@
 #include <GameEngineSoundManager.h>
 
 #include "PlayLevel.h"
-#include "Worm.h"
 
 #include "eCollisionGroup.h"
 #include "eCollisionCheckColor.h"

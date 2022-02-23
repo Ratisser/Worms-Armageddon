@@ -4,11 +4,12 @@
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
 #include <GameEngineSoundPlayer.h>
+#include "WeaponBase.h"
 
 class GameEngineCollision;
 class GameEngineRenderer;
 class Worm;
-class Girder : public GameEngineActor
+class Girder : public WeaponBase
 {
 public:
 	Girder();

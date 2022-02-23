@@ -109,10 +109,9 @@ void Bazooka::Update()
 	else
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->CreateExplosion100(pos_,50,true);
-
-		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
-
+		level->CreateExplosion100(pos_,70,true);
+		parentWorm_->BulletFocusOff();
+		
 		Death();
 	}
 

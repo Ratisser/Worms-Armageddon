@@ -183,6 +183,7 @@ void HomingMissile::Update()
 
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->CreateExplosion100(pos_,75,true);
+		parentWorm_->BulletFocusOff();
 
 		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
 		mouse->MouseBlock(false);

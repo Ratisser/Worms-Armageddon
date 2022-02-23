@@ -3,11 +3,12 @@
 #include <GameEngineActor.h>
 #include <GameEngineFSM.h>
 #include <GameEngineSoundPlayer.h> 
+#include "WeaponBase.h"
 
 class GameEngineCollision;
 class GameEngineRenderer;
 class Worm;
-class Sheep : public GameEngineActor
+class Sheep : public WeaponBase
 {
 public:
 	Sheep();

@@ -11,7 +11,6 @@
 #include "eCollisionCheckColor.h"
 #include "PlayLevel.h"
 #include "Explosion.h"
-#include "Worm.h"
 #include "UziBullet.h"
 Uzi::Uzi() // default constructer 디폴트 생성자
 {

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Worm.h"
 #include <GameEngineActor.h>
 
 class Worm;

@@ -1911,6 +1911,8 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 	if (GameEngineInput::GetInst().IsUp("Fire"))
 	{
 		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
+		newBaz->SetParentWorm(this);
+		BulletFocusOn(newBaz);
 		newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 		newBaz->SetBazooka(forward_, firePower_);
 		//bFocus_ = false;
@@ -1930,6 +1932,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		if (firePower_ > 1000.f)
 		{
 			Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
+			BulletFocusOn(newBaz);
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 			newBaz->SetBazooka(forward_, firePower_);
 			//bFocus_ = false;
@@ -1949,7 +1952,6 @@ StateInfo Worm::startBazookaWait(StateInfo _state)
 
 StateInfo Worm::updateBazookaWait(StateInfo _state)
 {
-
 	nextState_ = "Idle";
 	return "WeaponOff";
 }
@@ -2119,6 +2121,8 @@ StateInfo Worm::updateHomingFire(StateInfo _state)
 	if (GameEngineInput::GetInst().IsUp("Fire"))
 	{
 		HomingMissile* newHom = parentLevel_->CreateActor<HomingMissile>();
+		BulletFocusOn(newHom);
+		newHom->SetParentWorm(this);
 		newHom->SetPos(pos_ + float4(forward_ * 20.f));
 		newHom->SetPower(forward_, firePower_);
 		newHom->SetHomingPoint(mouseTargetPos_);

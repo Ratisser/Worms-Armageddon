@@ -1,7 +1,5 @@
 #include "WeaponBase.h"
 
-#include "Worm.h"
-
 WeaponBase::WeaponBase() // default constructer 디폴트 생성자
 {
 
