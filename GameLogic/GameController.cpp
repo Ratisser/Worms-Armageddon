@@ -222,10 +222,9 @@ void GameController::Update()
 				wormList_.erase(wormList_.begin() + i);
 
 				size = wormList_.size();
-
-				BottomUIDeath = false;
 			}
 		}
+		BottomUIDeath = false;
 		return;
 	}
 
