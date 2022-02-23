@@ -3197,12 +3197,15 @@ UIController* Worm::GetCurUIController() const
 	return uicontroller_;
 }
 
-void Worm::UIControllerDeath()
+bool Worm::UIControllerDeath()
 {
 	if (uicontroller_ != nullptr)
 	{
 		uicontroller_->CurWormUIControllerDeath();
+		return true;
 	}
+
+	return false;
 }
 
 void Worm::Damage(int _numDamage, float4 _MoveDir)

@@ -100,9 +100,6 @@ void UIController::Start()
 	weaponsheet_ = GetLevel()->CreateActor<WeaponSheet>();						// WeaponSheet 생성
 	weaponsheet_->SetRenderPos(ActivePos, DisablePos);									// 활성화/비활성화 위치 설정														// 해당 WeaponSheet를 생성한 UIController 저장
 
-	// 플레이어 하단 상태
-	bottomstate_ = GetLevel()->CreateActor<BottomStateUI>();
-
 	// 플레이어 상단 상태
 	wormtopstate_ = GetLevel()->CreateActor<WormTopStateUI>();
 
@@ -112,6 +109,9 @@ void UIController::Start()
 	curTimerDigitTen_->SetPos({ 28,690 });
 	curTimerDigit_ = GetLevel()->CreateActor<TimerDigit>();
 	curTimerDigit_->SetPos({ 48,690 });
+
+	// 플레이어 하단 상태
+	bottomstate_ = GetLevel()->CreateActor<BottomStateUI>();
 }
 
 void UIController::UpdateBefore()

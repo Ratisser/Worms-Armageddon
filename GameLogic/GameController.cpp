@@ -43,6 +43,8 @@
 std::vector<BottomStateUI*> GameController::PlayerHPBarList;
 std::queue<BottomStateUI*> GameController::PlayerHPBarSortQueue;
 bool GameController::BottomUISortStart = false;
+bool GameController::BottomUISortEnd = false;
+bool GameController::BottomUIDeath = false;
 int GameController::SortStartIndex = -1;
 int GameController::SortEndIndex = -1;
 float GameController::SortDeltaTime = 0.f;
@@ -159,24 +161,57 @@ void GameController::Update()
 {
 	state_.Update();
 
-
-	int size = wormList_.size();
-	for (int i = 0; i < size; ++i)
-	{	
-		//if (wormList_[i]->GetDeathEnd())
-		if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
-		{		
-			if (wormList_[i] == currentWorm_)
+	if (true == BottomUIDeath)
+	{
+		int size = wormList_.size();
+		for (int i = 0; i < size; ++i)
+		{
+			if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
 			{
-				currentWorm_ = nullptr;
-			}
-			wormList_[i]->UIControllerDeath();
-			wormList_[i]->WormDeath();			
-			wormList_.erase(wormList_.begin() + i);
+				if (wormList_[i] == currentWorm_)
+				{
+					currentWorm_ = nullptr;
+				}
+				wormList_[i]->WormDeath();
+				wormList_.erase(wormList_.begin() + i);
 
-			size = wormList_.size();
+				size = wormList_.size();
+			}
+		}
+		BottomUIDeath = false;
+	}
+
+	// 플레이어가 사망해서 UI가 지워진상태라면
+	// 나머지 하단바에 대한 위치 재조정
+	if (true == BottomUISortEnd)
+	{
+		BottomUISortEnd = false;
+
+		// 여기서 현재 모든 플레이어가 정렬이 종료되었으므로
+		// 모든 플레이어의 체력상태를 체크한다.
+		int Size = static_cast<int>(PlayerHPBarList.size());
+		for (int i = 0; i < Size; ++i)
+		{
+			if (0 >= PlayerHPBarList[i]->GetParentWorm()->GetCurHP())
+			{
+				if (true == PlayerHPBarList[i]->GetParentWorm()->UIControllerDeath())
+				{
+					PlayerHPBarList.erase(PlayerHPBarList.begin() + i);
+					Size = static_cast<int>(PlayerHPBarList.size());
+
+					for (int k = 0; k < Size; ++k)
+					{
+						PlayerHPBarList[k]->PositionReadjustment();
+					}
+
+					BottomUIDeath = true;
+
+					return;
+				}
+			}
 		}
 	}
+
 	//TODO : 죽을 녀석 찾아다가 포커싱 해줘야함
 
 	GameEngineDebugExtension::PrintDebugWindowText("wormIndex : ", wormIndex_);
@@ -299,14 +334,6 @@ void GameController::CreateWormUI()
 		wormList_[i]->SetUIController(CurUIController);
 		wormList_[i]->GetCurUIController()->GetCurWeaponSheet()->SetParentController(wormList_[i]->GetCurUIController());
 
-		// 플레이어당 하단 상태 UI
-		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
-		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
-		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
-
-		// 플레이어 하단 상태바관련 관리목록에 추가
-		PlayerHPBarList.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
-
 		// 플레이어당 상단 상태 UI
 		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentWorm(wormList_[i]);
 		wormList_[i]->GetCurUIController()->GetCurTopState()->SetParentUIController(CurUIController);
@@ -356,6 +383,14 @@ void GameController::CreateWormUI()
 		//CurUIController->AddWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 기믹오브젝트 획득으로 인한 무기획득시 호출(새로운무기추가 또는 기존무기개수증가)
 		//CurUIController->UseWeapon(eItemList::WEAPON_AIRSTRIKE);		// 플레이어가 무기사용했을대 호출(가지고있는 무기개수감수)
 		ItemListTest.clear();
+
+		// 플레이어당 하단 상태 UI
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentWorm(wormList_[i]);
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->SetParentUIController(CurUIController);
+		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
+
+		// 플레이어 하단 상태바관련 관리목록에 추가
+		PlayerHPBarList.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
 	}
 }
 
@@ -549,11 +584,6 @@ StateInfo GameController::updateActionEnd(StateInfo _state)
 	{
 		currentWorm_ = nullptr;
 
-		//if (true == BottomUISortStart)
-		//{
-		//	BottomStateHPBarSortStart();
-		//}
-
 		return "Settlement";
 	}
 
@@ -595,24 +625,25 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
 
 	bool Damagethisturn= false;
-	// 이것은 무엇을 위한 처리인가????
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
-			Damagethisturn = true;
 			if (true == BottomUISortStart)
 			{
+				Damagethisturn = true;
+
 				if (true == BottomStateHPBarSort())
 				{
 					wormList_[i]->ResetisDamaged();
 				}
 			}
 
-			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest(); // 사용안하는변수인데 왜 Setting하나?
+			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
 
 		}
 	}
+
 	if (Damagethisturn)
 	{
 		return StateInfo();
@@ -905,7 +936,13 @@ bool GameController::BottomStateHPBarSort()
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
 				BottomUISortStart = false;
 
-				return true;
+				// 만약 현재 정렬이 종료되고 대기큐에 정렬하려는 플레이어가
+				// 존재하지않다면 정렬 완전종료
+				if (true == PlayerHPBarSortQueue.empty())
+				{
+					BottomUISortEnd = true;
+					return true;
+				}
 			}
 
 			for (int j = SortStartIndex + 1; j < Size; ++j)

@@ -34,7 +34,7 @@ public:
 	void SetCurWeapon(eItemList _WeaponType);
 	void SetUIController(UIController* _uicontroller);
 	UIController* GetCurUIController() const;
-	void UIControllerDeath();
+	bool UIControllerDeath();
 
 	void Damage(int _numDamage, float4 _MoveDir);
 	bool IsDie() const;

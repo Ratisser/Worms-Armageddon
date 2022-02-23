@@ -153,6 +153,8 @@ private: // 하단상태바 정렬관련
 	static std::vector<BottomStateUI*> PlayerHPBarList;
 	static std::queue<BottomStateUI*> PlayerHPBarSortQueue;
 	static bool BottomUISortStart;
+	static bool BottomUISortEnd;
+	static bool BottomUIDeath;
 	static int SortStartIndex;
 	static int SortEndIndex;
 	static float SortDeltaTime;

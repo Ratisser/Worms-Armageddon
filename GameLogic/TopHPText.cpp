@@ -353,11 +353,14 @@ void TopHPText::ChangeHPText()
 
 void TopHPText::ChangeTextAnimation(int _prevHp)
 {
-	HPHundredNumRenderer_->ChangeAnimation(std::to_string(_prevHp / 100));
-	HPTenNumRenderer_->ChangeAnimation(std::to_string((_prevHp / 10) % 10));
-	HPNumRenderer_->ChangeAnimation(std::to_string(_prevHp % 10));
-	PrevHP_--;
-	CheckHPTextZero();
+	if (-1 != _prevHp)
+	{
+		HPHundredNumRenderer_->ChangeAnimation(std::to_string(_prevHp / 100));
+		HPTenNumRenderer_->ChangeAnimation(std::to_string((_prevHp / 10) % 10));
+		HPNumRenderer_->ChangeAnimation(std::to_string(_prevHp % 10));
+		PrevHP_--;
+		CheckHPTextZero();
+	}
 }
 
 void TopHPText::CheckHPTextZero()

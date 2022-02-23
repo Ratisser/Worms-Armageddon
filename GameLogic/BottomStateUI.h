@@ -91,5 +91,8 @@ public:
 
 public:
 	void DecreaseHPBar();
+
+public: // 플레이어 사망으로인한 위치 재조정
+	void PositionReadjustment();
 };
 

@@ -524,36 +524,48 @@ void BottomStateUI::SetHPBarPos()
 void BottomStateUI::DecreaseHPBar()
 {
 	// 해당 플레이어의 체력을 기준으로 감소 목표치 계산 및 Flag On
-	CurHP_ = ParentWorm_->GetCurHP();
-	CurDamage_ = static_cast<float>(PrevHP_ - CurHP_);
-	if (InitHPBarLen_ == 200.f)
+	if (nullptr != ParentWorm_)
 	{
-		CurDamage_ *= 0.5f;
-	}
-	else if (InitHPBarLen_ == 150.f)
-	{
-		CurDamage_ *= 0.7f;
-	}
-	else if (InitHPBarLen_ == 50.f)
-	{
-		CurDamage_ *= 2.f;
-	}
+		CurHP_ = ParentWorm_->GetCurHP();
+		CurDamage_ = static_cast<float>(PrevHP_ - CurHP_);
+		if (InitHPBarLen_ == 200.f)
+		{
+			CurDamage_ *= 0.5f;
+		}
+		else if (InitHPBarLen_ == 150.f)
+		{
+			CurDamage_ *= 0.7f;
+		}
+		else if (InitHPBarLen_ == 50.f)
+		{
+			CurDamage_ *= 2.f;
+		}
 
-	if (0.f >= CurHP_)
-	{
-		TargetHPBarLen_ = 1.f;
-	}
-	else
-	{
-		TargetHPBarLen_ = CurHPBarLen_ - static_cast<float>(CurDamage_);
-		if (0.f >= TargetHPBarLen_)
+		if (0.f >= CurHP_)
 		{
 			TargetHPBarLen_ = 1.f;
 		}
+		else
+		{
+			TargetHPBarLen_ = CurHPBarLen_ - static_cast<float>(CurDamage_);
+			if (0.f >= TargetHPBarLen_)
+			{
+				TargetHPBarLen_ = 1.f;
+			}
+		}
+
+		DecreaseHPBar_ = true;
+
+		// 데미지 계산이 완료되었으므로 현재체력을 이전체력에 저장
+		PrevHP_ = CurHP_;
 	}
+}
 
-	DecreaseHPBar_ = true;
-
-	// 데미지 계산이 완료되었으므로 현재체력을 이전체력에 저장
-	PrevHP_ = CurHP_;
+void BottomStateUI::PositionReadjustment()
+{
+	// 모든 정렬이 끝이나고 해당 함수가 호출되므로
+	// 내 y값에서 -20.f를 해서 위치조정
+	FlagRenderPos_.y -= 20.f;;
+	NameRenderPos_.y -= 20.f;
+	HPBarRenderPos_.y -= 20.f;
 }
