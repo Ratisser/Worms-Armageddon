@@ -4,9 +4,9 @@
 
 class Petroleum : public GameEngineActor
 {
-	friend class PetroleumManager;
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
+	GameEngineRenderer* ChildSpriteRender_[3];
 
 	GameEngineCollision* groundCollision_; // ¹Ù´Ú
 	GameEngineCollision* BodyCollision_; // ¸öÅë
@@ -127,7 +127,7 @@ public:
 
 	void SetWindSpeed(float _WindSpeed)
 	{
-		WindAcc_ = _WindSpeed / 150.f;
+		WindAcc_ = _WindSpeed / 30.f;
 	}
 };
 

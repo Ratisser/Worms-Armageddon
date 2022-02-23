@@ -17,8 +17,8 @@ GameEngineObjectBase::~GameEngineObjectBase()
 {
 }
 
-GameEngineObjectBase::GameEngineObjectBase(GameEngineObjectBase&& _other) noexcept
-{
-}
+//GameEngineObjectBase::GameEngineObjectBase(GameEngineObjectBase&& _other) noexcept
+//{
+//}
 
 //member Func

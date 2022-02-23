@@ -31,7 +31,7 @@ private:
 		friend GameEngineRenderer;
 	private:
 		FrameAnimation();
-		FrameAnimation(FrameAnimation& obj);
+		FrameAnimation(const FrameAnimation& obj);
 		~FrameAnimation();
 
 	private:
@@ -47,7 +47,7 @@ private:
 		bool loop_;
 		bool isend_;
 
-		// 에니메이션 프레임 호출 함수 : 이현
+		// 에니메이션 프레임 호출 함수 : 이현 // 복사되지 않음
 		struct AnimationNotify
 		{
 			int             Frame_; //함수 호출 프레임
@@ -94,12 +94,12 @@ public:
 	~GameEngineRenderer(); // default destructer 디폴트 소멸자
 
 public:		// delete constructer
-	GameEngineRenderer(const GameEngineRenderer& _other) = delete; // default Copy constructer 디폴트 복사생성자
-	GameEngineRenderer(GameEngineRenderer&& _other) noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
+	GameEngineRenderer(const GameEngineRenderer& _other);// = delete; // default Copy constructer 디폴트 복사생성자
+	//GameEngineRenderer(GameEngineRenderer&& _other);// noexcept; // default RValue Copy constructer 디폴트 RValue 복사생성자
 
-public:		//delete operator
-	GameEngineRenderer& operator=(const GameEngineRenderer& _other) = delete; // default Copy operator 디폴트 대입 연산자
-	GameEngineRenderer& operator=(const GameEngineRenderer&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
+//public:		//delete operator
+	//GameEngineRenderer& operator=(const GameEngineRenderer& _other) = delete; // default Copy operator 디폴트 대입 연산자
+	//GameEngineRenderer& operator=(const GameEngineRenderer&& _other) = delete; // default RValue Copy operator 디폴트 RValue 대입연산자
 
 public:		//member Func
 	void SetCutIndex(size_t _Index, RENDERPIVOT _Pivot = RENDERPIVOT::LEFTTOP);

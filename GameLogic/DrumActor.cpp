@@ -14,7 +14,7 @@
 #include "GameController.h"
 #include "Petroleum.h"
 
-#define COUNT 40.f
+#define COUNT 40
 
 DrumActor::DrumActor():
 	Phase_(0.f),

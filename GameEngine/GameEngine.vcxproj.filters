@@ -51,6 +51,9 @@
     <ClInclude Include="KeyboardEvent.h">
       <Filter>Level0%28OS%29\Keyboard</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineRendererManager.h">
+      <Filter>Level1%28Object%29</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineLevel.cpp">
@@ -91,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="KeyboardEvent.cpp">
       <Filter>Level0%28OS%29\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineRendererManager.cpp">
+      <Filter>Level1%28Object%29</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

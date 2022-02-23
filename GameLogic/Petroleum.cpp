@@ -38,6 +38,8 @@ Petroleum::Petroleum() :
 
 }
 
+static int debugcount = 0;
+
 Petroleum::~Petroleum() // default destructer 디폴트 소멸자
 {
 
@@ -66,7 +68,8 @@ Petroleum::Petroleum(Petroleum&& _other) noexcept :
 
 void Petroleum::Start()
 {
-	GravityAcc = 4.f;
+	debugcount++;
+	GravityAcc = 6.f;
 
 	state_.CreateState("Phase1",&Petroleum::Phase1Start, &Petroleum::Phase1Update);
 	state_.CreateState("Phase2",&Petroleum::Phase2Start, &Petroleum::Phase2Update);
@@ -96,6 +99,24 @@ void Petroleum::Start()
 	mainSpriteRender_->CreateAnimation("petrol-3", "petrol-3", 0, 63, true, 100.f);
 	mainSpriteRender_->CreateAnimation("petrol-4", "petrol-4", 0, 63, true, 100.f);
 
+	for (int i = 0; i < 3; ++i)
+	{
+		ChildSpriteRender_[i] = CreateRenderer("petrol-1");
+		ChildSpriteRender_[i]->CreateAnimation("petrol60", "petrol60", 0, 19, true, 0.05f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol50", "petrol50", 0, 19, true, 0.05f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol40", "petrol40", 0, 19, true, 0.05f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol30", "petrol30", 0, 19, true, 0.05f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol20", "petrol20", 0, 19, true, 0.05f);
+
+		ChildSpriteRender_[i]->CreateAnimation("petrol-1", "petrol-1", 0, 63, true, 100.f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol-2", "petrol-2", 0, 63, true, 100.f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol-3", "petrol-3", 0, 63, true, 100.f);
+		ChildSpriteRender_[i]->CreateAnimation("petrol-4", "petrol-4", 0, 63, true, 100.f);
+	}
+
+	ChildSpriteRender_[0]->SetPivotMove(float4(-5.f, 0.f, 0.f));
+	ChildSpriteRender_[1]->SetPivotMove(float4(2.f, 2.f, 0.f));
+	ChildSpriteRender_[2]->SetPivotMove(float4(5.f, 0.f, 0.f));
 	state_.ChangeState("LiquidPhase0"); // 초기 값
 	PhysicalState_.ChangeState("Air");
 
@@ -127,6 +148,9 @@ void Petroleum::Render()
 	//}
 #endif // DEBUG
 	mainSpriteRender_->AnimationUpdate();
+	ChildSpriteRender_[0]->AnimationUpdate();
+	ChildSpriteRender_[1]->AnimationUpdate();
+	ChildSpriteRender_[2]->AnimationUpdate();
 
 }
 
@@ -200,6 +224,9 @@ StateInfo Petroleum::GroundUpdate(StateInfo _state)
 StateInfo Petroleum::LiquidPhase0Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol-1", std::string("petrol-1"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol-1", std::string("petrol-1"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol-1", std::string("petrol-1"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol-1", std::string("petrol-1"));
 
 	return StateInfo();
 }
@@ -231,6 +258,9 @@ StateInfo Petroleum::LiquidPhase0Update(StateInfo _state)
 StateInfo Petroleum::LiquidPhase1Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol-2", std::string("petrol-2"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol-2", std::string("petrol-2"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol-2", std::string("petrol-2"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol-2", std::string("petrol-2"));
 	return StateInfo();
 }
 
@@ -261,6 +291,9 @@ StateInfo Petroleum::LiquidPhase1Update(StateInfo _state)
 StateInfo Petroleum::LiquidPhase2Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol-3", std::string("petrol-3"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol-3", std::string("petrol-3"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol-3", std::string("petrol-3"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol-3", std::string("petrol-3"));
 	return StateInfo();
 }
 
@@ -291,6 +324,9 @@ StateInfo Petroleum::LiquidPhase2Update(StateInfo _state)
 StateInfo Petroleum::LiquidPhase3Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol-4", std::string("petrol-4"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol-4", std::string("petrol-4"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol-4", std::string("petrol-4"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol-4", std::string("petrol-4"));
 	return StateInfo();
 }
 
@@ -322,6 +358,9 @@ StateInfo Petroleum::Phase1Start(StateInfo _state)
 {
 	Burn_ = true;
 	mainSpriteRender_->ChangeAnimation("petrol60", std::string("petrol60"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol60", std::string("petrol60"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol60", std::string("petrol60"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol60", std::string("petrol60"));
 	return StateInfo();
 }
 
@@ -342,6 +381,9 @@ StateInfo Petroleum::Phase1Update(StateInfo _state)
 StateInfo Petroleum::Phase2Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol50", std::string("petrol50"));//GetLevel<PlayLevel>()->GroundUpdate13(pos_);
+	ChildSpriteRender_[0]->ChangeAnimation("petrol50", std::string("petrol50"));//GetLevel<PlayLevel>()->GroundUpdate13(pos_);
+	ChildSpriteRender_[1]->ChangeAnimation("petrol50", std::string("petrol50"));//GetLevel<PlayLevel>()->GroundUpdate13(pos_);
+	ChildSpriteRender_[2]->ChangeAnimation("petrol50", std::string("petrol50"));//GetLevel<PlayLevel>()->GroundUpdate13(pos_);
 	return StateInfo();
 }
 
@@ -365,6 +407,9 @@ StateInfo Petroleum::Phase2Update(StateInfo _state)
 StateInfo Petroleum::Phase3Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol40", std::string("petrol40"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol40", std::string("petrol40"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol40", std::string("petrol40"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol40", std::string("petrol40"));
 	GetLevel<PlayLevel>()->GroundUpdate13(pos_);
 	return StateInfo();
 }
@@ -389,6 +434,9 @@ StateInfo Petroleum::Phase3Update(StateInfo _state)
 StateInfo Petroleum::Phase4Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol30", std::string("petrol30"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol30", std::string("petrol30"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol30", std::string("petrol30"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol30", std::string("petrol30"));
 	GetLevel<PlayLevel>()->GroundUpdate6(pos_);
 	return StateInfo();
 }
@@ -413,6 +461,9 @@ StateInfo Petroleum::Phase4Update(StateInfo _state)
 StateInfo Petroleum::Phase5Start(StateInfo _state)
 {
 	mainSpriteRender_->ChangeAnimation("petrol20", std::string("petrol20"));
+	ChildSpriteRender_[0]->ChangeAnimation("petrol20", std::string("petrol20"));
+	ChildSpriteRender_[1]->ChangeAnimation("petrol20", std::string("petrol20"));
+	ChildSpriteRender_[2]->ChangeAnimation("petrol20", std::string("petrol20"));
 	GetLevel<PlayLevel>()->GroundUpdate4(pos_);
 	return StateInfo();
 }
@@ -426,6 +477,10 @@ StateInfo Petroleum::Phase5Update(StateInfo _state)
 			Cur_LifeTime_ += deltaTime_;
 		}
 		WormCollision();
+	}
+	else if(pos_.y > GetLevel<PlayLevel>()->GetGameController()->GetWaterLevel())
+	{
+		PetroleumDeath();
 	}
 	else
 	{
@@ -468,6 +523,9 @@ void Petroleum::CalFrameIndex()
 	int frameIndex = (int)(degree_ / 5.625f);
 
 	mainSpriteRender_->SetAnimationCurrentFrame(frameIndex);
+	ChildSpriteRender_[0]->SetAnimationCurrentFrame(frameIndex);
+	ChildSpriteRender_[1]->SetAnimationCurrentFrame(frameIndex);
+	ChildSpriteRender_[2]->SetAnimationCurrentFrame(frameIndex);
 
 }
 
@@ -496,14 +554,14 @@ void Petroleum::WormCollision()
 #endif // _DEBUG
 			float4 Dir = (*iter0)->GetCollisionPoint() - pos_;
 
-			if (Dir.y < 0)
+			if (Dir.y > 0)
 			{
 				Dir.y *= -1;
 			}
 
 			Dir.Normalize2D();
 
-			dynamic_cast<Worm*>((*iter0)->GetActor())->Damage(10, Dir);
+			dynamic_cast<Worm*>((*iter0)->GetActor())->Damage(1, Dir);
 
 			++iter0;
 		}

@@ -159,10 +159,6 @@ void GameController::Update()
 {
 	state_.Update();
 
-	//if (true == BottomUISortStart)
-	//{
-	//	BottomStateHPBarSortStart();
-	//}
 
 	int size = wormList_.size();
 	for (int i = 0; i < size; ++i)
@@ -607,7 +603,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 			Damagethisturn = true;
 			if (true == BottomUISortStart)
 			{
-				if (true == BottomStateHPBarSortStart())
+				if (true == BottomStateHPBarSort())
 				{
 					wormList_[i]->ResetisDamaged();
 				}
@@ -891,7 +887,7 @@ void GameController::BottomStateHPBarSortCheck(BottomStateUI* _CurUI)
 	}
 }
 
-bool GameController::BottomStateHPBarSortStart()
+bool GameController::BottomStateHPBarSort()
 {
 	SortDeltaTime += GameEngineTime::GetInst().GetDeltaTime();
 	if (0.3f <= SortDeltaTime)

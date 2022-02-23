@@ -19,9 +19,22 @@ GameEngineRenderer::FrameAnimation::FrameAnimation()
 
 }
 
-GameEngineRenderer::FrameAnimation::FrameAnimation(FrameAnimation& obj)
+GameEngineRenderer::FrameAnimation::FrameAnimation(const FrameAnimation& obj)
+	: start_(-1),
+	end_(-1),
+	cur_(-1),
+	curframeTime_(0.0f),
+	renderer_(nullptr),
+	pivot_(RENDERPIVOT::BOT),
+	loop_(nullptr),
+	image_(nullptr),
+	isend_(false)
 {
 	//*this = obj;
+
+	//frameTime_.resize((int)(obj.frameTime_.size()));
+
+	//std::copy(obj.frameTime_.begin(), obj.frameTime_.end(), frameTime_.begin());
 }
 
 GameEngineRenderer::FrameAnimation::~FrameAnimation()
@@ -117,10 +130,33 @@ GameEngineRenderer::~GameEngineRenderer()
 	allAnimation_.clear();
 }
 
-GameEngineRenderer::GameEngineRenderer(GameEngineRenderer&& _other) noexcept
+GameEngineRenderer::GameEngineRenderer(const GameEngineRenderer& _other)
+	: imagePivot_(float4::ZERO),
+	pivotpos_(float4::ZERO),
+	rendersize_(float4::ZERO),
+	imagepos_(float4::ZERO),
+	imagesize_(float4::ZERO),
+	isCamEffect_(true),
+	rotate_(0.0f),
+	alpha_(255),
+	curani_(0),
+	actor_(nullptr),
+	image_(nullptr),
+	maskimage_(nullptr)
 {
+	//*this = _other;
 
+	//allAnimation_.clear();
+	//std::copy(_other.allAnimation_.begin(), _other.allAnimation_.end(), allAnimation_.begin());
+
+	//actor_ = nullptr;
+	//SetParent(nullptr);
 }
+
+//GameEngineRenderer::GameEngineRenderer(GameEngineRenderer&& _other) noexcept
+//{
+//
+//}
 
 //member Func
 

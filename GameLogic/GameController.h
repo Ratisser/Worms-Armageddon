@@ -85,7 +85,7 @@ public:
 
 public: // 턴 종료시 UI관련 갱신
 	static void BottomStateHPBarSortCheck(BottomStateUI* _CurUI);
-	static bool BottomStateHPBarSortStart();
+	static bool BottomStateHPBarSort();
 	static void CurPlayerDeathCheck();
 
 public:
