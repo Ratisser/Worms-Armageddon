@@ -164,8 +164,7 @@ void GameController::Update()
 	if (1 == wormList_.size())
 	{
 		// 남은플레이어를 승리상태로 전환
-		int a = 0;
-
+		wormList_[0]->ChangeState("Win");
 		return;
 	}
 	else if (0 == wormList_.size())
@@ -548,6 +547,7 @@ StateInfo GameController::startAction(StateInfo _state)
 
 StateInfo GameController::updateAction(StateInfo _state)
 {
+
 	currentTurnTime_ -= GameEngineTime::GetInst().GetDeltaTime();
 	// 타이머 갱신을 해 줘야하는 부분
 	currentWorm_->GetCurUIController()->GetCurTimerDigitTen()->SetTenDigitTime(currentTurnTime_);
@@ -621,6 +621,8 @@ StateInfo GameController::startSettlement(StateInfo _state)
 
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
+
+
 	// Worm 사망절차
 	// 1.   Worm이 사망상태로 넘어가며 애니메이션을 실행한다
 	// 2.   Worm이 사망애니메이션종료후 사망한 Worm위치에 묘지액터가 생성 된다. (기존은 애니메이션종료후 바로사망)
@@ -738,7 +740,9 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 		}
 	}
 	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
-	{
+	{	
+
+
 		// 4.0f
 		if (SETTLEMENT_TIME <= settementTime_)
 		{
@@ -785,11 +789,18 @@ StateInfo GameController::updateDeath(StateInfo _state)
 
 StateInfo GameController::startVictory(StateInfo _state)
 {
+	// 빅토리 스테이트에선 이론상 웜리스트에 웜은 한 마리밖에 없습니다.
+	// 유일한 웜에게 카메라가 포커싱되며 해당 웜은 Win 스테이트를 실행합니다.
 	return StateInfo();
 }
 
 StateInfo GameController::updateVictory(StateInfo _state)
 {
+	for (size_t i = 0; i < wormList_.size(); i++)
+	{
+		wormList_[i]->ChangeState("Win");
+	}
+
 	return StateInfo();
 }
 
