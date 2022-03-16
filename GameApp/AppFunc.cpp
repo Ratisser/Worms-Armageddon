@@ -815,6 +815,10 @@ void CharactorImageInit()
 	RS::LoadImageFromFileAndCut(dir / "AirStrikeOffLeft.bmp", cutSize);
 	RS::LoadImageFromFileAndCut(dir / "AirStrikeOffRight.bmp", cutSize);
 
+	// 승리 애니메이션
+	RS::LoadImageFromFileAndCut(dir / "winLeft.bmp", cutSize);
+	RS::LoadImageFromFileAndCut(dir / "winRight.bmp", cutSize);
+
 	{
 		GameEngineDirectroy dir = GameEngineDirectroy();
 		dir.MoveParent("Worms-Armageddon");

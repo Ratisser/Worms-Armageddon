@@ -24,7 +24,6 @@ SuperSheep::SuperSheep()
 	, bGround_(false)
 	, jumpDelay_(JUMP_DELAY)
 	, deltaTime_(0.0f)
-	, parentWorm_(nullptr)
 	, explosionDelay_(0.0f)
 	, headPivot_(float4::UP)
 	, direction_(float4::UP)
@@ -324,7 +323,7 @@ StateInfo SuperSheep::updateFly(StateInfo _state)
 StateInfo SuperSheep::startExplosion(StateInfo _state)
 {
 	PlayLevel* level = (PlayLevel*)GetLevel();
-	level->CreateExplosion100(pos_,75,true);
+	level->CreateExplosion100(pos_, 75, true);
 	explosionDelay_ = 3.0f;
 	mainRender_->Off();
 	//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
