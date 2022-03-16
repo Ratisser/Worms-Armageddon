@@ -1270,6 +1270,8 @@ void Worm::WormDeath()
 {
 	Death();
 
+	uicontroller_->CurWormUIControllerDeath();
+
 	BulletFocusOff();	
 	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
 	if (pos_.y < waterlevel)
@@ -1375,6 +1377,8 @@ StateInfo Worm::updateHit(StateInfo _state)
 	float movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
 
 	//TODO : 바운드 조건을 걸어서 바운드가 종료되면 튀기지 안게ㅡㅁ
+	// 튕길때마다 튕기는 힘이 약해져야함	
+
 	if (movey < 0.f)
 	{	// 위로 튕길때
 		if (nullptr != headCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
@@ -1390,7 +1394,8 @@ StateInfo Worm::updateHit(StateInfo _state)
 				{
 					DamageDir_.y *= -1.f;  //이리 했는데도 다음 프레임에도 여전히 위에 부딪혀 있으면 잣댐
 				}
-			}			
+			}		
+			DamageSpeed_ *= 0.5f;
 		}
 		movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
 		SetMove(0.f, movey * deltaTime_);
@@ -1403,7 +1408,7 @@ StateInfo Worm::updateHit(StateInfo _state)
 			DamageAcc_ = 0.f;
 
 			if (Hit_ == false) //Slide_To_IdleLeft1_ 에니메이션 완료시 실행
-			{			
+			{	
 				return "Idle";
 			}
 
@@ -1430,6 +1435,8 @@ StateInfo Worm::updateHit(StateInfo _state)
 				SetMove(0.f, movey *10.f* deltaTime_);
 				DamageAcc_ += 10.f;*/
 			}
+			DamageSpeed_ *= 0.5f;
+
 			return StateInfo();
 		}
 		else
@@ -1609,6 +1616,11 @@ StateInfo Worm::updateIdle(StateInfo _state)
 		//if (true == DeathStart_)\
 		//TODO : 조건 만족되면 조금 기다리다가 실행
 		if (DeathState_ == DeathState::DeathStart)
+		{
+			return "Death";
+		}
+
+		if (hp_ <= 0)
 		{
 			return "Death";
 		}
