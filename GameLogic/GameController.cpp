@@ -144,17 +144,17 @@ void GameController::UpdateBefore()
 		prevwormIndex_ = wormIndex_;
 	}
 
-	if (!PlayerHPBarSortQueue.empty() && false == BottomUISortStart)
-	{
-		// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
-		BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
+	//if (!PlayerHPBarSortQueue.empty() && false == BottomUISortStart)
+	//{
+	//	// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
+	//	BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
 
-		// 정렬시작하므로 큐에서 제거
-		PlayerHPBarSortQueue.pop();
+	//	// 정렬시작하므로 큐에서 제거
+	//	PlayerHPBarSortQueue.pop();
 
-		// 정렬 시작
-		BottomStateHPBarSortCheck(QueueState);
-	}
+	//	// 정렬 시작
+	//	BottomStateHPBarSortCheck(QueueState);
+	//}
 }
 
 void GameController::Update()
@@ -180,53 +180,53 @@ void GameController::Update()
 
 	// 플레이어가 사망해서 UI가 지워진상태라면
 	// 나머지 하단바에 대한 위치 재조정
-	if (true == BottomUISortEnd)
-	{
-		BottomUISortEnd = false;
+	//if (true == BottomUISortEnd)
+	//{
+	//	BottomUISortEnd = false;
 
-		// 여기서 현재 모든 플레이어가 정렬이 종료되었으므로
-		// 모든 플레이어의 체력상태를 체크한다.
-		int Size = static_cast<int>(PlayerHPBarList.size());
-		for (int i = 0; i < Size; ++i)
-		{
-			if (0 >= PlayerHPBarList[i]->GetParentWorm()->GetCurHP())
-			{
-				if (true == PlayerHPBarList[i]->GetParentWorm()->UIControllerDeath())
-				{
-					PlayerHPBarList.erase(PlayerHPBarList.begin() + i);
-					Size = static_cast<int>(PlayerHPBarList.size());
+	//	// 여기서 현재 모든 플레이어가 정렬이 종료되었으므로
+	//	// 모든 플레이어의 체력상태를 체크한다.
+	//	int Size = static_cast<int>(PlayerHPBarList.size());
+	//	for (int i = 0; i < Size; ++i)
+	//	{
+	//		if (0 >= PlayerHPBarList[i]->GetParentWorm()->GetCurHP())
+	//		{
+	//			if (true == PlayerHPBarList[i]->GetParentWorm()->UIControllerDeath())
+	//			{
+	//				PlayerHPBarList.erase(PlayerHPBarList.begin() + i);
+	//				Size = static_cast<int>(PlayerHPBarList.size());
 
-					for (int k = 0; k < Size; ++k)
-					{
-						PlayerHPBarList[k]->PositionReadjustment();
-					}
+	//				for (int k = 0; k < Size; ++k)
+	//				{
+	//					PlayerHPBarList[k]->PositionReadjustment();
+	//				}
 
-					BottomUIDeath = true;
-				}
-			}
-		}
-	}
+	//				BottomUIDeath = true;
+	//			}
+	//		}
+	//	}
+	//}
 
-	if (true == BottomUIDeath)
-	{
-		int size = wormList_.size();
-		for (int i = 0; i < size; ++i)
-		{
-			if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
-			{
-				if (wormList_[i] == currentWorm_)
-				{
-					currentWorm_ = nullptr;
-				}
-				wormList_[i]->WormDeath();
-				wormList_.erase(wormList_.begin() + i);
+	//if (true == BottomUIDeath)
+	//{
+	//	int size = wormList_.size();
+	//	for (int i = 0; i < size; ++i)
+	//	{
+	//		if (wormList_[i]->GetDeathState() == Worm::DeathState::DeathEnd)
+	//		{
+	//			if (wormList_[i] == currentWorm_)
+	//			{
+	//				currentWorm_ = nullptr;
+	//			}
+	//			wormList_[i]->WormDeath();
+	//			wormList_.erase(wormList_.begin() + i);
 
-				size = wormList_.size();
-			}
-		}
-		BottomUIDeath = false;
-		return;
-	}
+	//			size = wormList_.size();
+	//		}
+	//	}
+	//	BottomUIDeath = false;
+	//	return;
+	//}
 
 	//TODO : 죽을 녀석 찾아다가 포커싱 해줘야함
 
@@ -487,6 +487,7 @@ void GameController::initState()
 	state_.CreateState("Action", &GameController::startAction, &GameController::updateAction);
 	state_.CreateState("ActionEnd", &GameController::startActionEnd, &GameController::updateActionEnd);
 	state_.CreateState("Settlement", &GameController::startSettlement, &GameController::updateSettlement);
+	state_.CreateState("DeathPhase", &GameController::startDeathPhase, &GameController::updateDeathPhase);
 	state_.CreateState("Death", &GameController::startDeath, &GameController::updateDeath);
 	state_.CreateState("Victory", &GameController::startVictory, &GameController::updateVictory);
 	state_.CreateState("ItemDrop", &GameController::startItemDrop, &GameController::updateItemDrop);
@@ -640,7 +641,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 
 	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
 
-	bool Damagethisturn= false;
+	bool Damagethisturn = false;
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
@@ -671,81 +672,101 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 		// 모든 웜이 사망처리가 끝나고 ui처리가 끝나면 턴전환 딜레이 계산
 		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
 	}
-	
+
 	////////////////////////// Worm Death 진행 ////////////////////////
 	//1. 죽을 얘가 있는지 확인
 	// Death를 진행시킬 worm
 
-	if (false == WormDeathReady_)
-	{		
-		CurDeathWorm_ = NextDeathWorm_;
-		
-		NextDeathWorm_ = nullptr;
+	//if (false == WormDeathReady_)
+	//{		
+	//	CurDeathWorm_ = NextDeathWorm_;
+	//	
+	//	NextDeathWorm_ = nullptr;
 
-		for (int i = 0; i < wormList_.size(); ++i)
-		{
-			//if (true == wormList_[i]->GetDeathReady_())
-			if ((wormList_[i]->GetDeathState() == Worm::DeathState::DeathReady))
-			{
-				WormDeathReady_ = true; //			(worm)의		Death를		준비중이다.
-				WormDeathProgressing_ = true; //	(컨트롤러)가 Death상태	진행중이다.
-				// 데미지를 입어 죽게될 worm은 GetDeathReady_()를 통해 bool 값을 전달한다.
-				if (nullptr == CurDeathWorm_)
-				{
-					CurDeathWorm_ = wormList_[i];
-					continue;
-				}
-				else if (nullptr == NextDeathWorm_)
-				{
-					NextDeathWorm_ = wormList_[i];
-					break;
-					// 1개체 죽음 완료후, 
-					// 죽음이 완료된 worm은 wormList_에서 지워져서 들어와선 안됨
-				}				
-			}
+	//	for (int i = 0; i < wormList_.size(); ++i)
+	//	{
+	//		//if (true == wormList_[i]->GetDeathReady_())
+	//		if ((wormList_[i]->GetDeathState() == Worm::DeathState::DeathReady))
+	//		{
+	//			WormDeathReady_ = true; //			(worm)의		Death를		준비중이다.
+	//			WormDeathProgressing_ = true; //	(컨트롤러)가 Death상태	진행중이다.
+	//			// 데미지를 입어 죽게될 worm은 GetDeathReady_()를 통해 bool 값을 전달한다.
+	//			if (nullptr == CurDeathWorm_)
+	//			{
+	//				CurDeathWorm_ = wormList_[i];
+	//				continue;
+	//			}
+	//			else if (nullptr == NextDeathWorm_)
+	//			{
+	//				NextDeathWorm_ = wormList_[i];
+	//				break;
+	//				// 1개체 죽음 완료후, 
+	//				// 죽음이 완료된 worm은 wormList_에서 지워져서 들어와선 안됨
+	//			}				
+	//		}
 
-			if((CurDeathWorm_ == nullptr) && (NextDeathWorm_ == nullptr))
-			{
-				WormDeathProgressing_ = false; // 죽음 리스트중 마지막 하나 남은 worm이 죽었다.
-			}
-		}
+	//		if((CurDeathWorm_ == nullptr) && (NextDeathWorm_ == nullptr))
+	//		{
+	//			WormDeathProgressing_ = false; // 죽음 리스트중 마지막 하나 남은 worm이 죽었다.
+	//		}
+	//	}
 
-		//TODO :  Worm::DeathStart가 되어 에니메이션을 재생하고, 재생이 완료 후, bool DeathEnd가 된것을 인지하면
-		// nextworm state로 넘어가고, 그 nextworm에 다음 죽게될 worm을 넘겨주어야함
+	//	//TODO :  Worm::DeathStart가 되어 에니메이션을 재생하고, 재생이 완료 후, bool DeathEnd가 된것을 인지하면
+	//	// nextworm state로 넘어가고, 그 nextworm에 다음 죽게될 worm을 넘겨주어야함
 
-		//worm의 죽음 상태 변화를 시작함 // worm의 대기상태와 GameController의 대기상태는 다름
-		if (nullptr != CurDeathWorm_)
-		{					
-			CurDeathWorm_->SetDeathState(Worm::DeathState::DeathStart);
-			//CurDeathWorm_->SetDeathReady(false);
-			//CurDeathWorm_->SetDeathStart(true);
-		}
-	}
-	//다음 worm 죽이기까지 컨트롤러를 대기시킨다.
-	if (true == WormDeathReady_)
+	//	//worm의 죽음 상태 변화를 시작함 // worm의 대기상태와 GameController의 대기상태는 다름
+	//	if (nullptr != CurDeathWorm_)
+	//	{					
+	//		CurDeathWorm_->SetDeathState(Worm::DeathState::DeathStart);
+	//		//CurDeathWorm_->SetDeathReady(false);
+	//		//CurDeathWorm_->SetDeathStart(true);
+	//	}
+	//}
+	////다음 worm 죽이기까지 컨트롤러를 대기시킨다.
+	//if (true == WormDeathReady_)
+	//{
+	//	WormDeathWaitingTime_ += GameEngineTime::GetInst().GetDeltaTime();
+
+	//	if (WormDeathWaitingTime_ > 3.f) // 3초가 지나면 대기가 끝난다.
+	//	{
+	//		WormDeathReady_ = false; // 다시 다음 worm을 찾을 준비가 됬따.
+	//		WormDeathWaitingTime_ = 0.f;
+	//	
+	//		//CurDeathWorm_ = NextDeathWorm_;
+	//		//NextDeathWorm_ = nullptr;
+	//		//SetFocusOnlyOneWorm(CurDeathWorm_);
+	//		//대기가 끝남
+	//	}
+	//}
+	//if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
+	//{
+	//	// 4.0f
+	//	if (SETTLEMENT_TIME <= settementTime_)
+	//	{
+	//		settementTime_ = 0.0f;
+	//		return "NextWorm";
+	//	}
+	//}
+
+
+	std::vector<Worm*>::iterator startIter = wormList_.begin();
+
+	while (startIter != wormList_.end())
 	{
-		WormDeathWaitingTime_ += GameEngineTime::GetInst().GetDeltaTime();
+		Worm* currentWorm = *startIter;
+		if (currentWorm->GetDeathState() == Worm::DeathState::DeathReady)
+		{
+			readyToDeathWorm_.push_back(currentWorm);
+			startIter = wormList_.erase(startIter);
+		}
+		else
+		{
+			++startIter;
+		}
+	}
 
-		if (WormDeathWaitingTime_ > 3.f) // 3초가 지나면 대기가 끝난다.
-		{
-			WormDeathReady_ = false; // 다시 다음 worm을 찾을 준비가 됬따.
-			WormDeathWaitingTime_ = 0.f;
-		
-			//CurDeathWorm_ = NextDeathWorm_;
-			//NextDeathWorm_ = nullptr;
-			//SetFocusOnlyOneWorm(CurDeathWorm_);
-			//대기가 끝남
-		}
-	}
-	if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
-	{
-		// 4.0f
-		if (SETTLEMENT_TIME <= settementTime_)
-		{
-			settementTime_ = 0.0f;
-			return "NextWorm";
-		}
-	}
+	CurDeathWorm_ = nullptr;
+	return "DeathPhase";
 
 	return StateInfo();
 }
@@ -757,19 +778,17 @@ StateInfo GameController::startDeathPhase(StateInfo _state) //
 
 StateInfo GameController::updateDeathPhase(StateInfo _state)
 {
-	//cameraPos_ = GetLevel()->GetCamPos();S
-	//
-	//float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
-	//float4 MoveVector = cameraMovePos - cameraPos_;
-	//
-	//GetLevel()->SetCamMove(MoveVector * 0.1f);
-	//DeathPhase에서 다시 결산 페이즈로 넘어가, 갱신될 수도 있다.
-	if (true)
+	if (0 < readyToDeathWorm_.size())
 	{
-		// 죽음 애니메이션이 완전히 끝나면 State 를 다시 Settlement 로 돌려서 더 죽을 웜이 있나를 살펴본다...
-		return "Settlement";
+		CurDeathWorm_ = readyToDeathWorm_.front();
+		CurDeathWorm_->SetDeathState(Worm::DeathState::DeathStart);
+		CurDeathWorm_->ChangeState("Death");
+		readyToDeathWorm_.pop_front();
+
+		return "Death";
 	}
-	return StateInfo();
+
+	return "NextWorm";
 }
 
 
@@ -780,6 +799,34 @@ StateInfo GameController::startDeath(StateInfo _state)
 
 StateInfo GameController::updateDeath(StateInfo _state)
 {
+	if (CurDeathWorm_ != nullptr && CurDeathWorm_->GetDeathState() == Worm::DeathState::DeathEnd)
+	{
+		auto uiStartIter = PlayerHPBarList.begin();
+
+		while (uiStartIter != PlayerHPBarList.end())
+		{
+			if ((*uiStartIter)->GetParentWorm() == CurDeathWorm_)
+			{
+				uiStartIter = PlayerHPBarList.erase(uiStartIter);
+			}
+			else
+			{
+				++uiStartIter;
+			}
+		}
+		CurDeathWorm_->WormDeath();
+		CurDeathWorm_ = nullptr;
+		if (0 < readyToDeathWorm_.size())
+		{
+			BottomUISortStart = true;
+			return "DeathPhase";
+		}
+		else
+		{
+			return "NextWorm";
+		}
+	}
+
 	return StateInfo();
 }
 

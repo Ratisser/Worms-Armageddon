@@ -82,6 +82,22 @@ public:
 
 	const float GetWaterLevel();
 
+public:
+	void IncresePetroleumCount()
+	{
+		PetroleumCount_++;
+	}
+
+	void DecresePetroleumCount()
+	{
+		PetroleumCount_--;
+	}
+
+	WindController* GetWindController()
+	{
+		return windController_;
+	}
+	void RandomTurnWind();
 
 public: // 턴 종료시 UI관련 갱신
 	static void BottomStateHPBarSortCheck(BottomStateUI* _CurUI);
@@ -99,6 +115,7 @@ private:
 private:
 	GameEngineFSM<GameController> state_;
 	std::vector<Worm*> wormList_;
+	std::list<Worm*> readyToDeathWorm_;
 	std::vector<float> xPosList_;
 
 	int PetroleumCount_; // 현재 활성중인 기름 숫자
@@ -129,22 +146,7 @@ private: // 바람관련
 	WindController* windController_;
 	void WindInit();
 	GameEngineMath::Random windDice_;
-public:
-	void IncresePetroleumCount()
-	{
-		PetroleumCount_++;
-	}
 
-	void DecresePetroleumCount()
-	{
-		PetroleumCount_--;
-	}
-
-	WindController* GetWindController()
-	{
-		return windController_;
-	}
-	void RandomTurnWind();
 
 private: // 물관련
 	WaterLevel* WaterLevel_;
