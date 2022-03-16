@@ -111,6 +111,9 @@ void Worm::initRenderer()
 	mainRender_->CreateAnimation("wdieLeft", "wdieLeft.bmp", 0, 59, false, 0.033f);
 	mainRender_->CreateAnimation("wdieRight", "wdieRight.bmp", 0, 59, false, 0.033f);
 
+	mainRender_->CreateAnimation("WinLeft", "winLeft.bmp", 0, 13, true, 0.033f);
+	mainRender_->CreateAnimation("WinRight", "winRight.bmp", 0, 13, true, 0.033f);
+
 	mainRender_->CreateAnimation("Slide_To_IdleRight1_", "SlideR1_.bmp", 0, 21, false, 0.033f);
 	mainRender_->CreateAnimation("Slide_To_IdleRight1_U", "SlideR1_u.bmp", 0, 21, false, 0.033f);
 	mainRender_->CreateAnimation("Slide_To_IdleRight1_D", "SlideR1_d.bmp", 0, 21, false, 0.033f);
@@ -394,6 +397,7 @@ void Worm::initState()
 	state_.CreateState("Drown", &Worm::StartDrown, &Worm::updateDrown);
 	state_.CreateState("Hit", &Worm::StartHit, &Worm::updateHit);
 	state_.CreateState("Death", &Worm::StartDeath, &Worm::updateDeath);
+	state_.CreateState("Win", &Worm::startWin, &Worm::updateWin);
 
 	state_.CreateState("Idle", &Worm::startIdle, &Worm::updateIdle);
 	state_.CreateState("Walk", &Worm::startWalk, &Worm::updateWalk);
@@ -1508,6 +1512,25 @@ StateInfo Worm::updateDeath(StateInfo _state)
 	return StateInfo();
 }
 
+
+StateInfo Worm::startWin(StateInfo _state)
+{
+	if (bLeft_)
+	{
+		mainRender_->ChangeAnimation("WinLeft", std::string("winLeft.bmp"));
+	}
+	else
+	{
+		mainRender_->ChangeAnimation("WinRight", std::string("winRight.bmp"));
+	}
+
+	return StateInfo();
+}
+
+StateInfo Worm::updateWin(StateInfo _state)
+{
+	return StateInfo();
+}
 
 StateInfo Worm::startIdle(StateInfo _state)
 {

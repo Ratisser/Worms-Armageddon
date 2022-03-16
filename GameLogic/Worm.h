@@ -161,6 +161,9 @@ private:
 	StateInfo StartDeath(StateInfo _state);
 	StateInfo updateDeath(StateInfo _state);
 
+	StateInfo startWin(StateInfo _state);
+	StateInfo updateWin(StateInfo _state);
+	
 	StateInfo startIdle(StateInfo _state);
 	StateInfo updateIdle(StateInfo _state);
 
