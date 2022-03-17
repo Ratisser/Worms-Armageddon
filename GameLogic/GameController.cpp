@@ -45,6 +45,7 @@ std::queue<BottomStateUI*> GameController::PlayerHPBarSortQueue;
 bool GameController::BottomUISortStart = false;
 bool GameController::BottomUISortEnd = false;
 bool GameController::BottomUIDeath = false;
+bool GameController::DamageFlag = false;
 int GameController::SortStartIndex = -1;
 int GameController::SortEndIndex = -1;
 float GameController::SortDeltaTime = 0.f;
@@ -655,11 +656,12 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	// 3. UI관련 처리 완료 후 턴전환
 
 	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
-
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
+			DamageFlag = true;
+
 			if (false == wormList_[i]->GetCurUIController()->GetCurBottomState()->GetDecreaswHPBarFlag())
 			{
 				if (true == BottomStateHPBarSort())
@@ -671,6 +673,13 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
 
 		}
+	}
+
+	// Damage를 받은 웜즈가 없으면 바로 넘김
+	if (false == DamageFlag)
+	{
+		BottomUISortEnd = false;
+		return "DeathCheck";
 	}
 
 	// UI 정렬 완료 전까지 넘기면안됌
@@ -839,6 +848,7 @@ StateInfo GameController::updateDeath(StateInfo _state)
 		}
 
 		CurDeathWorm_->WormDeath();
+		DamageFlag = false;
 		BottomUISortEnd = false;
 		CurDeathWorm_ = nullptr;
 		if (0 < readyToDeathWorm_.size())

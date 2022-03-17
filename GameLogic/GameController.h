@@ -157,6 +157,7 @@ private: // 물관련
 private: // 하단상태바 정렬관련
 	static std::vector<BottomStateUI*> PlayerHPBarList;
 	static std::queue<BottomStateUI*> PlayerHPBarSortQueue;
+	static bool DamageFlag;
 	static bool BottomUISortEnd;
 	static bool BottomUIDeath;
 	static int SortStartIndex;
