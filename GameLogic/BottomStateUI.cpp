@@ -54,37 +54,38 @@ void BottomStateUI::Start()
 
 void BottomStateUI::UpdateBefore()
 {
-	//if (true == DecreaseHPBar_)
-	//{
-	//	// 델타타임 누적
-	//	PrevHPBarLen_ -= GameEngineTime::GetInst().GetDeltaTime() * DecreaseSpeed_;
-	//	if (TargetHPBarLen_ >= PrevHPBarLen_)
-	//	{
-	//		if (1.f >= PrevHPBarLen_)
-	//		{
-	//			HPBarRenderer_->SetRenderSize(float4(1.f, 17.f));
+	if (true == DecreaseHPBar_)
+	{
+		// 델타타임 누적
+		PrevHPBarLen_ -= GameEngineTime::GetInst().GetDeltaTime() * DecreaseSpeed_;
+		if (TargetHPBarLen_ >= PrevHPBarLen_)
+		{
+			GameController::BottomUISortStart = false;
+			if (1.f >= PrevHPBarLen_)
+			{
+				HPBarRenderer_->SetRenderSize(float4(1.f, 17.f));
 
-	//			// 게임컨트롤 호출해서 HPBar 정렬
-	//			GameController::BottomStateHPBarSortCheck(this);
+				// 게임컨트롤 호출해서 HPBar 정렬
+				GameController::BottomStateHPBarSortCheck(this);
 
-	//			DecreaseHPBar_ = false;
-	//			return;
-	//		}
+				DecreaseHPBar_ = false;
+				return;
+			}
 
-	//		CurHP_ = ParentWorm_->GetCurHP();
+			CurHP_ = ParentWorm_->GetCurHP();
 
-	//		// 게임컨트롤 호출해서 HPBar 정렬
-	//		GameController::BottomStateHPBarSortCheck(this);
+			// 게임컨트롤 호출해서 HPBar 정렬
+			GameController::BottomStateHPBarSortCheck(this);
 
-	//		CurHPBarLen_ = PrevHPBarLen_;
-	//		DecreaseHPBar_ = false;
+			CurHPBarLen_ = PrevHPBarLen_;
+			DecreaseHPBar_ = false;
 
-	//		return;
-	//	}
+			return;
+		}
 
-	//	// 체력바 크기는 100 x 17
-	//	HPBarRenderer_->SetRenderSize(float4(PrevHPBarLen_, 17.f));
-	//}
+		// 체력바 크기는 100 x 17
+		HPBarRenderer_->SetRenderSize(float4(PrevHPBarLen_, 17.f));
+	}
 }
 
 void BottomStateUI::Update()
@@ -112,6 +113,11 @@ void BottomStateUI::Render()
 	{
 		HPBarRenderer_->Render();
 	}
+}
+
+bool BottomStateUI::GetDecreaswHPBarFlag() const
+{
+	return DecreaseHPBar_;
 }
 
 Worm* BottomStateUI::GetParentWorm() const

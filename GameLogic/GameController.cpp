@@ -144,17 +144,17 @@ void GameController::UpdateBefore()
 		prevwormIndex_ = wormIndex_;
 	}
 
-	//if (!PlayerHPBarSortQueue.empty() && false == BottomUISortStart)
-	//{
-	//	// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
-	//	BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
+	if (!PlayerHPBarSortQueue.empty() && false == BottomUISortStart)
+	{
+		// 선입선출의 개념을 활용하여 그다음 정렬 항목을 빼오며
+		BottomStateUI* QueueState = PlayerHPBarSortQueue.front();
 
-	//	// 정렬시작하므로 큐에서 제거
-	//	PlayerHPBarSortQueue.pop();
+		// 정렬시작하므로 큐에서 제거
+		PlayerHPBarSortQueue.pop();
 
-	//	// 정렬 시작
-	//	BottomStateHPBarSortCheck(QueueState);
-	//}
+		// 정렬 시작
+		BottomStateHPBarSortCheck(QueueState);
+	}
 }
 
 void GameController::Update()
@@ -346,6 +346,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 void GameController::CreateWormUI()
 {
 	size_t wormcnt = wormList_.size();
+	PlayerHPBarList.resize(wormcnt);
 	for (int i = 0; i < wormcnt; ++i)
 	{
 		std::string Name = wormList_[i]->GetName();
@@ -415,7 +416,7 @@ void GameController::CreateWormUI()
 		wormList_[i]->GetCurUIController()->GetCurBottomState()->GameStartInit(static_cast<int>(i));
 
 		// 플레이어 하단 상태바관련 관리목록에 추가
-		PlayerHPBarList.push_back(wormList_[i]->GetCurUIController()->GetCurBottomState());
+		PlayerHPBarList[i] = wormList_[i]->GetCurUIController()->GetCurBottomState();
 	}
 }
 
@@ -496,6 +497,7 @@ void GameController::initState()
 	state_.CreateState("Action", &GameController::startAction, &GameController::updateAction);
 	state_.CreateState("ActionEnd", &GameController::startActionEnd, &GameController::updateActionEnd);
 	state_.CreateState("Settlement", &GameController::startSettlement, &GameController::updateSettlement);
+	state_.CreateState("DeathCheck", &GameController::startDeathCheck, &GameController::updateDeathCheck);
 	state_.CreateState("DeathPhase", &GameController::startDeathPhase, &GameController::updateDeathPhase);
 	state_.CreateState("Death", &GameController::startDeath, &GameController::updateDeath);
 	state_.CreateState("Victory", &GameController::startVictory, &GameController::updateVictory);
@@ -623,6 +625,7 @@ StateInfo GameController::startSettlement(StateInfo _state)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
+			BottomUISortStart = true;
 			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
 		}
 	}
@@ -653,15 +656,12 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 
 	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
 
-	bool Damagethisturn = false;
 	for (size_t i = 0; i < wormList_.size(); i++)
 	{
 		if (true == wormList_[i]->isDamagedThisTurn())
 		{
-			if (true == BottomUISortStart)
+			if (false == wormList_[i]->GetCurUIController()->GetCurBottomState()->GetDecreaswHPBarFlag())
 			{
-				Damagethisturn = true;
-
 				if (true == BottomStateHPBarSort())
 				{
 					wormList_[i]->ResetisDamaged();
@@ -673,17 +673,13 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 		}
 	}
 
-	if (Damagethisturn)
+	// UI 정렬 완료 전까지 넘기면안됌
+	if (true == BottomUISortEnd)
 	{
-		return StateInfo();
+		BottomUISortEnd = false;
+		return "DeathCheck";
 	}
 
-	// if문이 왜걸려있나?
-	if (true)
-	{
-		// 모든 웜이 사망처리가 끝나고 ui처리가 끝나면 턴전환 딜레이 계산
-		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
-	}
 
 	////////////////////////// Worm Death 진행 ////////////////////////
 	//1. 죽을 얘가 있는지 확인
@@ -760,7 +756,16 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	//	}
 	//}
 
+	return StateInfo();
+}
 
+StateInfo GameController::startDeathCheck(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo GameController::updateDeathCheck(StateInfo _state)
+{
 	std::vector<Worm*>::iterator startIter = wormList_.begin();
 
 	while (startIter != wormList_.end())
@@ -778,9 +783,8 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	}
 
 	CurDeathWorm_ = nullptr;
-	return "DeathPhase";
 
-	return StateInfo();
+	return "DeathPhase";
 }
 
 StateInfo GameController::startDeathPhase(StateInfo _state) // 
@@ -813,24 +817,32 @@ StateInfo GameController::updateDeath(StateInfo _state)
 {
 	if (CurDeathWorm_ != nullptr && CurDeathWorm_->GetDeathState() == Worm::DeathState::DeathEnd)
 	{
-		auto uiStartIter = PlayerHPBarList.begin();
+		BottomStateUI* DeathBottomUI = CurDeathWorm_->GetCurUIController()->GetCurBottomState();
 
-		while (uiStartIter != PlayerHPBarList.end())
+		// 여기서 현재 모든 플레이어가 정렬이 종료되었으므로
+		// 모든 플레이어의 체력상태를 체크한다.
+		int Size = static_cast<int>(PlayerHPBarList.size());
+		for (int i = 0; i < Size; ++i)
 		{
-			if ((*uiStartIter)->GetParentWorm() == CurDeathWorm_)
+			if (0 >= PlayerHPBarList[i]->GetParentWorm()->GetCurHP())
 			{
-				uiStartIter = PlayerHPBarList.erase(uiStartIter);
-			}
-			else
-			{
-				++uiStartIter;
+				if (PlayerHPBarList[i] == DeathBottomUI)
+				{
+					PlayerHPBarList.erase(PlayerHPBarList.begin() + i);
+					Size = static_cast<int>(PlayerHPBarList.size());
+					for (int k = 0; k < Size; ++k)
+					{
+						PlayerHPBarList[k]->PositionReadjustment();
+					}
+				}
 			}
 		}
+
 		CurDeathWorm_->WormDeath();
+		BottomUISortEnd = false;
 		CurDeathWorm_ = nullptr;
 		if (0 < readyToDeathWorm_.size())
 		{
-			BottomUISortStart = true;
 			return "DeathPhase";
 		}
 		else
@@ -1023,7 +1035,8 @@ bool GameController::BottomStateHPBarSort()
 			if (SortStartIndex == SortEndIndex && 1 != Size)
 			{
 				// 마지막 인덱스까지 정렬이 완료되었으면 Flag 해제
-				BottomUISortStart = false;
+				// 바로 턴이 넘어가거나 웜즈가 바로 죽는거를 방지하기 위해 삭제
+				//BottomUISortStart = false;
 
 				// 만약 현재 정렬이 종료되고 대기큐에 정렬하려는 플레이어가
 				// 존재하지않다면 정렬 완전종료

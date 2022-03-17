@@ -1620,10 +1620,10 @@ StateInfo Worm::updateIdle(StateInfo _state)
 			return "Death";
 		}
 
-		if (hp_ <= 0)
-		{
-			return "Death";
-		}
+		//if (hp_ <= 0)
+		//{
+		//	return "Death";
+		//}
 	}
 
 	// ¶³¾îÁö´Â Áß
