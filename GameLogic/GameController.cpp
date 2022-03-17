@@ -285,7 +285,12 @@ void GameController::UpdateAfter()
 
 		if (1 == static_cast<int>(wormList_.size()))
 		{
-			int a = 0;
+			// 웜리스트 사이즈가 1이다 == 한명만 살아남은 상태다
+			float4 cameraMovePos = wormList_[0]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
+			float4 MoveVector = cameraMovePos - cameraPos_;
+
+			GetLevel()->SetCamMove(MoveVector * 0.1f);
+			return;
 		}
 
 		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
