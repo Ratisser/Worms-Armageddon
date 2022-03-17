@@ -577,7 +577,7 @@ StateInfo GameController::updateAction(StateInfo _state)
 		currentTurnTime_ = 0.0f;
 	}
 
-	if (currentTurnTime_ < 0 || 0 == currentWorm_->GetActionTokenCount())
+	if (currentTurnTime_ < 0 || 0 >= currentWorm_->GetActionTokenCount())
 	{
 		// 턴시간 초과 or 토큰 소진으로 인한 플레이어 전환이 발생하므로 이곳에서
 		// 무기창 비활성이 된다.
@@ -1050,6 +1050,15 @@ bool GameController::BottomStateHPBarSort()
 
 				// 만약 현재 정렬이 종료되고 대기큐에 정렬하려는 플레이어가
 				// 존재하지않다면 정렬 완전종료
+				if (true == PlayerHPBarSortQueue.empty())
+				{
+					BottomUISortEnd = true;
+
+					return true;
+				}
+			}
+			else if (SortEndIndex == -1)
+			{
 				if (true == PlayerHPBarSortQueue.empty())
 				{
 					BottomUISortEnd = true;
