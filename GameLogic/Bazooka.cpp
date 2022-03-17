@@ -26,6 +26,8 @@ Bazooka::Bazooka()
 	, bBackJump_(false)
 	, deltaTime_(0.0f)
 	, degree_(0.f)
+	, state_(this)
+	, explosionDelayTime_(0.0f)
 {
 
 }
@@ -35,8 +37,17 @@ Bazooka::~Bazooka() // default destructer 디폴트 소멸자
 
 }
 
+void Bazooka::InitState()
+{
+	state_.CreateState("Fly", &Bazooka::startFly, &Bazooka::updateFly);
+	state_.CreateState("Explosion", &Bazooka::startExplosion, &Bazooka::updateExplosion);
+	state_.CreateState("Wait", &Bazooka::startWait, &Bazooka::updateWait);
+	state_.ChangeState("Fly");
+}
+
 void Bazooka::Start()
 {
+
 	SetRenderOrder((int)RenderOrder::Weapon);
 	mainRender_ = CreateRenderer("missile");
 
@@ -47,7 +58,10 @@ void Bazooka::Start()
 	groundCheckCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCheckCollision_->SetPivot({ 0.0f, BOTTOM_PIVOT + 1.f });
 
+
+	InitState();
 	GameEngineSoundManager::GetInstance().PlaySoundByName("ROCKETRELEASE.WAV");
+	
 }
 
 void Bazooka::UpdateBefore()
@@ -60,6 +74,30 @@ void Bazooka::Update()
 	prevPos_ = pos_;
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
+	state_.Update();
+
+}
+
+void Bazooka::UpdateAfter()
+{
+}
+
+void Bazooka::Render()
+{
+	if (true == mainRender_->IsOn())
+	{
+		mainRender_->AnimationUpdate();
+
+	}
+}
+
+StateInfo Bazooka::startFly(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Bazooka::updateFly(StateInfo _state)
+{
 	if (nullptr == groundCheckCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
@@ -75,9 +113,9 @@ void Bazooka::Update()
 		float4 moveVector = pos_ - prevPos_;
 		float normalize = sqrtf(moveVector.x * moveVector.x + moveVector.y * moveVector.y);
 		moveVector.x /= normalize;
-		moveVector.y /= normalize; 
-		
-		float theta; 
+		moveVector.y /= normalize;
+
+		float theta;
 
 		if (pos_.x < prevPos_.x)
 		{
@@ -88,7 +126,7 @@ void Bazooka::Update()
 			theta = float4::UP.x * moveVector.x + float4::UP.y * moveVector.y;
 		}
 
-		theta = acos(theta); 
+		theta = acos(theta);
 		degree_ = theta * (180.f / 3.14f);
 
 		if (pos_.x < prevPos_.x)
@@ -108,21 +146,43 @@ void Bazooka::Update()
 	}
 	else
 	{
-		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->CreateExplosion100(pos_,70,true);
-        parentWorm_->BulletFocusOff(); // 현재 바주카 파워를 최대치로 땡길 시만 ParentWorm 이 nullptr 이 되는 현상이 생김.
-		
+		return "Explosion";
+
+
+	}
+
+	return StateInfo();
+}
+
+StateInfo Bazooka::startExplosion(StateInfo _state)
+{
+	PlayLevel* level = (PlayLevel*)GetLevel();
+	level->CreateExplosion100(pos_, 70, true);
+	mainRender_->Off();
+	return StateInfo();
+}
+
+StateInfo Bazooka::updateExplosion(StateInfo _state)
+{
+	return "Wait";
+}
+
+StateInfo Bazooka::startWait(StateInfo _state)
+{
+	return StateInfo();
+}
+
+StateInfo Bazooka::updateWait(StateInfo _state)
+{
+	explosionDelayTime_ += GameEngineTime::GetInst().GetDeltaTime();
+
+	if (3.0f <= explosionDelayTime_)
+	{
+		parentWorm_->ChangeState("Idle");
+		parentWorm_->BulletFocusOff(); // 현재 바주카 파워를 최대치로 땡길 시만 ParentWorm 이 nullptr 이 되는 현상이 생김.
+
 		Death();
 	}
 
+	return StateInfo();
 }
-
-void Bazooka::UpdateAfter()
-{
-}
-
-void Bazooka::Render()
-{
-	mainRender_->AnimationUpdate();
-}
-

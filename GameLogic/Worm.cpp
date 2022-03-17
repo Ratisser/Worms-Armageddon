@@ -1962,7 +1962,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		{
 			soundPowerUp_.Stop();
 		}
-		SubtractActionToken(1);
+		//SubtractActionToken(1);
 		return "BazookaWait";
 	}
 
@@ -1978,7 +1978,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 			newBaz->SetBazooka(forward_, firePower_);
 			//bFocus_ = false;
-			SubtractActionToken(1);
+			//SubtractActionToken(1);
 			return "BazookaWait";
 		}
 	}
@@ -1988,14 +1988,15 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 
 StateInfo Worm::startBazookaWait(StateInfo _state)
 {
-	
+	SubtractActionToken(1);
 	return StateInfo();
 }
 
 StateInfo Worm::updateBazookaWait(StateInfo _state)
 {
-	nextState_ = "Idle";
+
 	return "WeaponOff";
+	nextState_ = "Idle";
 }
 
 StateInfo Worm::startHomingStart(StateInfo _state)
