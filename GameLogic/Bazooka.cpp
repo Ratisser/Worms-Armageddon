@@ -179,7 +179,7 @@ StateInfo Bazooka::updateWait(StateInfo _state)
 	if (3.0f <= explosionDelayTime_)
 	{
 		parentWorm_->ChangeState("Idle");
-		parentWorm_->BulletFocusOff(); // 현재 바주카 파워를 최대치로 땡길 시만 ParentWorm 이 nullptr 이 되는 현상이 생김.
+		parentWorm_->BulletFocusOff();
 
 		Death();
 	}
