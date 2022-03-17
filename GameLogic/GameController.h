@@ -116,6 +116,9 @@ private:
 	const float SETTLEMENT_TIME = 4.0f;
 
 private:
+	float GameEndChangeTime_;
+
+private:
 	GameEngineFSM<GameController> state_;
 	std::vector<Worm*> wormList_;
 	std::list<Worm*> readyToDeathWorm_;
@@ -133,6 +136,7 @@ private:
 
 	int wormIndex_;
 	int prevwormIndex_;
+	int prevwormSize_;
 	float4 cameraPos_;
 
 	float cameraMoveSpeed_;
@@ -157,6 +161,7 @@ private: // 물관련
 private: // 하단상태바 정렬관련
 	static std::vector<BottomStateUI*> PlayerHPBarList;
 	static std::queue<BottomStateUI*> PlayerHPBarSortQueue;
+	static bool GameEndFlag;
 	static bool DamageFlag;
 	static bool BottomUISortEnd;
 	static bool BottomUIDeath;

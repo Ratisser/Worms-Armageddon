@@ -40,12 +40,15 @@
 
 #include "PlayLevel.h"
 
+#include <GameEngineLevelManager.h>
+
 std::vector<BottomStateUI*> GameController::PlayerHPBarList;
 std::queue<BottomStateUI*> GameController::PlayerHPBarSortQueue;
 bool GameController::BottomUISortStart = false;
 bool GameController::BottomUISortEnd = false;
 bool GameController::BottomUIDeath = false;
 bool GameController::DamageFlag = false;
+bool GameController::GameEndFlag = false;
 int GameController::SortStartIndex = -1;
 int GameController::SortEndIndex = -1;
 float GameController::SortDeltaTime = 0.f;
@@ -71,6 +74,7 @@ GameController::GameController() // default constructer 디폴트 생성자
 	, windController_(nullptr)
 	, CurDeathWorm_(nullptr)
 	, NextDeathWorm_(nullptr)
+	, GameEndChangeTime_(10.f)
 {
 
 }
@@ -160,23 +164,37 @@ void GameController::UpdateBefore()
 
 void GameController::Update()
 {
+	// 승리하였으므로 레벨 체인지
+	if (true == GameEndFlag)
+	{
+		GameEndChangeTime_ -= GameEngineTime::GetInst().GetDeltaTime();
+		if (0.f >= GameEndChangeTime_)
+		{
+			GameEndChangeTime_ = 10.f;
+			GameEngineLevelManager::GetInst().ChangeLevel("EndingLevel", true);
+		}
+	}
+
+	state_.Update();
+
 	// 남은 플레이어가 1명이므로 승리로 판단
 	// 남은 플레이어가 없다면 무승부로 판단
 	if (1 == wormList_.size())
 	{
 		// 남은플레이어를 승리상태로 전환
 		wormList_[0]->ChangeState("Win");
+
+		// Flag On
+		GameEndFlag = true;
 		return;
 	}
 	else if (0 == wormList_.size())
 	{
 		// 남은 플레이어가 없으므로 FadeIn/Out처리 후 엔딩씬으로 전환
-		int a = 0;
+		GameEndFlag = true;
 
 		return;
 	}
-
-	state_.Update();
 
 	// 플레이어가 사망해서 UI가 지워진상태라면
 	// 나머지 하단바에 대한 위치 재조정
@@ -294,6 +312,12 @@ void GameController::UpdateAfter()
 			return;
 		}
 
+		// 사망한 웜이 존재한다면 카메라 포커스 대기(다음웜으로 넘어간상태가되면 웜리스트 카운트를 리셋해줌
+		if (prevwormSize_ != static_cast<int>(wormList_.size()))
+		{
+			return;
+		}
+
 		float4 cameraMovePos = wormList_[wormIndex_]->GetPos() - GameEngineWindow::GetInst().GetSize().halffloat4();
 		float4 MoveVector = cameraMovePos - cameraPos_;
 
@@ -341,6 +365,7 @@ void GameController::CreateWorm(const float _minX, const float _maxX)
 
 	xPosList_.push_back(wormXPosContainer_);
 	wormList_[0]->SetFocus(true);
+	prevwormSize_ = wormList_.size();
 	currentWorm_ = wormList_[0];
 }
 
@@ -532,7 +557,19 @@ StateInfo GameController::updateNextWorm(StateInfo _state)
 
 		prevwormIndex_ = wormIndex_;
 
-		++wormIndex_;
+		// 여기서 사망한 웜즈가 있는지 체크
+		if (prevwormSize_ != static_cast<int>(wormList_.size()))
+		{
+			// 사망했던 웜의 인덱스를 현재 WormIndex에 셋팅 단,
+			// 사망한 웜이 마지막인덱스였다면 -1
+
+
+			prevwormSize_ = static_cast<int>(wormList_.size());
+		}
+		else
+		{
+			++wormIndex_;
+		}
 
 		if (wormIndex_ == wormList_.size())
 		{
