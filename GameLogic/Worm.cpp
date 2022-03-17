@@ -1611,10 +1611,10 @@ StateInfo Worm::updateIdle(StateInfo _state)
 			return "Death";
 		}
 
-		if (hp_ <= 0)
-		{
-			return "Death";
-		}
+		//if (hp_ <= 0)
+		//{
+		//	return "Death";
+		//}
 	}
 
 	// ¶³¾îÁö´Â Áß
@@ -1966,6 +1966,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		if (firePower_ > 1000.f)
 		{
 			Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
+			newBaz->SetParentWorm(this);
 			BulletFocusOn(newBaz);
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 			newBaz->SetBazooka(forward_, firePower_);
@@ -3314,6 +3315,7 @@ void Worm::BulletFocusOn(GameEngineActor* _actor)
 void Worm::BulletFocusOff()
 {
 	bulletFocusActor_ = nullptr;
+	return;
 }
 
 void Worm::SetFocus(bool _bFocus)

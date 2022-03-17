@@ -36,6 +36,8 @@ HomingMissile::HomingMissile()
 	, targetPos_(float4::ZERO)
 	, soundWhoosh_("ShotGunFire.wav")
 	, bHomingSound_(true)
+	, explosionDelay_(0.0f)
+	, bExplosionWait_(false)
 {
 
 }
@@ -48,7 +50,7 @@ HomingMissile::~HomingMissile() // default destructer 디폴트 소멸자
 void HomingMissile::Start()
 {
 	SetRenderOrder((int)RenderOrder::Weapon);
-	
+
 	//mainRender_ = CreateRenderer("hmissil1");
 	//mainRender_->ChangeAnimation("blueMissle");
 
@@ -68,13 +70,28 @@ void HomingMissile::Start()
 
 void HomingMissile::UpdateBefore()
 {
-
+	mainRender_->AnimationUpdate();
 }
 
 void HomingMissile::Update()
 {
 	prevPos_ = pos_;
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
+
+	if (bExplosionWait_)
+	{
+		explosionDelay_ -= deltaTime_;
+
+		if (explosionDelay_ < 0.0f)
+		{
+			parentWorm_->BulletFocusOff();
+			MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
+			mouse->MouseBlock(false);
+			parentWorm_->SubtractActionToken(1);
+			Death();
+		}
+		return;
+	}
 
 	if (nullptr == groundCheckCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
@@ -93,13 +110,13 @@ void HomingMissile::Update()
 			SetMove(MovePos);
 
 			startPos_ = pos_;
-			rotPos_.x = windSpeed  * 0.1f;
+			rotPos_.x = windSpeed * 0.1f;
 			rotPos_.y = 0.f;
 		}
 		else if (endTime_ >= 0.f)
 		{
 			if (true == bHomingSound_)
-			{				
+			{
 				GameEngineSoundManager::GetInstance().PlaySoundByName("WEAPONHOMING.WAV");
 				bHomingSound_ = false;
 			}
@@ -179,15 +196,13 @@ void HomingMissile::Update()
 	}
 	else
 	{
-		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
+		explosionDelay_ = 3.0f;
+		bExplosionWait_ = true;
 
 		PlayLevel* level = (PlayLevel*)GetLevel();
-		level->CreateExplosion100(pos_,75,true);
-		parentWorm_->BulletFocusOff();
-
-		MouseObject* mouse = (MouseObject*)GetLevel()->FindActor("PlayLevelMouse");
-		mouse->MouseBlock(false);
-		Death();
+		level->CreateExplosion100(pos_, 75, true);
+		mainRender_->Off();
+		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
 	}
 
 }
@@ -198,6 +213,9 @@ void HomingMissile::UpdateAfter()
 
 void HomingMissile::Render()
 {
-	mainRender_->AnimationUpdate();
+	if (mainRender_->IsOn())
+	{
+		mainRender_->Render();
+	}
 }
 

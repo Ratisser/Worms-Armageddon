@@ -50,6 +50,7 @@ private:
 	bool bGround_;
 	bool bBackJump_;
 	bool bHomingSound_;
+	bool bExplosionWait_;
 
 	float degree_;
 	float deltaTime_;
@@ -57,6 +58,7 @@ private:
 	float rotAngle_;
 	float endTime_;
 	float homingTime;
+	float explosionDelay_;
 
 	GameEngineSoundPlayer soundWhoosh_;
 

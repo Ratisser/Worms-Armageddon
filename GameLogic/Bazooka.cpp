@@ -110,7 +110,7 @@ void Bazooka::Update()
 	{
 		PlayLevel* level = (PlayLevel*)GetLevel();
 		level->CreateExplosion100(pos_,70,true);
-		parentWorm_->BulletFocusOff();
+        parentWorm_->BulletFocusOff(); // 현재 바주카 파워를 최대치로 땡길 시만 ParentWorm 이 nullptr 이 되는 현상이 생김.
 		
 		Death();
 	}

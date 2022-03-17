@@ -59,6 +59,7 @@ public:
 	virtual void Render() override;
 
 public:
+	bool GetDecreaswHPBarFlag() const;
 	Worm* GetParentWorm() const;
 	int GetWormIndex();
 	int GetCurHP() const;

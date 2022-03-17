@@ -61,6 +61,9 @@ private:
 	StateInfo startSettlement(StateInfo _state); // 턴 넘어가기 직전에 일종의 "결산" 단계입니다.
 	StateInfo updateSettlement(StateInfo _state); // 대미지 판정 등을 해 주는 단계라고 생각해주시면 됩니다.
 
+	StateInfo startDeathCheck(StateInfo _state);
+	StateInfo updateDeathCheck(StateInfo _state);
+
 	StateInfo startDeathPhase(StateInfo _state); // 대미지 판정 이후, 웜들의 죽음을 순차적으로 판별,
 	StateInfo updateDeathPhase(StateInfo _state); // 진행하는 단계 (제작중);
 
@@ -154,11 +157,14 @@ private: // 물관련
 private: // 하단상태바 정렬관련
 	static std::vector<BottomStateUI*> PlayerHPBarList;
 	static std::queue<BottomStateUI*> PlayerHPBarSortQueue;
-	static bool BottomUISortStart;
+	static bool DamageFlag;
 	static bool BottomUISortEnd;
 	static bool BottomUIDeath;
 	static int SortStartIndex;
 	static int SortEndIndex;
 	static float SortDeltaTime;
+
+public:
+	static bool BottomUISortStart;
 };
 
