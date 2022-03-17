@@ -61,30 +61,7 @@ public:
 	{
 		return hp_;
 	}
-	//const bool GetDeathReady_()
-	//{
-	//	return DeathReady_;
-	//}
 
-	//void SetDeathEnd(bool _DeathEnd)
-	//{
-	//	DeathEnd_ = _DeathEnd;
-	//}
-
-	//const bool GetDeathEnd()
-	//{
-	//	return DeathEnd_;
-	//}
-
-	//void SetDeathStart(bool _DeathStart)
-	//{
-	//	DeathStart_ = _DeathStart;
-	//}
-
-	//void SetDeathReady(bool _DeathReady)
-	//{
-	//	DeathReady_ = _DeathReady;
-	//}
 	int GetPrevHp()
 	{
 		return prevHp_;
@@ -112,7 +89,8 @@ public:
 		IsLive,
 		DeathReady,
 		DeathStart,
-		DeathEnd
+		DeathEnd,
+		Drown
 	};
 
 	bool GetHit() const
@@ -350,6 +328,19 @@ private:
 	void HitEnd()
 	{
 		Hit_ = false;
+	}
+
+	void IfDrown_Death() // 물에 빠지면 디지는거 조건 검사까지 다해줌
+	{
+		float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
+		if (pos_.y >= waterlevel + 200.f)
+		{
+			ClearActionToken();
+			hp_ = 0;
+			isDamaged_ = true;
+			ChangeState("Drown");
+		}
+
 	}
 };
 

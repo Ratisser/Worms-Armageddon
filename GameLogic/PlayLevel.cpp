@@ -160,10 +160,10 @@ void PlayLevel::LevelUpdate()
 	}
 	//µð¹ö±×
 	{
-		if (true == GameEngineInput::GetInst().IsDown("DrumSpawn"))
-		{
-			CreateGimmickObject();
-		}
+		//if (true == GameEngineInput::GetInst().IsDown("DrumSpawn"))
+		//{
+		//	CreateGimmickObject();
+		//}
 	}
 }
 
@@ -283,15 +283,15 @@ void PlayLevel::GroundUpdate4(float4 _pos)
 
 void PlayLevel::KeySetting()
 {
-	if (false == GameEngineInput::GetInst().IsKey("DrumExplode"))
-	{
-		GameEngineInput::GetInst().CreateKey("DrumExplode", 'G');
-	}
+	//if (false == GameEngineInput::GetInst().IsKey("DrumExplode"))
+	//{
+	//	GameEngineInput::GetInst().CreateKey("DrumExplode", 'G');
+	//}
 
-	if (false == GameEngineInput::GetInst().IsKey("DrumSpawn"))
-	{
-		GameEngineInput::GetInst().CreateKey("DrumSpawn", 'H');
-	}
+	//if (false == GameEngineInput::GetInst().IsKey("DrumSpawn"))
+	//{
+	//	GameEngineInput::GetInst().CreateKey("DrumSpawn", 'H');
+	//}
 
 	if (false == GameEngineInput::GetInst().IsKey("TestWaterLevelUp"))
 	{

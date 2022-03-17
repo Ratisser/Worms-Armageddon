@@ -70,13 +70,13 @@ void DrumActor::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
-	if (true == GameEngineInput::GetInst().IsPress("DrumExplode"))
-	{
-		DrumExplode();
-		return;
-	}
+	//if (true == GameEngineInput::GetInst().IsPress("DrumExplode"))
+	//{
+	//	DrumExplode();
+	//	return;
+	//}
 
-	else if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::WEAPON)))
+	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::WEAPON)))
 	{
 		DrumExplode();
 		return;

@@ -61,9 +61,6 @@ Worm::Worm()
 	, bFocus_(false)
 	, SoundWait_(false)
 	, isDamaged_(false)
-	//, DeathReady_(false)
-	//, DeathStart_(false)
-	//, DeathEnd_(false)
 	, DeathAniEnd_(false)
 	, DeathState_(DeathState::IsLive)
 	, uicontroller_(nullptr)
@@ -1284,24 +1281,17 @@ void Worm::WormDeath()
 
 StateInfo Worm::StartDrown(StateInfo _state)
 {
-	//DeathReady_ = true;
-	DeathState_ = DeathState::DeathEnd;
-	//DeathEnd_ = true;
+	// 물에 빠졌다. 모든것을 종료하고 꼬르륵 가라앉는 에니메이션만 재생하고
+	// 모든걸 종료한다.
+
+	DeathState_ = DeathState::Drown;
+	actionToken_ = 0;
 
 	return StateInfo();
 }
 
 StateInfo Worm::updateDrown(StateInfo _state)
 {
-	//SetMove({ 0.f, 200.f * deltaTime_ ,0.f });
-
-	//float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
-
-	//if (pos_.y > waterlevel + 400.f)
-	//{
-	//	//Death();
-	//}
-
 	return StateInfo();
 }
 
@@ -1444,12 +1434,12 @@ StateInfo Worm::updateHit(StateInfo _state)
 			SetMove(0.f, movey * deltaTime_);
 			DamageAcc_ += 10.f;
 
-			//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-
-			//if (nullptr != bottom)
-			//{
-			//	SetMove(0.f, ((DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_) *-0.5);
-			//}
+			//물에 떨어졌으면
+			float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
+			if (pos_.y >= waterlevel + 200.f)
+			{
+				ChangeState("Death");
+			}
 		}
 	}
 
@@ -1506,6 +1496,8 @@ StateInfo Worm::StartDeath(StateInfo _state)
 
 StateInfo Worm::updateDeath(StateInfo _state)
 {
+
+
 	if (mainRender_->GetCurAnimationName() != "wdieLeft")
 	{
 		GameEngineDebug::AssertFalse();
@@ -1514,7 +1506,6 @@ StateInfo Worm::updateDeath(StateInfo _state)
 	if(true == mainRender_->IsCurAnimationEnd()) // 에니메이션 동작이 끝나면
 	{
 		DeathState_ = DeathState::DeathEnd;
-		//DeathEnd_ = true;		
 	}
 	return StateInfo();
 }
@@ -1739,6 +1730,7 @@ StateInfo Worm::updateWalk(StateInfo _state)
 	}
 
 	normalMove();
+
 	return StateInfo();
 }
 
@@ -1841,6 +1833,7 @@ StateInfo Worm::updateJump(StateInfo _state)
 
 	//SetMove(speed_ * deltaTime_);
 	normalMove();
+
 	return StateInfo();
 }
 
@@ -3270,17 +3263,9 @@ void Worm::Damage(int _numDamage, float4 _MoveDir)
 	{
 		hp_ = 0;
 		DeathState_ = DeathState::DeathReady;
-		//DeathReady_ = true;
 	}
 	ClearActionToken();
 	ChangeState("Hit");
-	//if (true == state_.IsCurStateName("Hit"))
-	//{
-	//	
-	//}
-	//else
-	//{
-	//}
 
 	// 해당 플레이어 하단 체력상태바 데미지입력
 	uicontroller_->GetCurBottomState()->DecreaseHPBar();
@@ -3348,19 +3333,9 @@ void Worm::Update()
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 	state_.Update();
 
-	//if (DeathEnd_ == true)
-	//{		
-	//	WormDeath();
-	//}
-
-
-
 	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
 
-	if (pos_.y >= waterlevel+200.f)
-	{
-		ChangeState("Drown");
-	}
+	IfDrown_Death();
 }
 
 void Worm::UpdateAfter()
@@ -3379,12 +3354,6 @@ void Worm::Render()
 	{
 		crosshairRender_->Render();
 	}
-	//bottomCenterCollision_->DebugRender();
-	//groundCheckCollision_->DebugRender();
-	//leftSideCollision_->DebugRender();
-	//rightSideCollision_->DebugRender();
-	//headCollision_->DebugRender();
-	//HitBoxCollision_->DebugRender();
 }
 
 void Worm::ChangeState(std::string _stateName)

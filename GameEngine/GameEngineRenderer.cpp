@@ -437,7 +437,7 @@ bool GameEngineRenderer::IsCurAnimationEnd()
 	}
 #endif // DEBUG
 
-	return curani_->isend_;
+	return curani_->end_ == curani_->cur_;
 }
 
 void GameEngineRenderer::SetChangeFrame(const std::string& _Name, int _index, float _Time)

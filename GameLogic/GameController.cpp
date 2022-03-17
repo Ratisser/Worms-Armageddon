@@ -595,21 +595,9 @@ StateInfo GameController::startActionEnd(StateInfo _state)
 
 StateInfo GameController::updateActionEnd(StateInfo _state)
 {
-#ifdef _DEBUG
-	if (PetroleumCount_ < 0)
-		GameEngineDebug::AssertFalse();
-#endif // _DEBUG
-	//TODO : 모든 웜들의 행동,드럼통 기름 등등이 움직임이 모두 멈춘것을 확인하면 다음으로 넘김
-	// 현재 활성중인 드럼통 기름의 숫자를 체크하고 다음으로 넘김, 
-	// 다음으로 넘어갔는데 중간에 드럼통이 터지는 일이 발생하면 존나 골치아플듯
-	if (PetroleumCount_ == 0)
-	{
-		currentWorm_ = nullptr;
+	currentWorm_ = nullptr;
 
-		return "Settlement";
-	}
-
-	return StateInfo();
+	return "Settlement";
 }
 
 StateInfo GameController::startSettlement(StateInfo _state)
@@ -628,7 +616,6 @@ StateInfo GameController::startSettlement(StateInfo _state)
 StateInfo GameController::updateSettlement(StateInfo _state)
 {
 
-
 	// Worm 사망절차
 	// 1.   Worm이 사망상태로 넘어가며 애니메이션을 실행한다
 	// 2.   Worm이 사망애니메이션종료후 사망한 Worm위치에 묘지액터가 생성 된다. (기존은 애니메이션종료후 바로사망)
@@ -637,15 +624,15 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 	//                     -. Worm이 사망애니메이션을 실행하게되면 충돌체는 제거되어야한다.(HitBoxCollision_ 얘제거해야함)
 	//                     -. 묘지액터가 생성하면서 hitbox collision을 생성해서 피격처리해야할듯...
 	//                 2) 사망애니메이션이 끝나자마자 WORM을 죽이게되면 UI처리에서 곤란해진다.
-
+	//
 	// 결론 : WORM사망애니메이션 실행 -> 종료 -> 렌더링OFF 및 충돌체제거 -> 묘지액터생성(사망한플레이어의 위치)
 	//        -> UI관련처리 -> 해당 Worm사망처리 및 UI관련 사망처리 -> GameController에서 관리하는 Worm목록갱신 -> 턴전환
-
+	//
 	// Worm Tern전환 절차
 	// 1. Worm이 한가지 동작을 실행 또는 턴타임초과시 턴전환 시작
 	// 2. Worm과 Next Worm의 전환 중간과정에서 UI관련 처리시작
 	// 3. UI관련 처리 완료 후 턴전환
-
+	//
 	// 결론 : Cur Worm에서 Next Worm으로 턴전환시 UI관련처리 구간상태가 필요
 
 	bool Damagethisturn = false;
@@ -662,9 +649,7 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 					wormList_[i]->ResetisDamaged();
 				}
 			}
-
 			wormList_[i]->GetCurUIController()->GetCurTopState()->SetTextChangeRequest();
-
 		}
 	}
 
@@ -673,107 +658,39 @@ StateInfo GameController::updateSettlement(StateInfo _state)
 		return StateInfo();
 	}
 
-	// if문이 왜걸려있나?
-	if (true)
+	bool IsOK = false;
+
+	settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
+
+	if (settementTime_ >3.f)
 	{
-		// 모든 웜이 사망처리가 끝나고 ui처리가 끝나면 턴전환 딜레이 계산
-		settementTime_ += GameEngineTime::GetInst().GetDeltaTime();
+		IsOK = true;
+
+		settementTime_ = 0.f;
 	}
 
-	////////////////////////// Worm Death 진행 ////////////////////////
-	//1. 죽을 얘가 있는지 확인
-	// Death를 진행시킬 worm
-
-	//if (false == WormDeathReady_)
-	//{		
-	//	CurDeathWorm_ = NextDeathWorm_;
-	//	
-	//	NextDeathWorm_ = nullptr;
-
-	//	for (int i = 0; i < wormList_.size(); ++i)
-	//	{
-	//		//if (true == wormList_[i]->GetDeathReady_())
-	//		if ((wormList_[i]->GetDeathState() == Worm::DeathState::DeathReady))
-	//		{
-	//			WormDeathReady_ = true; //			(worm)의		Death를		준비중이다.
-	//			WormDeathProgressing_ = true; //	(컨트롤러)가 Death상태	진행중이다.
-	//			// 데미지를 입어 죽게될 worm은 GetDeathReady_()를 통해 bool 값을 전달한다.
-	//			if (nullptr == CurDeathWorm_)
-	//			{
-	//				CurDeathWorm_ = wormList_[i];
-	//				continue;
-	//			}
-	//			else if (nullptr == NextDeathWorm_)
-	//			{
-	//				NextDeathWorm_ = wormList_[i];
-	//				break;
-	//				// 1개체 죽음 완료후, 
-	//				// 죽음이 완료된 worm은 wormList_에서 지워져서 들어와선 안됨
-	//			}				
-	//		}
-
-	//		if((CurDeathWorm_ == nullptr) && (NextDeathWorm_ == nullptr))
-	//		{
-	//			WormDeathProgressing_ = false; // 죽음 리스트중 마지막 하나 남은 worm이 죽었다.
-	//		}
-	//	}
-
-	//	//TODO :  Worm::DeathStart가 되어 에니메이션을 재생하고, 재생이 완료 후, bool DeathEnd가 된것을 인지하면
-	//	// nextworm state로 넘어가고, 그 nextworm에 다음 죽게될 worm을 넘겨주어야함
-
-	//	//worm의 죽음 상태 변화를 시작함 // worm의 대기상태와 GameController의 대기상태는 다름
-	//	if (nullptr != CurDeathWorm_)
-	//	{					
-	//		CurDeathWorm_->SetDeathState(Worm::DeathState::DeathStart);
-	//		//CurDeathWorm_->SetDeathReady(false);
-	//		//CurDeathWorm_->SetDeathStart(true);
-	//	}
-	//}
-	////다음 worm 죽이기까지 컨트롤러를 대기시킨다.
-	//if (true == WormDeathReady_)
-	//{
-	//	WormDeathWaitingTime_ += GameEngineTime::GetInst().GetDeltaTime();
-
-	//	if (WormDeathWaitingTime_ > 3.f) // 3초가 지나면 대기가 끝난다.
-	//	{
-	//		WormDeathReady_ = false; // 다시 다음 worm을 찾을 준비가 됬따.
-	//		WormDeathWaitingTime_ = 0.f;
-	//	
-	//		//CurDeathWorm_ = NextDeathWorm_;
-	//		//NextDeathWorm_ = nullptr;
-	//		//SetFocusOnlyOneWorm(CurDeathWorm_);
-	//		//대기가 끝남
-	//	}
-	//}
-	//if (false == WormDeathProgressing_) // worm을 죽이는 중도 아니고, 죽일놈도 못찾았으면 다음 차레로 넘어가										// 다음 웜으로 넘겨준다.
-	//{
-	//	// 4.0f
-	//	if (SETTLEMENT_TIME <= settementTime_)
-	//	{
-	//		settementTime_ = 0.0f;
-	//		return "NextWorm";
-	//	}
-	//}
-
-
-	std::vector<Worm*>::iterator startIter = wormList_.begin();
-
-	while (startIter != wormList_.end())
+	if (true == IsOK)
 	{
-		Worm* currentWorm = *startIter;
-		if (currentWorm->GetDeathState() == Worm::DeathState::DeathReady)
-		{
-			readyToDeathWorm_.push_back(currentWorm);
-			startIter = wormList_.erase(startIter);
-		}
-		else
-		{
-			++startIter;
-		}
-	}
+		std::vector<Worm*>::iterator startIter = wormList_.begin();
 
-	CurDeathWorm_ = nullptr;
-	return "DeathPhase";
+		while (startIter != wormList_.end())
+		{
+			Worm* currentWorm = *startIter;
+			if (currentWorm->GetDeathState() == Worm::DeathState::DeathReady)
+			{
+				readyToDeathWorm_.push_back(currentWorm);
+				startIter = wormList_.erase(startIter);
+			}
+			else
+			{
+				++startIter;
+			}
+		}
+
+		CurDeathWorm_ = nullptr;
+
+		return "DeathPhase";
+	}
 
 	return StateInfo();
 }
@@ -830,7 +747,7 @@ StateInfo GameController::updateDeath(StateInfo _state)
 		}
 		else
 		{
-			return "NextWorm";
+			return "ㅍ";
 		}
 	}
 
