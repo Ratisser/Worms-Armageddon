@@ -1951,8 +1951,8 @@ StateInfo Worm::startBazookaFire(StateInfo _state)
 StateInfo Worm::updateBazookaFire(StateInfo _state)
 {
 	Aim* newAim = parentLevel_->CreateActor<Aim>();
-	newAim->SetAim(1.f, pos_ + float4(100.f, 100.f), pos_);
-
+	newAim->SetAim(1.f, pos_ + (forward_ * 50.f), pos_);
+	
 	if (GameEngineInput::GetInst().IsUp("Fire"))
 	{
 		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
