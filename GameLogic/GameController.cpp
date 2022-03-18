@@ -1103,6 +1103,24 @@ bool GameController::BottomStateHPBarSort()
 					return true;
 				}
 			}
+			else if (SortEndIndex < SortStartIndex)
+			{
+				if (true == PlayerHPBarSortQueue.empty())
+				{
+					BottomUISortEnd = true;
+
+					return true;
+				}
+			}
+			else if (SortEndIndex == SortStartIndex)
+			{
+				if (true == PlayerHPBarSortQueue.empty())
+				{
+					BottomUISortEnd = true;
+
+					return true;
+				}
+			}
 
 			for (int j = SortStartIndex + 1; j < Size; ++j)
 			{
