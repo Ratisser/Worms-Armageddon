@@ -83,6 +83,10 @@ void AppResourcesInit()
 		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().LoadGameImage("missile", Dir.PathToPlusFileName("missile.bmp"));
 		loadingImage->Cut({ 60,60 });
 
+		loadingImage = GameEngineImage::GetInst().LoadGameImage("blob", Dir.PathToPlusFileName("blob.bmp"));
+		loadingImage->Cut({ 64.f,64.f });
+
+
 		float4 cutSize = float4(60.f, 60.f);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil1.bmp"), cutSize);
 		RS::LoadImageFromFileAndCut(Dir.PathToPlusFileName("hmissil2.bmp"), cutSize);

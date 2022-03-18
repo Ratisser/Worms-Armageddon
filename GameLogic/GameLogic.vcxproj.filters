@@ -444,6 +444,7 @@
     <ClInclude Include="AirStrikeBullet.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Aim.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -722,6 +723,7 @@
     <ClCompile Include="AirStrikeBullet.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Aim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="UIController사용법.txt">

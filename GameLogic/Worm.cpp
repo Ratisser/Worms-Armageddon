@@ -33,6 +33,7 @@
 #include "PlayLevel.h"
 #include "MapTrain.h"
 #include "WindController.h"
+#include "Aim.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -1949,6 +1950,9 @@ StateInfo Worm::startBazookaFire(StateInfo _state)
 
 StateInfo Worm::updateBazookaFire(StateInfo _state)
 {
+	Aim* newAim = parentLevel_->CreateActor<Aim>();
+	newAim->SetAim(1.f, pos_ + float4(100.f, 100.f), pos_);
+
 	if (GameEngineInput::GetInst().IsUp("Fire"))
 	{
 		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
