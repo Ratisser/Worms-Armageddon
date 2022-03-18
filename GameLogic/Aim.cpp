@@ -18,6 +18,7 @@ Aim::Aim()
 	, deltaTime_(0.f)
 	, tickTime_(0.f)
 	, tickTimeBase_(0.f)
+	, destroyTime(2.f)
 	, startPos_(float4::ZERO)
 	, nextPos_(float4::ZERO)
 	, imageIndex_(0)
@@ -51,12 +52,20 @@ void Aim::Update()
 		deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
 		tickTime_ -= deltaTime_;
+		destroyTime -= deltaTime_;
+
+		if (destroyTime <= 0.f)
+		{
+			destroyTime = 100.f;
+			ChildClear();
+		}
 
 		if (tickTime_ <= 0.f && imageIndex_ < 16)
 		{
 			if (false == renderOn)
 			{
 				renderOn = true;
+				childAim_.push_back(this);
 			}
 
 			tickTime_ = tickTimeBase_;
@@ -86,7 +95,17 @@ void Aim::NextAimRender()
 
 	Aim* newAim = parentLevel_->CreateActor<Aim>();
 	newAim->SetChildAim(startPos_ + Pos, imageIndex_);
+	childAim_.push_back(newAim);
+}
 
+void Aim::ChildClear()
+{
+	std::vector<Aim*>::iterator iter = childAim_.begin();
+
+	for (; iter != childAim_.end(); ++iter)
+	{
+		(*iter)->Death();
+	}
 }
 
 void Aim::SetAim(float _MaxTime, float4 _EndPos, float4 _Pos)

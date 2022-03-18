@@ -28,6 +28,7 @@ public:
 	virtual void Render() override;
 
 	void NextAimRender();
+	void ChildClear();
 
 	void PowerEnd()
 	{
@@ -43,8 +44,9 @@ public:
 	void SetChildAim(float4 _Pos, int _ImageIndex);
 
 private:
-	GameEngineRenderer* mainRender_;
+	std::vector<Aim*> childAim_;
 
+	GameEngineRenderer* mainRender_;
 	float4 startPos_;
 	float4 endPos_;
 	float4 nextPos_;
@@ -55,6 +57,7 @@ private:
 	float tickTime_;
 	float tickTimeBase_;
 	float deltaTime_;
+	float destroyTime;
 	int imageIndex_;
 };
 
