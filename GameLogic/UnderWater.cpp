@@ -19,6 +19,8 @@ UnderWater::UnderWater(UnderWater&& _other) noexcept  // default RValue Copy con
 void UnderWater::Start()
 {
 	mainSpriteRender_ = CreateRenderer("Under_Water");
+	float4 imageSize = mainSpriteRender_->GetImageSize();
+	mainSpriteRender_->SetPivotPos(imageSize.halffloat4());
 }
 
 void UnderWater::UpdateBefore()

@@ -44,9 +44,10 @@ private:
 	bool bLeft_;
 	bool bGround_;
 	bool bBackJump_;
-
+	
 	float degree_;
 	float deltaTime_;
+	float explosionDelayTime_;
 
 public:
 	void SetBazooka(float4 _direction, float _firePower)
@@ -54,5 +55,18 @@ public:
 		direction_ = _direction;
 		speed_ = _direction * _firePower;
 	}
+
+private:
+	StateInfo startFly(StateInfo _state);
+	StateInfo updateFly(StateInfo _state);
+
+	StateInfo startExplosion(StateInfo _state);
+	StateInfo updateExplosion(StateInfo _state);
+
+	StateInfo startWait(StateInfo _state);
+	StateInfo updateWait(StateInfo _state);
+
+	GameEngineFSM<Bazooka> state_;
+	void InitState();
 };
 

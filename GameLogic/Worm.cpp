@@ -33,6 +33,7 @@
 #include "PlayLevel.h"
 #include "MapTrain.h"
 #include "WindController.h"
+#include "Aim.h"
 
 Worm::Worm()
 	: mainRender_(nullptr)
@@ -1889,13 +1890,18 @@ StateInfo Worm::startBazookaFire(StateInfo _state)
 {
 	firePower_ = 100.0f;
 	soundPowerUp_.Play();
+
+	aim_ = parentLevel_->CreateActor<Aim>();
+	aim_->SetAim(1.f, pos_ + (forward_ * 50.f), pos_ + (forward_ * 10.f));
+
 	return StateInfo();
 }
 
 StateInfo Worm::updateBazookaFire(StateInfo _state)
-{
+{	
 	if (GameEngineInput::GetInst().IsUp("Fire"))
 	{
+		aim_->AimClear();
 		Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
 		newBaz->SetParentWorm(this);
 		BulletFocusOn(newBaz);
@@ -1907,7 +1913,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 		{
 			soundPowerUp_.Stop();
 		}
-		SubtractActionToken(1);
+		//SubtractActionToken(1);
 		return "BazookaWait";
 	}
 
@@ -1917,13 +1923,14 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 
 		if (firePower_ > 1000.f)
 		{
+			aim_->AimClear();
 			Bazooka* newBaz = parentLevel_->CreateActor<Bazooka>();
 			newBaz->SetParentWorm(this);
 			BulletFocusOn(newBaz);
 			newBaz->SetPos(pos_ + float4(forward_ * 20.f));
 			newBaz->SetBazooka(forward_, firePower_);
 			//bFocus_ = false;
-			SubtractActionToken(1);
+			//SubtractActionToken(1);
 			return "BazookaWait";
 		}
 	}
@@ -1933,14 +1940,15 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 
 StateInfo Worm::startBazookaWait(StateInfo _state)
 {
-	
+	SubtractActionToken(1);
 	return StateInfo();
 }
 
 StateInfo Worm::updateBazookaWait(StateInfo _state)
 {
-	nextState_ = "Idle";
+
 	return "WeaponOff";
+	nextState_ = "Idle";
 }
 
 StateInfo Worm::startHomingStart(StateInfo _state)
@@ -2100,6 +2108,10 @@ StateInfo Worm::updateHomingAim(StateInfo _state)
 StateInfo Worm::startHomingFire(StateInfo _state)
 {
 	firePower_ = 100.0f;
+
+	aim_ = parentLevel_->CreateActor<Aim>();
+	aim_->SetAim(1.f, pos_ + (forward_ * 50.f), pos_ + (forward_ * 10.f));
+
 	return StateInfo();
 }
 
@@ -2107,6 +2119,7 @@ StateInfo Worm::updateHomingFire(StateInfo _state)
 {
 	if (GameEngineInput::GetInst().IsUp("Fire"))
 	{
+		aim_->AimClear();
 		HomingMissile* newHom = parentLevel_->CreateActor<HomingMissile>();
 		BulletFocusOn(newHom);
 		newHom->SetParentWorm(this);
@@ -2123,6 +2136,7 @@ StateInfo Worm::updateHomingFire(StateInfo _state)
 
 		if (firePower_ > 1000.f)
 		{
+			aim_->AimClear();
 			HomingMissile* newHom = parentLevel_->CreateActor<HomingMissile>();
 			newHom->SetPos(pos_ + float4(forward_ * 20.f));
 			newHom->SetPower(forward_, firePower_);

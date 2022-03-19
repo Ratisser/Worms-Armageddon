@@ -27,6 +27,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Aim.h" />
     <ClInclude Include="AirStrike.h" />
     <ClInclude Include="AirStrikeBullet.h" />
     <ClInclude Include="BackGroundGradation.h">
@@ -359,6 +360,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Aim.cpp" />
     <ClCompile Include="AirStrike.cpp" />
     <ClCompile Include="AirStrikeBullet.cpp" />
     <ClCompile Include="BackGroundGradation.cpp">
