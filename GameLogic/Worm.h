@@ -293,6 +293,8 @@ private:
 	GameEngineSoundPlayer soundWhoosh_;
 	GameEngineSoundPlayer soundPowerUp_;
 
+	class Aim* aim_;
+
 	float4 accelation_;
 	float4 speed_;
 	float4 direction_;

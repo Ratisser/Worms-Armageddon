@@ -28,7 +28,7 @@ public:
 	virtual void Render() override;
 
 	void NextAimRender();
-	void ChildClear();
+	void AimClear();
 
 	void PowerEnd()
 	{
@@ -57,7 +57,6 @@ private:
 	float tickTime_;
 	float tickTimeBase_;
 	float deltaTime_;
-	float destroyTime;
 	int imageIndex_;
 };
 

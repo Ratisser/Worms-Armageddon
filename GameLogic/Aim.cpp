@@ -18,7 +18,6 @@ Aim::Aim()
 	, deltaTime_(0.f)
 	, tickTime_(0.f)
 	, tickTimeBase_(0.f)
-	, destroyTime(1.f)
 	, startPos_(float4::ZERO)
 	, nextPos_(float4::ZERO)
 	, imageIndex_(0)
@@ -52,13 +51,6 @@ void Aim::Update()
 		deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
 		tickTime_ -= deltaTime_;
-		destroyTime -= deltaTime_;
-
-		if (destroyTime <= 0.f)
-		{
-			destroyTime = 100.f;
-			ChildClear();
-		}
 
 		if (tickTime_ <= 0.f && imageIndex_ < 16)
 		{
@@ -98,8 +90,10 @@ void Aim::NextAimRender()
 	childAim_.push_back(newAim);
 }
 
-void Aim::ChildClear()
+void Aim::AimClear()
 {
+	parentAim_ = false;
+
 	std::vector<Aim*>::iterator iter = childAim_.begin();
 
 	for (; iter != childAim_.end(); ++iter)
