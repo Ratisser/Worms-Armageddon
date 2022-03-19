@@ -444,6 +444,9 @@
     <ClInclude Include="AirStrikeBullet.h">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Grave.h">
+      <Filter>Actor\PlayLevel\GimmickObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestLevel.cpp">
@@ -721,6 +724,9 @@
     </ClCompile>
     <ClCompile Include="AirStrikeBullet.cpp">
       <Filter>Actor\PlayLevel\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Grave.cpp">
+      <Filter>Actor\PlayLevel\GimmickObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

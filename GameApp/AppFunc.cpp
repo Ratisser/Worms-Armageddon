@@ -970,22 +970,58 @@ void GimmickObjectImageInit() // 기믹 오브젝트 로드에 사용
 	}
 
 	//oildrum
+	{
+		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("oildrum1", Dir.PathToPlusFileName("oildrum1.bmp"));
+		loadingImage->Cut({ 90,90 });
 
-	GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
-		LoadGameImage("oildrum1", Dir.PathToPlusFileName("oildrum1.bmp"));
-	loadingImage->Cut({ 90,90 });
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("oildrum2", Dir.PathToPlusFileName("oildrum2.bmp"));
+		loadingImage->Cut({ 90,90 });
 
-	loadingImage = GameEngineImage::GetInst().
-		LoadGameImage("oildrum2", Dir.PathToPlusFileName("oildrum2.bmp"));
-	loadingImage->Cut({ 90,90 });
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("oildrum3", Dir.PathToPlusFileName("oildrum3.bmp"));
+		loadingImage->Cut({ 90,90 });
 
-	loadingImage = GameEngineImage::GetInst().
-		LoadGameImage("oildrum3", Dir.PathToPlusFileName("oildrum3.bmp"));
-	loadingImage->Cut({ 90,90 });
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("oildrum4", Dir.PathToPlusFileName("oildrum4.bmp"));
+		loadingImage->Cut({ 90,90 });
+	}
 
-	loadingImage = GameEngineImage::GetInst().
-		LoadGameImage("oildrum4", Dir.PathToPlusFileName("oildrum4.bmp"));
-	loadingImage->Cut({ 90,90 });
+	Dir.MoveParent("Worms-Armageddon");
+
+	if (false == Dir.MoveChild("\\Resources\\Image\\Misc\\Grave\\"))
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+
+	{
+		GameEngineImageFile* loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("grave1", Dir.PathToPlusFileName("grave1.bmp"));
+		loadingImage->Cut({ 60,60 });
+
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("grave2", Dir.PathToPlusFileName("grave2.bmp"));
+		loadingImage->Cut({ 60,60 });
+
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("grave3", Dir.PathToPlusFileName("grave3.bmp"));
+		loadingImage->Cut({ 60,60 });
+
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("grave4", Dir.PathToPlusFileName("grave4.bmp"));
+		loadingImage->Cut({ 60,60 });
+
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("grave5", Dir.PathToPlusFileName("grave5.bmp"));
+		loadingImage->Cut({ 60,60 });
+
+		loadingImage = GameEngineImage::GetInst().
+			LoadGameImage("grave6", Dir.PathToPlusFileName("grave6.bmp"));
+		loadingImage->Cut({ 60,60 });
+	}
+
 }
 
 void EffectImageInit()

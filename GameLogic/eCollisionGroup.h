@@ -12,6 +12,7 @@ enum class eCollisionGroup
 	PETROLEUM,
 	PETROLEUM_HITBOX,
 	DRUM,
+	GRAVE,
 	WEAPON,
 	MAX
 };

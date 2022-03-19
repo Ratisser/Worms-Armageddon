@@ -12,7 +12,6 @@
 #include "PlayLevel.h"
 #include "Worm.h"
 #include "GameController.h"
-#include "DrumActor.h"
 #include "Bazooka.h"
 #include "Uzi.h"
 #include "UziBullet.h"
@@ -30,6 +29,9 @@
 #include "EffectActor.h"
 #include "ExplosionSize.h"
 #include "Effectkamismk.h"
+
+#include "DrumActor.h"
+#include "Grave.h"
 
 #include "BackgroundScatter.h"
 #include "PetroleumManager.h"
@@ -231,6 +233,11 @@ void PlayLevel::CreateExplosion25(float4 Pos, int _Damage, bool _DamageToDist)
 	actor->SetDamage(_Damage, _DamageToDist);
 
 	GroundUpdate25(Pos);
+}
+
+void PlayLevel::CreateGrave(float4 Pos)
+{
+	CreateActor<Grave>(Pos);
 }
 
 void PlayLevel::CreatePurpleStarEffect(float4 Pos)

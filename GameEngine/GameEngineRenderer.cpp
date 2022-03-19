@@ -14,7 +14,8 @@ GameEngineRenderer::FrameAnimation::FrameAnimation()
 	pivot_(RENDERPIVOT::BOT),
 	loop_(nullptr),
 	image_(nullptr),
-	isend_(false)
+	isend_(false),
+	reverse_(false)
 {
 
 }
@@ -28,7 +29,8 @@ GameEngineRenderer::FrameAnimation::FrameAnimation(const FrameAnimation& obj)
 	pivot_(RENDERPIVOT::BOT),
 	loop_(nullptr),
 	image_(nullptr),
-	isend_(false)
+	isend_(false),
+	reverse_(false)
 {
 	//*this = obj;
 
@@ -68,7 +70,7 @@ void GameEngineRenderer::FrameAnimation::Update()
 		{
 			if (nullptr != EndFunction_)
 			{
-				EndFunction_(); 
+				EndFunction_();
 			}
 
 			isend_ = true;
@@ -89,6 +91,53 @@ void GameEngineRenderer::FrameAnimation::Update()
 	renderer_->Render();
 }
 
+void GameEngineRenderer::FrameAnimation::UpdateReverseLoop()
+{
+	curframeTime_ -= GameEngineTime::GetInst().GetDeltaTime();
+	if (0.0f >= curframeTime_)
+	{
+		if (cur_ == 0)
+		{
+			reverse_ = false;
+		}
+
+		if (false == reverse_)
+		{
+			++cur_;
+		}
+		else
+		{
+			--cur_;
+		}
+
+		if (false == FrameFunctionList_.empty())
+		{
+			auto iter1 = FrameFunctionList_.begin();
+			auto iter2 = FrameFunctionList_.end();
+			for (; iter1 != iter2; ++iter1)
+			{
+				if ((*iter1)->Frame_ == cur_)
+				{
+					(*iter1)->FrameFunction_();
+				}
+			}
+		}
+
+		if (end_ == cur_)
+		{
+			if (nullptr != EndFunction_)
+			{
+				EndFunction_(); 
+			}
+
+			reverse_ = true;
+		}
+		curframeTime_ = frameTime_[cur_ - start_];
+	}
+
+	renderer_->SetCutIndex(cur_, pivot_);
+	renderer_->Render();
+}
 
 // Static Var
 // Static Func
@@ -407,6 +456,19 @@ void GameEngineRenderer::AnimationUpdate()
 #endif // DEBUG
 
 	curani_->Update();
+}
+
+void GameEngineRenderer::AnimationUpdateReverseLoop()
+{
+#ifdef _DEBUG	
+	if (nullptr == curani_)
+	{
+		GameEngineDebug::AssertFalse();
+		return;
+	}
+#endif // DEBUG
+
+	curani_->UpdateReverseLoop();
 }
 
 bool GameEngineRenderer::IsCurAnimationName(const std::string& _Name)

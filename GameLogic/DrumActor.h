@@ -7,10 +7,8 @@ class DrumActor : public GameEngineActor
 {
 private:	// member Var
 	GameEngineRenderer* mainSpriteRender_;
-
-	GameEngineCollision* groundCollision_; // ¹Ù´Ú
 	GameEngineCollision* BodyCollision_; // ¸öÅë
-
+	GameEngineCollision* groundCollision_; // ¹Ù´Ú
 
 	const float PetroleumSpeed;
 

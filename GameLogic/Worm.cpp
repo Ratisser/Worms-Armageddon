@@ -391,7 +391,6 @@ void Worm::initCollision()
 
 void Worm::initState()
 {
-	state_.CreateState("Drown", &Worm::StartDrown, &Worm::updateDrown);
 	state_.CreateState("Hit", &Worm::StartHit, &Worm::updateHit);
 	state_.CreateState("Death", &Worm::StartDeath, &Worm::updateDeath);
 	state_.CreateState("Win", &Worm::startWin, &Worm::updateWin);
@@ -1274,26 +1273,11 @@ void Worm::WormDeath()
 	if (pos_.y < waterlevel)
 	{
 		GetLevel<PlayLevel>()->CreateExplosion25(pos_, 20, false);
+		GetLevel<PlayLevel>()->CreateGrave(pos_);
 	}
 }
 
 #pragma region Stage
-
-StateInfo Worm::StartDrown(StateInfo _state)
-{
-	// 물에 빠졌다. 모든것을 종료하고 꼬르륵 가라앉는 에니메이션만 재생하고
-	// 모든걸 종료한다.
-
-	DeathState_ = DeathState::Drown;
-	actionToken_ = 0;
-
-	return StateInfo();
-}
-
-StateInfo Worm::updateDrown(StateInfo _state)
-{
-	return StateInfo();
-}
 
 StateInfo Worm::StartHit(StateInfo _state)
 {
@@ -1421,9 +1405,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 				{
 					DamageDir_.y *= -1.f;
 				}
-				/*movey = DamageAcc_ + (DamageDir_.y * DamageSpeed_);
-				SetMove(0.f, movey *10.f* deltaTime_);
-				DamageAcc_ += 10.f;*/
 			}
 			DamageSpeed_ *= 0.5f;
 
@@ -1433,13 +1414,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 		{// 땅에 안 닿았으면
 			SetMove(0.f, movey * deltaTime_);
 			DamageAcc_ += 10.f;
-
-			//물에 떨어졌으면
-			float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
-			if (pos_.y >= waterlevel + 200.f)
-			{
-				ChangeState("Death");
-			}
 		}
 	}
 
@@ -1448,16 +1422,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 		if (nullptr == rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			SetMove(movex * deltaTime_, 0.f);
-			//Left = leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-			//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-			//if (nullptr != Left)
-			//{
-			//	SetMove(((DamageDir_.x + WindSpeed_) * (DamageSpeed_ * deltaTime_))*-0.5, 0.f);
-			//}
-			//if (nullptr != bottom)
-			//{
-			//	SetMove(0.f, ((DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_) * -0.5);
-			//}
 		}
 	}
 	else if ((DamageDir_.x * (WindSpeed_ + DamageSpeed_)) <= 0)
@@ -1465,16 +1429,6 @@ StateInfo Worm::updateHit(StateInfo _state)
 		if (nullptr == leftSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
 			SetMove(movex* deltaTime_, 0.f);
-			//Right = rightSideCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-			//bottom = bottomCenterCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP));
-			//if (nullptr != Right)
-			//{
-			//	SetMove(((DamageDir_.x + WindSpeed_) * (DamageSpeed_ * deltaTime_)) * -0.5, 0.f);
-			//}
-			//if (nullptr != bottom)
-			//{
-			//	SetMove(0.f, ((DamageAcc_ + (DamageDir_.y * DamageSpeed_)) * deltaTime_) * -0.5);
-			//}
 		}
 	}
 	else
@@ -1496,8 +1450,6 @@ StateInfo Worm::StartDeath(StateInfo _state)
 
 StateInfo Worm::updateDeath(StateInfo _state)
 {
-
-
 	if (mainRender_->GetCurAnimationName() != "wdieLeft")
 	{
 		GameEngineDebug::AssertFalse();
@@ -3178,7 +3130,6 @@ StateInfo Worm::updateAirStrikeWait(StateInfo _state)
 	return "WeaponOff";
 }
 
-
 StateInfo Worm::startWeaponOn(StateInfo _state)
 {
 	setAnimationWeaponOn();
@@ -3334,10 +3285,6 @@ void Worm::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 	state_.Update();
-
-	float waterlevel = GetLevel<PlayLevel>()->GetWaterLevel();
-
-	IfDrown_Death();
 }
 
 void Worm::UpdateAfter()

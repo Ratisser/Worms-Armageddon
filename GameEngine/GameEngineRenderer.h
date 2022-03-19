@@ -38,6 +38,7 @@ private:
 		int start_;
 		int end_;
 		int cur_;
+		bool reverse_;
 		std::vector<float> frameTime_;
 
 		float curframeTime_;
@@ -65,6 +66,7 @@ private:
 			isend_ = false;
 		}
 		void Update();
+		void UpdateReverseLoop();
 	};
 
 public:
@@ -128,6 +130,7 @@ public:
 	void ChangeAnimation(const std::string& _Name, const std::string& _name, bool _forceChange = false);
 	void SetChangeFrame(const std::string& _Name, int _index, float _Time);
 	void AnimationUpdate();
+	void AnimationUpdateReverseLoop();
 	bool IsCurAnimationEnd();
 
 	int GetCurAnimationFrame();

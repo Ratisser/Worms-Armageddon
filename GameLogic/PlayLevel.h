@@ -56,6 +56,8 @@ public:
 	void CreateExplosion50(float4 Pos, int _Damage = 50, bool _DamageToDist = false); //test
 	void CreateExplosion25(float4 Pos, int _Damage = 25, bool _DamageToDist = false); //test
 
+	void CreateGrave(float4 Pos);
+
 	void CreatePurpleStarEffect(float4 Pos);
 
 	void GroundUpdate100(float4 _pos);
