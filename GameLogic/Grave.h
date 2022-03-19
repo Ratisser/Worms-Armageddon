@@ -10,6 +10,7 @@ private:	// member Var
 
 	GameEngineRenderer* mainSpriteRender_;
 
+	GameEngineCollision* HeadCollision_; // ajfl
 	GameEngineCollision* groundCollision_; // ¹Ù´Ú
 
 	GameEngineFSM<Grave> state_;
@@ -18,6 +19,7 @@ private:	// member Var
 
 	float GravityAcc_;
 	float GravitySpeed_;
+	float GravityMove_;
 	int bound_;
 
 public:
