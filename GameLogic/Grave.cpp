@@ -1,6 +1,7 @@
 #include <GameEngineTime.h>
 #include <GameEngineRenderer.h>
 #include <GameEngineCollision.h>
+#include "GameEngineSoundManager.h"
 
 #include "eCollisionCheckColor.h"
 #include "eCollisionGroup.h"
@@ -10,8 +11,13 @@
 Grave::Grave():
 	GravitySpeed_(0.f),
 	GravityAcc_(0.f),
-	bound_(3),
-	state_(this)
+	GravityMove_(0.f),
+	deltaTime_(0.f),
+	bound_(0),
+	state_(this),
+	mainSpriteRender_(nullptr),
+	HeadCollision_(nullptr),
+	groundCollision_(nullptr)
 	// default constructer 디폴트 생성자
 {
 
@@ -63,7 +69,10 @@ void Grave::Start()
 
 	state_.ChangeState("Air");
 
-	GravityAcc_ = -100.f;
+	GravityMove_ = -300;
+	GravitySpeed_ = 0.f;
+	GravityAcc_ = 0.5f;
+	bound_ = 8;
 
 	initCollision();
 }
@@ -94,38 +103,112 @@ StateInfo Grave::StartAir(StateInfo)
 
 StateInfo Grave::UpdateAir(StateInfo)
 {
-	if (nullptr != groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
-		bound_--;
-		GravityAcc_ = 0.f;
-
-		if (bound_ == 0)
+		if (nullptr != HeadCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
-			return "Ground";
+			if (GravityMove_ < 0)
+			{
+				GravityMove_ *= -1.f;
+			}
+			//GravityMove_ *= 0.5f;
 		}
 
-		else
+		else if (nullptr != groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 		{
-			if (GravitySpeed_ > 0.f)
+			//GravitySpeed_ = 0.f;
+
+			//return "Ground
+
+			GameEngineSoundManager::GetInstance().PlaySoundByName("TEAMBOUNCE.WAV");
+
+			if (bound_ == 0)
 			{
-				GravitySpeed_ *= -1.f;
+				return "Ground";
 			}
 
-			GravitySpeed_ *= 0.5f;
+			else
+			{
+				bound_--;
+				if (GravityMove_ > 0.f)
+				{
+					GravityMove_ *= -1.f;
+				}
 
+
+				SetMove(0.f, GravityMove_ * deltaTime_);
+				GravitySpeed_ *= 0.75f;
+				GravityMove_ *= 0.75f;
+				
+				GravitySpeed_ += GravityAcc_;
+				GravityMove_ += GravitySpeed_;		
+
+
+				return StateInfo();
+			}
 		}
+
+		SetMove(0.f, GravityMove_ * deltaTime_);
+		GravitySpeed_ += GravityAcc_;
+		GravityMove_ += GravitySpeed_;
+		return StateInfo();
 	}
 
-	SetMove(0.f, GravitySpeed_ * deltaTime_);
-	//GravitySpeed_ += GravityAcc_;
-	//GravityAcc_ += 1.f;
-	return StateInfo();
+	{
+		float movey = GravityAcc_ + (GravityMove_ * GravitySpeed_);
+
+		if (movey < 0.f)
+		{	
+			if (nullptr != HeadCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+			{
+				if (bound_ <= 0)
+				{		
+					GravityMove_ = 0.f;
+				}
+				else
+				{
+					bound_--;
+					if (GravityMove_ < 0)
+					{
+						GravityMove_ *= -1.f; 
+					}
+				}
+				GravitySpeed_ *= 0.5f;
+			}
+			movey = GravityAcc_ + (GravityMove_ * GravitySpeed_);
+			SetMove(0.f, movey * deltaTime_);
+			GravityAcc_ += 10.f;
+		}
+		else
+		{	
+			if (nullptr != groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
+			{
+				GravityAcc_ = 0.f;
+
+				if (bound_ > 0)
+				{
+					bound_--;
+					if (GravityMove_ > 0.f)
+					{
+						GravityMove_ *= -1.f;
+					}
+				}
+				GravitySpeed_ *= 0.5f;
+
+				return StateInfo();
+			}
+			else
+			{
+				SetMove(0.f, movey * deltaTime_);
+				GravityAcc_ += 10.f;
+			}
+		}
+	}
 }
 
 StateInfo Grave::StartGround(StateInfo)
 {
-	bound_ = 3;
-	GravitySpeed_ = 200.f;
+	GravitySpeed_ = 0.f;
+	bound_ = 8;
 
 	return StateInfo();
 }
@@ -143,6 +226,9 @@ StateInfo Grave::UpdateGround(StateInfo)
 
 void Grave::initCollision()
 {
+	HeadCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::GRAVE), CollisionCheckType::POINT);
+	HeadCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
+	HeadCollision_->SetPivot({ 0.f, -15.f });
 	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::GRAVE), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
 	groundCollision_->SetPivot({ 0.f, 5.f });

@@ -70,12 +70,6 @@ void DrumActor::Update()
 {
 	deltaTime_ = GameEngineTime::GetInst().GetDeltaTime();
 
-	//if (true == GameEngineInput::GetInst().IsPress("DrumExplode"))
-	//{
-	//	DrumExplode();
-	//	return;
-	//}
-
 	if (nullptr != BodyCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::WEAPON)))
 	{
 		DrumExplode();
@@ -112,7 +106,7 @@ void DrumActor::Update()
 
 	if (nullptr == groundCollision_->CollisionGroupCheckOne(static_cast<int>(eCollisionGroup::MAP)))
 	{
-		SetMove(0.f,100.f* deltaTime_);
+		SetMove(0.f,500.f* deltaTime_);
 	}
 }
 
@@ -137,7 +131,7 @@ void DrumActor::initCollision()
 {
 	groundCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::POINT);
 	groundCollision_->SetColorCheck(static_cast<DWORD>(eCollisionCheckColor::MAP));
-	groundCollision_->SetPivot({ 0.f, 20.f });
+	groundCollision_->SetPivot({ 0.f, 17.f });
 
 	BodyCollision_ = CreateCollision(static_cast<int>(eCollisionGroup::DRUM), CollisionCheckType::RECT);
 	BodyCollision_->SetSize({ 30.f, 40.f });

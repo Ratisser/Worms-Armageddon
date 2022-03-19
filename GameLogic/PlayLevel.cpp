@@ -108,21 +108,13 @@ void PlayLevel::Loading()
 
 	// 뒷배경 생성
 	CreateActor<Midground>();
-
-
-	//MakeWaterLevel(); // 수면 엑터 생성 함수 묶음
-	//CreateGimmickObject();
-
 	wormLoading();
-
 	KeySetting();
 }
 
 void PlayLevel::LevelUpdate()
 {
 	PJWLevelUpdate();
-
-
 
 	if (true == GameEngineInput::GetInst().IsDown("Debug_Next"))
 	{
@@ -159,13 +151,6 @@ void PlayLevel::LevelUpdate()
 
 		GameEngineDebugExtension::PrintDebugWindowText("Wind Direction : ", Controller_->GetWindController()->GetCurrentWindDir(), ", Wind Speed : ", Controller_->GetWindController()->GetCurrentWindSpeed());
 		GameEngineDebugExtension::PrintDebugWindowText("Water Level : ", Controller_->GetWaterLevel());
-	}
-	//디버그
-	{
-		//if (true == GameEngineInput::GetInst().IsDown("DrumSpawn"))
-		//{
-		//	CreateGimmickObject();
-		//}
 	}
 }
 
@@ -290,16 +275,6 @@ void PlayLevel::GroundUpdate4(float4 _pos)
 
 void PlayLevel::KeySetting()
 {
-	//if (false == GameEngineInput::GetInst().IsKey("DrumExplode"))
-	//{
-	//	GameEngineInput::GetInst().CreateKey("DrumExplode", 'G');
-	//}
-
-	//if (false == GameEngineInput::GetInst().IsKey("DrumSpawn"))
-	//{
-	//	GameEngineInput::GetInst().CreateKey("DrumSpawn", 'H');
-	//}
-
 	if (false == GameEngineInput::GetInst().IsKey("TestWaterLevelUp"))
 	{
 		GameEngineInput::GetInst().CreateKey("TestWaterLevelUp", 'Q');

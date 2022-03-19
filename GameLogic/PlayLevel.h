@@ -43,10 +43,6 @@ public:
 	void Loading() override;
 	void LevelUpdate() override;
 
-	//const float4 GetMousePos()
-	//{
-	//	return MouseObject_->GetPos();
-	//}
 
 public:
 	void CreateGimmickObject();

@@ -278,6 +278,15 @@ public:
 		return *this;
 	}
 
+	float4& operator*=(const float _other)
+	{
+		this->x *= _other;
+		this->y *= _other;
+		this->z *= _other;
+		this->w *= _other;
+		return *this;
+	}
+
 	float4& operator/=(const float4 _other) 
 	{
 		this->x /= _other.x;
