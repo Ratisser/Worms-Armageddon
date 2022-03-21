@@ -2779,10 +2779,12 @@ StateInfo Worm::startBattleAxeFire2(StateInfo _state)
 	if (bLeft_)
 	{
 		mainRender_->ChangeAnimation("BattleAxeFire2Left", std::string("axeFire2Left.bmp"));
+		reinterpret_cast<PlayLevel*>(parentLevel_)->CreateExplosion50(float4(pos_.x - 40, pos_.y), 50, false);
 	}
 	else
 	{
 		mainRender_->ChangeAnimation("BattleAxeFire2Right", std::string("axeFire2Right.bmp"));
+		reinterpret_cast<PlayLevel*>(parentLevel_)->CreateExplosion50(float4(pos_.x + 40, pos_.y), 50, false);
 	}
 	return StateInfo();
 }
