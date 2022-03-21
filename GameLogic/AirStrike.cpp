@@ -56,7 +56,13 @@ void AirStrike::Update()
 		Death();
 	}
 
-	if (GetPos().DistanceTo(firePoint_) <= 15.f)
+	//if (GetPos().DistanceTo(firePoint_) <= 15.f)
+	//{
+	//	fire_ = true;
+	//}
+
+	float4 pos = GetPos();
+	if (abs(firePoint_.x - pos.x) < 20)
 	{
 		fire_ = true;
 	}
@@ -93,11 +99,11 @@ void AirStrike::SetAirStrike(bool _Left, float4 _Pos)
 		direction_ = float4::RIGHT;
 		mainRender_ = CreateRenderer("airjetbRight");
 
-		SetPos(float4(_Pos.x - 1000.f, _Pos.y));
+		SetPos(float4(_Pos.x - 1000.f, _Pos.y - 200.f));
 	}
 	else
 	{
 		direction_ = float4::LEFT;
-		SetPos(float4(_Pos.x + 1000.f, _Pos.y));
+		SetPos(float4(_Pos.x + 1000.f, _Pos.y - 200.f));
 	}
 }

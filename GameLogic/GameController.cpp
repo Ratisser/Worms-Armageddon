@@ -170,7 +170,7 @@ void GameController::Update()
 		GameEndChangeTime_ -= GameEngineTime::GetInst().GetDeltaTime();
 		if (0.f >= GameEndChangeTime_)
 		{
-			GameEndChangeTime_ = 10.f;
+			GameEndChangeTime_ = 3.f;
 			GameEngineLevelManager::GetInst().ChangeLevel("EndingLevel", true);
 		}
 	}
