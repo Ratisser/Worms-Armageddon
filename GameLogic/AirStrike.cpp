@@ -19,7 +19,7 @@ AirStrike::AirStrike()
 	, destroyTime_(7.f)
 	, fireTime_(0.0f)
 	, fire_(false)
-	, fireCount_(3)
+	, fireCount_(5)
 {
 
 }
@@ -65,6 +65,7 @@ void AirStrike::Update()
 	if (abs(firePoint_.x - pos.x) < 20)
 	{
 		fire_ = true;
+
 	}
 
 	if (true == fire_)
@@ -75,6 +76,8 @@ void AirStrike::Update()
 		{
 			AirStrikeBullet* newAirStrike = parentLevel_->CreateActor<AirStrikeBullet>();
 			newAirStrike->SetPos(float4(pos_.x, pos_.y + 20.f));
+			newAirStrike->SetParentWorm(parentWorm_);
+			parentWorm_->BulletFocusOn(newAirStrike);
 			fireTime_ = 0.03f;
 			--fireCount_;
 		}
@@ -93,17 +96,17 @@ void AirStrike::Render()
 void AirStrike::SetAirStrike(bool _Left, float4 _Pos)
 {
 	firePoint_ = _Pos;
-
+	
 	if (true == _Left)
 	{
 		direction_ = float4::RIGHT;
 		mainRender_ = CreateRenderer("airjetbRight");
 
-		SetPos(float4(_Pos.x - 1000.f, _Pos.y - 200.f));
+		SetPos(float4(_Pos.x - 1000.f, _Pos.y - 400.f));
 	}
 	else
 	{
 		direction_ = float4::LEFT;
-		SetPos(float4(_Pos.x + 1000.f, _Pos.y - 200.f));
+		SetPos(float4(_Pos.x + 1000.f, _Pos.y - 400.f));
 	}
 }

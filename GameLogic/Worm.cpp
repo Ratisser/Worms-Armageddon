@@ -3085,7 +3085,8 @@ StateInfo Worm::updateAirStrikeOn(StateInfo _state)
 
 		AirStrike* newAirStrike = parentLevel_->CreateActor<AirStrike>();
 		newAirStrike->SetAirStrike(bLeft_, mouseTargetPos_);
-
+		newAirStrike->SetParentWorm(this);
+		BulletFocusOn(newAirStrike);
 		return "AirStrikeFire";
 	}
 

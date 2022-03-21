@@ -113,7 +113,7 @@ void AirStrikeBullet::Update()
 		level->CreateExplosion75(pos_);
 
 		//GameEngineSoundManager::GetInstance().PlaySoundByName("Explosion1.wav");
-
+		parentWorm_->BulletFocusOff();
 		Death();
 	}
 }
