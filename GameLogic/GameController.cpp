@@ -805,6 +805,14 @@ StateInfo GameController::updateVictory(StateInfo _state)
 		wormList_[i]->ChangeState("Win");
 	}
 
+	static float waitTime = 2.0f;
+
+	waitTime -= GameEngineTime::GetInst().GetDeltaTime();
+	if (waitTime < 0.f)
+	{
+		GameEngineLevelManager::GetInst().ChangeLevel("EndingLevel");
+	}
+
 	return StateInfo();
 }
 
