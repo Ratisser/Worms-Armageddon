@@ -1940,7 +1940,7 @@ StateInfo Worm::updateBazookaFire(StateInfo _state)
 
 StateInfo Worm::startBazookaWait(StateInfo _state)
 {
-	SubtractActionToken(1);
+	//SubtractActionToken(1);
 	return StateInfo();
 }
 
