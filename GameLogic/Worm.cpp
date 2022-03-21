@@ -2237,6 +2237,7 @@ StateInfo Worm::updateFirepunchStart(StateInfo _state)
 		if (true == mainRender_->IsCurAnimationEnd())
 		{
 			mainRender_->ChangeAnimation("FirepunchFlyLeft", std::string("firePunchFlyLeft.bmp"));
+			reinterpret_cast<PlayLevel*>(parentLevel_)->CreateExplosion25(float4(pos_.x - 25.f, pos_.y), 30, true);
 			return "FirepunchFly";
 		}
 
@@ -2248,6 +2249,7 @@ StateInfo Worm::updateFirepunchStart(StateInfo _state)
 		if (true == mainRender_->IsCurAnimationEnd())
 		{
 			mainRender_->ChangeAnimation("FirepunchFlyRight", std::string("firePunchFlyRight.bmp"));
+			reinterpret_cast<PlayLevel*>(parentLevel_)->CreateExplosion25(float4(pos_.x + 25.f, pos_.y), 30, true);
 			return "FirepunchFly";
 		}
 	}
