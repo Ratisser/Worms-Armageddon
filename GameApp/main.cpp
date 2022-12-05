@@ -54,7 +54,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 	// 최초 씬 지정.
-	GameEngineLevelManager::GetInst().ChangeLevel("LobbyLevel");
+	GameEngineLevelManager::GetInst().ChangeLevel("TitleLevel");
 
 	GameEngineWindow::GetInst().Loop(UpdateFunc);
 
