@@ -2,13 +2,13 @@
 #include <string>
 #include <map>
 #include <GameEngineDebug.h>
+#include "GameEngineLevel.h"
 
 
 // 분류 : 매니저(관리클래스)
 // 용도 : 레벨관리
 // 설명 : 레벨을 만들고
 //        레벨을 전환시켜줄수 있는 기능을 담당합니다..
-class GameEngineLevel;
 class GameEngineLevelManager
 {
 private:	// member Var

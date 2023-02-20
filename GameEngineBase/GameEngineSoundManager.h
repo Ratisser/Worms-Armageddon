@@ -11,6 +11,7 @@
 #endif
 
 #include <unordered_map>
+#include <string>
 
 class GameEngineSoundPlayer;
 class GameEngineSoundManager
